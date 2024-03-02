@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GetBuyr.com</string>
+    <string name="facebook_app_id">1105184566636041</string>
+
+    <string name="fb_login_protocol_scheme">fb1105184566636041</string>
+
+    <string name="android__admob_ads_id_key">ca-app-pub-3786103437138402~5814664694</string>
+    
+</resources>

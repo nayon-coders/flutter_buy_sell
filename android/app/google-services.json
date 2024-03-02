@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "273622575743",
+    "project_id": "getbuyr-84e2d",
+    "storage_bucket": "getbuyr-84e2d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:273622575743:android:01a18bceba2e5ff1c3ad4a",
+        "android_client_info": {
+          "package_name": "com.getbuyr.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "273622575743-q6nol2hlf499qrpvd8j4gbj3n90eate9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAH10QXcPlNWJosLsNl386GdUzWerOpmxQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "273622575743-q6nol2hlf499qrpvd8j4gbj3n90eate9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
