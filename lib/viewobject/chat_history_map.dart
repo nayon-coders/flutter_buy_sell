@@ -2,15 +2,14 @@ import 'package:quiver/core.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_map_object.dart';
 
 class ChatHistoryMap extends PsMapObject<ChatHistoryMap> {
-  ChatHistoryMap(
-      {this.id, this.mapKey, this.chatHistoryId, int sorting, this.addedDate}) {
-    super.sorting = sorting;
+  ChatHistoryMap({this.id, this.mapKey, this.chatHistoryId, int? sorting, this.addedDate}) {
+    super.sorting = sorting!;
   }
 
-  String id;
-  String mapKey;
-  String chatHistoryId;
-  String addedDate;
+  String? id;
+  String? mapKey;
+  String? chatHistoryId;
+  String? addedDate;
 
   @override
   bool operator ==(dynamic other) => other is ChatHistoryMap && id == other.id;
@@ -20,20 +19,15 @@ class ChatHistoryMap extends PsMapObject<ChatHistoryMap> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   ChatHistoryMap fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return ChatHistoryMap(
-          id: dynamicData['id'],
-          mapKey: dynamicData['map_key'],
-          chatHistoryId: dynamicData['chat_history_id'],
-          sorting: dynamicData['sorting'],
-          addedDate: dynamicData['added_date']);
+      return ChatHistoryMap(id: dynamicData['id'], mapKey: dynamicData['map_key'], chatHistoryId: dynamicData['chat_history_id'], sorting: dynamicData['sorting'], addedDate: dynamicData['added_date']);
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -49,7 +43,7 @@ class ChatHistoryMap extends PsMapObject<ChatHistoryMap> {
 
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

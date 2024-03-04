@@ -1,5 +1,4 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 
 class ItemEntryParameterHolder extends PsHolder<ItemEntryParameterHolder> {
   ItemEntryParameterHolder({
@@ -27,28 +26,28 @@ class ItemEntryParameterHolder extends PsHolder<ItemEntryParameterHolder> {
     this.status,
   });
 
-  final String catId;
-  final String subCatId;
-  final String itemTypeId;
-  final String itemPriceTypeId;
-  final String itemCurrencyId;
-  final String conditionOfItemId;
-  final String itemLocationId;
-  final String dealOptionRemark;
-  final String description;
-  final String highlightInfomation;
-  final String price;
-  final String dealOptionId;
-  final String brand;
-  final String businessMode;
-  final String isSoldOut;
-  final String title;
-  final String address;
-  final String latitude;
-  final String longitude;
-  final String id;
-  final String addedUserId;
-  final String status;
+  final String? catId;
+  final String? subCatId;
+  final String? itemTypeId;
+  final String? itemPriceTypeId;
+  final String? itemCurrencyId;
+  final String? conditionOfItemId;
+  final String? itemLocationId;
+  final String? dealOptionRemark;
+  final String? description;
+  final String? highlightInfomation;
+  final String? price;
+  final String? dealOptionId;
+  final String? brand;
+  final String? businessMode;
+  final String? isSoldOut;
+  final String? title;
+  final String? address;
+  final String? latitude;
+  final String? longitude;
+  final String? id;
+  final String? addedUserId;
+  final String? status;
 
   @override
   Map<String, dynamic> toMap() {
@@ -113,70 +112,70 @@ class ItemEntryParameterHolder extends PsHolder<ItemEntryParameterHolder> {
     String key = '';
 
     if (catId != '') {
-      key += catId;
+      key += catId!;
     }
     if (subCatId != '') {
-      key += subCatId;
+      key += subCatId!;
     }
     if (itemTypeId != '') {
-      key += itemTypeId;
+      key += itemTypeId!;
     }
     if (itemPriceTypeId != '') {
-      key += itemPriceTypeId;
+      key += itemPriceTypeId!;
     }
     if (itemCurrencyId != '') {
-      key += itemCurrencyId;
+      key += itemCurrencyId!;
     }
     if (conditionOfItemId != '') {
-      key += conditionOfItemId;
+      key += conditionOfItemId!;
     }
     if (itemLocationId != '') {
-      key += itemLocationId;
+      key += itemLocationId!;
     }
     if (dealOptionRemark != '') {
-      key += dealOptionRemark;
+      key += dealOptionRemark!;
     }
     if (description != '') {
-      key += description;
+      key += description!;
     }
     if (highlightInfomation != '') {
-      key += highlightInfomation;
+      key += highlightInfomation!;
     }
     if (price != '') {
-      key += price;
+      key += price!;
     }
     if (dealOptionId != '') {
-      key += dealOptionId;
+      key += dealOptionId!;
     }
     if (brand != '') {
-      key += brand;
+      key += brand!;
     }
     if (businessMode != '') {
-      key += businessMode;
+      key += businessMode!;
     }
     if (isSoldOut != '') {
-      key += isSoldOut;
+      key += isSoldOut!;
     }
     if (title != '') {
-      key += title;
+      key += title!;
     }
     if (address != '') {
-      key += address;
+      key += address!;
     }
     if (latitude != '') {
-      key += latitude;
+      key += latitude!;
     }
     if (longitude != '') {
-      key += longitude;
+      key += longitude!;
     }
     if (id != '') {
-      key += id;
+      key += id!;
     }
     if (addedUserId != '') {
-      key += addedUserId;
+      key += addedUserId!;
     }
     if (status != '') {
-      key += status;
+      key += status!;
     }
     return key;
   }

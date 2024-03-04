@@ -5,23 +5,23 @@ import 'package:flutterbuyandsell/viewobject/user_info.dart';
 
 class PSAppInfo extends PsObject<PSAppInfo> {
   PSAppInfo({
-     this.psAppVersion,
-     this.userInfo,
-     this.deleteObject,
-     this.oneDay,
-     this.currencySymbol,
-     this.currencyShortForm,
-     this.stripePublishableKey,
-     this.paypalEnable,
-     this.stripeEnable,
-     this.razorEnable,
-     this.razorKey,
-     this.offlineEnabled,
-     this.payStackEnabled,
-     this.payStackKey,
-     this.inAppPurchasedEnabled,
-     this.inAppPurchasedPrdIdAndroid,
-     this.inAppPurchasedPrdIdIOS,
+    this.psAppVersion,
+    this.userInfo,
+    this.deleteObject,
+    this.oneDay,
+    this.currencySymbol,
+    this.currencyShortForm,
+    this.stripePublishableKey,
+    this.paypalEnable,
+    this.stripeEnable,
+    this.razorEnable,
+    this.razorKey,
+    this.offlineEnabled,
+    this.payStackEnabled,
+    this.payStackKey,
+    this.inAppPurchasedEnabled,
+    this.inAppPurchasedPrdIdAndroid,
+    this.inAppPurchasedPrdIdIOS,
   });
   PSAppVersion? psAppVersion;
   UserInfo? userInfo;
@@ -49,28 +49,9 @@ class PSAppInfo extends PsObject<PSAppInfo> {
   @override
   PSAppInfo fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return PSAppInfo(
-          psAppVersion: PSAppVersion().fromMap(dynamicData['version']),
-          userInfo: UserInfo().fromMap(dynamicData['user_info']),
-          deleteObject:
-              DeleteObject().fromMapList(dynamicData['delete_history']),
-          oneDay: dynamicData['oneday'],
-          currencySymbol: dynamicData['currency_symbol'],
-          currencyShortForm: dynamicData['currency_short_form'],
-          stripePublishableKey: dynamicData['stripe_publishable_key'],
-          paypalEnable: dynamicData['paypal_enabled'],
-          razorEnable: dynamicData['razor_enabled'],
-          razorKey: dynamicData['razor_key'],
-          stripeEnable: dynamicData['stripe_enabled'],
-          offlineEnabled: dynamicData['offline_enabled'],
-          payStackEnabled: dynamicData['paystack_enabled'],
-          payStackKey: dynamicData['paystack_key'],
-          inAppPurchasedEnabled: dynamicData['in_app_purchased_enabled'],
-          inAppPurchasedPrdIdAndroid: dynamicData['in_app_purchased_prd_id_android'],
-          inAppPurchasedPrdIdIOS: dynamicData['in_app_purchased_prd_id_ios']
-          );
+      return PSAppInfo(psAppVersion: PSAppVersion().fromMap(dynamicData['version']), userInfo: UserInfo().fromMap(dynamicData['user_info']), deleteObject: DeleteObject().fromMapList(dynamicData['delete_history']), oneDay: dynamicData['oneday'], currencySymbol: dynamicData['currency_symbol'], currencyShortForm: dynamicData['currency_short_form'], stripePublishableKey: dynamicData['stripe_publishable_key'], paypalEnable: dynamicData['paypal_enabled'], razorEnable: dynamicData['razor_enabled'], razorKey: dynamicData['razor_key'], stripeEnable: dynamicData['stripe_enabled'], offlineEnabled: dynamicData['offline_enabled'], payStackEnabled: dynamicData['paystack_enabled'], payStackKey: dynamicData['paystack_key'], inAppPurchasedEnabled: dynamicData['in_app_purchased_enabled'], inAppPurchasedPrdIdAndroid: dynamicData['in_app_purchased_prd_id_android'], inAppPurchasedPrdIdIOS: dynamicData['in_app_purchased_prd_id_ios']);
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -97,7 +78,7 @@ class PSAppInfo extends PsObject<PSAppInfo> {
       data['in_app_purchased_prd_id_ios'] = object.inAppPurchasedPrdIdIOS;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

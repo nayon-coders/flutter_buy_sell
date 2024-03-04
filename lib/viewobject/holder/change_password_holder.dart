@@ -1,14 +1,11 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
-class ChangePasswordParameterHolder
-    extends PsHolder<ChangePasswordParameterHolder> {
-  ChangePasswordParameterHolder(
-      {@required this.userId, @required this.userPassword});
+class ChangePasswordParameterHolder extends PsHolder<ChangePasswordParameterHolder> {
+  ChangePasswordParameterHolder({@required this.userId, @required this.userPassword});
 
-  final String userId;
-  final String userPassword;
+  final String? userId;
+  final String? userPassword;
 
   @override
   Map<String, dynamic> toMap() {
@@ -33,10 +30,10 @@ class ChangePasswordParameterHolder
     String key = '';
 
     if (userId != '') {
-      key += userId;
+      key += userId!;
     }
     if (userPassword != '') {
-      key += userPassword;
+      key += userPassword!;
     }
     return key;
   }

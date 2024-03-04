@@ -1,16 +1,14 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
-class UserReportItemParameterHolder
-    extends PsHolder<UserReportItemParameterHolder> {
+class UserReportItemParameterHolder extends PsHolder<UserReportItemParameterHolder> {
   UserReportItemParameterHolder({
     @required this.itemId,
     @required this.reportedUserId,
   });
 
-  final String itemId;
-  final String reportedUserId;
+  final String? itemId;
+  final String? reportedUserId;
 
   @override
   Map<String, dynamic> toMap() {
@@ -33,10 +31,10 @@ class UserReportItemParameterHolder
     String key = '';
 
     if (reportedUserId != '') {
-      key += reportedUserId;
+      key += reportedUserId!;
     }
     if (itemId != '') {
-      key += itemId;
+      key += itemId!;
     }
 
     return key;

@@ -2,13 +2,7 @@ import 'package:quiver/core.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_map_object.dart';
 
 class ProductMap extends PsMapObject<ProductMap> {
-  ProductMap(
-      {
-         this.id,
-         this.mapKey,
-         this.productId,
-          int? sorting,
-         this.addedDate}) {
+  ProductMap({this.id, this.mapKey, this.productId, int? sorting, this.addedDate}) {
     super.sorting = sorting!;
   }
 
@@ -30,12 +24,7 @@ class ProductMap extends PsMapObject<ProductMap> {
 
   @override
   ProductMap fromMap(dynamic dynamicData) {
-    return ProductMap(
-        id: dynamicData['id'],
-        mapKey: dynamicData['map_key'],
-        productId: dynamicData['product_id'],
-        sorting: dynamicData['sorting'],
-        addedDate: dynamicData['added_date']);
+    return ProductMap(id: dynamicData['id'], mapKey: dynamicData['map_key'], productId: dynamicData['product_id'], sorting: dynamicData['sorting'], addedDate: dynamicData['added_date']);
   }
 
   @override
@@ -50,7 +39,7 @@ class ProductMap extends PsMapObject<ProductMap> {
 
       return data;
     } else {
-      return {};
+      return null!;
     }
   }
 

@@ -1,5 +1,4 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
 class UserLogoutHolder extends PsHolder<UserLogoutHolder> {
@@ -7,7 +6,7 @@ class UserLogoutHolder extends PsHolder<UserLogoutHolder> {
     @required this.userId,
   });
 
-  final String userId;
+  final String? userId;
 
   @override
   Map<String, dynamic> toMap() {
@@ -28,7 +27,7 @@ class UserLogoutHolder extends PsHolder<UserLogoutHolder> {
     String key = '';
 
     if (userId != '') {
-      key += userId;
+      key += userId!;
     }
 
     return key;

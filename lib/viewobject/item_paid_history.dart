@@ -4,40 +4,41 @@ import 'package:quiver/core.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 
 class ItemPaidHistory extends PsObject<ItemPaidHistory> {
-  ItemPaidHistory(
-      {this.id,
-      this.itemId,
-      this.startDate,
-      this.endDate,
-      this.amount,
-      this.paymentMethod,
-      this.transCode,
-      this.status,
-      this.addedDate,
-      this.addedUserId,
-      this.updatedDate,
-      this.updatedUserId,
-      this.updatedFlag,
-      this.addedDateStreet,
-      this.paidStatus,
-      this.item});
+  ItemPaidHistory({
+    this.id,
+    this.itemId,
+    this.startDate,
+    this.endDate,
+    this.amount,
+    this.paymentMethod,
+    this.transCode,
+    this.status,
+    this.addedDate,
+    this.addedUserId,
+    this.updatedDate,
+    this.updatedUserId,
+    this.updatedFlag,
+    this.addedDateStreet,
+    this.paidStatus,
+    this.item,
+  });
 
-  String id;
-  String itemId;
-  String startDate;
-  String endDate;
-  String amount;
-  String paymentMethod;
-  String transCode;
-  String status;
-  String addedDate;
-  String addedUserId;
-  String updatedDate;
-  String updatedUserId;
-  String updatedFlag;
-  String addedDateStreet;
-  String paidStatus;
-  Product item;
+  final String? id;
+  final String? itemId;
+  final String? startDate;
+  final String? endDate;
+  final String? amount;
+  final String? paymentMethod;
+  final String? transCode;
+  final String? status;
+  final String? addedDate;
+  final String? addedUserId;
+  final String? updatedDate;
+  final String? updatedUserId;
+  final String? updatedFlag;
+  final String? addedDateStreet;
+  final String? paidStatus;
+  final Product? item;
 
   User user;
   @override
@@ -48,31 +49,15 @@ class ItemPaidHistory extends PsObject<ItemPaidHistory> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   ItemPaidHistory fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return ItemPaidHistory(
-          id: dynamicData['id'],
-          itemId: dynamicData['item_id'],
-          startDate: dynamicData['start_date'],
-          endDate: dynamicData['end_date'],
-          amount: dynamicData['amount'],
-          paymentMethod: dynamicData['payment_method'],
-          transCode: dynamicData['trans_code'],
-          status: dynamicData['status'],
-          addedDate: dynamicData['added_date'],
-          addedUserId: dynamicData['added_user_id'],
-          updatedDate: dynamicData['updated_date'],
-          updatedUserId: dynamicData['updated_user_id'],
-          updatedFlag: dynamicData['updated_flag'],
-          addedDateStreet: dynamicData['added_date_str'],
-          paidStatus: dynamicData['paid_status'],
-          item: Product().fromMap(dynamicData['item']));
+      return ItemPaidHistory(id: dynamicData['id'], itemId: dynamicData['item_id'], startDate: dynamicData['start_date'], endDate: dynamicData['end_date'], amount: dynamicData['amount'], paymentMethod: dynamicData['payment_method'], transCode: dynamicData['trans_code'], status: dynamicData['status'], addedDate: dynamicData['added_date'], addedUserId: dynamicData['added_user_id'], updatedDate: dynamicData['updated_date'], updatedUserId: dynamicData['updated_user_id'], updatedFlag: dynamicData['updated_flag'], addedDateStreet: dynamicData['added_date_str'], paidStatus: dynamicData['paid_status'], item: Product().fromMap(dynamicData['item']));
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -98,7 +83,7 @@ class ItemPaidHistory extends PsObject<ItemPaidHistory> {
       data['item'] = Product().toMap(object.item);
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

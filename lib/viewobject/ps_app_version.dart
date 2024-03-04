@@ -2,12 +2,7 @@ import 'package:quiver/core.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 
 class PSAppVersion extends PsObject<PSAppVersion> {
-  PSAppVersion(
-      { this.versionNo,
-       this.versionForceUpdate,
-       this.versionTitle,
-       this.versionMessage,
-       this.versionNeedClearData});
+  PSAppVersion({this.versionNo, this.versionForceUpdate, this.versionTitle, this.versionMessage, this.versionNeedClearData});
   String? versionNo;
   String? versionForceUpdate;
   String? versionTitle;
@@ -15,8 +10,7 @@ class PSAppVersion extends PsObject<PSAppVersion> {
   String? versionNeedClearData;
 
   @override
-  bool operator ==(dynamic other) =>
-      other is PSAppVersion && versionNo == other.versionNo;
+  bool operator ==(dynamic other) => other is PSAppVersion && versionNo == other.versionNo;
 
   @override
   int get hashCode => hash2(versionNo.hashCode, versionNo.hashCode);
@@ -28,12 +22,7 @@ class PSAppVersion extends PsObject<PSAppVersion> {
 
   @override
   PSAppVersion fromMap(dynamic dynamicData) {
-    return PSAppVersion(
-        versionNo: dynamicData['version_no'],
-        versionForceUpdate: dynamicData['version_force_update'],
-        versionTitle: dynamicData['version_title'],
-        versionMessage: dynamicData['version_message'],
-        versionNeedClearData: dynamicData['version_need_clear_data']);
+    return PSAppVersion(versionNo: dynamicData['version_no'], versionForceUpdate: dynamicData['version_force_update'], versionTitle: dynamicData['version_title'], versionMessage: dynamicData['version_message'], versionNeedClearData: dynamicData['version_need_clear_data']);
   }
 
   @override
@@ -47,7 +36,7 @@ class PSAppVersion extends PsObject<PSAppVersion> {
       data['version_need_clear_data'] = object.versionNeedClearData;
       return data;
     } else {
-      return {};
+      return null!;
     }
   }
 

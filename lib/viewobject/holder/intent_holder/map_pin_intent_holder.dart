@@ -6,7 +6,7 @@ class MapPinIntentHolder {
     @required this.mapLat,
     @required this.mapLng,
   });
-  final String flag;
-  final String mapLat;
-  final String mapLng;
+  final String? flag;
+  final String? mapLat;
+  final String? mapLng;
 }

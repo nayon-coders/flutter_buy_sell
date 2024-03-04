@@ -1,17 +1,15 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
-class UnblockUserHolder
-    extends PsHolder<UnblockUserHolder> {
+class UnblockUserHolder extends PsHolder<UnblockUserHolder> {
   UnblockUserHolder({
     @required this.fromBlockUserId,
     @required this.toBlockUserId,
   });
 
-  final String fromBlockUserId;
-  final String toBlockUserId;
-  
+  final String? fromBlockUserId;
+  final String? toBlockUserId;
+
   @override
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> map = <String, dynamic>{};
@@ -33,10 +31,10 @@ class UnblockUserHolder
     String key = '';
 
     if (fromBlockUserId != '') {
-      key += fromBlockUserId;
+      key += fromBlockUserId!;
     }
     if (toBlockUserId != '') {
-      key += toBlockUserId;
+      key += toBlockUserId!;
     }
 
     return key;

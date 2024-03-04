@@ -4,23 +4,15 @@ import 'default_icon.dart';
 import 'default_photo.dart';
 
 class Category extends PsObject<Category> {
-  Category(
-      {this.catId,
-      this.catName,
-      this.catOrdering,
-      this.status,
-      this.addedDate,
-      this.addedDateStr,
-      this.defaultPhoto,
-      this.defaultIcon});
-  String catId;
-  String catName;
-  String catOrdering;
-  String status;
-  String addedDate;
-  String addedDateStr;
-  DefaultPhoto defaultPhoto;
-  DefaultIcon defaultIcon;
+  Category({this.catId, this.catName, this.catOrdering, this.status, this.addedDate, this.addedDateStr, this.defaultPhoto, this.defaultIcon});
+  String? catId;
+  String? catName;
+  String? catOrdering;
+  String? status;
+  String? addedDate;
+  String? addedDateStr;
+  DefaultPhoto? defaultPhoto;
+  DefaultIcon? defaultIcon;
 
   @override
   bool operator ==(dynamic other) => other is Category && catId == other.catId;
@@ -32,23 +24,15 @@ class Category extends PsObject<Category> {
 
   @override
   String getPrimaryKey() {
-    return catId;
+    return catId!;
   }
 
   @override
   Category fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return Category(
-          catId: dynamicData['cat_id'],
-          catName: dynamicData['cat_name'],
-          catOrdering: dynamicData['cat_ordering'],
-          status: dynamicData['status'],
-          addedDate: dynamicData['added_date'],
-          addedDateStr: dynamicData['added_date_str'],
-          defaultPhoto: DefaultPhoto().fromMap(dynamicData['default_photo']),
-          defaultIcon: DefaultIcon().fromMap(dynamicData['default_icon']));
+      return Category(catId: dynamicData['cat_id'], catName: dynamicData['cat_name'], catOrdering: dynamicData['cat_ordering'], status: dynamicData['status'], addedDate: dynamicData['added_date'], addedDateStr: dynamicData['added_date_str'], defaultPhoto: DefaultPhoto().fromMap(dynamicData['default_photo']), defaultIcon: DefaultIcon().fromMap(dynamicData['default_icon']));
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -63,10 +47,10 @@ class Category extends PsObject<Category> {
       data['added_date'] = object.addedDate;
       data['added_date_str'] = object.addedDateStr;
       data['default_photo'] = DefaultPhoto().toMap(object.defaultPhoto);
-      data['default_icon'] = DefaultIcon().toMap(object.defaultIcon);
+      data['default_icon'] = DefaultIcon().toMap(object.defaultIcon!);
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

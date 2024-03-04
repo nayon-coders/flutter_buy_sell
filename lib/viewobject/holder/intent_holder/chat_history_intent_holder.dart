@@ -7,10 +7,10 @@ class ChatHistoryIntentHolder {
     @required this.buyerUserId,
     @required this.sellerUserId,
   });
-  final String itemId;
-  final String chatFlag;
-  final String buyerUserId;
-  final String sellerUserId;
+  final String? itemId;
+  final String? chatFlag;
+  final String? buyerUserId;
+  final String? sellerUserId;
 }
 
 // class ChatHistoryIntentHolder {

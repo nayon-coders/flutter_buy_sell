@@ -1,13 +1,12 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
 class AppInfoParameterHolder extends PsHolder<AppInfoParameterHolder> {
   AppInfoParameterHolder({@required this.startDate, @required this.endDate, @required this.userId});
 
-  final String startDate;
-  final String endDate;
-  final String userId;
+  final String? startDate;
+  final String? endDate;
+  final String? userId;
 
   @override
   Map<String, dynamic> toMap() {
@@ -34,13 +33,13 @@ class AppInfoParameterHolder extends PsHolder<AppInfoParameterHolder> {
     String key = '';
 
     if (startDate != '') {
-      key += startDate;
+      key += startDate!;
     }
     if (endDate != '') {
-      key += endDate;
+      key += endDate!;
     }
     if (userId != '') {
-      key += userId;
+      key += userId!;
     }
     return key;
   }

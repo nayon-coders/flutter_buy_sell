@@ -1,11 +1,10 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
 class ResendCodeParameterHolder extends PsHolder<ResendCodeParameterHolder> {
   ResendCodeParameterHolder({@required this.userEmail});
 
-  final String userEmail;
+  final String? userEmail;
 
   @override
   Map<String, dynamic> toMap() {
@@ -28,7 +27,7 @@ class ResendCodeParameterHolder extends PsHolder<ResendCodeParameterHolder> {
     String key = '';
 
     if (userEmail != '') {
-      key += userEmail;
+      key += userEmail!;
     }
     return key;
   }

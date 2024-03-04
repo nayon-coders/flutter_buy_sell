@@ -4,19 +4,18 @@ import 'package:quiver/core.dart';
 class ChatUserPresence extends PsObject<ChatUserPresence> {
   ChatUserPresence({this.userId, this.userName});
 
-  String userId;
-  String userName;
+  String? userId;
+  String? userName;
 
   @override
-  bool operator ==(dynamic other) =>
-      other is ChatUserPresence && userId == other.userId;
+  bool operator ==(dynamic other) => other is ChatUserPresence && userId == other.userId;
 
   @override
   int get hashCode => hash2(userId.hashCode, userId.hashCode);
 
   @override
   String getPrimaryKey() {
-    return userId;
+    return userId!;
   }
 
   @override
@@ -36,10 +35,9 @@ class ChatUserPresence extends PsObject<ChatUserPresence> {
   @override
   ChatUserPresence fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return ChatUserPresence(
-          userId: dynamicData['userId'], userName: dynamicData['userName']);
+      return ChatUserPresence(userId: dynamicData['userId'], userName: dynamicData['userName']);
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -65,7 +63,7 @@ class ChatUserPresence extends PsObject<ChatUserPresence> {
 
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 }

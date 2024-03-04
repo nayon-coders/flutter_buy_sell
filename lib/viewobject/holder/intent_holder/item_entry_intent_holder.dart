@@ -6,6 +6,6 @@ class ItemEntryIntentHolder {
     @required this.flag,
     @required this.item,
   });
-  final String flag;
-  final Product item;
+  final String? flag;
+  final Product? item;
 }

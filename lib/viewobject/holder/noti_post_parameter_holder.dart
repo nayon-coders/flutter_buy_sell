@@ -1,16 +1,12 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
 class NotiPostParameterHolder extends PsHolder<NotiPostParameterHolder> {
-  NotiPostParameterHolder(
-      {@required this.notiId,
-      @required this.userId,
-      @required this.deviceToken});
+  NotiPostParameterHolder({@required this.notiId, @required this.userId, @required this.deviceToken});
 
-  final String notiId;
-  final String userId;
-  final String deviceToken;
+  final String? notiId;
+  final String? userId;
+  final String? deviceToken;
 
   @override
   Map<String, dynamic> toMap() {
@@ -37,14 +33,14 @@ class NotiPostParameterHolder extends PsHolder<NotiPostParameterHolder> {
     String key = '';
 
     if (notiId != '') {
-      key += notiId;
+      key += notiId!;
     }
     if (userId != '') {
-      key += userId;
+      key += userId!;
     }
 
     if (deviceToken != '') {
-      key += deviceToken;
+      key += deviceToken!;
     }
     return key;
   }

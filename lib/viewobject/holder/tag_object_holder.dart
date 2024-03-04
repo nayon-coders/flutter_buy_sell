@@ -1,14 +1,12 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
 class TagParameterHolder extends PsHolder<TagParameterHolder> {
-  TagParameterHolder(
-      {@required this.fieldName, @required this.tagId, @required this.tagName});
+  TagParameterHolder({@required this.fieldName, @required this.tagId, @required this.tagName});
 
-  final String fieldName;
-  final String tagId;
-  final String tagName;
+  final String? fieldName;
+  final String? tagId;
+  final String? tagName;
 
   @override
   Map<String, dynamic> toMap() {
@@ -35,14 +33,14 @@ class TagParameterHolder extends PsHolder<TagParameterHolder> {
     String key = '';
 
     if (fieldName != '') {
-      key += fieldName;
+      key += fieldName!;
     }
     if (tagId != '') {
-      key += tagId;
+      key += tagId!;
     }
 
     if (tagName != '') {
-      key += tagName;
+      key += tagName!;
     }
     return key;
   }

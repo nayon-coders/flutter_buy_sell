@@ -1,45 +1,11 @@
+// ignore_for_file: null_check_always_fails
+
 import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 import 'package:flutterbuyandsell/viewobject/rating_detail.dart';
 import 'package:quiver/core.dart';
 
 class BlockedUser extends PsObject<BlockedUser> {
-  BlockedUser(
-      {this.userId,
-      this.userIsSysAdmin,
-      this.facebookId,
-      this.googleId,
-      this.phoneId,
-      this.userName,
-      this.userEmail,
-      this.userPhone,
-      this.userAddress,
-      this.userLat,
-      this.userLng,
-      this.city,
-      this.userPassword,
-      this.userAboutMe,
-      this.userCoverPhoto,
-      this.userProfilePhoto,
-      this.roleId,
-      this.status,
-      this.isBanned,
-      this.addedDate,
-      this.deviceToken,
-      this.code,
-      this.overallRating,
-      this.whatsapp,
-      this.messenger,
-      this.followerCount,
-      this.followingCount,
-      this.emailVerify,
-      this.facebookVerify,
-      this.googleVerify,
-      this.phoneVerify,
-      this.ratingCount,
-      this.isFollowed,
-      this.ratingDetail,
-      this.isFavourited,
-      this.isOwner});
+  BlockedUser({this.userId, this.userIsSysAdmin, this.facebookId, this.googleId, this.phoneId, this.userName, this.userEmail, this.userPhone, this.userAddress, this.userLat, this.userLng, this.city, this.userPassword, this.userAboutMe, this.userCoverPhoto, this.userProfilePhoto, this.roleId, this.status, this.isBanned, this.addedDate, this.deviceToken, this.code, this.overallRating, this.whatsapp, this.messenger, this.followerCount, this.followingCount, this.emailVerify, this.facebookVerify, this.googleVerify, this.phoneVerify, this.ratingCount, this.isFollowed, this.ratingDetail, this.isFavourited, this.isOwner});
   String? userId;
   String? userIsSysAdmin;
   String? facebookId;
@@ -87,7 +53,7 @@ class BlockedUser extends PsObject<BlockedUser> {
 
   @override
   String getPrimaryKey() {
-    return userId;
+    return userId!;
   }
 
   @override
@@ -133,7 +99,7 @@ class BlockedUser extends PsObject<BlockedUser> {
         // city: ShippingCity().fromMap(dynamicData['city'])
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -179,7 +145,7 @@ class BlockedUser extends PsObject<BlockedUser> {
       data['is_owner'] = object.isOwner;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

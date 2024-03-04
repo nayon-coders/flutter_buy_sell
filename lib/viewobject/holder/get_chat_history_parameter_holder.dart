@@ -1,18 +1,16 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
-class GetChatHistoryParameterHolder
-    extends PsHolder<GetChatHistoryParameterHolder> {
+class GetChatHistoryParameterHolder extends PsHolder<GetChatHistoryParameterHolder> {
   GetChatHistoryParameterHolder({
     @required this.itemId,
     @required this.buyerUserId,
     @required this.sellerUserId,
   });
 
-  final String itemId;
-  final String buyerUserId;
-  final String sellerUserId;
+  final String? itemId;
+  final String? buyerUserId;
+  final String? sellerUserId;
 
   @override
   Map<String, dynamic> toMap() {
@@ -37,13 +35,13 @@ class GetChatHistoryParameterHolder
     String key = '';
 
     if (itemId != '') {
-      key += itemId;
+      key += itemId!;
     }
     if (buyerUserId != '') {
-      key += buyerUserId;
+      key += buyerUserId!;
     }
     if (sellerUserId != '') {
-      key += sellerUserId;
+      key += sellerUserId!;
     }
 
     return key;

@@ -5,6 +5,6 @@ class SafetyTipsIntentHolder {
     @required this.animationController,
     @required this.safetyTips,
   });
-  final AnimationController animationController;
-  final String safetyTips;
+  final AnimationController? animationController;
+  final String? safetyTips;
 }

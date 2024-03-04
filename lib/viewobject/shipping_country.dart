@@ -3,15 +3,15 @@ import 'package:quiver/core.dart';
 
 class ShippingCountry extends PsObject<ShippingCountry> {
   ShippingCountry({
-      this.id,
-     this.name,
-     this.status,
-     this.addedDate,
-     this.addedUserId,
-     this.updatedDate,
-     this.updatedUserId,
-     this.updatedFlag,
-     this.addedDateStr,
+    this.id,
+    this.name,
+    this.status,
+    this.addedDate,
+    this.addedUserId,
+    this.updatedDate,
+    this.updatedUserId,
+    this.updatedFlag,
+    this.addedDateStr,
   });
 
   String? id;
@@ -39,17 +39,7 @@ class ShippingCountry extends PsObject<ShippingCountry> {
 
   @override
   ShippingCountry fromMap(dynamic dynamicData) {
-    return ShippingCountry(
-        id: dynamicData['id'],
-        name: dynamicData['name'],
-        status: dynamicData['status'],
-        addedDate: dynamicData['added_date'],
-        addedUserId: dynamicData['added_user_id'],
-        updatedDate: dynamicData['updated_date'],
-        updatedUserId: dynamicData['updated_user_id'],
-        updatedFlag: dynamicData['updated_flag'],
-        addedDateStr: dynamicData['added_date_str']
-    );
+    return ShippingCountry(id: dynamicData['id'], name: dynamicData['name'], status: dynamicData['status'], addedDate: dynamicData['added_date'], addedUserId: dynamicData['added_user_id'], updatedDate: dynamicData['updated_date'], updatedUserId: dynamicData['updated_user_id'], updatedFlag: dynamicData['updated_flag'], addedDateStr: dynamicData['added_date_str']);
   }
 
   @override
@@ -67,14 +57,13 @@ class ShippingCountry extends PsObject<ShippingCountry> {
       data['added_date_str'] = object.addedDateStr;
       return data;
     } else {
-      return {};
+      return null!;
     }
   }
 
   @override
   List<ShippingCountry> fromMapList(List<dynamic> dynamicDataList) {
-    final List<ShippingCountry> shippingCountryAndCityList =
-        <ShippingCountry>[];
+    final List<ShippingCountry> shippingCountryAndCityList = <ShippingCountry>[];
 
     if (dynamicDataList != null) {
       for (dynamic dynamicData in dynamicDataList) {

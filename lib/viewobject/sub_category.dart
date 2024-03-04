@@ -4,19 +4,7 @@ import 'default_icon.dart';
 import 'default_photo.dart';
 
 class SubCategory extends PsObject<SubCategory> {
-  SubCategory(
-      { this.id,
-       this.name,
-       this.status,
-       this.addedDate,
-       this.addedUserId,
-       this.updatedDate,
-       this.catId,
-       this.updatedUserId,
-       this.updatedFlag,
-       this.addedDateStreet,
-       this.defaultPhoto,
-       this.defaultIcon});
+  SubCategory({this.id, this.name, this.status, this.addedDate, this.addedUserId, this.updatedDate, this.catId, this.updatedUserId, this.updatedFlag, this.addedDateStreet, this.defaultPhoto, this.defaultIcon});
 
   String? id;
   String? name;
@@ -44,19 +32,7 @@ class SubCategory extends PsObject<SubCategory> {
 
   @override
   SubCategory fromMap(dynamic dynamicData) {
-    return SubCategory(
-        id: dynamicData['id'],
-        name: dynamicData['name'],
-        status: dynamicData['status'],
-        addedDate: dynamicData['added_date'],
-        addedUserId: dynamicData['added_user_id'],
-        updatedDate: dynamicData['updated_date'],
-        catId: dynamicData['cat_id'],
-        updatedUserId: dynamicData['updated_user_id'],
-        updatedFlag: dynamicData['updated_flag'],
-        addedDateStreet: dynamicData['added_date_str'],
-        defaultPhoto: DefaultPhoto().fromMap(dynamicData['default_photo']),
-        defaultIcon: DefaultIcon().fromMap(dynamicData['default_icon']));
+    return SubCategory(id: dynamicData['id'], name: dynamicData['name'], status: dynamicData['status'], addedDate: dynamicData['added_date'], addedUserId: dynamicData['added_user_id'], updatedDate: dynamicData['updated_date'], catId: dynamicData['cat_id'], updatedUserId: dynamicData['updated_user_id'], updatedFlag: dynamicData['updated_flag'], addedDateStreet: dynamicData['added_date_str'], defaultPhoto: DefaultPhoto().fromMap(dynamicData['default_photo']), defaultIcon: DefaultIcon().fromMap(dynamicData['default_icon']));
   }
 
   @override
@@ -77,7 +53,7 @@ class SubCategory extends PsObject<SubCategory> {
       data['default_photo'] = DefaultPhoto().toMap(object.defaultPhoto);
       return data;
     } else {
-      return {};
+      return null!;
     }
   }
 

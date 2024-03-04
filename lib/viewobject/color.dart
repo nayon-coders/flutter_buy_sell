@@ -1,25 +1,19 @@
+// ignore_for_file: null_check_always_fails
+
 import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 import 'package:quiver/core.dart';
 
 class Colors extends PsObject<Colors> {
-  Colors(
-      {this.id,
-      this.productId,
-      this.colorValue,
-      this.addedDate,
-      this.addedUserId,
-      this.updatedDate,
-      this.updatedUserId,
-      this.updatedFlag});
+  Colors({this.id, this.productId, this.colorValue, this.addedDate, this.addedUserId, this.updatedDate, this.updatedUserId, this.updatedFlag});
 
-  String id;
-  String productId;
-  String colorValue;
-  String addedDate;
-  String addedUserId;
-  String updatedDate;
-  String updatedUserId;
-  String updatedFlag;
+  String? id;
+  String? productId;
+  String? colorValue;
+  String? addedDate;
+  String? addedUserId;
+  String? updatedDate;
+  String? updatedUserId;
+  String? updatedFlag;
 
   @override
   bool operator ==(dynamic other) => other is Colors && id == other.id;
@@ -29,23 +23,15 @@ class Colors extends PsObject<Colors> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   Colors fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return Colors(
-          id: dynamicData['id'],
-          productId: dynamicData['product_id'],
-          colorValue: dynamicData['color_value'],
-          addedDate: dynamicData['added_date'],
-          addedUserId: dynamicData['added_user_id'],
-          updatedDate: dynamicData['updated_date'],
-          updatedUserId: dynamicData['updated_user_id'],
-          updatedFlag: dynamicData['updated_flag']);
+      return Colors(id: dynamicData['id'], productId: dynamicData['product_id'], colorValue: dynamicData['color_value'], addedDate: dynamicData['added_date'], addedUserId: dynamicData['added_user_id'], updatedDate: dynamicData['updated_date'], updatedUserId: dynamicData['updated_user_id'], updatedFlag: dynamicData['updated_flag']);
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -63,7 +49,7 @@ class Colors extends PsObject<Colors> {
       data['updated_flag'] = object.updatedFlag;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

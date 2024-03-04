@@ -1,3 +1,5 @@
+// ignore_for_file: null_check_always_fails
+
 import 'package:flutterbuyandsell/viewobject/product.dart';
 import 'package:flutterbuyandsell/viewobject/user.dart';
 import 'package:quiver/core.dart';
@@ -27,25 +29,25 @@ class ChatHistory extends PsObject<ChatHistory> {
     this.seller,
   });
 
-  String id;
-  String itemId;
-  String buyerUserId;
-  String sellerUserId;
-  String negoPrice;
-  String buyerUnreadCount;
-  String sellerUnreadCount;
-  String isAccept;
-  String addedDate;
-  String isOffer;
-  String offerAmount;
-  String addedDateStr;
-  String photoCount;
-  String isFavourited;
-  String isOwner;
-  DefaultPhoto defaultPhoto;
-  Product item;
-  User buyer;
-  User seller;
+  String? id;
+  String? itemId;
+  String? buyerUserId;
+  String? sellerUserId;
+  String? negoPrice;
+  String? buyerUnreadCount;
+  String? sellerUnreadCount;
+  String? isAccept;
+  String? addedDate;
+  String? isOffer;
+  String? offerAmount;
+  String? addedDateStr;
+  String? photoCount;
+  String? isFavourited;
+  String? isOwner;
+  DefaultPhoto? defaultPhoto;
+  Product? item;
+  User? buyer;
+  User? seller;
   @override
   bool operator ==(dynamic other) => other is ChatHistory && id == other.id;
 
@@ -54,7 +56,7 @@ class ChatHistory extends PsObject<ChatHistory> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
@@ -82,7 +84,7 @@ class ChatHistory extends PsObject<ChatHistory> {
         seller: User().fromMap(dynamicData['seller']),
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -111,7 +113,7 @@ class ChatHistory extends PsObject<ChatHistory> {
       data['seller'] = User().toMap(object.seller);
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

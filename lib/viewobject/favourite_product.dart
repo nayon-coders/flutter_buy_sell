@@ -2,30 +2,28 @@ import 'package:quiver/core.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_map_object.dart';
 
 class FavouriteProduct extends PsMapObject<FavouriteProduct> {
-  FavouriteProduct({this.id, int sorting}) {
-    super.sorting = sorting;
+  FavouriteProduct({this.id, int? sorting}) {
+    super.sorting = sorting!;
   }
-  String id;
+  String? id;
 
   @override
-  bool operator ==(dynamic other) =>
-      other is FavouriteProduct && id == other.id;
+  bool operator ==(dynamic other) => other is FavouriteProduct && id == other.id;
 
   @override
   int get hashCode => hash2(id.hashCode, id.hashCode);
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   FavouriteProduct fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return FavouriteProduct(
-          id: dynamicData['id'], sorting: dynamicData['sorting']);
+      return FavouriteProduct(id: dynamicData['id'], sorting: dynamicData['sorting']);
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -37,7 +35,7 @@ class FavouriteProduct extends PsMapObject<FavouriteProduct> {
       data['sorting'] = object.sorting;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

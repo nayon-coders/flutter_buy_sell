@@ -42,37 +42,33 @@ Future<void> main() async {
 
   // Firebase.initializeApp();
   await Firebase.initializeApp(
-      // name: 'flutter-buy-and-sell',
-      options: Platform.isIOS
-          ? const FirebaseOptions(
-              appId: PsConfig.iosGoogleAppId,
-              messagingSenderId: PsConfig.iosGcmSenderId,
-              databaseURL: PsConfig.iosDatabaseUrl,
-              projectId: PsConfig.iosProjectId,
-              apiKey: PsConfig.iosApiKey)
-          : const FirebaseOptions(
-              appId: PsConfig.androidGoogleAppId,
-              apiKey: PsConfig.androidApiKey,
-              projectId: PsConfig.androidProjectId,
-              messagingSenderId: PsConfig.androidGcmSenderId,
-              databaseURL: PsConfig.androidDatabaseUrl,
-            ),
-    );
+    // name: 'flutter-buy-and-sell',
+    options: Platform.isIOS
+        ? const FirebaseOptions(appId: PsConfig.iosGoogleAppId, messagingSenderId: PsConfig.iosGcmSenderId, databaseURL: PsConfig.iosDatabaseUrl, projectId: PsConfig.iosProjectId, apiKey: PsConfig.iosApiKey)
+        : const FirebaseOptions(
+            appId: PsConfig.androidGoogleAppId,
+            apiKey: PsConfig.androidApiKey,
+            projectId: PsConfig.androidProjectId,
+            messagingSenderId: PsConfig.androidGcmSenderId,
+            databaseURL: PsConfig.androidDatabaseUrl,
+          ),
+  );
   // FirebaseMessaging.onBackgroundMessage(Utils.myBackgroundMessageHandler);
 
   NativeAdmob(adUnitID: Utils.getAdAppId());
 
   if (Platform.isIOS) {
     FirebaseMessaging.instance.requestPermission(
-          alert: true,
-          announcement: false,
-          badge: true,
-          carPlay: false,
-          criticalAlert: false,
-          provisional: false,
-          sound: true,
-      );
+      alert: true,
+      announcement: false,
+      badge: true,
+      carPlay: false,
+      criticalAlert: false,
+      provisional: false,
+      sound: true,
+    );
   }
+
   /// Update the iOS foreground notification presentation options to allow
   /// heads up notifications.
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -98,11 +94,7 @@ Future<void> main() async {
     Utils.psPrint(e.toString());
   }
 
-  runApp(EasyLocalization(
-      path: 'assets/langs',
-      startLocale: PsConfig.defaultLanguage.toLocale(),
-      supportedLocales: getSupportedLanguages(),
-      child: PSApp()));
+  runApp(EasyLocalization(path: 'assets/langs', startLocale: PsConfig.defaultLanguage.toLocale(), supportedLocales: getSupportedLanguages(), child: PSApp()));
 }
 
 List<Locale> getSupportedLanguages() {
@@ -128,8 +120,7 @@ class _PSAppState extends State<PSApp> {
     super.initState();
   }
 
-  Future<ThemeData> getSharePerference(
-      EasyLocalization provider, dynamic data) {
+  Future<ThemeData> getSharePerference(EasyLocalization provider, dynamic data) {
     Utils.psPrint('>> get share perference');
     if (themeDataCompleter == null) {
       Utils.psPrint('init completer');
@@ -144,8 +135,7 @@ class _PSAppState extends State<PSApp> {
         psSharedPreferences.shared = sh;
 
         Utils.psPrint('init theme provider');
-        final PsThemeProvider psThemeProvider = PsThemeProvider(
-            repo: PsThemeRepository(psSharedPreferences: psSharedPreferences));
+        final PsThemeProvider psThemeProvider = PsThemeProvider(repo: PsThemeRepository(psSharedPreferences: psSharedPreferences));
 
         Utils.psPrint('get theme');
         final ThemeData themeData = psThemeProvider.getTheme();
@@ -170,7 +160,7 @@ class _PSAppState extends State<PSApp> {
   Widget build(BuildContext context) {
     // init Color
     PsColors.loadColor(context);
-    print('*** ${Utils.convertColorToString(PsColors.mainColor)}');
+    print('*** ${Utils.convertColorToString(PsColors.mainColor!)}');
 
     return MultiProvider(
         providers: <SingleChildWidget>[

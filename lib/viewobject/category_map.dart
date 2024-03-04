@@ -2,15 +2,14 @@ import 'package:quiver/core.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_map_object.dart';
 
 class CategoryMap extends PsMapObject<CategoryMap> {
-  CategoryMap(
-      {this.id, this.mapKey, this.categoryId, int sorting, this.addedDate}) {
-    super.sorting = sorting;
+  CategoryMap({this.id, this.mapKey, this.categoryId, int? sorting, this.addedDate}) {
+    super.sorting = sorting!;
   }
 
-  String id;
-  String mapKey;
-  String categoryId;
-  String addedDate;
+  String? id;
+  String? mapKey;
+  String? categoryId;
+  String? addedDate;
 
   @override
   bool operator ==(dynamic other) => other is CategoryMap && id == other.id;
@@ -21,14 +20,9 @@ class CategoryMap extends PsMapObject<CategoryMap> {
   @override
   CategoryMap fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return CategoryMap(
-          id: dynamicData['id'],
-          mapKey: dynamicData['map_key'],
-          categoryId: dynamicData['category_id'],
-          sorting: dynamicData['sorting'],
-          addedDate: dynamicData['added_date']);
+      return CategoryMap(id: dynamicData['id'], mapKey: dynamicData['map_key'], categoryId: dynamicData['category_id'], sorting: dynamicData['sorting'], addedDate: dynamicData['added_date']);
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -44,7 +38,7 @@ class CategoryMap extends PsMapObject<CategoryMap> {
 
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -77,7 +71,7 @@ class CategoryMap extends PsMapObject<CategoryMap> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override

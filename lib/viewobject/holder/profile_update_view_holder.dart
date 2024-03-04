@@ -1,9 +1,7 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
-class ProfileUpdateParameterHolder
-    extends PsHolder<ProfileUpdateParameterHolder> {
+class ProfileUpdateParameterHolder extends PsHolder<ProfileUpdateParameterHolder> {
   ProfileUpdateParameterHolder({
     @required this.userId,
     @required this.userName,
@@ -17,16 +15,16 @@ class ProfileUpdateParameterHolder
     @required this.deviceToken,
   });
 
-  final String userId;
-  final String userName;
-  final String userEmail;
-  final String userPhone;
-  final String userAboutMe;
-  final String isShowEmail;
-  final String isShowPhone;
-  final String userAddress;
-  final String city;
-  final String deviceToken;
+  final String? userId;
+  final String? userName;
+  final String? userEmail;
+  final String? userPhone;
+  final String? userAboutMe;
+  final String? isShowEmail;
+  final String? isShowPhone;
+  final String? userAddress;
+  final String? city;
+  final String? deviceToken;
 
   @override
   Map<String, dynamic> toMap() {
@@ -67,38 +65,38 @@ class ProfileUpdateParameterHolder
     String key = '';
 
     if (userId != '') {
-      key += userId;
+      key += userId!;
     }
     if (userName != '') {
-      key += userName;
+      key += userName!;
     }
 
     if (userEmail != '') {
-      key += userEmail;
+      key += userEmail!;
     }
     if (userPhone != '') {
-      key += userPhone;
+      key += userPhone!;
     }
 
     if (userAboutMe != '') {
-      key += userAboutMe;
+      key += userAboutMe!;
     }
 
     if (userAddress != '') {
-      key += userAddress;
+      key += userAddress!;
     }
     if (city != '') {
-      key += city;
+      key += city!;
     }
 
     if (deviceToken != '') {
-      key += deviceToken;
+      key += deviceToken!;
     }
     if (isShowEmail != '') {
-      key += isShowEmail;
+      key += isShowEmail!;
     }
     if (isShowPhone != '') {
-      key += isShowPhone;
+      key += isShowPhone!;
     }
     return key;
   }

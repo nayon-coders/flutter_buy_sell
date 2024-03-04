@@ -1,3 +1,5 @@
+// ignore_for_file: null_check_always_fails
+
 import 'package:quiver/core.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 import 'default_photo.dart';
@@ -27,38 +29,37 @@ class AboutUs extends PsObject<AboutUs> {
     this.safetyTips,
     this.defaultPhoto,
   });
-  String aboutId;
-  String aboutTitle;
-  String aboutDescription;
-  String aboutEmail;
-  String aboutPhone;
-  String aboutWebsite;
-  String adsOn;
-  String adsClient;
-  String adsSlot;
-  String analytOn;
-  String analytTrackId;
-  String facebook;
-  String googlePlus;
-  String instagram;
-  String youtube;
-  String pinterest;
-  String twitter;
-  String privacypolicy;
-  String gdpr;
-  String uploadPoint;
-  String safetyTips;
-  DefaultPhoto defaultPhoto;
+  String? aboutId;
+  String? aboutTitle;
+  String? aboutDescription;
+  String? aboutEmail;
+  String? aboutPhone;
+  String? aboutWebsite;
+  String? adsOn;
+  String? adsClient;
+  String? adsSlot;
+  String? analytOn;
+  String? analytTrackId;
+  String? facebook;
+  String? googlePlus;
+  String? instagram;
+  String? youtube;
+  String? pinterest;
+  String? twitter;
+  String? privacypolicy;
+  String? gdpr;
+  String? uploadPoint;
+  String? safetyTips;
+  DefaultPhoto? defaultPhoto;
   @override
-  bool operator ==(dynamic other) =>
-      other is AboutUs && aboutId == other.aboutId;
+  bool operator ==(dynamic other) => other is AboutUs && aboutId == other.aboutId;
 
   @override
   int get hashCode => hash2(aboutId.hashCode, aboutId.hashCode);
 
   @override
   String getPrimaryKey() {
-    return aboutId;
+    return aboutId!;
   }
 
   @override
@@ -89,7 +90,7 @@ class AboutUs extends PsObject<AboutUs> {
         defaultPhoto: DefaultPhoto().fromMap(dynamicData['default_photo']),
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -121,7 +122,7 @@ class AboutUs extends PsObject<AboutUs> {
       data['default_photo'] = DefaultPhoto().toMap(object.defaultPhoto);
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

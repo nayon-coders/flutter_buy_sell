@@ -1,41 +1,27 @@
 import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 
 class DefaultIcon extends PsObject<DefaultIcon> {
-  DefaultIcon(
-      {this.imgId,
-      this.imgParentId,
-      this.imgType,
-      this.imgPath,
-      this.imgWidth,
-      this.imgHeight,
-      this.imgDesc});
+  DefaultIcon({this.imgId, this.imgParentId, this.imgType, this.imgPath, this.imgWidth, this.imgHeight, this.imgDesc});
 
-  String imgId;
-  String imgParentId;
-  String imgType;
-  String imgPath;
-  String imgWidth;
-  String imgHeight;
-  String imgDesc;
+  String? imgId;
+  String? imgParentId;
+  String? imgType;
+  String? imgPath;
+  String? imgWidth;
+  String? imgHeight;
+  String? imgDesc;
 
   @override
   String getPrimaryKey() {
-    return imgId;
+    return imgId!;
   }
 
   @override
   DefaultIcon fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return DefaultIcon(
-          imgId: dynamicData['img_id'],
-          imgParentId: dynamicData['img_parent_id'],
-          imgType: dynamicData['img_type'],
-          imgPath: dynamicData['img_path'],
-          imgWidth: dynamicData['img_width'],
-          imgHeight: dynamicData['img_height'],
-          imgDesc: dynamicData['img_desc']);
+      return DefaultIcon(imgId: dynamicData['img_id'], imgParentId: dynamicData['img_parent_id'], imgType: dynamicData['img_type'], imgPath: dynamicData['img_path'], imgWidth: dynamicData['img_width'], imgHeight: dynamicData['img_height'], imgDesc: dynamicData['img_desc']);
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -52,7 +38,7 @@ class DefaultIcon extends PsObject<DefaultIcon> {
       data['img_desc'] = object.imgDesc;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

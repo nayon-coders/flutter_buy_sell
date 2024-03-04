@@ -1,13 +1,15 @@
+// ignore_for_file: null_check_always_fails
+
 import 'package:quiver/core.dart';
 import 'common/ps_object.dart';
 
 class ItemType extends PsObject<ItemType> {
   ItemType({this.id, this.name, this.status, this.addedDate});
 
-  String id;
-  String name;
-  String status;
-  String addedDate;
+  String? id;
+  String? name;
+  String? status;
+  String? addedDate;
 
   @override
   bool operator ==(dynamic other) => other is ItemType && id == other.id;
@@ -17,7 +19,7 @@ class ItemType extends PsObject<ItemType> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
@@ -30,7 +32,7 @@ class ItemType extends PsObject<ItemType> {
         addedDate: dynamicData['added_date'],
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -44,7 +46,7 @@ class ItemType extends PsObject<ItemType> {
       data['added_date'] = object.addedDate;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

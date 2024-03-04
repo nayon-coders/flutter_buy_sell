@@ -6,7 +6,7 @@ class ItemListIntentHolder {
     @required this.status,
     @required this.title,
   });
-  final String userId;
-  final String status;
-  final String title;
+  final String? userId;
+  final String? status;
+  final String? title;
 }

@@ -2,7 +2,7 @@ import 'package:quiver/core.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_map_object.dart';
 
 class OfferMap extends PsMapObject<OfferMap> {
-  OfferMap({ this.id,  this.mapKey,  this.offerId,   int? sorting,  this.addedDate}) {
+  OfferMap({this.id, this.mapKey, this.offerId, int? sorting, this.addedDate}) {
     super.sorting = sorting!;
   }
 
@@ -24,12 +24,7 @@ class OfferMap extends PsMapObject<OfferMap> {
 
   @override
   OfferMap fromMap(dynamic dynamicData) {
-    return OfferMap(
-        id: dynamicData['id'],
-        mapKey: dynamicData['map_key'],
-        offerId: dynamicData['offer_id'],
-        sorting: dynamicData['sorting'],
-        addedDate: dynamicData['added_date']);
+    return OfferMap(id: dynamicData['id'], mapKey: dynamicData['map_key'], offerId: dynamicData['offer_id'], sorting: dynamicData['sorting'], addedDate: dynamicData['added_date']);
   }
 
   @override
@@ -44,7 +39,7 @@ class OfferMap extends PsMapObject<OfferMap> {
 
       return data;
     } else {
-      return {};
+      return null!;
     }
   }
 

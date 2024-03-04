@@ -1,17 +1,12 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
-class NotiRegisterParameterHolder
-    extends PsHolder<NotiRegisterParameterHolder> {
-  NotiRegisterParameterHolder(
-      {@required this.platformName,
-      @required this.deviceId,
-      @required this.loginUserId});
+class NotiRegisterParameterHolder extends PsHolder<NotiRegisterParameterHolder> {
+  NotiRegisterParameterHolder({@required this.platformName, @required this.deviceId, @required this.loginUserId});
 
-  final String platformName;
-  final String deviceId;
-  final String loginUserId;
+  final String? platformName;
+  final String? deviceId;
+  final String? loginUserId;
 
   @override
   Map<String, dynamic> toMap() {
@@ -38,13 +33,13 @@ class NotiRegisterParameterHolder
     String key = '';
 
     if (platformName != '') {
-      key += platformName;
+      key += platformName!;
     }
     if (deviceId != '') {
-      key += deviceId;
+      key += deviceId!;
     }
     if (loginUserId != '') {
-      key += loginUserId;
+      key += loginUserId!;
     }
     return key;
   }

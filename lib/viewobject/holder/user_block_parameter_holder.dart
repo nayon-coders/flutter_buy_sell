@@ -1,17 +1,15 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
-class UserBlockParameterHolder
-    extends PsHolder<UserBlockParameterHolder> {
+class UserBlockParameterHolder extends PsHolder<UserBlockParameterHolder> {
   UserBlockParameterHolder({
     @required this.loginUserId,
     @required this.addedUserId,
   });
 
-  final String loginUserId;
-  final String addedUserId;
-  
+  final String? loginUserId;
+  final String? addedUserId;
+
   @override
   Map<String, dynamic> toMap() {
     final Map<String, dynamic> map = <String, dynamic>{};
@@ -33,10 +31,10 @@ class UserBlockParameterHolder
     String key = '';
 
     if (loginUserId != '') {
-      key += loginUserId;
+      key += loginUserId!;
     }
     if (addedUserId != '') {
-      key += addedUserId;
+      key += addedUserId!;
     }
 
     return key;

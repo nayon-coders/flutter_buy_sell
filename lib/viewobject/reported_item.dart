@@ -4,11 +4,12 @@ import 'common/ps_object.dart';
 
 class ReportedItem extends PsObject<ReportedItem> {
   ReportedItem({
-     this.id,
-     this.title,
-     this.status,
-     this.addedDate,
-     this.defaultPhoto,});
+    this.id,
+    this.title,
+    this.status,
+    this.addedDate,
+    this.defaultPhoto,
+  });
 
   String? id;
   String? title;
@@ -24,7 +25,7 @@ class ReportedItem extends PsObject<ReportedItem> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
@@ -38,7 +39,7 @@ class ReportedItem extends PsObject<ReportedItem> {
         defaultPhoto: DefaultPhoto().fromMap(dynamicData['default_photo']),
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -53,7 +54,7 @@ class ReportedItem extends PsObject<ReportedItem> {
       data['default_photo'] = DefaultPhoto().toMap(object.defaultPhoto);
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

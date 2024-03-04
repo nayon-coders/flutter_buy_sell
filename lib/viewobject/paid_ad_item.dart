@@ -1,27 +1,29 @@
+// ignore_for_file: null_check_always_fails
+
 import 'package:flutterbuyandsell/viewobject/product.dart';
 import 'package:quiver/core.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 
 class PaidAdItem extends PsObject<PaidAdItem> {
   PaidAdItem({
-     this.id,
-     this.itemId,
-     this.startDate,
-     this.startTimeStamp,
-     this.endDate,
-     this.endTimeStamp,
-     this.amount,
-     this.paymentMethod,
-     this.transCode,
-     this.status,
-     this.addedDate,
-     this.addedUserId,
-     this.updatedDate,
-     this.updatedUserId,
-     this.updatedFlag,
-     this.addedDateStr,
-     this.paidStatus,
-     this.item,
+    this.id,
+    this.itemId,
+    this.startDate,
+    this.startTimeStamp,
+    this.endDate,
+    this.endTimeStamp,
+    this.amount,
+    this.paymentMethod,
+    this.transCode,
+    this.status,
+    this.addedDate,
+    this.addedUserId,
+    this.updatedDate,
+    this.updatedUserId,
+    this.updatedFlag,
+    this.addedDateStr,
+    this.paidStatus,
+    this.item,
   });
 
   String? id;
@@ -101,7 +103,7 @@ class PaidAdItem extends PsObject<PaidAdItem> {
       data['item'] = Product().toMap(object.item);
       return data;
     } else {
-      return {};
+      return null!;
     }
   }
 

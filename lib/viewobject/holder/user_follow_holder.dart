@@ -1,5 +1,4 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
 class UserFollowHolder extends PsHolder<UserFollowHolder> {
@@ -8,8 +7,8 @@ class UserFollowHolder extends PsHolder<UserFollowHolder> {
     @required this.followedUserId,
   });
 
-  final String userId;
-  final String followedUserId;
+  final String? userId;
+  final String? followedUserId;
 
   @override
   Map<String, dynamic> toMap() {
@@ -32,10 +31,10 @@ class UserFollowHolder extends PsHolder<UserFollowHolder> {
     String key = '';
 
     if (followedUserId != '') {
-      key += followedUserId;
+      key += followedUserId!;
     }
     if (userId != '') {
-      key += userId;
+      key += userId!;
     }
 
     return key;

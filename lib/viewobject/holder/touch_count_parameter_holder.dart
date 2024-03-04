@@ -1,12 +1,11 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
 class TouchCountParameterHolder extends PsHolder<TouchCountParameterHolder> {
   TouchCountParameterHolder({@required this.itemId, @required this.userId});
 
-  final String itemId;
-  final String userId;
+  final String? itemId;
+  final String? userId;
 
   @override
   Map<String, dynamic> toMap() {
@@ -31,11 +30,11 @@ class TouchCountParameterHolder extends PsHolder<TouchCountParameterHolder> {
     String key = '';
 
     if (itemId != '') {
-      key += itemId;
+      key += itemId!;
     }
 
     if (userId != '') {
-      key += userId;
+      key += userId!;
     }
     return key;
   }

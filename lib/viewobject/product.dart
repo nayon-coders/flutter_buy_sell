@@ -14,53 +14,7 @@ import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 import 'default_photo.dart';
 
 class Product extends PsObject<Product> {
-  Product(
-      { this.id,
-       this.catId,
-       this.subCatId,
-       this.itemTypeId,
-       this.itemPriceTypeId,
-       this.itemCurrencyId,
-       this.itemLocationId,
-       this.conditionOfItemId,
-       this.dealOptionRemark,
-         this.description,
-       this.highlightInformation,
-       this.price,
-       this.dealOptionId,
-       this.brand,
-       this.businessMode,
-       this.isSoldOut,
-       this.title,
-       this.address,
-       this.lat,
-       this.lng,
-       this.status,
-       this.addedDate,
-       this.addedUserId,
-       this.updatedDate,
-       this.updatedUserId,
-       this.updatedFlag,
-       this.touchCount,
-       this.favouriteCount,
-       this.isPaid,
-       this.dynamicLink,
-       this.addedDateStr,
-       this.paidStatus,
-       this.photoCount,
-       this.defaultPhoto,
-       this.category,
-       this.subCategory,
-       this.itemType,
-       this.itemPriceType,
-       this.itemCurrency,
-       this.itemLocation,
-       this.conditionOfItem,
-       this.dealOption,
-       this.user,
-       this.ratingDetail,
-       this.isFavourited,
-       this.isOwner});
+  Product({this.id, this.catId, this.subCatId, this.itemTypeId, this.itemPriceTypeId, this.itemCurrencyId, this.itemLocationId, this.conditionOfItemId, this.dealOptionRemark, this.description, this.highlightInformation, this.price, this.dealOptionId, this.brand, this.businessMode, this.isSoldOut, this.title, this.address, this.lat, this.lng, this.status, this.addedDate, this.addedUserId, this.updatedDate, this.updatedUserId, this.updatedFlag, this.touchCount, this.favouriteCount, this.isPaid, this.dynamicLink, this.addedDateStr, this.paidStatus, this.photoCount, this.defaultPhoto, this.category, this.subCategory, this.itemType, this.itemPriceType, this.itemCurrency, this.itemLocation, this.conditionOfItem, this.dealOption, this.user, this.ratingDetail, this.isFavourited, this.isOwner});
 
   String? id;
   String? catId;
@@ -116,7 +70,7 @@ class Product extends PsObject<Product> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
@@ -152,7 +106,7 @@ class Product extends PsObject<Product> {
         touchCount: dynamicData['touch_count'],
         favouriteCount: dynamicData['favourite_count'],
         isPaid: dynamicData['is_paid'],
-        dynamicLink : dynamicData['dynamic_link'],
+        dynamicLink: dynamicData['dynamic_link'],
         addedDateStr: dynamicData['added_date_str'],
         paidStatus: dynamicData['paid_status'],
         photoCount: dynamicData['photo_count'],
@@ -165,14 +119,13 @@ class Product extends PsObject<Product> {
         itemPriceType: ItemPriceType().fromMap(dynamicData['item_price_type']),
         itemCurrency: ItemCurrency().fromMap(dynamicData['item_currency']),
         itemLocation: ItemLocation().fromMap(dynamicData['item_location']),
-        conditionOfItem:
-            ConditionOfItem().fromMap(dynamicData['condition_of_item']),
+        conditionOfItem: ConditionOfItem().fromMap(dynamicData['condition_of_item']),
         dealOption: DealOption().fromMap(dynamicData['deal_option']),
         user: User().fromMap(dynamicData['user']),
         ratingDetail: RatingDetail().fromMap(dynamicData['rating_details']),
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -222,14 +175,13 @@ class Product extends PsObject<Product> {
       data['item_price_type'] = ItemPriceType().toMap(object.itemPriceType);
       data['item_currency'] = ItemCurrency().toMap(object.itemCurrency);
       data['item_location'] = ItemLocation().toMap(object.itemLocation);
-      data['condition_of_item'] =
-          ConditionOfItem().toMap(object.conditionOfItem);
+      data['condition_of_item'] = ConditionOfItem().toMap(object.conditionOfItem);
       data['deal_option'] = DealOption().toMap(object.dealOption);
       data['user'] = User().toMap(object.user);
       data['rating_details'] = RatingDetail().toMap(object.ratingDetail);
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -266,7 +218,7 @@ class Product extends PsObject<Product> {
     for (int i = 0; i < dataList.length; i++) {
       if (idCache[dataList[i].id] == null) {
         _tmpList.add(dataList[i]);
-        idCache[dataList[i].id] = dataList[i].id;
+        idCache[dataList[i].id!] = dataList[i].id!;
       } else {
         Utils.psPrint('Duplicate');
       }

@@ -2,10 +2,10 @@ import 'package:quiver/core.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_map_object.dart';
 
 class FollowerItem extends PsMapObject<FollowerItem> {
-  FollowerItem({this.id, int sorting}) {
-    super.sorting = sorting;
+  FollowerItem({this.id, int? sorting}) {
+    super.sorting = sorting!;
   }
-  String id;
+  String? id;
 
   @override
   bool operator ==(dynamic other) => other is FollowerItem && id == other.id;
@@ -15,16 +15,15 @@ class FollowerItem extends PsMapObject<FollowerItem> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   FollowerItem fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return FollowerItem(
-          id: dynamicData['id'], sorting: dynamicData['sorting']);
+      return FollowerItem(id: dynamicData['id'], sorting: dynamicData['sorting']);
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -36,7 +35,7 @@ class FollowerItem extends PsMapObject<FollowerItem> {
       data['sorting'] = object.sorting;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

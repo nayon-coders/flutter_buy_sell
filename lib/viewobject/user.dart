@@ -3,46 +3,7 @@ import 'package:flutterbuyandsell/viewobject/rating_detail.dart';
 import 'package:quiver/core.dart';
 
 class User extends PsObject<User> {
-  User(
-      {  this.userId,
-       this.userIsSysAdmin,
-       this.facebookId,
-       this.googleId,
-       this.phoneId,
-       this.userName,
-       this.userEmail,
-       this.userPhone,
-       this.userAddress,
-       this.userLat,
-       this.userLng,
-       this.city,
-       this.userPassword,
-       this.userAboutMe,
-       this.isShowEmail,
-       this.isShowPhone,
-       this.userCoverPhoto,
-       this.userProfilePhoto,
-       this.roleId,
-       this.status,
-       this.isBanned,
-       this.addedDate,
-       this.addedDateTimeStamp,
-       this.deviceToken,
-       this.code,
-       this.overallRating,
-       this.whatsapp,
-       this.messenger,
-       this.followerCount,
-       this.followingCount,
-       this.emailVerify,
-       this.facebookVerify,
-       this.googleVerify,
-       this.phoneVerify,
-       this.ratingCount,
-       this.isFollowed,
-       this.ratingDetail,
-       this.isFavourited,
-       this.isOwner});
+  User({this.userId, this.userIsSysAdmin, this.facebookId, this.googleId, this.phoneId, this.userName, this.userEmail, this.userPhone, this.userAddress, this.userLat, this.userLng, this.city, this.userPassword, this.userAboutMe, this.isShowEmail, this.isShowPhone, this.userCoverPhoto, this.userProfilePhoto, this.roleId, this.status, this.isBanned, this.addedDate, this.addedDateTimeStamp, this.deviceToken, this.code, this.overallRating, this.whatsapp, this.messenger, this.followerCount, this.followingCount, this.emailVerify, this.facebookVerify, this.googleVerify, this.phoneVerify, this.ratingCount, this.isFollowed, this.ratingDetail, this.isFavourited, this.isOwner});
   String? userId;
   String? userIsSysAdmin;
   String? facebookId;
@@ -93,7 +54,7 @@ class User extends PsObject<User> {
 
   @override
   String getPrimaryKey() {
-    return userId;
+    return userId!;
   }
 
   @override
@@ -142,7 +103,7 @@ class User extends PsObject<User> {
         // city: ShippingCity().fromMap(dynamicData['city'])
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -191,7 +152,7 @@ class User extends PsObject<User> {
       data['is_owner'] = object.isOwner;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 
