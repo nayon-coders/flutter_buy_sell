@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 
 class TokenProvider extends PsProvider {
   TokenProvider(
-      {@required TokenRepository repo,
+      {required TokenRepository repo,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;

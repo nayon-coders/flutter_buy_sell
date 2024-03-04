@@ -8,7 +8,7 @@ import 'package:flutterbuyandsell/api/ps_api_service.dart';
 import 'package:flutterbuyandsell/repository/Common/ps_repository.dart';
 
 class NotificationRepository extends PsRepository {
-  NotificationRepository({@required PsApiService psApiService}) {
+  NotificationRepository({required PsApiService psApiService}) {
     _psApiService = psApiService;
   }
 

@@ -10,8 +10,8 @@ import 'package:flutterbuyandsell/viewobject/product.dart';
 
 class ItemListFromFollowersProvider extends PsProvider {
   ItemListFromFollowersProvider(
-      {@required ProductRepository repo,
-      @required this.psValueHolder,
+      {required ProductRepository repo,
+      required this.psValueHolder,
       int limit = 0})
       : super(repo,limit) {
     if (limit != 0) {
@@ -28,9 +28,9 @@ class ItemListFromFollowersProvider extends PsProvider {
         StreamController<PsResource<List<Product>>>.broadcast();
     subscription = itemListFromFollowersStream.stream
         .listen((PsResource<List<Product>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
-      print('**** ItemListFromFollowersProvider ${resource.data.length}');
+      print('**** ItemListFromFollowersProvider ${resource.data!.length}');
       _itemListFromFollowersList = resource;
 
       if (resource.status != PsStatus.BLOCK_LOADING &&

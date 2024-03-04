@@ -10,7 +10,7 @@ import 'package:flutterbuyandsell/viewobject/holder/product_parameter_holder.dar
 import 'package:flutterbuyandsell/viewobject/product.dart';
 
 class PopularProductProvider extends PsProvider {
-  PopularProductProvider({@required ProductRepository repo, int limit = 0})
+  PopularProductProvider({required ProductRepository repo, int limit = 0})
       : super(repo, limit) {
     if (limit != 0) {
       super.limit = limit;
@@ -24,11 +24,11 @@ class PopularProductProvider extends PsProvider {
     productListStream = StreamController<PsResource<List<Product>>>.broadcast();
     subscription =
         productListStream.stream.listen((PsResource<List<Product>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
-      print('**** PopularProductProvider ${resource.data.length}');
+      print('**** PopularProductProvider ${resource.data!.length}');
       _productList = resource;
-      _productList.data = Product().checkDuplicate(resource.data);
+      _productList.data = Product().checkDuplicate(resource.data!);
 
       if (resource.status != PsStatus.BLOCK_LOADING &&
           resource.status != PsStatus.PROGRESS_LOADING) {

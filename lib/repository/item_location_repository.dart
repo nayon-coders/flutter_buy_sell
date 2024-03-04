@@ -11,8 +11,8 @@ import 'Common/ps_repository.dart';
 
 class ItemLocationRepository extends PsRepository {
   ItemLocationRepository(
-      {@required PsApiService psApiService,
-      @required ItemLocationDao itemLocationDao}) {
+      {required PsApiService psApiService,
+      required ItemLocationDao itemLocationDao}) {
     _psApiService = psApiService;
     _itemLocationDao = itemLocationDao;
   }
@@ -51,7 +51,7 @@ class ItemLocationRepository extends PsRepository {
 
       if (_resource.status == PsStatus.SUCCESS) {
         await _itemLocationDao.deleteAll();
-        await _itemLocationDao.insertAll(primaryKey, _resource.data);
+        await _itemLocationDao.insertAll(primaryKey, _resource.data!);
         itemLocationListStream.sink.add(await _itemLocationDao.getAll());
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
@@ -59,7 +59,7 @@ class ItemLocationRepository extends PsRepository {
         }
       }
       itemLocationListStream.sink.add(await _itemLocationDao.getAll(
-            status: _resource.status, message: _resource.message));
+            status: _resource.status, message: _resource.message!));
     }
   }
 
@@ -80,7 +80,7 @@ class ItemLocationRepository extends PsRepository {
           await _psApiService.getItemLocationList(jsonMap, loginUserId,limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _itemLocationDao.insertAll(primaryKey, _resource.data);
+        await _itemLocationDao.insertAll(primaryKey, _resource.data!);
       }
       itemLocationListStream.sink.add(await _itemLocationDao.getAll());
     }

@@ -8,7 +8,7 @@ import 'package:flutterbuyandsell/api/common/ps_status.dart';
 import 'package:flutterbuyandsell/provider/common/ps_provider.dart';
 
 class RatingListProvider extends PsProvider {
-  RatingListProvider({@required RatingRepository repo, int limit = 0}) : super(repo, limit) {
+  RatingListProvider({required RatingRepository repo, int limit = 0}) : super(repo, limit) {
     _repo = repo;
     print('Rating Provider: $hashCode');
 
@@ -19,7 +19,7 @@ class RatingListProvider extends PsProvider {
     ratingListStream = StreamController<PsResource<List<Rating>>>.broadcast();
     subscription =
         ratingListStream.stream.listen((PsResource<List<Rating>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _ratingList = resource;
 

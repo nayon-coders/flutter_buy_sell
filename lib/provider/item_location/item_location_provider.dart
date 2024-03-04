@@ -11,8 +11,8 @@ import 'package:flutterbuyandsell/viewobject/item_location.dart';
 
 class ItemLocationProvider extends PsProvider {
   ItemLocationProvider(
-      {@required ItemLocationRepository repo,
-      @required this.psValueHolder,
+      {required ItemLocationRepository repo,
+      required this.psValueHolder,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;
@@ -26,9 +26,9 @@ class ItemLocationProvider extends PsProvider {
         StreamController<PsResource<List<ItemLocation>>>.broadcast();
     subscription = itemLocationListStream.stream
         .listen((PsResource<List<ItemLocation>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
-      if (ItemLocation().isListEqual(_itemLocationList.data, resource.data)) {
+      if (ItemLocation().isListEqual(_itemLocationList.data!, resource.data!)) {
         _itemLocationList.status = resource.status;
         _itemLocationList.message = resource.message;
       } else {

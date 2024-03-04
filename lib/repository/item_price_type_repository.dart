@@ -10,8 +10,8 @@ import 'package:flutterbuyandsell/viewobject/item_price_type.dart';
 
 class ItemPriceTypeRepository extends PsRepository {
   ItemPriceTypeRepository(
-      {@required PsApiService psApiService,
-      @required ItemPriceTypeDao itemPriceTypeDao}) {
+      {required PsApiService psApiService,
+      required ItemPriceTypeDao itemPriceTypeDao}) {
     _psApiService = psApiService;
     _itemPriceTypeDao = itemPriceTypeDao;
   }
@@ -47,7 +47,7 @@ class ItemPriceTypeRepository extends PsRepository {
 
     if (_resource.status == PsStatus.SUCCESS) {
       await _itemPriceTypeDao.deleteAll();
-      await _itemPriceTypeDao.insertAll(_primaryKey, _resource.data);
+      await _itemPriceTypeDao.insertAll(_primaryKey, _resource.data!);
       
     }else{
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
@@ -72,7 +72,7 @@ class ItemPriceTypeRepository extends PsRepository {
 
     if (_resource.status == PsStatus.SUCCESS) {
       _itemPriceTypeDao
-          .insertAll(_primaryKey, _resource.data)
+          .insertAll(_primaryKey, _resource.data!)
           .then((dynamic data) async {
         itemConditionListStream.sink.add(await _itemPriceTypeDao.getAll());
       });

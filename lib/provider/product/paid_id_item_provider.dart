@@ -10,7 +10,7 @@ import 'package:flutter/cupertino.dart';
 
 class PaidAdItemProvider extends PsProvider {
   PaidAdItemProvider(
-      {@required PaidAdItemRepository repo, @required this.psValueHolder, int limit = 0})
+      {required PaidAdItemRepository repo, required this.psValueHolder, int limit = 0})
       : super(repo,limit) {
     _repo = repo;
 
@@ -24,7 +24,7 @@ class PaidAdItemProvider extends PsProvider {
         StreamController<PsResource<List<PaidAdItem>>>.broadcast();
     subscription = paidAdItemListStream.stream
         .listen((PsResource<List<PaidAdItem>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _paidAdItemList = resource;
 

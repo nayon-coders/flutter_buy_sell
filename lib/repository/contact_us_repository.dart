@@ -9,7 +9,7 @@ import 'Common/ps_repository.dart';
 
 class ContactUsRepository extends PsRepository {
   ContactUsRepository({
-    @required PsApiService psApiService,
+    required PsApiService psApiService,
   }) {
     _psApiService = psApiService;
   }

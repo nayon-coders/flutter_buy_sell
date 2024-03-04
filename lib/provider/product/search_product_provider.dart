@@ -13,7 +13,7 @@ import 'package:flutterbuyandsell/viewobject/product.dart';
 
 class SearchProductProvider extends PsProvider {
   SearchProductProvider(
-      {@required ProductRepository repo, this.psValueHolder, int limit = 0})
+      {required ProductRepository repo, this.psValueHolder, int limit = 0})
       : super(repo, limit) {
     _repo = repo;
     print('SearchProductProvider : $hashCode');
@@ -24,15 +24,15 @@ class SearchProductProvider extends PsProvider {
     productListStream = StreamController<PsResource<List<Product>>>.broadcast();
     subscription =
         productListStream.stream.listen((PsResource<List<Product>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       // _productList = resource;
 
       // if (!Product().isSame(_productList.data, resource.data)) {
       //   print('**** ${resource.data.hashCode}');
-      print('**** SearchProductProvider ${resource.data.length}');
+      print('**** SearchProductProvider ${resource.data!.length}');
       _productList = resource;
-      _productList.data = Product().checkDuplicate(resource.data);
+      _productList.data = Product().checkDuplicate(resource.data!);
       // } else {
       //   _productList.status = PsStatus.SUCCESS;
       // }
@@ -48,7 +48,7 @@ class SearchProductProvider extends PsProvider {
     });
   }
   ProductRepository _repo;
-  PsValueHolder psValueHolder;
+  PsValueHolder? psValueHolder;
   PsResource<List<Product>> _productList =
       PsResource<List<Product>>(PsStatus.NOACTION, '', <Product>[]);
 

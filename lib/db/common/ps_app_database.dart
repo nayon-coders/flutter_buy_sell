@@ -10,16 +10,15 @@ import 'package:flutterbuyandsell/config/ps_config.dart';
 class PsAppDatabase {
   // A private constructor. Allows us to create instances of AppDatabase
   // only from within the AppDatabase class itself.
-  PsAppDatabase._();
 
   // Singleton instance
-  static final PsAppDatabase _singleton = PsAppDatabase._();
+  static final PsAppDatabase _singleton = PsAppDatabase();
 
   // Singleton accessor
   static PsAppDatabase get instance => _singleton;
 
   // Completer is used for transforming synchronous code into asynchronous code.
-  Completer<Database> _dbOpenCompleter;
+  Completer<Database>? _dbOpenCompleter;
 
   // Database object accessor
   Future<Database> get database async {
@@ -32,7 +31,7 @@ class PsAppDatabase {
     // If the database is already opened, awaiting the future will happen instantly.
     // Otherwise, awaiting the returned future will take some time - until complete() is called
     // on the Completer in _openDatabase() below.
-    return _dbOpenCompleter.future;
+    return _dbOpenCompleter!.future;
   }
 
   Future<dynamic> _openDatabase() async {
@@ -44,6 +43,6 @@ class PsAppDatabase {
 
     final Database database = await databaseFactoryIo.openDatabase(dbPath);
     // Any code awaiting the Completer's future will now start executing
-    _dbOpenCompleter.complete(database);
+    _dbOpenCompleter!.complete(database);
   }
 }

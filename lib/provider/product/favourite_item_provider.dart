@@ -11,8 +11,8 @@ import 'package:flutter/cupertino.dart';
 
 class FavouriteItemProvider extends PsProvider {
   FavouriteItemProvider(
-      {@required ProductRepository repo,
-      @required this.psValueHolder,
+      {required ProductRepository repo,
+      required this.psValueHolder,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;
@@ -27,10 +27,10 @@ class FavouriteItemProvider extends PsProvider {
         StreamController<PsResource<List<Product>>>.broadcast();
     subscription =
         favouriteListStream.stream.listen((PsResource<List<Product>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _favouriteItemList = resource;
-      _favouriteItemList.data = Product().checkDuplicate(resource.data);
+      _favouriteItemList.data = Product().checkDuplicate(resource.data!);
 
       if (resource.status != PsStatus.BLOCK_LOADING &&
           resource.status != PsStatus.PROGRESS_LOADING) {

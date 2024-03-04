@@ -21,7 +21,7 @@ class OfferMapDao extends PsDao<OfferMap> {
   }
 
   @override
-  String getPrimaryKey(OfferMap object) {
+  String? getPrimaryKey(OfferMap object) {
     return object.id;
   }
 

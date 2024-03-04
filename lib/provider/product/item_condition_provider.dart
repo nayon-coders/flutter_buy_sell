@@ -9,7 +9,7 @@ import 'package:flutterbuyandsell/provider/common/ps_provider.dart';
 import 'package:flutterbuyandsell/viewobject/condition_of_item.dart';
 
 class ItemConditionProvider extends PsProvider {
-  ItemConditionProvider({@required ItemConditionRepository repo, int limit = 0})
+  ItemConditionProvider({required ItemConditionRepository repo, int limit = 0})
       : super(repo,limit) {
     _repo = repo;
     print('Item Condition Provider: $hashCode');

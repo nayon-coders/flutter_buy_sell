@@ -21,7 +21,7 @@ class BlogDao extends PsDao<Blog> {
   }
 
   @override
-  String getPrimaryKey(Blog object) {
+  String? getPrimaryKey(Blog object) {
     return object.id;
   }
 

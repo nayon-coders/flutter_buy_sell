@@ -9,7 +9,7 @@ import 'package:flutterbuyandsell/provider/common/ps_provider.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_value_holder.dart';
 
 class BlockedUserProvider extends PsProvider {
-  BlockedUserProvider({@required BlockedUserRepository repo, this.valueHolder,int limit = 0}) : super(repo,limit) {
+  BlockedUserProvider({required BlockedUserRepository repo, this.valueHolder,int limit = 0}) : super(repo,limit) {
     if (limit != 0) {
       super.limit = limit;
     }
@@ -23,7 +23,7 @@ class BlockedUserProvider extends PsProvider {
     blockedUserListStream = StreamController<PsResource<List<BlockedUser>>>.broadcast();
     subscription =
         blockedUserListStream.stream.listen((PsResource<List<BlockedUser>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _blockedUserList = resource;
 
@@ -39,7 +39,7 @@ class BlockedUserProvider extends PsProvider {
   }
 
   BlockedUserRepository _repo;
-  PsValueHolder valueHolder;
+  PsValueHolder? valueHolder;
 
   PsResource<List<BlockedUser>> _blockedUserList =
       PsResource<List<BlockedUser>>(PsStatus.NOACTION, '', <BlockedUser>[]);

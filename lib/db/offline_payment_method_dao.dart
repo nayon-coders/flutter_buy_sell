@@ -21,7 +21,7 @@ class OfflinePaymentMethodDao extends PsDao<OfflinePaymentMethod> {
   }
 
   @override
-  String getPrimaryKey(OfflinePaymentMethod object) {
+  String? getPrimaryKey(OfflinePaymentMethod object) {
     return object.id;
   }
 

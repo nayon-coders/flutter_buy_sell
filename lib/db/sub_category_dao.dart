@@ -11,7 +11,7 @@ class SubCategoryDao extends PsDao<SubCategory> {
   final String _primaryKey = 'id';
 
   @override
-  String getPrimaryKey(SubCategory object) {
+  String? getPrimaryKey(SubCategory object) {
     return object.id;
   }
 

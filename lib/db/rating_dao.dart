@@ -21,7 +21,7 @@ class RatingDao extends PsDao<Rating> {
   }
 
   @override
-  String getPrimaryKey(Rating object) {
+  String? getPrimaryKey(Rating object) {
     return object.id;
   }
 

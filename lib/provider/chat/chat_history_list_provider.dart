@@ -24,7 +24,7 @@ class ChatHistoryListProvider extends PsProvider {
 
     subscription = chatHistoryListStream.stream
         .listen((PsResource<List<ChatHistory>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _chatHistoryList = resource;
 

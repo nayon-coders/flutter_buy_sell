@@ -10,8 +10,8 @@ import 'package:flutterbuyandsell/viewobject/item_currency.dart';
 
 class ItemCurrencyRepository extends PsRepository {
   ItemCurrencyRepository(
-      {@required PsApiService psApiService,
-      @required ItemCurrencyDao itemCurrencyDao}) {
+      {required PsApiService psApiService,
+      required ItemCurrencyDao itemCurrencyDao}) {
     _psApiService = psApiService;
     _itemConditionDao = itemCurrencyDao;
   }
@@ -48,7 +48,7 @@ class ItemCurrencyRepository extends PsRepository {
 
     if (_resource.status == PsStatus.SUCCESS) {
       await _itemConditionDao.deleteAll();
-      await _itemConditionDao.insertAll(_primaryKey, _resource.data);
+      await _itemConditionDao.insertAll(_primaryKey, _resource.data!);
       
     }else{
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
@@ -73,7 +73,7 @@ class ItemCurrencyRepository extends PsRepository {
 
     if (_resource.status == PsStatus.SUCCESS) {
       _itemConditionDao
-          .insertAll(_primaryKey, _resource.data)
+          .insertAll(_primaryKey, _resource.data!)
           .then((dynamic data) async {
         itemConditionListStream.sink.add(await _itemConditionDao.getAll());
       });

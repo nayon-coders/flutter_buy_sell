@@ -29,76 +29,76 @@ class PsSharedPreferences {
   Stream<PsValueHolder> get psValueHolder => _valueController.stream;
 
   void loadValueHolder() {
-    final String _loginUserId = shared.getString(PsConst.VALUE_HOLDER__USER_ID);
+    final String? _loginUserId = shared.getString(PsConst.VALUE_HOLDER__USER_ID);
   
-    final String _loginUserName =
+    final String? _loginUserName =
         shared.getString(PsConst.VALUE_HOLDER__USER_NAME);
-    final String _userIdToVerify =
+    final String? _userIdToVerify =
         shared.getString(PsConst.VALUE_HOLDER__USER_ID_TO_VERIFY);
-    final String _userNameToVerify =
+    final String? _userNameToVerify =
         shared.getString(PsConst.VALUE_HOLDER__USER_NAME_TO_VERIFY);
-    final String _userEmailToVerify =
+    final String? _userEmailToVerify =
         shared.getString(PsConst.VALUE_HOLDER__USER_EMAIL_TO_VERIFY);
-    final String _userPasswordToVerify =
+    final String? _userPasswordToVerify =
         shared.getString(PsConst.VALUE_HOLDER__USER_PASSWORD_TO_VERIFY);
-    final String _notiToken =
+    final String? _notiToken =
         shared.getString(PsConst.VALUE_HOLDER__NOTI_TOKEN);
-    final bool _notiSetting =
+    final bool? _notiSetting =
         shared.getBool(PsConst.VALUE_HOLDER__NOTI_SETTING);
     final bool _cameraSetting =
         shared.getBool(PsConst.VALUE_HOLDER__CAMERA_SETTING) ?? false;
     final bool _isToShowIntroSlider = shared.getBool(PsConst.VALUE_HOLDER__SHOW_INTRO_SLIDER) ?? true;
-    final String _overAllTaxLabel =
+    final String? _overAllTaxLabel =
         shared.getString(PsConst.VALUE_HOLDER__OVERALL_TAX_LABEL);
-    final String _overAllTaxValue =
+    final String? _overAllTaxValue =
         shared.getString(PsConst.VALUE_HOLDER__OVERALL_TAX_VALUE);
-    final String _shippingTaxLabel =
+    final String? _shippingTaxLabel =
         shared.getString(PsConst.VALUE_HOLDER__SHIPPING_TAX_LABEL);
-    final String _shippingTaxValue =
+    final String? _shippingTaxValue =
         shared.getString(PsConst.VALUE_HOLDER__SHIPPING_TAX_VALUE);
-    final String _shippingId =
+    final String? _shippingId =
         shared.getString(PsConst.VALUE_HOLDER__SHIPPING_ID);
-    final String _shopId = shared.getString(PsConst.VALUE_HOLDER__SHOP_ID);
-    final String _messenger = shared.getString(PsConst.VALUE_HOLDER__MESSENGER);
-    final String _whatsApp = shared.getString(PsConst.VALUE_HOLDER__WHATSAPP);
-    final String _phone = shared.getString(PsConst.VALUE_HOLDER__PHONE);
-    final String _appInfoVersionNo =
+    final String? _shopId = shared.getString(PsConst.VALUE_HOLDER__SHOP_ID);
+    final String? _messenger = shared.getString(PsConst.VALUE_HOLDER__MESSENGER);
+    final String? _whatsApp = shared.getString(PsConst.VALUE_HOLDER__WHATSAPP);
+    final String? _phone = shared.getString(PsConst.VALUE_HOLDER__PHONE);
+    final String? _appInfoVersionNo =
         shared.getString(PsConst.APPINFO_PREF_VERSION_NO);
-    final bool _appInfoForceUpdate =
+    final bool? _appInfoForceUpdate =
         shared.getBool(PsConst.APPINFO_PREF_FORCE_UPDATE);
-    final String _appInfoForceUpdateTitle =
+    final String? _appInfoForceUpdateTitle =
         shared.getString(PsConst.APPINFO_FORCE_UPDATE_TITLE);
-    final String _appInfoForceUpdateMsg =
+    final String? _appInfoForceUpdateMsg =
         shared.getString(PsConst.APPINFO_FORCE_UPDATE_MSG);
-    final String _startDate =
+    final String? _startDate =
         shared.getString(PsConst.VALUE_HOLDER__START_DATE);
-    final String _endDate = shared.getString(PsConst.VALUE_HOLDER__END_DATE);
+    final String? _endDate = shared.getString(PsConst.VALUE_HOLDER__END_DATE);
 
-    final String _paypalEnabled =
+    final String? _paypalEnabled =
         shared.getString(PsConst.VALUE_HOLDER__PAYPAL_ENABLED);
-    final String _stripeEnabled =
+    final String? _stripeEnabled =
         shared.getString(PsConst.VALUE_HOLDER__STRIPE_ENABLED);
-    final String _codEnabled =
+    final String? _codEnabled =
         shared.getString(PsConst.VALUE_HOLDER__COD_ENABLED);
-    final String _bankEnabled =
+    final String? _bankEnabled =
         shared.getString(PsConst.VALUE_HOLDER__BANK_TRANSFER_ENABLE);
-    final String _publishKey =
+    final String? _publishKey =
         shared.getString(PsConst.VALUE_HOLDER__PUBLISH_KEY);
 
-    final String _standardShippingEnable =
+    final String? _standardShippingEnable =
         shared.getString(PsConst.VALUE_HOLDER__STANDART_SHIPPING_ENABLE);
-    final String _zoneShippingEnable =
+    final String? _zoneShippingEnable =
         shared.getString(PsConst.VALUE_HOLDER__ZONE_SHIPPING_ENABLE);
-    final String _noShippingEnable =
+    final String? _noShippingEnable =
         shared.getString(PsConst.VALUE_HOLDER__NO_SHIPPING_ENABLE);
 
-    final String _locationId =
+    final String? _locationId =
         shared.getString(PsConst.VALUE_HOLDER__LOCATION_ID);
-    final String _locationName =
+    final String? _locationName =
         shared.getString(PsConst.VALUE_HOLDER__LOCATION_NAME);
-    final String _locationLat =
+    final String? _locationLat =
         shared.getString(PsConst.VALUE_HOLDER__LOCATION_LAT);
-    final String _locationLng =
+    final String? _locationLng =
         shared.getString(PsConst.VALUE_HOLDER__LOCATION_LNG);
     final PsValueHolder _valueHolder = PsValueHolder(
         loginUserId: _loginUserId,
@@ -166,7 +166,7 @@ class PsSharedPreferences {
     loadValueHolder();
   }
 
-  String getNotiMessage() {
+  String? getNotiMessage() {
     return shared.getString(PsConst.VALUE_HOLDER__NOTI_MESSAGE);
   }
 

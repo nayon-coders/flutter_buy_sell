@@ -12,7 +12,7 @@ class BlogProvider extends PsProvider {
     if (limit != 0) {
       super.limit = limit;
     }
-    _repo = repo;
+    _repo = repo!;
 
     print('Blog Provider: $hashCode');
 
@@ -22,7 +22,7 @@ class BlogProvider extends PsProvider {
     blogListStream = StreamController<PsResource<List<Blog>>>.broadcast();
     subscription =
         blogListStream.stream.listen((PsResource<List<Blog>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _blogList = resource;
 

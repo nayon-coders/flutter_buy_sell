@@ -13,7 +13,7 @@ import 'Common/ps_repository.dart';
 
 class GalleryRepository extends PsRepository {
   GalleryRepository(
-      {@required PsApiService psApiService, @required GalleryDao galleryDao}) {
+      {required PsApiService psApiService, required GalleryDao galleryDao}) {
     _psApiService = psApiService;
     _galleryDao = galleryDao;
   }
@@ -55,7 +55,7 @@ class GalleryRepository extends PsRepository {
       if (_resource.status == PsStatus.SUCCESS) {
         await _galleryDao.deleteWithFinder(
             Finder(filter: Filter.equals(imgParentId, parentImgId)));
-        await _galleryDao.insertAll(imgParentId, _resource.data);
+        await _galleryDao.insertAll(imgParentId, _resource.data!);
         
       }else{
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
@@ -76,7 +76,7 @@ class GalleryRepository extends PsRepository {
     if (_resource.status == PsStatus.SUCCESS) {
       await _galleryDao
           .deleteWithFinder(Finder(filter: Filter.equals(imgParentId, imgId)));
-      await insert(_resource.data);
+      await insert(_resource.data!);
       return _resource;
     } else {
       final Completer<PsResource<DefaultPhoto>> completer =
@@ -99,7 +99,7 @@ class GalleryRepository extends PsRepository {
             senderId, sellerUserId, buyerUserId, itemId, type, imageFile);
     if (_resource.status == PsStatus.SUCCESS) {
       await _galleryDao.deleteAll();
-      await insert(_resource.data);
+      await insert(_resource.data!);
       return _resource;
     } else {
       final Completer<PsResource<DefaultPhoto>> completer =

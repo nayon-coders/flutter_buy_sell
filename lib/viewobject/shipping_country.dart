@@ -3,7 +3,7 @@ import 'package:quiver/core.dart';
 
 class ShippingCountry extends PsObject<ShippingCountry> {
   ShippingCountry({
-     required this.id,
+      this.id,
      this.name,
      this.status,
      this.addedDate,
@@ -14,7 +14,7 @@ class ShippingCountry extends PsObject<ShippingCountry> {
      this.addedDateStr,
   });
 
-  String id;
+  String? id;
   String? name;
   String? status;
   String? addedDate;
@@ -34,25 +34,22 @@ class ShippingCountry extends PsObject<ShippingCountry> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   ShippingCountry fromMap(dynamic dynamicData) {
-    if (dynamicData != null) {
-      return ShippingCountry(
-          id: dynamicData['id'],
-          name: dynamicData['name'],
-          status: dynamicData['status'],
-          addedDate: dynamicData['added_date'],
-          addedUserId: dynamicData['added_user_id'],
-          updatedDate: dynamicData['updated_date'],
-          updatedUserId: dynamicData['updated_user_id'],
-          updatedFlag: dynamicData['updated_flag'],
-          addedDateStr: dynamicData['added_date_str']);
-    } else {
-      return null;
-    }
+    return ShippingCountry(
+        id: dynamicData['id'],
+        name: dynamicData['name'],
+        status: dynamicData['status'],
+        addedDate: dynamicData['added_date'],
+        addedUserId: dynamicData['added_user_id'],
+        updatedDate: dynamicData['updated_date'],
+        updatedUserId: dynamicData['updated_user_id'],
+        updatedFlag: dynamicData['updated_flag'],
+        addedDateStr: dynamicData['added_date_str']
+    );
   }
 
   @override
@@ -70,7 +67,7 @@ class ShippingCountry extends PsObject<ShippingCountry> {
       data['added_date_str'] = object.addedDateStr;
       return data;
     } else {
-      return null;
+      return {};
     }
   }
 

@@ -10,8 +10,8 @@ import 'package:flutterbuyandsell/viewobject/deal_option.dart';
 
 class ItemDealOptionRepository extends PsRepository {
   ItemDealOptionRepository(
-      {@required PsApiService psApiService,
-      @required ItemDealOptionDao itemDealOptionDao}) {
+      {required PsApiService psApiService,
+      required ItemDealOptionDao itemDealOptionDao}) {
     _psApiService = psApiService;
     _itemDealOptionDao = itemDealOptionDao;
   }
@@ -48,7 +48,7 @@ class ItemDealOptionRepository extends PsRepository {
 
     if (_resource.status == PsStatus.SUCCESS) {
       await _itemDealOptionDao.deleteAll();
-      await _itemDealOptionDao.insertAll(_primaryKey, _resource.data);
+      await _itemDealOptionDao.insertAll(_primaryKey, _resource.data!);
       
     }else{
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
@@ -73,7 +73,7 @@ class ItemDealOptionRepository extends PsRepository {
 
     if (_resource.status == PsStatus.SUCCESS) {
       _itemDealOptionDao
-          .insertAll(_primaryKey, _resource.data)
+          .insertAll(_primaryKey, _resource.data!)
           .then((dynamic data) async {
         itemDealOptionListStream.sink.add(await _itemDealOptionDao.getAll());
       });

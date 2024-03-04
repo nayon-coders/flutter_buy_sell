@@ -10,7 +10,7 @@ import 'package:flutterbuyandsell/viewobject/holder/product_parameter_holder.dar
 import 'package:flutterbuyandsell/viewobject/product.dart';
 
 class FeaturedProductProvider extends PsProvider {
-  FeaturedProductProvider({@required ProductRepository repo, int limit = 0})
+  FeaturedProductProvider({required ProductRepository repo, int limit = 0})
       : super(repo, limit) {
     _repo = repo;
     print('FeaturedProductProvider : $hashCode');
@@ -22,11 +22,11 @@ class FeaturedProductProvider extends PsProvider {
 
     subscription =
         productListStream.stream.listen((PsResource<List<Product>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
-      print('**** FeaturedProductProvider ${resource.data.length}');
+      print('**** FeaturedProductProvider ${resource.data!.length}');
       _productList = resource;
-      _productList.data = Product().checkDuplicate(resource.data);
+      _productList.data = Product().checkDuplicate(resource.data!);
 
       if (resource.status != PsStatus.BLOCK_LOADING &&
           resource.status != PsStatus.PROGRESS_LOADING) {

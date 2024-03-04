@@ -11,8 +11,8 @@ import 'package:flutterbuyandsell/provider/common/ps_provider.dart';
 
 class ItemDetailProvider extends PsProvider {
   ItemDetailProvider(
-      {@required ProductRepository repo,
-      @required this.psValueHolder,
+      {required ProductRepository repo,
+      required this.psValueHolder,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;

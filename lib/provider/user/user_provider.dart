@@ -37,8 +37,8 @@ import 'package:the_apple_sign_in/the_apple_sign_in.dart';
 
 class UserProvider extends PsProvider {
   UserProvider(
-      {@required UserRepository repo,
-      @required this.psValueHolder,
+      {required UserRepository repo,
+      required this.psValueHolder,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;
@@ -48,7 +48,7 @@ class UserProvider extends PsProvider {
     subscription = userListStream.stream.listen((PsResource<User> resource) {
       if (resource != null && resource.data != null) {
         _user = resource;
-        holderUser = resource.data;
+        holderUser = resource.data!;
       }
 
       if (resource.status != PsStatus.BLOCK_LOADING &&
@@ -352,8 +352,8 @@ class UserProvider extends PsProvider {
   ///
   Future<fb_auth.User> getCurrentFirebaseUser() async {
     final fb_auth.FirebaseAuth auth = fb_auth.FirebaseAuth.instance;
-    final fb_auth.User currentUser = auth.currentUser;
-    return currentUser;
+    final fb_auth.User? currentUser = auth.currentUser;
+    return currentUser!;
   }
 
   Future<void> handleFirebaseAuthError(BuildContext context, String email,
@@ -467,7 +467,7 @@ class UserProvider extends PsProvider {
             /// Success
             ///
             if (onAppleIdSignInSelected != null) {
-              onAppleIdSignInSelected(resourceUser.data.userId);
+              onAppleIdSignInSelected(resourceUser.data!.userId);
             } else {
               Navigator.pop(context, resourceUser.data);
             }
@@ -519,7 +519,7 @@ class UserProvider extends PsProvider {
 
   Future<PsResource<User>> _submitLoginWithAppleId(fb_auth.User user) async {
     if (user != null) {
-      String email = user.email;
+      String? email = user.email;
       if (email == null || email == '') {
         // if (user.providerData.isNotEmpty) {
         //   email = user.providerData[0].email;
@@ -528,7 +528,7 @@ class UserProvider extends PsProvider {
         if (user.providerData.isNotEmpty) {
           for (int i = 0; i < user.providerData.length; i++) {
             if (user.providerData[i].email != null &&
-                user.providerData[i].email.trim() != '') {
+                user.providerData[i].email!.trim() != '') {
               email = user.providerData[i].email;
             }
           }
@@ -567,13 +567,13 @@ class UserProvider extends PsProvider {
     // 2. check the result
     switch (result.status) {
       case AuthorizationStatus.authorized:
-        final AppleIdCredential appleIdCredential = result.credential;
+        final AppleIdCredential appleIdCredential = result.credential!;
 
         final OAuthProvider oAuthProvider = OAuthProvider('apple.com');
         final OAuthCredential credential = oAuthProvider.credential(
-          idToken: String.fromCharCodes(appleIdCredential.identityToken),
+          idToken: String.fromCharCodes(appleIdCredential.identityToken!),
           accessToken:
-              String.fromCharCodes(appleIdCredential.authorizationCode),
+              String.fromCharCodes(appleIdCredential.authorizationCode!),
         );
         fb_auth.UserCredential authResult;
         try {
@@ -581,40 +581,40 @@ class UserProvider extends PsProvider {
         } on PlatformException catch (e) {
           print(e);
 
-          handleFirebaseAuthError(context, appleIdCredential.email);
+          handleFirebaseAuthError(context, appleIdCredential.email!);
           // Fail to Login to Firebase, must return null;
           return null;
         }
-        fb_auth.User firebaseUser = authResult.user;
+        fb_auth.User? firebaseUser = authResult.user;
         if (scopes.contains(Scope.fullName)) {
           String displayName;
 
           displayName = null;
 
-          if (appleIdCredential.fullName.givenName != null) {
-            displayName = '${appleIdCredential.fullName.givenName}';
+          if (appleIdCredential.fullName?.givenName != null) {
+            displayName = '${appleIdCredential.fullName!.givenName}';
           }
 
-          if (appleIdCredential.fullName.familyName != null) {
+          if (appleIdCredential.fullName!.familyName != null) {
             if (displayName != null) {
               displayName = '$displayName ';
             }
 
             if (displayName != null) {
-              displayName += '${appleIdCredential.fullName.familyName}';
+              displayName += '${appleIdCredential.fullName!.familyName}';
             } else {
-              displayName = '${appleIdCredential.fullName.familyName}';
+              displayName = '${appleIdCredential.fullName!.familyName}';
             }
           }
 
           if (displayName != null && displayName != ' ' && displayName != '') {
-            await firebaseUser.updateProfile(displayName: displayName);
+            await firebaseUser!.updateProfile(displayName: displayName);
           }
         }
 
         firebaseUser = _firebaseAuth.currentUser;
 
-        return firebaseUser;
+        return firebaseUser!;
       case AuthorizationStatus.error:
         print(result.error.toString());
         throw PlatformException(
@@ -676,7 +676,7 @@ class UserProvider extends PsProvider {
             /// Success
             ///
             if (onGoogleIdSignInSelected != null) {
-              onGoogleIdSignInSelected(resourceUser.data.userId);
+              onGoogleIdSignInSelected(resourceUser.data!.userId);
             } else {
               Navigator.pop(context, resourceUser.data);
             }
@@ -728,25 +728,25 @@ class UserProvider extends PsProvider {
 
   Future<fb_auth.User> _getFirebaseUserWithGoogleId() async {
     try {
-      final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+      final GoogleSignInAccount? googleUser = await _googleSignIn.signIn();
 
       //for not select any google acc
-      if (googleUser == null) {
-        return null;
-      }
+      // if (googleUser == null) {
+      //   return null;
+      // }comment
 
       final GoogleSignInAuthentication googleAuth =
-          await googleUser.authentication;
+          await googleUser!.authentication;
 
       final AuthCredential credential = GoogleAuthProvider.credential(
         accessToken: googleAuth.accessToken,
         idToken: googleAuth.idToken,
       );
 
-      final fb_auth.User user =
+      final fb_auth.User? user =
           (await _firebaseAuth.signInWithCredential(credential)).user;
       print('signed in' + user.displayName);
-      return user;
+      return user!;
     } on Exception {
       print('not select google account');
       return null;
@@ -755,7 +755,7 @@ class UserProvider extends PsProvider {
 
   Future<PsResource<User>> _submitLoginWithGoogleId(fb_auth.User user) async {
     if (user != null) {
-      String email = user.email;
+      String email = user.email!;
       if (email == null || email == '') {
         // if (user.providerData.isNotEmpty) {
         //   email = user.providerData[0].email;
@@ -763,8 +763,8 @@ class UserProvider extends PsProvider {
         if (user.providerData.isNotEmpty) {
           for (int i = 0; i < user.providerData.length; i++) {
             if (user.providerData[i].email != null &&
-                user.providerData[i].email.trim() != '') {
-              email = user.providerData[i].email;
+                user.providerData[i].email!.trim() != '') {
+              email = user.providerData[i].email!;
               break;
             }
           }

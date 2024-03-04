@@ -9,7 +9,7 @@ import 'package:flutterbuyandsell/viewobject/holder/offer_parameter_holder.dart'
 import 'package:flutterbuyandsell/viewobject/offer.dart';
 
 class OfferListProvider extends PsProvider {
-  OfferListProvider({@required OfferRepository repo, int limit = 0})
+  OfferListProvider({required OfferRepository repo, int limit = 0})
       : super(repo, limit) {
     _repo = repo;
     print('OfferListProvider : $hashCode');
@@ -21,7 +21,7 @@ class OfferListProvider extends PsProvider {
 
     subscription =
         offerListStream.stream.listen((PsResource<List<Offer>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _offerList = resource;
 

@@ -12,7 +12,7 @@ import 'package:flutterbuyandsell/viewobject/product.dart';
 
 class DisabledProductProvider extends PsProvider {
   DisabledProductProvider(
-      {@required ProductRepository repo, this.psValueHolder, int limit = 0})
+      {required ProductRepository repo, this.psValueHolder, int limit = 0})
       : super(repo, limit) {
     _repo = repo;
     print('DisabledProductProvider : $hashCode');
@@ -23,7 +23,7 @@ class DisabledProductProvider extends PsProvider {
     itemListStream = StreamController<PsResource<List<Product>>>.broadcast();
     subscription =
         itemListStream.stream.listen((PsResource<List<Product>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _itemList = resource;
 
@@ -38,7 +38,7 @@ class DisabledProductProvider extends PsProvider {
     });
   }
   ProductRepository _repo;
-  PsValueHolder psValueHolder;
+  PsValueHolder? psValueHolder;
   ProductParameterHolder addedUserParameterHolder =
       ProductParameterHolder().getDisabledProductParameterHolder();
   PsResource<List<Product>> _itemList =

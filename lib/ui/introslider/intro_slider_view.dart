@@ -10,7 +10,7 @@ import 'package:flutterbuyandsell/viewobject/common/ps_value_holder.dart';
 import 'package:provider/provider.dart';
 
 class IntroSliderView extends StatefulWidget {
-  const IntroSliderView({@required this.settingSlider});
+  const IntroSliderView({required this.settingSlider});
   final int settingSlider;
   @override
   @override
@@ -19,7 +19,7 @@ class IntroSliderView extends StatefulWidget {
 
 class _IntroSliderViewState extends State<IntroSliderView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  late AnimationController animationController;
   @override
   void initState() {
     _controller = TabController(vsync: this, length: 3);
@@ -32,10 +32,10 @@ class _IntroSliderViewState extends State<IntroSliderView>
   }
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  UserProvider userProvider;
-  UserRepository userRepo;
-  PsValueHolder psValueHolder;
-  TabController _controller;
+  UserProvider? userProvider;
+  UserRepository? userRepo;
+  PsValueHolder? psValueHolder;
+  TabController? _controller;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class _IntroSliderViewState extends State<IntroSliderView>
         '............................Build UI Again ............................');
     userRepo = Provider.of<UserRepository>(context);
     psValueHolder = Provider.of<PsValueHolder>(context);
-    _controller.animateTo(0);
+    _controller?.animateTo(0);
     return ChangeNotifierProvider<UserProvider>(
         lazy: false,
         create: (BuildContext context) {

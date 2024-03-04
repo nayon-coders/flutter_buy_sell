@@ -3,15 +3,15 @@ import 'package:flutterbuyandsell/viewobject/common/ps_map_object.dart';
 
 class UserMap extends PsMapObject<UserMap> {
   UserMap({
-    required this.id,
+     this.id,
      this.mapKey,
      this.userId,
-    required int sorting,
+     int? sorting,
      this.addedDate}) {
-    super.sorting = sorting;
+    super.sorting = sorting!;
   }
 
-  String id;
+  String? id;
   String? mapKey;
   String? userId;
   String? addedDate;
@@ -24,22 +24,18 @@ class UserMap extends PsMapObject<UserMap> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   //usermap?
   UserMap fromMap(dynamic dynamicData) {
-    if (dynamicData != null) {
-      return UserMap(
-          id: dynamicData['id'],
-          mapKey: dynamicData['map_key'],
-          userId: dynamicData['user_id'],
-          sorting: dynamicData['sorting'],
-          addedDate: dynamicData['added_date']);
-    } else {
-      return null;
-    }
+    return UserMap(
+        id: dynamicData['id'],
+        mapKey: dynamicData['map_key'],
+        userId: dynamicData['user_id'],
+        sorting: dynamicData['sorting'],
+        addedDate: dynamicData['added_date']);
   }
 
   @override
@@ -54,7 +50,7 @@ class UserMap extends PsMapObject<UserMap> {
 
       return data;
     } else {
-      return null;
+      return {};
     }
   }
 

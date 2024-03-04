@@ -17,7 +17,7 @@ class UserLoginDao extends PsDao<UserLogin> {
   static UserLoginDao get instance => _singleton;
 
   @override
-  String getPrimaryKey(UserLogin object) {
+  String? getPrimaryKey(UserLogin object) {
     return object.id;
   }
 

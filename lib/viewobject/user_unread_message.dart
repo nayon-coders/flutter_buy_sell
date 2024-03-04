@@ -3,12 +3,12 @@ import 'package:quiver/core.dart';
 
 class UserUnreadMessage extends PsObject<UserUnreadMessage> {
   UserUnreadMessage({
-    required this.id,
+     this.id,
      this.blogNotiUnreadCount,
      this.buyerUnreadCount,
      this.sellerUnreadCount,
   });
-  String id;
+  String? id;
   String? blogNotiUnreadCount;
   String? buyerUnreadCount;
   String? sellerUnreadCount;
@@ -24,21 +24,17 @@ class UserUnreadMessage extends PsObject<UserUnreadMessage> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   UserUnreadMessage fromMap(dynamic dynamicData) {
-    if (dynamicData != null) {
-      return UserUnreadMessage(
-        id: dynamicData['id'],
-        blogNotiUnreadCount: dynamicData['blog_noti_unread_count'],
-        buyerUnreadCount: dynamicData['buyer_unread_count'],
-        sellerUnreadCount: dynamicData['seller_unread_count'],
-      );
-    } else {
-      return null;
-    }
+    return UserUnreadMessage(
+      id: dynamicData['id'],
+      blogNotiUnreadCount: dynamicData['blog_noti_unread_count'],
+      buyerUnreadCount: dynamicData['buyer_unread_count'],
+      sellerUnreadCount: dynamicData['seller_unread_count'],
+    );
   }
 
   @override
@@ -52,7 +48,7 @@ class UserUnreadMessage extends PsObject<UserUnreadMessage> {
 
       return data;
     } else {
-      return null;
+      return {};
     }
   }
 

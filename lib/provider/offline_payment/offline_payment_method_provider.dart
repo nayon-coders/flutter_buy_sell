@@ -10,7 +10,7 @@ import 'package:flutterbuyandsell/provider/common/ps_provider.dart';
 import 'package:flutterbuyandsell/viewobject/offline_payment_method.dart';
 
 class OfflinePaymentMethodProvider extends PsProvider {
-  OfflinePaymentMethodProvider({@required OfflinePaymentMethodRepository repo, this.psValueHolder, int limit = 0})
+  OfflinePaymentMethodProvider({required OfflinePaymentMethodRepository repo,  this.psValueHolder, int limit = 0})
       : super(repo, limit) {
     _repo = repo;
 
@@ -37,7 +37,7 @@ class OfflinePaymentMethodProvider extends PsProvider {
     });
   }
   OfflinePaymentMethodRepository _repo;
-  PsValueHolder psValueHolder;
+  PsValueHolder? psValueHolder;
   String userId = '';
   String deviceToken;
 

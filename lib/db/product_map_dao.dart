@@ -21,7 +21,7 @@ class ProductMapDao extends PsDao<ProductMap> {
   }
 
   @override
-  String getPrimaryKey(ProductMap object) {
+  String? getPrimaryKey(ProductMap object) {
     return object.id;
   }
 

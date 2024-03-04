@@ -11,7 +11,7 @@ import 'package:flutterbuyandsell/viewobject/noti.dart';
 
 class NotiRepository extends PsRepository {
   NotiRepository(
-      {@required PsApiService psApiService, @required NotiDao notiDao}) {
+      {required PsApiService psApiService, required NotiDao notiDao}) {
     _psApiService = psApiService;
     _notiDao = notiDao;
   }

@@ -6,7 +6,10 @@ import 'package:flutterbuyandsell/repository/language_repository.dart';
 import 'package:flutterbuyandsell/viewobject/common/language.dart';
 
 class LanguageProvider extends PsProvider {
-  LanguageProvider({@required LanguageRepository repo, int limit = 0 }) : super(repo,limit) {
+  LanguageProvider({
+    required LanguageRepository repo,
+    int limit = 0
+  }) : super(repo,limit) {
     _repo = repo;
     isDispose = false;
   }

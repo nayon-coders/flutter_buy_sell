@@ -8,7 +8,7 @@ import 'package:flutterbuyandsell/utils/utils.dart';
 import 'package:flutterbuyandsell/viewobject/item_price_type.dart';
 
 class ItemPriceTypeProvider extends PsProvider {
-  ItemPriceTypeProvider({@required ItemPriceTypeRepository repo, int limit = 0 })
+  ItemPriceTypeProvider({required ItemPriceTypeRepository repo, int limit = 0 })
       : super(repo,limit) {
     _repo = repo;
     print('Item Price Type Provider: $hashCode');

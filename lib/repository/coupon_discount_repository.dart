@@ -9,7 +9,7 @@ import 'Common/ps_repository.dart';
 
 class CouponDiscountRepository extends PsRepository {
   CouponDiscountRepository({
-    @required PsApiService psApiService,
+    required PsApiService psApiService,
   }) {
     _psApiService = psApiService;
   }

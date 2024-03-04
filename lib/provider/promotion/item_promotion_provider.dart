@@ -9,7 +9,7 @@ import 'package:flutterbuyandsell/viewobject/item_paid_history.dart';
 
 class ItemPromotionProvider extends PsProvider {
   ItemPromotionProvider(
-      {@required ItemPaidHistoryRepository itemPaidHistoryRepository,
+      {required ItemPaidHistoryRepository itemPaidHistoryRepository,
       int limit = 0})
       : super(itemPaidHistoryRepository, limit) {
     _repo = itemPaidHistoryRepository;

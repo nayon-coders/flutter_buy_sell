@@ -12,7 +12,7 @@ import 'package:flutterbuyandsell/provider/common/ps_provider.dart';
 
 class UserLoginProvider extends PsProvider {
   UserLoginProvider(
-      {@required UserRepository repo, @required this.psValueHolder, int limit = 0})
+      {required UserRepository repo, required this.psValueHolder, int limit = 0})
       : super(repo,limit) {
     _repo = repo;
     isDispose = false;

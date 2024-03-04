@@ -10,8 +10,8 @@ import 'package:flutterbuyandsell/repository/Common/ps_repository.dart';
 
 class ItemConditionRepository extends PsRepository {
   ItemConditionRepository(
-      {@required PsApiService psApiService,
-      @required ItemConditionDao itemConditionDao}) {
+      {required PsApiService psApiService,
+      required ItemConditionDao itemConditionDao}) {
     _psApiService = psApiService;
     _itemConditionDao = itemConditionDao;
   }
@@ -49,7 +49,7 @@ class ItemConditionRepository extends PsRepository {
 
     if (_resource.status == PsStatus.SUCCESS) {
       await _itemConditionDao.deleteAll();
-      await _itemConditionDao.insertAll(_primaryKey, _resource.data);
+      await _itemConditionDao.insertAll(_primaryKey, _resource.data!);
       
     }else{
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
@@ -75,7 +75,7 @@ class ItemConditionRepository extends PsRepository {
 
     if (_resource.status == PsStatus.SUCCESS) {
       _itemConditionDao
-          .insertAll(_primaryKey, _resource.data)
+          .insertAll(_primaryKey, _resource.data!)
           .then((dynamic data) async {
         itemConditionListStream.sink.add(await _itemConditionDao.getAll());
       });

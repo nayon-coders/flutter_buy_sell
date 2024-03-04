@@ -4,13 +4,13 @@ import 'common/ps_object.dart';
 
 class ReportedItem extends PsObject<ReportedItem> {
   ReportedItem({
-    required this.id,
+     this.id,
      this.title,
      this.status,
      this.addedDate,
      this.defaultPhoto,});
 
-  String id;
+  String? id;
   String? title;
   String? status;
   String? addedDate;

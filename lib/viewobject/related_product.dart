@@ -2,10 +2,10 @@ import 'package:quiver/core.dart';
 import 'common/ps_map_object.dart';
 
 class RelatedProduct extends PsMapObject<RelatedProduct> {
-  RelatedProduct({required this.id, required int sorting}) {
-    super.sorting = sorting;
+  RelatedProduct({ this.id,  int? sorting}) {
+    super.sorting = sorting!;
   }
-  String id;
+  String? id;
 
   @override
   bool operator ==(dynamic other) => other is RelatedProduct && id == other.id;
@@ -15,17 +15,13 @@ class RelatedProduct extends PsMapObject<RelatedProduct> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   RelatedProduct fromMap(dynamic dynamicData) {
-    if (dynamicData != null) {
-      return RelatedProduct(
-          id: dynamicData['id'], sorting: dynamicData['sorting']);
-    } else {
-      return null;
-    }
+    return RelatedProduct(
+        id: dynamicData['id'], sorting: dynamicData['sorting']);
   }
 
   @override
@@ -36,7 +32,7 @@ class RelatedProduct extends PsMapObject<RelatedProduct> {
       data['sorting'] = object.sorting;
       return data;
     } else {
-      return null;
+      return {};
     }
   }
 

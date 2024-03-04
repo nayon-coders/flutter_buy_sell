@@ -21,7 +21,7 @@ class UserMapDao extends PsDao<UserMap> {
   }
 
   @override
-  String getPrimaryKey(UserMap object) {
+  String? getPrimaryKey(UserMap object) {
     return object.id;
   }
 

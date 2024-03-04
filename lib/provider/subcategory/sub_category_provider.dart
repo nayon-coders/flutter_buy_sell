@@ -10,7 +10,7 @@ import 'package:flutterbuyandsell/viewobject/holder/product_parameter_holder.dar
 import 'package:flutterbuyandsell/viewobject/sub_category.dart';
 
 class SubCategoryProvider extends PsProvider {
-  SubCategoryProvider({@required SubCategoryRepository repo,int limit = 0}) : super(repo,limit) {
+  SubCategoryProvider({required SubCategoryRepository repo,int limit = 0}) : super(repo,limit) {
     _repo = repo;
     print('SubCategory Provider: $hashCode');
 

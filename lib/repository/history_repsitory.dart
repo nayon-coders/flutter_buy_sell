@@ -8,7 +8,7 @@ import 'package:flutterbuyandsell/api/common/ps_status.dart';
 import 'Common/ps_repository.dart';
 
 class HistoryRepository extends PsRepository {
-  HistoryRepository({@required HistoryDao historyDao}) {
+  HistoryRepository({required HistoryDao historyDao}) {
     _historyDao = historyDao;
   }
 

@@ -8,7 +8,7 @@ import 'package:flutterbuyandsell/api/common/ps_status.dart';
 import 'package:flutterbuyandsell/provider/common/ps_provider.dart';
 
 class RatingProvider extends PsProvider {
-  RatingProvider({@required RatingRepository repo, int limit = 0}) : super(repo, limit) {
+  RatingProvider({required RatingRepository repo, int limit = 0}) : super(repo, limit) {
     _repo = repo;
     print('Rating Provider: $hashCode');
 

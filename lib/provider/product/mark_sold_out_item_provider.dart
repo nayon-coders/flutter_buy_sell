@@ -9,7 +9,7 @@ import 'package:flutterbuyandsell/viewobject/holder/mark_sold_out_item_parameter
 import 'package:flutterbuyandsell/viewobject/product.dart';
 
 class MarkSoldOutItemProvider extends PsProvider {
-  MarkSoldOutItemProvider({@required ProductRepository repo, int limit = 0}) : super(repo,limit) {
+  MarkSoldOutItemProvider({required ProductRepository repo, int limit = 0}) : super(repo,limit) {
     _repo = repo;
     print('MarkSoldOutItemProvider : $hashCode');
     Utils.checkInternetConnectivity().then((bool onValue) {

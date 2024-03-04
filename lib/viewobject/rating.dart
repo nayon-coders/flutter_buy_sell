@@ -4,7 +4,7 @@ import 'package:quiver/core.dart';
 
 class Rating extends PsObject<Rating> {
   Rating(
-      {required this.id,
+      { this.id,
        this.fromUserId,
        this.toUserId,
        this.rating,
@@ -14,7 +14,7 @@ class Rating extends PsObject<Rating> {
        this.addedDateStr,
        this.fromUser,
        this.toUser});
-  String id;
+  String? id;
   String? fromUserId;
   String? toUserId;
   String? rating;

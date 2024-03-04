@@ -3,7 +3,7 @@ import 'package:quiver/core.dart';
 
 class ShippingCity extends PsObject<ShippingCity> {
   ShippingCity({
-     required this.id,
+      this.id,
      this.countryId,
      this.name,
      this.status,
@@ -15,7 +15,7 @@ class ShippingCity extends PsObject<ShippingCity> {
      this.addedDateStr,
   });
 
-  String id;
+  String? id;
   String? countryId;
   String? name;
   String? status;
@@ -36,31 +36,28 @@ class ShippingCity extends PsObject<ShippingCity> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   ShippingCity fromMap(dynamic dynamicData) {
-    if (dynamicData != null) {
-      return ShippingCity(
-          id: dynamicData['id'],
-          name: dynamicData['name'],
-          status: dynamicData['status'],
-          addedDate: dynamicData['added_date'],
-          addedUserId: dynamicData['added_user_id'],
-          updatedDate: dynamicData['updated_date'],
-          updatedUserId: dynamicData['updated_user_id'],
-          updatedFlag: dynamicData['updated_flag'],
-          countryId: dynamicData['country_id'],
-          addedDateStr: dynamicData['added_date_str']);
-    } else {
-      return null;
-    }
+    return ShippingCity(
+        id: dynamicData['id'],
+        name: dynamicData['name'],
+        status: dynamicData['status'],
+        addedDate: dynamicData['added_date'],
+        addedUserId: dynamicData['added_user_id'],
+        updatedDate: dynamicData['updated_date'],
+        updatedUserId: dynamicData['updated_user_id'],
+        updatedFlag: dynamicData['updated_flag'],
+        countryId: dynamicData['country_id'],
+        addedDateStr: dynamicData['added_date_str']);
   }
 
   @override
   Map<String, dynamic> toMap(ShippingCity object) {
     if (object != null) {
+
       final Map<String, dynamic> data = <String, dynamic>{};
       data['id'] = object.id;
       data['name'] = object.name;
@@ -72,9 +69,10 @@ class ShippingCity extends PsObject<ShippingCity> {
       data['updated_flag'] = object.updatedFlag;
       data['country_id'] = object.countryId;
       data['added_date_str'] = object.addedDateStr;
+
       return data;
     } else {
-      return null;
+      return {};
     }
   }
 

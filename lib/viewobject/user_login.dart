@@ -3,8 +3,8 @@ import 'package:quiver/core.dart';
 import 'common/ps_object.dart';
 
 class UserLogin extends PsObject<UserLogin> {
-  UserLogin({ required this.id,  this.login,  this.user});
-  String id;
+  UserLogin({  this.id,  this.login,  this.user});
+  String? id;
   bool? login;
   User? user;
 
@@ -16,20 +16,16 @@ class UserLogin extends PsObject<UserLogin> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   UserLogin fromMap(dynamic dynamicData) {
-    if (dynamicData != null) {
-      return UserLogin(
-        id: dynamicData['id'],
-        login: dynamicData['map_key'],
-        user: User().fromMap(dynamicData['user']),
-      );
-    } else {
-      return  null;
-    }
+    return UserLogin(
+      id: dynamicData['id'],
+      login: dynamicData['map_key'],
+      user: User().fromMap(dynamicData['user']),
+    );
   }
 
   @override
@@ -42,7 +38,7 @@ class UserLogin extends PsObject<UserLogin> {
 
       return data;
     } else {
-      return null;
+      return {};
     }
   }
 

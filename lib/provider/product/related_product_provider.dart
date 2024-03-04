@@ -10,8 +10,8 @@ import 'package:flutterbuyandsell/provider/common/ps_provider.dart';
 
 class RelatedProductProvider extends PsProvider {
   RelatedProductProvider(
-      {@required ProductRepository repo,
-      @required this.psValueHolder,
+      {required ProductRepository repo,
+      required this.psValueHolder,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;
@@ -24,10 +24,10 @@ class RelatedProductProvider extends PsProvider {
         StreamController<PsResource<List<Product>>>.broadcast();
     subscription = relatedProductListStream.stream
         .listen((PsResource<List<Product>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _relatedProductList = resource;
-      _relatedProductList.data = Product().checkDuplicate(resource.data);
+      _relatedProductList.data = Product().checkDuplicate(resource.data!);
 
       if (resource.status != PsStatus.BLOCK_LOADING &&
           resource.status != PsStatus.PROGRESS_LOADING) {

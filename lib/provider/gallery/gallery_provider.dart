@@ -9,7 +9,7 @@ import 'package:flutterbuyandsell/api/common/ps_status.dart';
 import 'package:flutterbuyandsell/provider/common/ps_provider.dart';
 
 class GalleryProvider extends PsProvider {
-  GalleryProvider({@required GalleryRepository repo, int limit = 0 }) : super(repo,limit) {
+  GalleryProvider({required GalleryRepository repo, int limit = 0 }) : super(repo,limit) {
     _repo = repo;
 
     print('Gallery Provider: $hashCode');
@@ -22,11 +22,11 @@ class GalleryProvider extends PsProvider {
         StreamController<PsResource<List<DefaultPhoto>>>.broadcast();
     subscription = galleryListStream.stream
         .listen((PsResource<List<DefaultPhoto>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _galleryList = resource;
       if (_galleryList != null) {
-        selectedImageList = _galleryList.data;
+        selectedImageList = _galleryList.data!;
       }
 
       if (resource.status != PsStatus.BLOCK_LOADING &&

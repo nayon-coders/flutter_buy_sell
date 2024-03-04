@@ -5,38 +5,38 @@ import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 
 class Offer extends PsObject<Offer> {
   Offer({
-    required this.id,
-    required this.itemId,
-    required this.buyerUserId,
-    required this.sellerUserId,
-    required this.negoPrice,
-    required this.buyerUnreadCount,
-    required this.sellerUnreadCount,
-    required this.isAccept,
-    required this.addedDate,
-    required this.isOffer,
-    required this.offerAmount,
-    required this.addedDateStr,
-    required this.item,
-    required this.buyer,
-    required this.seller,
+     this.id,
+     this.itemId,
+     this.buyerUserId,
+     this.sellerUserId,
+     this.negoPrice,
+     this.buyerUnreadCount,
+     this.sellerUnreadCount,
+     this.isAccept,
+     this.addedDate,
+     this.isOffer,
+     this.offerAmount,
+     this.addedDateStr,
+     this.item,
+     this.buyer,
+     this.seller,
   });
 
-  String id;
-  String itemId;
-  String buyerUserId;
-  String sellerUserId;
-  String negoPrice;
-  String buyerUnreadCount;
-  String sellerUnreadCount;
-  String isAccept;
-  String addedDate;
-  String isOffer;
-  String offerAmount;
-  String addedDateStr;
-  Product item;
-  User buyer;
-  User seller;
+  String? id;
+  String? itemId;
+  String? buyerUserId;
+  String? sellerUserId;
+  String? negoPrice;
+  String? buyerUnreadCount;
+  String? sellerUnreadCount;
+  String? isAccept;
+  String? addedDate;
+  String? isOffer;
+  String? offerAmount;
+  String? addedDateStr;
+  Product? item;
+  User? buyer;
+  User? seller;
   @override
   bool operator ==(dynamic other) => other is Offer && id == other.id;
 
@@ -45,32 +45,28 @@ class Offer extends PsObject<Offer> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   Offer fromMap(dynamic dynamicData) {
-    if (dynamicData != null) {
-      return Offer(
-        id: dynamicData['id'],
-        itemId: dynamicData['item_id'],
-        buyerUserId: dynamicData['buyer_user_id'],
-        sellerUserId: dynamicData['seller_user_id'],
-        negoPrice: dynamicData['nego_price'],
-        buyerUnreadCount: dynamicData['buyer_unread_count'],
-        sellerUnreadCount: dynamicData['seller_unread_count'],
-        isAccept: dynamicData['is_accept'],
-        addedDate: dynamicData['added_date'],
-        isOffer: dynamicData['is_offer'],
-        offerAmount: dynamicData['offer_amount'],
-        addedDateStr: dynamicData['added_date_str'],
-        item: Product().fromMap(dynamicData['item']),
-        buyer: User().fromMap(dynamicData['buyer']),
-        seller: User().fromMap(dynamicData['seller']),
-      );
-    } else {
-      return null;
-    }
+    return Offer(
+      id: dynamicData['id'],
+      itemId: dynamicData['item_id'],
+      buyerUserId: dynamicData['buyer_user_id'],
+      sellerUserId: dynamicData['seller_user_id'],
+      negoPrice: dynamicData['nego_price'],
+      buyerUnreadCount: dynamicData['buyer_unread_count'],
+      sellerUnreadCount: dynamicData['seller_unread_count'],
+      isAccept: dynamicData['is_accept'],
+      addedDate: dynamicData['added_date'],
+      isOffer: dynamicData['is_offer'],
+      offerAmount: dynamicData['offer_amount'],
+      addedDateStr: dynamicData['added_date_str'],
+      item: Product().fromMap(dynamicData['item']),
+      buyer: User().fromMap(dynamicData['buyer']),
+      seller: User().fromMap(dynamicData['seller']),
+    );
   }
 
   @override
@@ -94,7 +90,7 @@ class Offer extends PsObject<Offer> {
       data['seller'] = User().toMap(object.seller);
       return data;
     } else {
-      return null;
+      return {};
     }
   }
 

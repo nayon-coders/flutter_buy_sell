@@ -21,7 +21,7 @@ class PaidAdItemDao extends PsDao<PaidAdItem> {
   }
 
   @override
-  String getPrimaryKey(PaidAdItem object) {
+  String? getPrimaryKey(PaidAdItem object) {
     return object.id;
   }
 

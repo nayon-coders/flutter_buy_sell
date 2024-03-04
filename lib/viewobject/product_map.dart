@@ -7,9 +7,9 @@ class ProductMap extends PsMapObject<ProductMap> {
          this.id,
          this.mapKey,
          this.productId,
-         required int sorting,
+          int? sorting,
          this.addedDate}) {
-    super.sorting = sorting;
+    super.sorting = sorting!;
   }
 
   String? id;
@@ -25,21 +25,17 @@ class ProductMap extends PsMapObject<ProductMap> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   ProductMap fromMap(dynamic dynamicData) {
-    if (dynamicData != null) {
-      return ProductMap(
-          id: dynamicData['id'],
-          mapKey: dynamicData['map_key'],
-          productId: dynamicData['product_id'],
-          sorting: dynamicData['sorting'],
-          addedDate: dynamicData['added_date']);
-    } else {
-      return null;
-    }
+    return ProductMap(
+        id: dynamicData['id'],
+        mapKey: dynamicData['map_key'],
+        productId: dynamicData['product_id'],
+        sorting: dynamicData['sorting'],
+        addedDate: dynamicData['added_date']);
   }
 
   @override
@@ -54,7 +50,7 @@ class ProductMap extends PsMapObject<ProductMap> {
 
       return data;
     } else {
-      return null;
+      return {};
     }
   }
 

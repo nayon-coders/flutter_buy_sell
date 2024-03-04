@@ -12,7 +12,7 @@ import 'Common/ps_repository.dart';
 
 class BlockedUserRepository extends PsRepository {
   BlockedUserRepository(
-      {@required PsApiService psApiService, @required BlockedUserDao blockedUserDao}) {
+      {required PsApiService psApiService, required BlockedUserDao blockedUserDao}) {
     _psApiService = psApiService;
     _blockedUserDao = blockedUserDao;
   }
@@ -58,7 +58,7 @@ class BlockedUserRepository extends PsRepository {
 
       if (_resource.status == PsStatus.SUCCESS) {
         await _blockedUserDao.deleteAll();
-        await _blockedUserDao.insertAll(primaryKey, _resource.data);
+        await _blockedUserDao.insertAll(primaryKey, _resource.data!);
         
       }else{
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
@@ -84,7 +84,7 @@ class BlockedUserRepository extends PsRepository {
           await _psApiService.getBlockedUserList(loginUserId,limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _blockedUserDao.insertAll(primaryKey, _resource.data);
+        await _blockedUserDao.insertAll(primaryKey, _resource.data!);
       }
       blogListStream.sink.add(await _blockedUserDao.getAll());
     }

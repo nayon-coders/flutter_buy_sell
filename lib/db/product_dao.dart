@@ -21,7 +21,7 @@ class ProductDao extends PsDao<Product> {
   }
 
   @override
-  String getPrimaryKey(Product object) {
+  String? getPrimaryKey(Product object) {
     return object.id;
   }
 

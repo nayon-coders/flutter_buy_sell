@@ -7,7 +7,7 @@ import 'package:flutterbuyandsell/repository/Common/ps_repository.dart';
 import 'package:flutterbuyandsell/viewobject/item_paid_history.dart';
 
 class ItemPaidHistoryRepository extends PsRepository {
-  ItemPaidHistoryRepository({@required PsApiService psApiService}) {
+  ItemPaidHistoryRepository({required PsApiService psApiService}) {
     _psApiService = psApiService;
   }
   String primaryKey = 'id';

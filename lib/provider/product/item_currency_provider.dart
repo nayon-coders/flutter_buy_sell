@@ -8,7 +8,7 @@ import 'package:flutterbuyandsell/provider/common/ps_provider.dart';
 import 'package:flutterbuyandsell/viewobject/item_currency.dart';
 
 class ItemCurrencyProvider extends PsProvider {
-  ItemCurrencyProvider({@required ItemCurrencyRepository repo, int limit = 0 }) : super(repo,limit) {
+  ItemCurrencyProvider({required ItemCurrencyRepository repo, int limit = 0 }) : super(repo,limit) {
     _repo = repo;
     print('Item Currency Provider: $hashCode');
 

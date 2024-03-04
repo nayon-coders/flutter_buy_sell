@@ -21,7 +21,7 @@ class UserUnreadMessageDao extends PsDao<UserUnreadMessage> {
   }
 
   @override
-  String getPrimaryKey(UserUnreadMessage object) {
+  String? getPrimaryKey(UserUnreadMessage object) {
     return object.id;
   }
 

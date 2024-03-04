@@ -10,7 +10,7 @@ import 'package:flutterbuyandsell/viewobject/common/ps_value_holder.dart';
 import 'package:flutterbuyandsell/viewobject/reported_item.dart';
 
 class ReportedItemProvider extends PsProvider {
-  ReportedItemProvider({@required ReportedItemRepository repo,this.valueHolder, int limit = 0}) : super(repo,limit) {
+  ReportedItemProvider({required ReportedItemRepository repo,this.valueHolder, int limit = 0}) : super(repo,limit) {
     _repo = repo;
     print('ReportedItem Provider: $hashCode');
 
@@ -38,7 +38,7 @@ class ReportedItemProvider extends PsProvider {
 
   StreamController<PsResource<List<ReportedItem>>> itemTypeListStream;
   ReportedItemRepository _repo;
-  PsValueHolder valueHolder;
+  PsValueHolder? valueHolder;
 
   PsResource<List<ReportedItem>> _itemTypeList =
       PsResource<List<ReportedItem>>(PsStatus.NOACTION, '', <ReportedItem>[]);

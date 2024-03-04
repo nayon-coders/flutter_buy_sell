@@ -9,7 +9,7 @@ import 'package:flutterbuyandsell/repository/Common/ps_repository.dart';
 import 'package:flutterbuyandsell/viewobject/common/language.dart';
 
 class LanguageRepository extends PsRepository {
-  LanguageRepository({@required PsSharedPreferences psSharedPreferences}) {
+  LanguageRepository({required PsSharedPreferences psSharedPreferences}) {
     _psSharedPreferences = psSharedPreferences;
   }
 
@@ -20,17 +20,17 @@ class LanguageRepository extends PsRepository {
   PsSharedPreferences _psSharedPreferences;
 
   void loadLanguageValueHolder() {
-    final String _languageCodeKey = _psSharedPreferences.shared
+    final String? _languageCodeKey = _psSharedPreferences.shared
         .getString(PsConst.LANGUAGE__LANGUAGE_CODE_KEY);
-    final String _countryCodeKey = _psSharedPreferences.shared
+    final String? _countryCodeKey = _psSharedPreferences.shared
         .getString(PsConst.LANGUAGE__COUNTRY_CODE_KEY);
-    final String _languageNameKey = _psSharedPreferences.shared
+    final String? _languageNameKey = _psSharedPreferences.shared
         .getString(PsConst.LANGUAGE__LANGUAGE_NAME_KEY);
 
     _valueController.add(PsLanguageValueHolder(
-      languageCode: _languageCodeKey,
-      countryCode: _countryCodeKey,
-      name: _languageNameKey,
+      languageCode: _languageCodeKey!,
+      countryCode: _countryCodeKey!,
+      name: _languageNameKey!,
     ));
   }
 

@@ -17,7 +17,7 @@ class ReportedItemDao extends PsDao<ReportedItem> {
   static ReportedItemDao get instance => _singleton;
 
   @override
-  String getPrimaryKey(ReportedItem object) {
+  String? getPrimaryKey(ReportedItem object) {
     return object.id;
   }
 

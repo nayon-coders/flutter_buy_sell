@@ -10,7 +10,7 @@ import 'package:flutterbuyandsell/viewobject/holder/user_parameter_holder.dart';
 import 'package:flutterbuyandsell/viewobject/user.dart';
 
 class UserListProvider extends PsProvider {
-  UserListProvider({@required UserRepository repo, this.psValueHolder,int limit = 0})
+  UserListProvider({required UserRepository repo, this.psValueHolder,int limit = 0})
       : super(repo,limit) {
     _repo = repo;
     print('UserListProvider : $hashCode');
@@ -21,7 +21,7 @@ class UserListProvider extends PsProvider {
     userListStream = StreamController<PsResource<List<User>>>.broadcast();
     subscription =
         userListStream.stream.listen((PsResource<List<User>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _userList = resource;
 
@@ -41,7 +41,7 @@ class UserListProvider extends PsProvider {
       UserParameterHolder().getFollowingUsers();
 
   UserRepository _repo;
-  PsValueHolder psValueHolder;
+  PsValueHolder? psValueHolder;
 
   PsResource<List<User>> _userList =
       PsResource<List<User>>(PsStatus.NOACTION, '', <User>[]);

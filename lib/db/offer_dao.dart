@@ -21,7 +21,7 @@ class OfferDao extends PsDao<Offer> {
   }
 
   @override
-  String getPrimaryKey(Offer object) {
+  String? getPrimaryKey(Offer object) {
     return object.id;
   }
 

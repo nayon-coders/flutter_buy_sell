@@ -11,8 +11,8 @@ import 'Common/ps_repository.dart';
 
 class CategoryRepository extends PsRepository {
   CategoryRepository(
-      {@required PsApiService psApiService,
-      @required CategoryDao categoryDao}) {
+      {required PsApiService psApiService,
+      required CategoryDao categoryDao}) {
     _psApiService = psApiService;
     _categoryDao = categoryDao;
   }
@@ -64,7 +64,7 @@ class CategoryRepository extends PsRepository {
         await _categoryDao.deleteAll();
 
         // Insert Category
-        await _categoryDao.insertAll(primaryKey, _resource.data);
+        await _categoryDao.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
           print('delete all');
@@ -95,7 +95,7 @@ class CategoryRepository extends PsRepository {
       if (_resource.status == PsStatus.SUCCESS) {
         await _categoryDao.getAll();
 
-        await _categoryDao.insertAll(primaryKey, _resource.data);
+        await _categoryDao.insertAll(primaryKey, _resource.data!);
       }
       sinkCategoryListStream(categoryListStream, await _categoryDao.getAll());
     }

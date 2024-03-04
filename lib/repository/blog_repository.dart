@@ -11,7 +11,7 @@ import 'Common/ps_repository.dart';
 
 class BlogRepository extends PsRepository {
   BlogRepository(
-      {@required PsApiService psApiService, @required BlogDao blogDao}) {
+      {required PsApiService psApiService, required BlogDao blogDao}) {
     _psApiService = psApiService;
     _blogDao = blogDao;
   }
@@ -47,7 +47,7 @@ class BlogRepository extends PsRepository {
 
       if (_resource.status == PsStatus.SUCCESS) {
         await _blogDao.deleteAll();
-        await _blogDao.insertAll(primaryKey, _resource.data);
+        await _blogDao.insertAll(primaryKey, _resource.data!);
         
       }else{
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
@@ -72,7 +72,7 @@ class BlogRepository extends PsRepository {
           await _psApiService.getBlogList(limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _blogDao.insertAll(primaryKey, _resource.data);
+        await _blogDao.insertAll(primaryKey, _resource.data!);
       }
       blogListStream.sink.add(await _blogDao.getAll());
     }

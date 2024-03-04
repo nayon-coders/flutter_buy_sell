@@ -10,7 +10,7 @@ import 'package:flutterbuyandsell/repository/noti_repository.dart';
 import 'package:flutterbuyandsell/viewobject/noti.dart';
 
 class NotiProvider extends PsProvider {
-  NotiProvider({@required NotiRepository repo, this.psValueHolder, int limit = 0})
+  NotiProvider({required NotiRepository repo, required this.psValueHolder, int limit = 0})
       : super(repo, limit) {
     _repo = repo;
 

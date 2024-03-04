@@ -119,14 +119,14 @@ Route<dynamic> generateRoute(RouteSettings settings) {
 
             case '${RoutePaths.introSlider}':
       return MaterialPageRoute<dynamic>(builder: (BuildContext context) {
-        final Object args = settings.arguments;
-        final int settingSlider = args ?? int;
-        return IntroSliderView(settingSlider:settingSlider);
+        final Object? args = settings.arguments;
+        final Object settingSlider = args! ?? int;
+        return  IntroSliderView(settingSlider:settingSlider);
       });
 
     case '${RoutePaths.force_update}':
       return MaterialPageRoute<dynamic>(builder: (BuildContext context) {
-        final Object args = settings.arguments;
+        final Object? args = settings.arguments;
         final PSAppVersion psAppVersion = args ?? PSAppVersion;
         return ForceUpdateView(psAppVersion: psAppVersion);
       });

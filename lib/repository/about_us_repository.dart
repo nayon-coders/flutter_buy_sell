@@ -11,7 +11,7 @@ import 'Common/ps_repository.dart';
 
 class AboutUsRepository extends PsRepository {
   AboutUsRepository(
-      {@required PsApiService psApiService, @required AboutUsDao aboutUsDao}) {
+      {required PsApiService psApiService, required AboutUsDao aboutUsDao}) {
     _psApiService = psApiService;
     _aboutUsDao = aboutUsDao;
   }
@@ -45,7 +45,7 @@ class AboutUsRepository extends PsRepository {
 
       if (_resource.status == PsStatus.SUCCESS) {
         await _aboutUsDao.deleteAll();
-        await _aboutUsDao.insertAll(primaryKey, _resource.data);
+        await _aboutUsDao.insertAll(primaryKey, _resource.data!);
         
       }else{
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {

@@ -8,14 +8,14 @@ import 'package:flutterbuyandsell/api/common/ps_status.dart';
 import 'package:flutterbuyandsell/provider/common/ps_provider.dart';
 
 class HistoryProvider extends PsProvider {
-  HistoryProvider({@required HistoryRepository repo,int limit = 0}) : super(repo,limit) {
+  HistoryProvider({required HistoryRepository repo,int limit = 0}) : super(repo,limit) {
     _repo = repo;
     print('History Provider: $hashCode');
 
     historyListStream = StreamController<PsResource<List<Product>>>.broadcast();
     subscription =
         historyListStream.stream.listen((PsResource<List<Product>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _historyList = resource;
 

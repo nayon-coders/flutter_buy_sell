@@ -21,7 +21,7 @@ class BlockedUserDao extends PsDao<BlockedUser> {
   }
 
   @override
-  String getPrimaryKey(BlockedUser object) {
+  String? getPrimaryKey(BlockedUser object) {
     return object.userId;
   }
 

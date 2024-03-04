@@ -10,8 +10,8 @@ import 'package:flutterbuyandsell/viewobject/product.dart';
 
 class ItemEntryProvider extends PsProvider {
   ItemEntryProvider(
-      {@required ProductRepository repo,
-      @required this.psValueHolder,
+      {required ProductRepository repo,
+      required this.psValueHolder,
       int limit = 0})
       : super(repo, limit) {
     _repo = repo;
@@ -22,7 +22,7 @@ class ItemEntryProvider extends PsProvider {
     subscription = itemListStream.stream.listen((PsResource<Product> resource) {
       if (resource != null && resource.data != null) {
         _itemResource = resource;
-        item = resource.data;
+        item = resource.data!;
       }
 
       if (resource.status != PsStatus.BLOCK_LOADING &&

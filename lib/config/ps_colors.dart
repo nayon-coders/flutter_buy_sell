@@ -67,78 +67,78 @@ class PsColors {
   ///
   /// Main Color
   ///
-  static Color mainColor;
-  static Color mainColorWithWhite;
-  static Color mainColorWithBlack;
-  static Color mainDarkColor;
-  static Color mainLightColor;
-  static Color mainLightColorWithBlack;
-  static Color mainLightColorWithWhite;
-  static Color mainShadowColor;
-  static Color mainLightShadowColor;
-  static Color mainDividerColor;
-  static Color whiteColorWithBlack;
+  static Color? mainColor;
+  static Color? mainColorWithWhite;
+  static Color? mainColorWithBlack;
+  static Color? mainDarkColor;
+  static Color? mainLightColor;
+  static Color? mainLightColorWithBlack;
+  static Color? mainLightColorWithWhite;
+  static Color? mainShadowColor;
+  static Color? mainLightShadowColor;
+  static Color? mainDividerColor;
+  static Color? whiteColorWithBlack;
 
   ///
   /// Base Color
   ///
-  static Color baseColor;
-  static Color baseDarkColor;
-  static Color baseLightColor;
+  static Color? baseColor;
+  static Color? baseDarkColor;
+  static Color? baseLightColor;
 
   ///
   /// Text Color
   ///
-  static Color textPrimaryColor;
-  static Color textPrimaryDarkColor;
-  static Color textPrimaryLightColor;
+  static Color? textPrimaryColor;
+  static Color? textPrimaryDarkColor;
+  static Color? textPrimaryLightColor;
 
-  static Color textPrimaryColorForLight;
-  static Color textPrimaryDarkColorForLight;
-  static Color textPrimaryLightColorForLight;
+  static Color? textPrimaryColorForLight;
+  static Color? textPrimaryDarkColorForLight;
+  static Color? textPrimaryLightColorForLight;
 
   ///
   /// Icon Color
   ///
-  static Color iconColor;
+  static Color? iconColor;
 
   ///
   /// Background Color
   ///
-  static Color coreBackgroundColor;
-  static Color backgroundColor;
+  static Color? coreBackgroundColor;
+  static Color? backgroundColor;
 
   ///
   /// General
   ///
-  static Color white;
-  static Color black;
-  static Color grey;
-  static Color transparent;
+  static Color? white;
+  static Color? black;
+  static Color? grey;
+  static Color? transparent;
 
   ///
   /// Customs
   ///
-  static Color facebookLoginButtonColor;
-  static Color googleLoginButtonColor;
-  static Color appleLoginButtonColor;
-  static Color phoneLoginButtonColor;
-  static Color disabledFacebookLoginButtonColor;
-  static Color disabledGoogleLoginButtonColor;
-  static Color disabledAppleLoginButtonColor;
-  static Color disabledPhoneLoginButtonColor;
+  static Color? facebookLoginButtonColor;
+  static Color? googleLoginButtonColor;
+  static Color? appleLoginButtonColor;
+  static Color? phoneLoginButtonColor;
+  static Color? disabledFacebookLoginButtonColor;
+  static Color? disabledGoogleLoginButtonColor;
+  static Color? disabledAppleLoginButtonColor;
+  static Color? disabledPhoneLoginButtonColor;
 
-  static Color paypalColor;
-  static Color stripeColor;
+  static Color? paypalColor;
+  static Color? stripeColor;
 
-  static Color categoryBackgroundColor;
-  static Color loadingCircleColor;
-  static Color ratingColor;
+  static Color? categoryBackgroundColor;
+  static Color? loadingCircleColor;
+  static Color? ratingColor;
 
-  static Color soldOutUIColor;
-  static Color itemTypeColor;
+  static Color? soldOutUIColor;
+  static Color? itemTypeColor;
 
-  static Color paidAdsColor;
+  static Color? paidAdsColor;
 
   /// Colors Config For the whole App
   /// Please change the color based on your brand need.

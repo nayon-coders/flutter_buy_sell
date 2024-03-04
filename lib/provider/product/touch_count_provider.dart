@@ -11,7 +11,7 @@ import 'package:flutter/cupertino.dart';
 
 class TouchCountProvider extends PsProvider {
   TouchCountProvider(
-      {@required ProductRepository repo, @required this.psValueHolder, int limit = 0})
+      {required ProductRepository repo, required this.psValueHolder, int limit = 0})
       : super(repo,limit) {
     _repo = repo;
 

@@ -9,7 +9,7 @@ import 'package:flutterbuyandsell/provider/common/ps_provider.dart';
 import 'package:flutterbuyandsell/viewobject/deal_option.dart';
 
 class ItemDealOptionProvider extends PsProvider {
-  ItemDealOptionProvider({@required ItemDealOptionRepository repo, int limit = 0 })
+  ItemDealOptionProvider({required ItemDealOptionRepository repo, int limit = 0 })
       : super(repo,limit) {
     _repo = repo;
     print('Item Deal Option Provider: $hashCode');

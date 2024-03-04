@@ -11,7 +11,7 @@ import 'package:flutterbuyandsell/viewobject/holder/product_parameter_holder.dar
 import 'package:flutterbuyandsell/viewobject/product.dart';
 
 class AddedItemProvider extends PsProvider {
-  AddedItemProvider({@required ProductRepository repo, this.psValueHolder, int limit = 0})
+  AddedItemProvider({required ProductRepository repo, this.psValueHolder, int limit = 0})
       : super(repo,limit) {
     _repo = repo;
     print('AddedItemProvider : $hashCode');
@@ -22,7 +22,7 @@ class AddedItemProvider extends PsProvider {
     itemListStream = StreamController<PsResource<List<Product>>>.broadcast();
     subscription =
         itemListStream.stream.listen((PsResource<List<Product>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _itemList = resource;
 
@@ -37,7 +37,7 @@ class AddedItemProvider extends PsProvider {
     });
   }
   ProductRepository _repo;
-  PsValueHolder psValueHolder;
+  PsValueHolder? psValueHolder;
   ProductParameterHolder addedUserParameterHolder =
       ProductParameterHolder().getLatestParameterHolder();
   PsResource<List<Product>> _itemList =

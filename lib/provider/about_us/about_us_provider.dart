@@ -9,8 +9,8 @@ import 'package:flutterbuyandsell/viewobject/about_us.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_value_holder.dart';
 
 class AboutUsProvider extends PsProvider {
-  AboutUsProvider(
-      {@required AboutUsRepository repo, @required this.psValueHolder,int limit = 0})
+   AboutUsProvider(
+      {required AboutUsRepository repo, required this.psValueHolder,int limit = 0})
       : super(repo,limit) {
     _repo = repo;
 
@@ -22,7 +22,7 @@ class AboutUsProvider extends PsProvider {
     aboutUsListStream = StreamController<PsResource<List<AboutUs>>>.broadcast();
     subscription =
         aboutUsListStream.stream.listen((PsResource<List<AboutUs>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _aboutUsList = resource;
 

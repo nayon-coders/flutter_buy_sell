@@ -8,7 +8,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutterbuyandsell/viewobject/user_login.dart';
 
 class DeleteTaskProvider extends PsProvider {
-  DeleteTaskProvider({@required DeleteTaskRepository repo, this.psValueHolder, int limit = 0 })
+  DeleteTaskProvider({required DeleteTaskRepository repo, required this.psValueHolder, int limit = 0 })
       : super(repo,limit) {
     _repo = repo;
     print('Delete Task Provider: $hashCode');
@@ -16,7 +16,7 @@ class DeleteTaskProvider extends PsProvider {
         StreamController<PsResource<List<UserLogin>>>.broadcast();
     subscription = deleteTaskListStream.stream
         .listen((PsResource<List<UserLogin>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _deleteTaskList = resource;
 

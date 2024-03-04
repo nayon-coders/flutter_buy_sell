@@ -15,8 +15,8 @@ import 'package:flutterbuyandsell/repository/Common/ps_repository.dart';
 
 class ChatHistoryRepository extends PsRepository {
   ChatHistoryRepository(
-      {@required PsApiService psApiService,
-      @required ChatHistoryDao chatHistoryDao}) {
+      {required PsApiService psApiService,
+      required ChatHistoryDao chatHistoryDao}) {
     _psApiService = psApiService;
     _chatHistoryDao = chatHistoryDao;
   }
@@ -207,7 +207,7 @@ class ChatHistoryRepository extends PsRepository {
         // Create Map List
         final List<ChatHistoryMap> chatHistoryMapList = <ChatHistoryMap>[];
         int i = 0;
-        for (ChatHistory data in _resource.data) {
+        for (ChatHistory data in _resource.data!) {
           chatHistoryMapList.add(ChatHistoryMap(
               id: data.id + paramKey,
               mapKey: paramKey,
@@ -224,7 +224,7 @@ class ChatHistoryRepository extends PsRepository {
         await chatHistoryMapDao.insertAll(primaryKey, chatHistoryMapList);
 
         // Insert ChatHistory
-        await _chatHistoryDao.insertAll(primaryKey, _resource.data);
+        await _chatHistoryDao.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
         // Delete and Insert Map Dao
@@ -269,9 +269,9 @@ class ChatHistoryRepository extends PsRepository {
 
         int i = 0;
         if (existingMapList != null) {
-          i = existingMapList.data.length + 1;
+          i = existingMapList.data!.length + 1;
         }
-        for (ChatHistory data in _resource.data) {
+        for (ChatHistory data in _resource.data!) {
           chatHistoryMapList.add(ChatHistoryMap(
               id: data.id + paramKey,
               mapKey: paramKey,
@@ -283,7 +283,7 @@ class ChatHistoryRepository extends PsRepository {
         await chatHistoryMapDao.insertAll(primaryKey, chatHistoryMapList);
 
         // Insert ChatHistory
-        await _chatHistoryDao.insertAll(primaryKey, _resource.data);
+        await _chatHistoryDao.insertAll(primaryKey, _resource.data!);
       }
       sinkchatHistoryListStream(
           chatHistoryListStream,
@@ -336,8 +336,8 @@ class ChatHistoryRepository extends PsRepository {
     if (_resource.status == PsStatus.SUCCESS) {
       // await _chatHistoryDao.deleteAll();
       final Finder resetUnreadFinder =
-          Finder(filter: Filter.equals('id', _resource.data.id));
-      await _chatHistoryDao.update(_resource.data, finder: resetUnreadFinder);
+          Finder(filter: Filter.equals('id', _resource.data!.id));
+      await _chatHistoryDao.update(_resource.data!, finder: resetUnreadFinder);
 
       // sinkchatHistoryListStream(chatHistoryListStream, await _chatHistoryDao.getAll());
 
@@ -400,9 +400,9 @@ class ChatHistoryRepository extends PsRepository {
         await _psApiService.resetUnreadMessageCount(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       final Finder resetUnreadFinder =
-          Finder(filter: Filter.equals('id', _resource.data.id));
+          Finder(filter: Filter.equals('id', _resource.data!.id));
       //require to know message count once
-      await _chatHistoryDao.update(_resource.data, finder: resetUnreadFinder);
+      await _chatHistoryDao.update(_resource.data!, finder: resetUnreadFinder);
       // return _chatHistoryDao.getAll();
 
     } else {
@@ -465,7 +465,7 @@ class ChatHistoryRepository extends PsRepository {
         await _psApiService.makeMarkAsSold(jsonMap, loginUserId);
     if (_resource.status == PsStatus.SUCCESS) {
       // await _chatHistoryDao.deleteAll();
-      await _chatHistoryDao.insert(primaryKey, _resource.data);
+      await _chatHistoryDao.insert(primaryKey, _resource.data!);
       sinkChatHistoryStream(chatHistoryStream, await _chatHistoryDao.getOne());
 
       // return _resource;

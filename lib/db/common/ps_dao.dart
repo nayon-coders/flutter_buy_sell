@@ -65,7 +65,7 @@ abstract class PsDao<T extends PsObject<T>> {
         .put(await db, jsonList); //obj.toMapList(objectList));
   }
 
-  Future<dynamic> update(T object, {Finder finder}) async {
+  Future<dynamic> update(T object, {Finder? finder}) async {
     // For filtering by key (ID), RegEx, greater than, and many other criteria,
     // we use a Finder.
     finder ??= Finder(filter: getFilter(object));
@@ -87,7 +87,7 @@ abstract class PsDao<T extends PsObject<T>> {
     await dao.delete(await db);
   }
 
-  Future<dynamic> delete(T object, {Finder finder}) async {
+  Future<dynamic> delete(T object, {Finder? finder}) async {
     // For filtering by key (ID), RegEx, greater than, and many other criteria,
     // we use a Finder.
     finder ??= Finder(filter: getFilter(object));
@@ -107,7 +107,7 @@ abstract class PsDao<T extends PsObject<T>> {
   }
 
   Future<PsResource<List<T>>> getByKey(String key, String value,
-      {List<SortOrder> sortOrderList,
+      { List<SortOrder>? sortOrderList,
       PsStatus status = PsStatus.SUCCESS}) async {
     final Finder finder = Finder(filter: Filter.equals(key, value));
     if (sortOrderList != null && sortOrderList.isNotEmpty) {
@@ -127,10 +127,10 @@ abstract class PsDao<T extends PsObject<T>> {
   }
 
   Future<dynamic> getOneWithSubscription(
-      {StreamController<PsResource<T>> stream,
-      Finder finder,
+      {StreamController<PsResource<T>>? stream,
+      Finder? finder,
       PsStatus status = PsStatus.SUCCESS,
-      Function onDataUpdated}) async {
+      Function? onDataUpdated}) async {
     finder ??= Finder();
 
     final dynamic query = dao.query(finder: finder);
@@ -145,17 +145,17 @@ abstract class PsDao<T extends PsObject<T>> {
         break;
       }
 
-      onDataUpdated(result);
+      onDataUpdated!();
     });
 
     return subscription;
   }
 
   Future<dynamic> getAllWithSubscription(
-      {StreamController<PsResource<List<T>>> stream,
-      Finder finder,
+      {StreamController<PsResource<List<T>>>? stream,
+      Finder? finder,
       PsStatus status = PsStatus.SUCCESS,
-      Function onDataUpdated}) async {
+      Function? onDataUpdated}) async {
     finder ??= Finder(sortOrders: <SortOrder> [SortOrder(sortingKey, true)]);
 
     final dynamic query = dao.query(finder: finder);
@@ -168,30 +168,30 @@ abstract class PsDao<T extends PsObject<T>> {
         resultList.add(localObj);
       });
 
-      onDataUpdated(resultList);
+      onDataUpdated!();
     });
 
     return subscription;
   }
 
   Future<dynamic> getAllWithSubscriptionByMap(
-      {StreamController<PsResource<List<T>>> stream,
-      String primaryKey,
-      String mapKey,
-      String paramKey,
-      PsDao<PsObject<dynamic>> mapDao,
+      {StreamController<PsResource<List<T>>>? stream,
+      String? primaryKey,
+      String? mapKey,
+      String? paramKey,
+      PsDao<PsObject<dynamic>>? mapDao,
       dynamic mapObj,
-      List<SortOrder> sortOrderList,
+      List<SortOrder>? sortOrderList,
       PsStatus status = PsStatus.SUCCESS,
-      Function onDataUpdated}) async {
+      Function? onDataUpdated}) async {
     final PsResource<List<PsObject<dynamic>>> dataList = await mapDao.getAll(
         finder: Finder(
-            filter: Filter.equals(mapKey, paramKey),
+            filter: Filter.equals(mapKey?, paramKey),
             sortOrders: <SortOrder>[SortOrder('sorting', true)]));
     final List<String> valueList = mapObj.getIdList(dataList.data);
 
     final Finder finder = Finder(
-      filter: Filter.inList(primaryKey, valueList),
+      filter: Filter.inList(primaryKey!, valueList),
       //sortOrders: [SortOrder(Field.key, true)]
     );
     if (sortOrderList != null && sortOrderList.isNotEmpty) {
@@ -222,19 +222,19 @@ abstract class PsDao<T extends PsObject<T>> {
           }
         }
       }
-      onDataUpdated(PsResource<List<T>>(status, '', resultList));
+      onDataUpdated!(PsResource<List<T>>(status, '', resultList));
     });
     return subscription;
   }
 
    Future<dynamic> getAllWithSubscriptionByJoin(
-      {StreamController<PsResource<List<T>>> stream,
-      String primaryKey,
-      PsDao<PsObject<dynamic>> mapDao,
+      {StreamController<PsResource<List<T>>>? stream,
+      String? primaryKey,
+      PsDao<PsObject<dynamic>>? mapDao,
       dynamic mapObj,
-      List<SortOrder> sortOrderList,
+      List<SortOrder>? sortOrderList,
       PsStatus status = PsStatus.SUCCESS,
-      Function onDataUpdated}) async {
+      Function? onDataUpdated}) async {
    final PsResource<List<PsObject<dynamic>>> dataList = await mapDao.getAll(
         finder: Finder(sortOrders: <SortOrder>[SortOrder('sorting', true)]));
 
@@ -242,7 +242,7 @@ abstract class PsDao<T extends PsObject<T>> {
 
 
     final Finder finder = Finder(
-      filter: Filter.inList(primaryKey, valueList),
+      filter: Filter.inList(primaryKey!, valueList),
       //sortOrders: [SortOrder(Field.key, true)]
     );
     if (sortOrderList != null && sortOrderList.isNotEmpty) {
@@ -273,13 +273,13 @@ abstract class PsDao<T extends PsObject<T>> {
           }
         }
       }
-      onDataUpdated(PsResource<List<T>>(status, '', resultList));
+      onDataUpdated!(PsResource<List<T>>(status, '', resultList));
     });
     return subscription;
   }
 
   Future<PsResource<List<T>>> getAll(
-      {Finder finder,
+      {Finder? finder,
       PsStatus status = PsStatus.SUCCESS,
       String message = ''}) async {
     finder ??= Finder(sortOrders: <SortOrder> [SortOrder(sortingKey, true)]);
@@ -298,13 +298,13 @@ abstract class PsDao<T extends PsObject<T>> {
   }
 
   Future<PsResource<T>> getOne(
-      {Finder finder, PsStatus status = PsStatus.SUCCESS}) async {
+      {Finder? finder, PsStatus status = PsStatus.SUCCESS}) async {
     finder ??= Finder();
     final dynamic recordSnapshots = await dao.find(
       await db,
       finder: finder,
     );
-    T result;
+    T  result;
 
     for (dynamic snapshot in recordSnapshots) {
       final T localObj = obj.fromMap(snapshot.value);
@@ -313,14 +313,14 @@ abstract class PsDao<T extends PsObject<T>> {
       break;
     }
 
-    return PsResource<T>(status, '', result);
+    return PsResource<T>(status, '',  result);
   }
 
   Future<PsResource<List<T>>> getAllByJoin<K extends PsMapObject<dynamic>>(
       String primaryKey,
       PsDao<PsObject<dynamic>> mapDao,
       dynamic mapObj,
-      {List<SortOrder> sortOrderList,
+      {List<SortOrder>? sortOrderList,
       PsStatus status = PsStatus.SUCCESS}) async {
     final PsResource<List<PsObject<dynamic>>> dataList = await mapDao.getAll(
         finder: Finder(sortOrders: <SortOrder>[SortOrder('sorting', true)]));
@@ -360,7 +360,7 @@ abstract class PsDao<T extends PsObject<T>> {
           String filterIdKey,
           PsDao<PsObject<dynamic>> mapDao,
           dynamic mapObj,
-          {List<SortOrder> sortOrderList,
+          {List<SortOrder>? sortOrderList,
           PsStatus status = PsStatus.SUCCESS}) async {
     final PsResource<List<PsObject<dynamic>>> dataList = await mapDao.getAll(
         finder: Finder(sortOrders: <SortOrder>[
@@ -403,7 +403,7 @@ abstract class PsDao<T extends PsObject<T>> {
       String paramKey,
       PsDao<PsObject<dynamic>> mapDao,
       dynamic mapObj,
-      {List<SortOrder> sortOrderList,
+      {List<SortOrder>? sortOrderList,
       PsStatus status = PsStatus.SUCCESS}) async {
     final PsResource<List<PsObject<dynamic>>> dataList = await mapDao.getAll(
         finder: Finder(
