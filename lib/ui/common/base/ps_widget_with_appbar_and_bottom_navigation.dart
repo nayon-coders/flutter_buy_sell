@@ -6,10 +6,10 @@ import 'package:provider/provider.dart';
 class PsWidgetWithAppBarAndBottomNavigation<T extends ChangeNotifier>
     extends StatefulWidget {
   const PsWidgetWithAppBarAndBottomNavigation(
-      {Key key,
-      @required this.builder,
-      @required this.initProvider,
-      @required this.bottonNavigationView,
+      {Key? key,
+      required this.builder,
+      required this.initProvider,
+      required this.bottonNavigationView,
       this.child,
       this.onProviderReady,
       @required this.appBarTitle})
@@ -17,9 +17,9 @@ class PsWidgetWithAppBarAndBottomNavigation<T extends ChangeNotifier>
 
   final Widget Function(BuildContext context, T provider, Widget child) builder;
   final Function initProvider;
-  final Widget child;
-  final Function(T) onProviderReady;
-  final String appBarTitle;
+  final Widget? child;
+  final Function(T)? onProviderReady;
+  final String? appBarTitle;
   final Widget bottonNavigationView;
 
   @override
@@ -45,10 +45,10 @@ class _PsWidgetWithAppBarAndBottomNavigation<T extends ChangeNotifier>
         appBar: AppBar(
           brightness: Utils.getBrightnessForAppBar(context),
           iconTheme: IconThemeData(color: Theme.of(context).iconTheme.color),
-          title: Text(widget.appBarTitle,
+          title: Text(widget.appBarTitle!,
               style: Theme.of(context)
                   .textTheme
-                  .headline6
+                  .headline6!
                   .copyWith(fontWeight: FontWeight.bold)),
           flexibleSpace: Container(
             height: 200,
@@ -60,7 +60,7 @@ class _PsWidgetWithAppBarAndBottomNavigation<T extends ChangeNotifier>
           create: (BuildContext context) {
             final T providerObj = widget.initProvider();
             if (widget.onProviderReady != null) {
-              widget.onProviderReady(providerObj);
+              widget.onProviderReady!(providerObj);
             }
 
             return providerObj;

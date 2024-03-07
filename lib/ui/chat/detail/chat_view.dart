@@ -57,11 +57,11 @@ import 'package:fluttertoast/fluttertoast.dart';
 
 class ChatView extends StatefulWidget {
   const ChatView({
-    Key key,
-    @required this.itemId,
-    @required this.chatFlag,
-    @required this.buyerUserId,
-    @required this.sellerUserId,
+    Key? key,
+    required this.itemId,
+    required this.chatFlag,
+    required this.buyerUserId,
+    required this.sellerUserId,
     // @required this.isOffer,
   }) : super(key: key);
 
@@ -78,38 +78,38 @@ enum ChatUserStatus { active, in_active, offline }
 
 class _ChatViewState extends State<ChatView>
     with SingleTickerProviderStateMixin, WidgetsBindingObserver {
-  AnimationController animationController;
-  DatabaseReference _messagesRef;
-  DatabaseReference _chatRef;
-  DatabaseReference _userPresence;
+  AnimationController? animationController;
+  DatabaseReference? _messagesRef;
+  DatabaseReference? _chatRef;
+  DatabaseReference? _userPresence;
   // StreamSubscription<Event> _counterSubscription;
   // StreamSubscription<Event> _messagesSubscription;
   final bool _anchorToBottom = true;
-  FirebaseApp firebaseApp;
-  PsValueHolder psValueHolder;
-  String sessionId;
-  ChatHistoryRepository chatHistoryRepository;
-  NotificationRepository notiRepo;
-  UserUnreadMessageRepository userUnreadMessageRepository;
-  GalleryRepository galleryRepo;
-  ProductRepository productRepo;
-  GetChatHistoryProvider getChatHistoryProvider;
-  UserUnreadMessageProvider userUnreadMessageProvider;
-  ChatHistoryListProvider chatHistoryListProvider;
-  ItemDetailProvider itemDetailProvider;
-  GalleryProvider galleryProvider;
-  NotificationProvider notiProvider;
-  SyncChatHistoryParameterHolder holder;
-  GetChatHistoryParameterHolder getChatHistoryParameterHolder;
-  PsResource<ChatHistory> chatHistory;
-  String lastTimeStamp;
-  String status = '';
-  String itemId;
-  String receiverId;
-  String senderId;
-  String otherUserId;
+  FirebaseApp? firebaseApp;
+  PsValueHolder? psValueHolder;
+  String? sessionId;
+  ChatHistoryRepository? chatHistoryRepository;
+  NotificationRepository? notiRepo;
+  UserUnreadMessageRepository? userUnreadMessageRepository;
+  GalleryRepository? galleryRepo;
+  ProductRepository? productRepo;
+  GetChatHistoryProvider? getChatHistoryProvider;
+  UserUnreadMessageProvider? userUnreadMessageProvider;
+  ChatHistoryListProvider? chatHistoryListProvider;
+  ItemDetailProvider? itemDetailProvider;
+  GalleryProvider? galleryProvider;
+  NotificationProvider? notiProvider;
+  SyncChatHistoryParameterHolder? holder;
+  GetChatHistoryParameterHolder? getChatHistoryParameterHolder;
+  PsResource<ChatHistory>? chatHistory;
+  String? lastTimeStamp;
+  String? status = '';
+  String? itemId;
+  String? receiverId;
+  String? senderId;
+  String? otherUserId;
 
-  ChatUserStatus isActive;
+  ChatUserStatus? isActive;
   // bool isInActive = false;
 
   TextEditingController messageController = TextEditingController();
@@ -163,10 +163,10 @@ class _ChatViewState extends State<ChatView>
     if (state == AppLifecycleState.resumed) {
       // user returned to our app
     } else if (state == AppLifecycleState.inactive) {
-      _chatRef.child(psValueHolder.loginUserId).remove();
+      _chatRef!.child(psValueHolder!.loginUserId).remove();
       // app is inactive
     } else if (state == AppLifecycleState.paused) {
-      _chatRef.child(psValueHolder.loginUserId).remove();
+      _chatRef!.child(psValueHolder!.loginUserId).remove();
 
       // user is about quit our app temporally
     } else if (state == AppLifecycleState.detached) {
@@ -179,8 +179,8 @@ class _ChatViewState extends State<ChatView>
     super.dispose();
 
     if (mounted) {
-      _chatRef.child(psValueHolder.loginUserId).remove();
-      _userPresence.child(psValueHolder.loginUserId).remove();
+      _chatRef!.child(psValueHolder!.loginUserId).remove();
+      _userPresence!.child(psValueHolder!.loginUserId).remove();
     }
 
     WidgetsBinding.instance.removeObserver(this);
@@ -231,7 +231,7 @@ class _ChatViewState extends State<ChatView>
                 ? PsConst.CHAT_TO_BUYER
                 : PsConst.CHAT_TO_SELLER);
 
-    await notiProvider.postChatNoti(chatNotiParameterHolder.toMap());
+    await notiProvider!.postChatNoti(chatNotiParameterHolder.toMap());
   }
 
   Future<void> _insertDataToFireBase(
@@ -257,10 +257,10 @@ class _ChatViewState extends State<ChatView>
     messages.sessionId = sessionId;
     messages.type = type;
 
-    final String newkey = _messagesRef.child(sessionId).push().key;
+    final String newkey = _messagesRef!.child(sessionId).push().key;
     messages.id = newkey;
     // Add / Update
-    _messagesRef
+    _messagesRef!
         .child(sessionId)
         .child(newkey)
         .set(messages.toInsertMap(messages));
@@ -287,10 +287,10 @@ class _ChatViewState extends State<ChatView>
     messages.sessionId = sessionId;
 
     final String key =
-        _messagesRef.child(sessionId).child(id).remove().toString();
+        _messagesRef!.child(sessionId).child(id).remove().toString();
     messages.id = key;
     // delete
-    _messagesRef
+    _messagesRef!
         .child(sessionId)
         .child(key)
         .set(messages.toDeleteMap(messages));
@@ -325,7 +325,7 @@ class _ChatViewState extends State<ChatView>
     messages.addedDateTimeStamp = addedDate;
 
     // Update
-    _messagesRef
+    _messagesRef!
         .child(sessionId)
         .child(messages.id)
         .set(messages.toUpdateMap(messages));
@@ -347,12 +347,12 @@ class _ChatViewState extends State<ChatView>
     // chat.senderId = senderId;
 
     // _chatRef.child(senderId).child(sessionId).set(chat.toMap(chat));
-    _chatRef.child(senderId).set(chat.toMap(chat));
+    _chatRef!.child(senderId).set(chat.toMap(chat));
 
     final ChatUserPresence chatUserPresence =
         ChatUserPresence(userId: senderId, userName: userName);
 
-    _userPresence.child(senderId).set(chatUserPresence.toMap(chatUserPresence));
+    _userPresence!.child(senderId).set(chatUserPresence.toMap(chatUserPresence));
   }
 
   @override
@@ -369,22 +369,22 @@ class _ChatViewState extends State<ChatView>
     productRepo = Provider.of<ProductRepository>(context);
     userUnreadMessageRepository =
         Provider.of<UserUnreadMessageRepository>(context);
-    if (psValueHolder.loginUserId != null) {
-      if (psValueHolder.loginUserId == widget.buyerUserId) {
+    if (psValueHolder!.loginUserId != null) {
+      if (psValueHolder!.loginUserId == widget.buyerUserId) {
         sessionId =
             Utils.sortingUserId(widget.sellerUserId, widget.buyerUserId);
         otherUserId = widget.sellerUserId;
-      } else if (psValueHolder.loginUserId == widget.sellerUserId) {
+      } else if (psValueHolder!.loginUserId == widget.sellerUserId) {
         sessionId =
             Utils.sortingUserId(widget.buyerUserId, widget.sellerUserId);
         otherUserId = widget.buyerUserId;
       }
 
-      _insertSenderAndReceiverToFireBase(sessionId, widget.itemId, otherUserId,
-          psValueHolder.loginUserId, psValueHolder.loginUserName);
+      _insertSenderAndReceiverToFireBase(sessionId!, widget.itemId, otherUserId!,
+          psValueHolder!.loginUserId, psValueHolder!.loginUserName);
     }
 
-    _chatRef.child(otherUserId).onValue.listen((Event event) {
+    _chatRef!.child(otherUserId).onValue.listen((Event event) {
       if (event.snapshot.value == null) {
         if (isActive == null || isActive != ChatUserStatus.offline && mounted) {
           setState(() {
@@ -396,7 +396,7 @@ class _ChatViewState extends State<ChatView>
         itemId = event.snapshot.value['itemId'];
         final String _receiverId = event.snapshot.value['receiver_id'];
 
-        if (_receiverId == psValueHolder.loginUserId &&
+        if (_receiverId == psValueHolder!.loginUserId &&
             itemId == widget.itemId) {
           if (isActive != ChatUserStatus.active && mounted) {
             setState(() {
@@ -419,8 +419,8 @@ class _ChatViewState extends State<ChatView>
       if (chatHistory != null &&
           chatHistory.isOffer == PsConst.ONE &&
           chatHistory.isAccept != PsConst.ONE) {
-        await getChatHistoryProvider
-            .getChatHistory(getChatHistoryParameterHolder);
+        await getChatHistoryProvider!
+            .getChatHistory(getChatHistoryParameterHolder!);
         // setState(() {});
       }
     }
@@ -433,9 +433,9 @@ class _ChatViewState extends State<ChatView>
               .iconTheme
               .copyWith(color: PsColors.mainColorWithWhite),
           title: Text(
-            status,
+            status!,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: PsColors.mainColorWithWhite),
           )),
@@ -446,67 +446,67 @@ class _ChatViewState extends State<ChatView>
                 lazy: false,
                 create: (BuildContext context) {
                   itemDetailProvider = ItemDetailProvider(
-                      repo: productRepo, psValueHolder: psValueHolder);
+                      repo: productRepo!, psValueHolder: psValueHolder!);
 
                   final String loginUserId =
-                      Utils.checkUserLoginId(psValueHolder);
-                  itemDetailProvider.loadProduct(widget.itemId, loginUserId);
+                      Utils.checkUserLoginId(psValueHolder!);
+                  itemDetailProvider!.loadProduct(widget.itemId, loginUserId);
 
-                  return itemDetailProvider;
+                  return itemDetailProvider!;
                 }),
             ChangeNotifierProvider<UserUnreadMessageProvider>(
                 lazy: false,
                 create: (BuildContext context) {
                   userUnreadMessageProvider = UserUnreadMessageProvider(
-                      repo: userUnreadMessageRepository);
-                  return userUnreadMessageProvider;
+                      repo: userUnreadMessageRepository!);
+                  return userUnreadMessageProvider!;
                 }),
             ChangeNotifierProvider<ChatHistoryListProvider>(
                 lazy: false,
                 create: (BuildContext context) {
                   chatHistoryListProvider =
-                      ChatHistoryListProvider(repo: chatHistoryRepository);
+                      ChatHistoryListProvider(repo: chatHistoryRepository!);
 
                   //call read message count
-                  resetUnreadMessageCount(chatHistoryListProvider,
-                      psValueHolder, userUnreadMessageProvider);
-                  return chatHistoryListProvider;
+                  resetUnreadMessageCount(chatHistoryListProvider!,
+                      psValueHolder!, userUnreadMessageProvider!);
+                  return chatHistoryListProvider!;
                 }),
             ChangeNotifierProvider<NotificationProvider>(
                 lazy: false,
                 create: (BuildContext context) {
                   notiProvider = NotificationProvider(
-                      repo: notiRepo, psValueHolder: psValueHolder);
+                      repo: notiRepo!, psValueHolder: psValueHolder!);
 
-                  return notiProvider;
+                  return notiProvider!;
                 }),
             ChangeNotifierProvider<GalleryProvider>(
                 lazy: false,
                 create: (BuildContext context) {
                   galleryProvider = GalleryProvider(
-                    repo: galleryRepo,
+                    repo: galleryRepo!,
                   );
 
-                  return galleryProvider;
+                  return galleryProvider!;
                 }),
             ChangeNotifierProvider<GetChatHistoryProvider>(
                 lazy: false,
                 create: (BuildContext context) {
                   getChatHistoryProvider =
-                      GetChatHistoryProvider(repo: chatHistoryRepository);
+                      GetChatHistoryProvider(repo: chatHistoryRepository!);
                   getChatHistoryParameterHolder = GetChatHistoryParameterHolder(
                       itemId: widget.itemId,
                       buyerUserId: widget.buyerUserId,
                       sellerUserId: widget.sellerUserId);
-                  getChatHistoryProvider
-                      .getChatHistory(getChatHistoryParameterHolder);
+                  getChatHistoryProvider!
+                      .getChatHistory(getChatHistoryParameterHolder!);
 
-                  return getChatHistoryProvider;
+                  return getChatHistoryProvider!;
                 }),
           ],
               child: Consumer<ItemDetailProvider>(builder:
                   (BuildContext context, ItemDetailProvider itemDetailProvider,
-                      Widget child) {
+                      Widget? child) {
                 // if (getChatHistoryProvider.chatHistory != null &&
                 //     getChatHistoryProvider.chatHistory.data != null &&
                 if (itemDetailProvider.itemDetail != null &&
@@ -524,21 +524,21 @@ class _ChatViewState extends State<ChatView>
                               width: double.infinity,
                               child: ItemInfoWidget(
                                 insertDataToFireBase: _insertDataToFireBase,
-                                sessionId: sessionId,
-                                itemData: itemDetailProvider.itemDetail.data,
-                                sendByUserId: psValueHolder.loginUserId ?? '',
+                                sessionId: sessionId!,
+                                itemData: itemDetailProvider.itemDetail.data!,
+                                sendByUserId: psValueHolder!.loginUserId ?? '',
                                 chatFlag: widget.chatFlag,
                                 buyerUserId: widget.buyerUserId,
                                 sellerUserId: widget.sellerUserId,
-                                chatHistoryProvider: getChatHistoryProvider,
+                                chatHistoryProvider: getChatHistoryProvider!,
                                 isOffer:
-                                    (getChatHistoryProvider.chatHistory.data !=
+                                    (getChatHistoryProvider!.chatHistory.data !=
                                                 null &&
-                                            getChatHistoryProvider
-                                                    .chatHistory.data.id !=
+                                            getChatHistoryProvider!
+                                                    .chatHistory.data!.id !=
                                                 '')
-                                        ? getChatHistoryProvider
-                                            .chatHistory.data.isOffer
+                                        ? getChatHistoryProvider!
+                                            .chatHistory.data!.isOffer
                                         : '0',
                               ),
                             )),
@@ -548,7 +548,7 @@ class _ChatViewState extends State<ChatView>
                                 const EdgeInsets.only(bottom: PsDimens.space12),
                             child: FirebaseAnimatedList(
                               key: ValueKey<bool>(_anchorToBottom),
-                              query: _messagesRef
+                              query: _messagesRef!
                                   .child(sessionId)
                                   .orderByChild('itemId')
                                   .equalTo(widget.itemId),
@@ -586,13 +586,13 @@ class _ChatViewState extends State<ChatView>
                                   buyerUserId: widget.buyerUserId,
                                   sellerUserId: widget.sellerUserId,
                                   chatFlag: widget.chatFlag,
-                                  chatHistoryProvider: getChatHistoryProvider,
+                                  chatHistoryProvider: getChatHistoryProvider!,
                                   chatHistoryParameterHolder:
-                                      getChatHistoryParameterHolder,
+                                      getChatHistoryParameterHolder!,
                                   messageObj: messages,
                                   itemDetail:
-                                      itemDetailProvider.itemDetail.data,
-                                  psValueHolder: psValueHolder,
+                                      itemDetailProvider.itemDetail.data!,
+                                  psValueHolder: psValueHolder!,
                                   updateDataToFireBase: _updateDataToFireBase,
                                   insertDataToFireBase: _insertDataToFireBase,
                                   deleteDataToFireBase: _deleteDataToFireBase,
@@ -626,10 +626,10 @@ class _ChatViewState extends State<ChatView>
                                                   BorderRadius.circular(
                                                       PsDimens.space8)),
                                           child: Text(
-                                            lastTimeStamp,
+                                            lastTimeStamp!,
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .caption
+                                                .caption!
                                                 .copyWith(color: Colors.white),
                                           ),
                                         ),
@@ -651,7 +651,7 @@ class _ChatViewState extends State<ChatView>
                                     ? _chatCell
                                     : Column(
                                         mainAxisSize: MainAxisSize.min,
-                                        children: <Widget>[
+                                        children: <Widget>[///TODO: need to fix
                                           _chatCell,
                                           _dateWidget,
                                         ],
@@ -668,12 +668,12 @@ class _ChatViewState extends State<ChatView>
                               child: EditTextAndButtonWidget(
                                 messageController: messageController,
                                 insertDataToFireBase: _insertDataToFireBase,
-                                sessionId: sessionId,
-                                itemData: itemDetailProvider.itemDetail.data,
-                                psValueHolder: psValueHolder,
+                                sessionId: sessionId!,
+                                itemData: itemDetailProvider.itemDetail.data!,
+                                psValueHolder: psValueHolder!,
                                 chatFlag: widget.chatFlag,
-                                chatHistoryProvider: getChatHistoryProvider,
-                                galleryProvider: galleryProvider,
+                                chatHistoryProvider: getChatHistoryProvider!,
+                                galleryProvider: galleryProvider!,
                                 buyerUserId: widget.buyerUserId,
                                 sellerUserId: widget.sellerUserId,
                               ),
@@ -691,19 +691,19 @@ class _ChatViewState extends State<ChatView>
 
 class _ChatPageWidget extends StatefulWidget {
   const _ChatPageWidget(
-      {@required this.psValueHolder,
-      @required this.messageObj,
-      @required this.itemDetail,
-      @required this.buyerUserId,
-      @required this.sellerUserId,
-      @required this.updateDataToFireBase,
-      @required this.insertDataToFireBase,
-      @required this.deleteDataToFireBase,
-      @required this.chatHistoryProvider,
-      @required this.chatHistoryParameterHolder,
-      @required this.chatFlag,
-      @required this.checkOfferStatus,
-      @required this.index});
+      {required this.psValueHolder,
+      required this.messageObj,
+      required this.itemDetail,
+      required this.buyerUserId,
+      required this.sellerUserId,
+      required this.updateDataToFireBase,
+      required this.insertDataToFireBase,
+      required this.deleteDataToFireBase,
+      required this.chatHistoryProvider,
+      required this.chatHistoryParameterHolder,
+      required this.chatFlag,
+      required this.checkOfferStatus,
+      required this.index});
   final PsValueHolder psValueHolder;
   final Message messageObj;
   final Product itemDetail;
@@ -1104,8 +1104,8 @@ class __ChatPageWidgetState extends State<_ChatPageWidget> {
 
 class _ChatImageReceiverWidget extends StatelessWidget {
   const _ChatImageReceiverWidget({
-    Key key,
-    @required this.widget,
+    Key? key,
+    required this.widget,
   }) : super(key: key);
 
   final _ChatPageWidget widget;
@@ -1151,9 +1151,9 @@ class _ChatImageReceiverWidget extends StatelessWidget {
 
 class _ChatImageSenderWidget extends StatelessWidget {
   const _ChatImageSenderWidget({
-    Key key,
-    @required this.widget,
-    @required this.deleteDataToFireBase,
+    Key? key,
+    required this.widget,
+    required this.deleteDataToFireBase,
   }) : super(key: key);
 
   final _ChatPageWidget widget;
@@ -1228,9 +1228,9 @@ class _ChatImageSenderWidget extends StatelessWidget {
 
 class _ChatTextReceiverWidget extends StatefulWidget {
   const _ChatTextReceiverWidget({
-    Key key,
-    @required this.widget,
-    @required this.itemDetail,
+    Key? key,
+    required this.widget,
+    required this.itemDetail,
   }) : super(key: key);
 
   final _ChatPageWidget widget;
@@ -1262,7 +1262,7 @@ class __ChatTextReceiverWidgetState extends State<_ChatTextReceiverWidget> {
           height: 40,
           child: PsNetworkCircleImageForUser(
             photoKey: '',
-            imagePath: widget.itemDetail.user.userProfilePhoto,
+            imagePath: widget.itemDetail.user!.userProfilePhoto!,
             boxfit: BoxFit.cover,
             onTap: () {
             
@@ -1291,7 +1291,7 @@ class __ChatTextReceiverWidgetState extends State<_ChatTextReceiverWidget> {
             child: GestureDetector(
               onLongPress: () {
                 FocusScope.of(context).requestFocus(FocusNode());
-                final RenderBox overlay =
+                final RenderObject? overlay =
                     Overlay.of(context).context.findRenderObject();
 
                 showMenu(
@@ -1338,10 +1338,10 @@ class __ChatTextReceiverWidgetState extends State<_ChatTextReceiverWidget> {
                             //)
                           )),
                     ],
-                    position: RelativeRect.fromRect(
-                        _tapPosition & const Size(1, 1),
+                    position: RelativeRect.fromRect( ///TODO: need to fix
+                        _tapPosition &  Size(1, 1),
                         Offset.zero &
-                            overlay.size // Bigger rect, the entire screen
+                            overlay!.depth // Bigger rect, the entire screen
                         ));
               },
               onTapDown: _storePosition,
@@ -1350,7 +1350,7 @@ class __ChatTextReceiverWidgetState extends State<_ChatTextReceiverWidget> {
                 text: widget.widget.messageObj.message,
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText2
+                    .bodyText2!
                     .copyWith(color: PsColors.textPrimaryColorForLight),
               ),
             ),
@@ -1370,9 +1370,9 @@ class __ChatTextReceiverWidgetState extends State<_ChatTextReceiverWidget> {
 
 class _ChatTextSenderWidget extends StatefulWidget {
   const _ChatTextSenderWidget({
-    Key key,
-    @required this.widget,
-    @required this.deleteDataToFireBase,
+    Key? key,
+    required this.widget,
+    required this.deleteDataToFireBase,
   }) : super(key: key);
 
   final _ChatPageWidget widget;
@@ -1424,7 +1424,7 @@ class __ChatTextSenderWidgetState extends State<_ChatTextSenderWidget> {
           child: GestureDetector(
             onLongPress: () {
               FocusScope.of(context).requestFocus(FocusNode());
-              final RenderBox overlay =
+              final RenderObject? overlay =
                   Overlay.of(context).context.findRenderObject();
 
               showMenu(
@@ -1513,7 +1513,7 @@ class __ChatTextSenderWidgetState extends State<_ChatTextSenderWidget> {
                   ],
                   position: RelativeRect.fromRect(
                       _tapPosition & const Size(1, 1),
-                      Offset.zero &
+                      Offset.zero & ///TODO:need to fix
                           overlay.size // Bigger rect, the entire screen
                       ));
             },
@@ -1523,7 +1523,7 @@ class __ChatTextSenderWidgetState extends State<_ChatTextSenderWidget> {
               text: widget.widget.messageObj.message,
               style: Theme.of(context)
                   .textTheme
-                  .bodyText2
+                  .bodyText2!
                   .copyWith(color: PsColors.textPrimaryColorForLight),
             ),
           ),
@@ -1535,15 +1535,15 @@ class __ChatTextSenderWidgetState extends State<_ChatTextSenderWidget> {
 
 class _MakeIsUserBoughtWidget extends StatefulWidget {
   const _MakeIsUserBoughtWidget(
-      {@required this.messageObj,
-      @required this.updateDataToFireBase,
-      @required this.insertDataToFireBase,
-      @required this.chatHistoryProvider,
-      @required this.loginUserId,
-      @required this.sellerUserId,
-      @required this.buyerUserId,
-      @required this.itemDetail,
-      @required this.psValueHolder});
+      {required this.messageObj,
+      required this.updateDataToFireBase,
+      required this.insertDataToFireBase,
+      required this.chatHistoryProvider,
+      required this.loginUserId,
+      required this.sellerUserId,
+      required this.buyerUserId,
+      required this.itemDetail,
+      required this.psValueHolder});
   final Message messageObj;
   final Function updateDataToFireBase;
   final Function insertDataToFireBase;
@@ -1587,7 +1587,7 @@ class __MakeIsUserBoughtWidgetState extends State<_MakeIsUserBoughtWidget> {
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1
+                        .subtitle1!
                         .copyWith(color: PsColors.textPrimaryColorForLight),
                   ),
                   const SizedBox(height: PsDimens.space12),
@@ -1598,7 +1598,7 @@ class __MakeIsUserBoughtWidgetState extends State<_MakeIsUserBoughtWidget> {
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2
+                        .bodyText2!
                         .copyWith(color: PsColors.textPrimaryColorForLight),
                   ),
                 ],
@@ -1633,7 +1633,7 @@ class __MakeIsUserBoughtWidgetState extends State<_MakeIsUserBoughtWidget> {
                     Utils.getString(context, 'chat_view__give_review_button'),
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2
+                        .bodyText2!
                         .copyWith(color: Colors.white),
                   ),
                 ),
@@ -1691,7 +1691,7 @@ class __MakeIsUserBoughtWidgetState extends State<_MakeIsUserBoughtWidget> {
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText2
+                            .bodyText2!
                             .copyWith(color: Colors.white),
                       ),
                     ),
@@ -1708,11 +1708,11 @@ class __MakeIsUserBoughtWidgetState extends State<_MakeIsUserBoughtWidget> {
 
 class _MakeMarkAsSoldWidget extends StatefulWidget {
   const _MakeMarkAsSoldWidget(
-      {@required this.messageObj,
-      @required this.itemDetail,
-      @required this.psValueHolder,
-      @required this.buyerUserId,
-      @required this.sellerUserId});
+      {required this.messageObj,
+      required this.itemDetail,
+      required this.psValueHolder,
+      required this.buyerUserId,
+      required this.sellerUserId});
   final Message messageObj;
   final Product itemDetail;
   final PsValueHolder psValueHolder;
@@ -1749,7 +1749,7 @@ class __MakeMarkAsSoldWidgetState extends State<_MakeMarkAsSoldWidget> {
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1
+                        .subtitle1!
                         .copyWith(color: PsColors.textPrimaryColorForLight),
                   ),
                   const SizedBox(height: PsDimens.space12),
@@ -1760,7 +1760,7 @@ class __MakeMarkAsSoldWidgetState extends State<_MakeMarkAsSoldWidget> {
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2
+                        .bodyText2!
                         .copyWith(color: PsColors.textPrimaryColorForLight),
                   ),
                 ],
@@ -1775,11 +1775,11 @@ class __MakeMarkAsSoldWidgetState extends State<_MakeMarkAsSoldWidget> {
 
 class _MakeIsUserBoughtForBuyerWidget extends StatefulWidget {
   const _MakeIsUserBoughtForBuyerWidget(
-      {@required this.messageObj,
-      @required this.itemDetail,
-      @required this.psValueHolder,
-      @required this.buyerUserId,
-      @required this.sellerUserId});
+      {required this.messageObj,
+      required this.itemDetail,
+      required this.psValueHolder,
+      required this.buyerUserId,
+      required this.sellerUserId});
   final Message messageObj;
   final Product itemDetail;
   final PsValueHolder psValueHolder;
@@ -1818,7 +1818,7 @@ class __MakeIsUserBoughtForBuyerWidgetState
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1
+                        .subtitle1!
                         .copyWith(color: PsColors.textPrimaryColorForLight),
                   ),
                   const SizedBox(height: PsDimens.space12),
@@ -1829,7 +1829,7 @@ class __MakeIsUserBoughtForBuyerWidgetState
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2
+                        .bodyText2!
                         .copyWith(color: PsColors.textPrimaryColorForLight),
                   ),
                 ],
@@ -1865,7 +1865,7 @@ class __MakeIsUserBoughtForBuyerWidgetState
                     Utils.getString(context, 'chat_view__give_review_button'),
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2
+                        .bodyText2!
                         .copyWith(color: Colors.white),
                   ),
                 ),
@@ -1880,8 +1880,8 @@ class __MakeIsUserBoughtForBuyerWidgetState
 
 class _OfferReceivedBoxWithoutAcceptAndRejectWidget extends StatelessWidget {
   const _OfferReceivedBoxWithoutAcceptAndRejectWidget({
-    @required this.messageObj,
-    @required this.itemDetail,
+    required this.messageObj,
+    required this.itemDetail,
   });
   final Message messageObj;
   final Product itemDetail;
@@ -1910,7 +1910,7 @@ class _OfferReceivedBoxWithoutAcceptAndRejectWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle1
+                    .subtitle1!
                     .copyWith(color: PsColors.textPrimaryColorForLight),
               ),
               const SizedBox(height: PsDimens.space12),
@@ -1921,7 +1921,7 @@ class _OfferReceivedBoxWithoutAcceptAndRejectWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .headline6
+                    .headline6!
                     .copyWith(color: PsColors.textPrimaryColorForLight),
               ),
             ],
@@ -1938,15 +1938,15 @@ class _OfferReceivedBoxWithoutAcceptAndRejectWidget extends StatelessWidget {
 
 class _OfferReceivedBoxWithAcceptAndRejectWidget extends StatelessWidget {
   const _OfferReceivedBoxWithAcceptAndRejectWidget(
-      {@required this.messageObj,
-      @required this.chatFlag,
-      @required this.updateDataToFireBase,
-      @required this.insertDataToFireBase,
-      @required this.chatHistoryProvider,
-      @required this.loginUserId,
-      @required this.sellerUserId,
-      @required this.itemDetail,
-      @required this.buyerUserId});
+      {required this.messageObj,
+      required this.chatFlag,
+      required this.updateDataToFireBase,
+      required this.insertDataToFireBase,
+      required this.chatHistoryProvider,
+      required this.loginUserId,
+      required this.sellerUserId,
+      required this.itemDetail,
+      required this.buyerUserId});
   final Message messageObj;
   final String chatFlag;
   final Function updateDataToFireBase;
@@ -1982,7 +1982,7 @@ class _OfferReceivedBoxWithAcceptAndRejectWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle1
+                    .subtitle1!
                     .copyWith(color: PsColors.textPrimaryColorForLight),
               ),
               const SizedBox(height: PsDimens.space12),
@@ -1993,7 +1993,7 @@ class _OfferReceivedBoxWithAcceptAndRejectWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .headline6
+                    .headline6!
                     .copyWith(color: PsColors.textPrimaryColorForLight),
               ),
             ],
@@ -2080,7 +2080,7 @@ class _OfferReceivedBoxWithAcceptAndRejectWidget extends StatelessWidget {
                     Utils.getString(context, 'chat_view__offer_accept_button'),
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2
+                        .bodyText2!
                         .copyWith(color: Colors.white),
                   ),
                 ),
@@ -2175,14 +2175,14 @@ class _OfferReceivedBoxWithAcceptAndRejectWidget extends StatelessWidget {
 
 class _OfferAcceptedWithIsUserBoughtWidget extends StatelessWidget {
   const _OfferAcceptedWithIsUserBoughtWidget(
-      {@required this.messageObj,
-      @required this.updateDataToFireBase,
-      @required this.insertDataToFireBase,
-      @required this.chatHistoryProvider,
-      @required this.loginUserId,
-      @required this.sellerUserId,
-      @required this.buyerUserId,
-      @required this.itemDetail});
+      {required this.messageObj,
+      required this.updateDataToFireBase,
+      required this.insertDataToFireBase,
+      required this.chatHistoryProvider,
+      required this.loginUserId,
+      required this.sellerUserId,
+      required this.buyerUserId,
+      required this.itemDetail});
   final Message messageObj;
   final Function updateDataToFireBase;
   final Function insertDataToFireBase;
@@ -2253,7 +2253,7 @@ class _OfferAcceptedWithIsUserBoughtWidget extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText2
+                          .bodyText2!
                           .copyWith(color: Colors.white),
                     ),
                   ),
@@ -2270,7 +2270,7 @@ class _OfferAcceptedWithIsUserBoughtWidget extends StatelessWidget {
 
 class _AcceptedOrRejectedMessageWidget extends StatelessWidget {
   const _AcceptedOrRejectedMessageWidget(
-      {@required this.messageObj, @required this.itemDetail});
+      {required this.messageObj, required this.itemDetail});
   final Message messageObj;
   final Product itemDetail;
   @override
@@ -2311,7 +2311,7 @@ class _AcceptedOrRejectedMessageWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
-                      .subtitle1
+                      .subtitle1!
                       .copyWith(color: PsColors.textPrimaryColorForLight),
                 ),
                 const SizedBox(height: PsDimens.space12),
@@ -2322,7 +2322,7 @@ class _AcceptedOrRejectedMessageWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
-                      .headline6
+                      .headline6!
                       .copyWith(color: PsColors.textPrimaryColorForLight),
                 ),
               ],
@@ -2336,17 +2336,17 @@ class _AcceptedOrRejectedMessageWidget extends StatelessWidget {
 
 class EditTextAndButtonWidget extends StatefulWidget {
   const EditTextAndButtonWidget({
-    Key key,
-    @required this.messageController,
-    @required this.insertDataToFireBase,
-    @required this.sessionId,
-    @required this.itemData,
-    @required this.psValueHolder,
-    @required this.chatFlag,
-    @required this.chatHistoryProvider,
-    @required this.galleryProvider,
-    @required this.buyerUserId,
-    @required this.sellerUserId,
+    Key? key,
+    required this.messageController,
+    required this.insertDataToFireBase,
+    required this.sessionId,
+    required this.itemData,
+    required this.psValueHolder,
+    required this.chatFlag,
+    required this.chatHistoryProvider,
+    required this.galleryProvider,
+    required this.buyerUserId,
+    required this.sellerUserId,
   }) : super(key: key);
 
   final TextEditingController messageController;
@@ -2365,9 +2365,9 @@ class EditTextAndButtonWidget extends StatefulWidget {
       _EditTextAndButtonWidgetState();
 }
 
-File pickedImage;
+File? pickedImage;
 List<Asset> images = <Asset>[];
-Asset defaultAssetImage;
+Asset? defaultAssetImage;
 
 class _EditTextAndButtonWidgetState extends State<EditTextAndButtonWidget> {
   Future<bool> requestGalleryPermission() async {
@@ -2392,15 +2392,15 @@ class _EditTextAndButtonWidgetState extends State<EditTextAndButtonWidget> {
         selectedAssets: images,
         cupertinoOptions: const CupertinoOptions(takePhotoIcon: 'chat'),
         materialOptions: MaterialOptions(
-          actionBarColor: Utils.convertColorToString(PsColors.black),
-          actionBarTitleColor: Utils.convertColorToString(PsColors.white),
-          statusBarColor: Utils.convertColorToString(PsColors.black),
+          actionBarColor: Utils.convertColorToString(PsColors.black!),
+          actionBarTitleColor: Utils.convertColorToString(PsColors.white!),
+          statusBarColor: Utils.convertColorToString(PsColors.black!),
           lightStatusBar: false,
           actionBarTitle: '',
           allViewTitle: 'All Photos',
           useDetailsView: false,
           selectCircleStrokeColor:
-              Utils.convertColorToString(PsColors.mainColor),
+              Utils.convertColorToString(PsColors.mainColor!),
         ),
       );
     } on Exception catch (e) {
@@ -2434,7 +2434,7 @@ class _EditTextAndButtonWidgetState extends State<EditTextAndButtonWidget> {
             widget.psValueHolder.loginUserId,
             widget.psValueHolder.loginUserId,
             widget.buyerUserId,
-            widget.itemData.id,
+            widget.itemData.id!,
             PsConst.CHAT_TO_BUYER,
             await Utils.getImageFileFromAssets(
                 images[0], PsConfig.chatImageSize),
@@ -2444,7 +2444,7 @@ class _EditTextAndButtonWidgetState extends State<EditTextAndButtonWidget> {
             widget.sellerUserId,
             widget.sellerUserId,
             widget.psValueHolder.loginUserId,
-            widget.itemData.id,
+            widget.itemData.id!,
             PsConst.CHAT_TO_SELLER,
             await Utils.getImageFileFromAssets(
                 images[0], PsConfig.chatImageSize),
@@ -2457,7 +2457,7 @@ class _EditTextAndButtonWidgetState extends State<EditTextAndButtonWidget> {
               false,
               false,
               widget.itemData.id,
-              _apiStatus.data.imgPath,
+              _apiStatus.data!.imgPath,
               PsConst.CHAT_STATUS_NULL,
               widget.psValueHolder.loginUserId,
               widget.sessionId,
@@ -2472,7 +2472,7 @@ class _EditTextAndButtonWidgetState extends State<EditTextAndButtonWidget> {
   Widget build(BuildContext context) {
     SyncChatHistoryParameterHolder holder;
     return Consumer<GalleryProvider>(builder:
-        (BuildContext context, GalleryProvider provider, Widget child) {
+        (BuildContext context, GalleryProvider provider, Widget? child) {
       return SizedBox(
         width: double.infinity,
         height: PsDimens.space72,
@@ -2480,17 +2480,13 @@ class _EditTextAndButtonWidgetState extends State<EditTextAndButtonWidget> {
           decoration: BoxDecoration(
             color: Utils.isLightMode(context) ? Colors.white : Colors.grey[850],
             border: Border.all(
-                color: Utils.isLightMode(context)
-                    ? Colors.grey[200]
-                    : Colors.grey[900]),
+                color: Utils.isLightMode(context) ? Colors.grey.shade200 : Colors.grey.shade900),
             borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(PsDimens.space12),
                 topRight: Radius.circular(PsDimens.space12)),
             boxShadow: <BoxShadow>[
               BoxShadow(
-                color: Utils.isLightMode(context)
-                    ? Colors.grey[300]
-                    : Colors.grey[900],
+                color: Utils.isLightMode(context) ? Colors.grey.shade300 : Colors.grey.shade900,
                 blurRadius: 1.0, // has the effect of softening the shadow
                 spreadRadius: 0, // has the effect of extending the shadow
                 offset: const Offset(
@@ -2538,7 +2534,7 @@ class _EditTextAndButtonWidgetState extends State<EditTextAndButtonWidget> {
                       borderRadius: BorderRadius.circular(PsDimens.space4),
                       border: Border.all(
                           color: Utils.isLightMode(context)
-                              ? Colors.grey[200]
+                              ? Colors.grey.shade200
                               : Colors.black87),
                     ),
                     child: InkWell(
@@ -2573,7 +2569,7 @@ class _EditTextAndButtonWidgetState extends State<EditTextAndButtonWidget> {
 
                         if (widget.chatFlag == PsConst.CHAT_FROM_BUYER) {
                           holder = SyncChatHistoryParameterHolder(
-                              itemId: widget.itemData.id,
+                              itemId: widget.itemData.id!,
                               buyerUserId: widget.buyerUserId,
                               sellerUserId: widget.sellerUserId,
                               type: PsConst.CHAT_FROM_SELLER);
@@ -2581,7 +2577,7 @@ class _EditTextAndButtonWidgetState extends State<EditTextAndButtonWidget> {
                               .postChatHistory(holder.toMap());
                         } else {
                           holder = SyncChatHistoryParameterHolder(
-                              itemId: widget.itemData.id,
+                              itemId: widget.itemData.id!,
                               sellerUserId: widget.sellerUserId,
                               buyerUserId: widget.buyerUserId,
                               type: PsConst.CHAT_FROM_BUYER);
@@ -2638,16 +2634,16 @@ class _EditTextAndButtonWidgetState extends State<EditTextAndButtonWidget> {
 
 class ItemInfoWidget extends StatefulWidget {
   const ItemInfoWidget({
-    Key key,
-    @required this.insertDataToFireBase,
-    @required this.sessionId,
-    @required this.itemData,
-    @required this.sendByUserId,
-    @required this.chatFlag,
-    @required this.chatHistoryProvider,
-    @required this.buyerUserId,
-    @required this.sellerUserId,
-    @required this.isOffer,
+    Key? key,
+    required this.insertDataToFireBase,
+    required this.sessionId,
+    required this.itemData,
+    required this.sendByUserId,
+    required this.chatFlag,
+    required this.chatHistoryProvider,
+    required this.buyerUserId,
+    required this.sellerUserId,
+    required this.isOffer,
   }) : super(key: key);
 
   final Function insertDataToFireBase;
@@ -2685,18 +2681,18 @@ class _ItemInfoWidgetState extends State<ItemInfoWidget> {
 
     final Widget _imageWidget = PsNetworkImage(
       photoKey: '',
-      defaultPhoto: widget.itemData.defaultPhoto,
+      defaultPhoto: widget.itemData.defaultPhoto!,
       // width: 50,
       // height: 50,
       boxfit: BoxFit.cover,
       onTap: () {
         final ProductDetailIntentHolder holder = ProductDetailIntentHolder(
-            productId: widget.itemData.id,
+            productId: widget.itemData.id!,
             heroTagImage: widget.chatHistoryProvider.hashCode.toString() +
-                widget.itemData.id +
+                widget.itemData.id! +
                 PsConst.HERO_TAG__IMAGE,
             heroTagTitle: widget.chatHistoryProvider.hashCode.toString() +
-                widget.itemData.id +
+                widget.itemData.id! +
                 PsConst.HERO_TAG__TITLE);
         Navigator.pushNamed(context, RoutePaths.productDetail,
             arguments: holder);
@@ -2706,12 +2702,12 @@ class _ItemInfoWidgetState extends State<ItemInfoWidget> {
     return GestureDetector(
       onTap: () {
         final ProductDetailIntentHolder holder = ProductDetailIntentHolder(
-            productId: widget.itemData.id,
+            productId: widget.itemData.id!,
             heroTagImage: widget.chatHistoryProvider.hashCode.toString() +
-                widget.itemData.id +
+                widget.itemData.id! +
                 PsConst.HERO_TAG__IMAGE,
             heroTagTitle: widget.chatHistoryProvider.hashCode.toString() +
-                widget.itemData.id +
+                widget.itemData.id! +
                 PsConst.HERO_TAG__TITLE);
         Navigator.pushNamed(context, RoutePaths.productDetail,
             arguments: holder);
@@ -2736,7 +2732,7 @@ class _ItemInfoWidgetState extends State<ItemInfoWidget> {
                   Text(
 // 'dddd'
 
-                      widget.itemData.title,
+                      widget.itemData.title!,
                       style: Theme.of(context).textTheme.subtitle1),
                   _spacingWidget,
                   Row(
@@ -2746,7 +2742,7 @@ class _ItemInfoWidgetState extends State<ItemInfoWidget> {
                           widget.itemData.price != null &&
                                   widget.itemData.price != '0' &&
                                   widget.itemData.price != ''
-                              ? '${widget.itemData.itemCurrency.currencySymbol} ${Utils.getPriceFormat(widget.itemData.price)} ( ${widget.itemData.conditionOfItem.name} )'
+                              ? '${widget.itemData.itemCurrency!.currencySymbol} ${Utils.getPriceFormat(widget.itemData.price!)} ( ${widget.itemData.conditionOfItem!.name} )'
                               : Utils.getString(context, 'item_price_free'),
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
@@ -2765,7 +2761,7 @@ class _ItemInfoWidgetState extends State<ItemInfoWidget> {
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
-                                  .caption
+                                  .caption!
                                   .copyWith(color: Colors.white),
                             ),
                           )
@@ -2783,7 +2779,7 @@ class _ItemInfoWidgetState extends State<ItemInfoWidget> {
                               textAlign: TextAlign.center,
                               style: Theme.of(context)
                                   .textTheme
-                                  .caption
+                                  .caption!
                                   .copyWith(color: Colors.white),
                             ),
                           )
@@ -2797,14 +2793,14 @@ class _ItemInfoWidgetState extends State<ItemInfoWidget> {
               ),
             ),
             Consumer<GetChatHistoryProvider>(builder: (BuildContext context,
-                GetChatHistoryProvider getChatHistoryProvider, Widget child) {
+                GetChatHistoryProvider getChatHistoryProvider, Widget? child) {
               if (getChatHistoryProvider.chatHistory == null ||
                   getChatHistoryProvider.chatHistory.data == null) {
                 return Container();
               }
               bool _showOffer = true;
-              if (getChatHistoryProvider.chatHistory.data.id != '') {
-                if (getChatHistoryProvider.chatHistory.data.isOffer == '1') {
+              if (getChatHistoryProvider.chatHistory.data!.id != '') {
+                if (getChatHistoryProvider.chatHistory.data!.isOffer == '1') {
                   _showOffer = false;
                 }
               }
@@ -2820,12 +2816,12 @@ class _ItemInfoWidgetState extends State<ItemInfoWidget> {
 
                               if (widget.chatFlag == PsConst.CHAT_FROM_BUYER) {
                                 holder = MakeOfferParameterHolder(
-                                    itemId: widget.itemData.id,
+                                    itemId: widget.itemData.id!,
                                     buyerUserId: widget.buyerUserId == ''
                                         ? widget.sendByUserId
                                         : widget.buyerUserId,
                                     sellerUserId: widget.sellerUserId == ''
-                                        ? widget.itemData.user.userId
+                                        ? widget.itemData.user!.userId!
                                         : widget.sellerUserId,
                                     type: PsConst.CHAT_TO_BUYER,
                                     negoPrice: price);
@@ -2841,9 +2837,9 @@ class _ItemInfoWidgetState extends State<ItemInfoWidget> {
                                 }
                               } else {
                                 holder = MakeOfferParameterHolder(
-                                    itemId: widget.itemData.id,
+                                    itemId: widget.itemData.id!,
                                     sellerUserId: widget.sellerUserId == ''
-                                        ? widget.itemData.user.userId
+                                        ? widget.itemData.user!.userId!
                                         : widget.sellerUserId,
                                     buyerUserId: widget.buyerUserId == ''
                                         ? widget.sendByUserId
@@ -2862,7 +2858,7 @@ class _ItemInfoWidgetState extends State<ItemInfoWidget> {
                               }
 
                               final String makeOfferMessae =
-                                  '${widget.itemData.itemCurrency.currencySymbol} $price';
+                                  '${widget.itemData.itemCurrency!.currencySymbol} $price';
                               widget.insertDataToFireBase(
                                   '',
                                   false,
@@ -2891,7 +2887,7 @@ class _ItemInfoWidgetState extends State<ItemInfoWidget> {
                                 BorderRadius.circular(PsDimens.space4),
                             border: Border.all(
                                 color: Utils.isLightMode(context)
-                                    ? Colors.grey[200]
+                                    ? Colors.grey.shade200
                                     : Colors.black87),
                           ),
                           child: Ink(
@@ -2903,7 +2899,7 @@ class _ItemInfoWidgetState extends State<ItemInfoWidget> {
                                     'chat_view__make_offer_button_name'),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText2
+                                    .bodyText2!
                                     .copyWith(color: Colors.white),
                               ),
                             ),
@@ -2920,8 +2916,8 @@ class _ItemInfoWidgetState extends State<ItemInfoWidget> {
 
 class _ChatMakeOfferSenderBoxWidget extends StatelessWidget {
   const _ChatMakeOfferSenderBoxWidget({
-    @required this.messageObj,
-    @required this.itemDetail,
+    required this.messageObj,
+    required this.itemDetail,
   });
   final Message messageObj;
   final Product itemDetail;
@@ -2956,7 +2952,7 @@ class _ChatMakeOfferSenderBoxWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle1
+                    .subtitle1!
                     .copyWith(color: PsColors.textPrimaryColorForLight),
               ),
               const SizedBox(height: PsDimens.space12),
@@ -2967,7 +2963,7 @@ class _ChatMakeOfferSenderBoxWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .headline6
+                    .headline6!
                     .copyWith(color: PsColors.textPrimaryColorForLight),
               ),
             ],
@@ -3032,8 +3028,8 @@ class _ChatMakeOfferSenderBoxWidget extends StatelessWidget {
 
 class _ChatAcceptedOrRejectedOfferReceiverBoxWidget extends StatelessWidget {
   const _ChatAcceptedOrRejectedOfferReceiverBoxWidget({
-    @required this.messageObj,
-    @required this.itemDetail,
+    required this.messageObj,
+    required this.itemDetail,
   });
   final Message messageObj;
   final Product itemDetail;
@@ -3067,7 +3063,7 @@ class _ChatAcceptedOrRejectedOfferReceiverBoxWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle1
+                    .subtitle1!
                     .copyWith(color: PsColors.textPrimaryColorForLight),
               ),
               const SizedBox(height: PsDimens.space12),
@@ -3078,7 +3074,7 @@ class _ChatAcceptedOrRejectedOfferReceiverBoxWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .headline6
+                    .headline6!
                     .copyWith(color: PsColors.textPrimaryColorForLight),
               ),
             ],
@@ -3095,8 +3091,8 @@ class _ChatAcceptedOrRejectedOfferReceiverBoxWidget extends StatelessWidget {
 
 class _ChatAcceptedOrRejectedOfferSenderBoxWidget extends StatelessWidget {
   const _ChatAcceptedOrRejectedOfferSenderBoxWidget({
-    @required this.messageObj,
-    @required this.itemDetail,
+    required this.messageObj,
+    required this.itemDetail,
   });
   final Message messageObj;
   final Product itemDetail;
@@ -3133,7 +3129,7 @@ class _ChatAcceptedOrRejectedOfferSenderBoxWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle1
+                    .subtitle1!
                     .copyWith(color: PsColors.textPrimaryColorForLight),
               ),
               const SizedBox(height: PsDimens.space12),
@@ -3144,7 +3140,7 @@ class _ChatAcceptedOrRejectedOfferSenderBoxWidget extends StatelessWidget {
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .headline6
+                    .headline6!
                     .copyWith(color: PsColors.textPrimaryColorForLight),
               ),
             ],

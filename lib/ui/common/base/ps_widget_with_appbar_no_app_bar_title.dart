@@ -4,9 +4,9 @@ import 'package:provider/provider.dart';
 class PsWidgetWithAppBarNoAppBarTitle<T extends ChangeNotifier>
     extends StatefulWidget {
   const PsWidgetWithAppBarNoAppBarTitle(
-      {Key key,
-      @required this.builder,
-      @required this.initProvider,
+      {Key? key,
+      required this.builder,
+      required this.initProvider,
       this.child,
       this.onProviderReady,
       this.appBarTitle})
@@ -14,9 +14,9 @@ class PsWidgetWithAppBarNoAppBarTitle<T extends ChangeNotifier>
 
   final Widget Function(BuildContext context, T provider, Widget child) builder;
   final Function initProvider;
-  final Widget child;
-  final Function(T) onProviderReady;
-  final String appBarTitle;
+  final Widget? child;
+  final Function(T)? onProviderReady;
+  final String? appBarTitle;
 
   @override
   _PsWidgetWithAppBarState<T> createState() => _PsWidgetWithAppBarState<T>();
@@ -53,7 +53,7 @@ class _PsWidgetWithAppBarState<T extends ChangeNotifier>
       create: (BuildContext context) {
         final T providerObj = widget.initProvider();
         if (widget.onProviderReady != null) {
-          widget.onProviderReady(providerObj);
+          widget.onProviderReady!(providerObj);
         }
 
         return providerObj;

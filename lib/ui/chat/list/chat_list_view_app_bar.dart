@@ -9,8 +9,8 @@ class ChatListViewAppBar extends StatefulWidget {
       {this.selectedIndex = 0,
       this.showElevation = true,
       this.iconSize = 24,
-      @required this.items,
-      @required this.onItemSelected})
+      required this.items,
+      required this.onItemSelected})
       : assert(items != null),
         assert(items.length >= 2 && items.length <= 5),
         assert(onItemSelected != null);
@@ -33,14 +33,14 @@ class ChatListViewAppBar extends StatefulWidget {
 
 class _ChatListViewAppBarState extends State<ChatListViewAppBar> {
   _ChatListViewAppBarState(
-      {@required this.items,
+      {required this.items,
       this.iconSize,
       this.selectedIndexNo,
-      @required this.onItemSelected});
+      required this.onItemSelected});
 
-  final double iconSize;
+  final double? iconSize;
   List<ChatListViewAppBarItem> items;
-  int selectedIndexNo;
+  int? selectedIndexNo;
 
   ValueChanged<int> onItemSelected;
 
@@ -70,7 +70,7 @@ class _ChatListViewAppBarState extends State<ChatListViewAppBar> {
             item.title,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyText1.copyWith(
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: isSelected ? item.activeColor : item.inactiveColor),
           ),
         ],
@@ -133,18 +133,18 @@ class _ChatListViewAppBarState extends State<ChatListViewAppBar> {
 
 class ChatListViewAppBarItem {
   ChatListViewAppBarItem(
-      {@required this.title,
-      Color activeColor,
-      Color activeBackgroundColor,
-      Color inactiveColor,
-      Color inactiveBackgroundColor})
+      {required this.title,
+      Color? activeColor,
+      Color? activeBackgroundColor,
+      Color? inactiveColor,
+      Color? inactiveBackgroundColor})
       : assert(title != null),
-        activeColor = activeColor ?? PsColors.mainColor,
+        activeColor = activeColor ?? PsColors.mainColor!,
         activeBackgroundColor =
-            activeBackgroundColor ?? PsColors.mainLightColor,
-        inactiveColor = inactiveColor ?? PsColors.grey,
+            activeBackgroundColor ?? PsColors.mainLightColor!,
+        inactiveColor = inactiveColor ?? PsColors.grey!,
         inactiveBackgroundColor =
-            inactiveBackgroundColor ?? PsColors.grey.withOpacity(0.2);
+            inactiveBackgroundColor ?? PsColors.grey!.withOpacity(0.2);
 
   final String title;
   final Color activeColor;

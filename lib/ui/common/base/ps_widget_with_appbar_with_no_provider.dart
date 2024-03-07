@@ -5,14 +5,14 @@ import 'package:flutter/material.dart';
 
 class PsWidgetWithAppBarWithNoProvider extends StatefulWidget {
   const PsWidgetWithAppBarWithNoProvider(
-      {Key key,
+      {Key? key,
       this.builder,
-      @required this.child,
-      @required this.appBarTitle,
+      required this.child,
+      required this.appBarTitle,
       this.actions = const <Widget>[]})
       : super(key: key);
 
-  final Widget Function(BuildContext context, Widget child) builder;
+  final Widget Function(BuildContext context, Widget child)? builder;
 
   final Widget child;
 
@@ -44,7 +44,7 @@ class _PsWidgetWithAppBarWithNoProviderState
         title: Text(widget.appBarTitle,
             style: Theme.of(context)
                 .textTheme
-                .headline6
+                .headline6!
                 .copyWith(fontWeight: FontWeight.bold)
                 .copyWith(color: PsColors.mainColorWithWhite)),
         actions: widget.actions,

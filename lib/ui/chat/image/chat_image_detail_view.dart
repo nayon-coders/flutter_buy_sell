@@ -5,7 +5,7 @@ import 'package:flutterbuyandsell/viewobject/message.dart';
 import 'package:photo_view/photo_view_gallery.dart';
 
 class ChatImageDetailView extends StatefulWidget {
-  const ChatImageDetailView({@required this.messageObj});
+  const ChatImageDetailView({required this.messageObj});
   final Message messageObj;
   @override
   _ChatImageDetailViewState createState() => _ChatImageDetailViewState();
@@ -25,7 +25,7 @@ class _ChatImageDetailViewState extends State<ChatImageDetailView> {
           title: Text('',
               style: Theme.of(context)
                   .textTheme
-                  .headline6
+                  .headline6!
                   .copyWith(fontWeight: FontWeight.bold)
                   .copyWith(color: PsColors.mainColorWithWhite)),
         ),

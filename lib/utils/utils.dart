@@ -68,14 +68,14 @@ mixin Utils {
     return emailFormat;
   }
 
-  static DateTime previous;
+  static DateTime? previous;
   static void psPrint(String msg) {
     final DateTime now = DateTime.now();
     int min = 0;
     if (previous == null) {
       previous = now;
     } else {
-      min = now.difference(previous).inMilliseconds;
+      min = now.difference(previous!).inMilliseconds;
       previous = now;
     }
 
@@ -347,7 +347,7 @@ mixin Utils {
   }
 
   static dynamic launchAppStoreURL(
-      {String iOSAppId, bool writeReview = false}) async {
+      {String? iOSAppId, bool writeReview = false}) async {
     LaunchReview.launch(writeReview: writeReview, iOSAppId: iOSAppId);
   }
 
@@ -441,8 +441,8 @@ mixin Utils {
   static Future<void> saveDeviceToken(
       FirebaseMessaging _fcm, NotificationProvider notificationProvider) async {
     // Get the token for this device
-    final String fcmToken = await _fcm.getToken();
-    await notificationProvider.replaceNotiToken(fcmToken);
+    final String? fcmToken = await _fcm.getToken();
+    await notificationProvider.replaceNotiToken(fcmToken!);
 
     final NotiRegisterParameterHolder notiRegisterParameterHolder =
         NotiRegisterParameterHolder(

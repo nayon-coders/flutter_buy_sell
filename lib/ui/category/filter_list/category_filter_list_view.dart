@@ -28,14 +28,14 @@ class _CategoryFilterListViewState extends State<CategoryFilterListView>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  CategoryProvider _categoryProvider;
+  CategoryProvider? _categoryProvider;
   final CategoryParameterHolder categoryIconList = CategoryParameterHolder();
-  AnimationController animationController;
-  Animation<double> animation;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -45,7 +45,7 @@ class _CategoryFilterListViewState extends State<CategoryFilterListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _categoryProvider.nextCategoryList();
+        _categoryProvider!.nextCategoryList();
       }
     });
 
@@ -54,16 +54,16 @@ class _CategoryFilterListViewState extends State<CategoryFilterListView>
     animation = Tween<double>(
       begin: 0.0,
       end: 10.0,
-    ).animate(animationController);
+    ).animate(animationController!);
     super.initState();
   }
 
-  CategoryRepository repo1;
+  CategoryRepository? repo1;
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -88,7 +88,7 @@ class _CategoryFilterListViewState extends State<CategoryFilterListView>
                   '',
           initProvider: () {
             return CategoryProvider(
-                repo: repo1,
+                repo: repo1!,
                 psValueHolder: Provider.of<PsValueHolder>(context));
           },
           onProviderReady: (CategoryProvider provider) {
@@ -105,7 +105,7 @@ class _CategoryFilterListViewState extends State<CategoryFilterListView>
                   physics: const AlwaysScrollableScrollPhysics(),
                     controller: _scrollController,
                     shrinkWrap: true,
-                    itemCount: provider.categoryList.data.length,
+                    itemCount: provider.categoryList.data!.length,
                     itemBuilder: (BuildContext context, int index) {
                       if (provider.categoryList.status ==
                           PsStatus.BLOCK_LOADING) {
@@ -120,28 +120,28 @@ class _CategoryFilterListViewState extends State<CategoryFilterListView>
                               PsFrameUIForLoading(),
                             ]));
                       } else {
-                        final int count = provider.categoryList.data.length;
-                        animationController.forward();
+                        final int count = provider.categoryList.data!.length;
+                        animationController!.forward();
                         return FadeTransition(
-                            opacity: animation,
+                            opacity: animation!,
                             child: CategoryFilterListItem(
-                              animationController: animationController,
+                              animationController: animationController!,
                               animation:
                                   Tween<double>(begin: 0.0, end: 1.0).animate(
                                 CurvedAnimation(
-                                  parent: animationController,
+                                  parent: animationController!,
                                   curve: Interval((1 / count) * index, 1.0,
                                       curve: Curves.fastOutSlowIn),
                                 ),
                               ),
-                              category: provider.categoryList.data[index],
+                              category: provider.categoryList.data![index],
                               onTap: () {
                                 final Category category =
-                                    provider.categoryList.data[index];
+                                    provider.categoryList.data![index];
                                 Navigator.pop(context, category);
 
                                 print(
-                                    provider.categoryList.data[index].catName);
+                                    provider.categoryList.data![index].catName);
                               },
                             ));
                       }

@@ -27,10 +27,10 @@ class ExpansionTile extends StatefulWidget {
   /// the tile to reveal or hide the [children]. The [initiallyExpanded] property must
   /// be non-null.
   const ExpansionTile({
-    Key key,
+    Key? key,
     this.headerBackgroundColor,
     this.leading,
-    @required this.title,
+    required this.title,
     this.backgroundColor,
     this.iconColor,
     this.onExpansionChanged,
@@ -43,7 +43,7 @@ class ExpansionTile extends StatefulWidget {
   /// A widget to display before the title.
   ///
   /// Typically a [CircleAvatar] widget.
-  final Widget leading;
+  final Widget? leading;
 
   /// The primary content of the list item.
   ///
@@ -55,27 +55,27 @@ class ExpansionTile extends StatefulWidget {
   /// When the tile starts expanding, this function is called with the value
   /// true. When the tile starts collapsing, this function is called with
   /// the value false.
-  final ValueChanged<bool> onExpansionChanged;
+  final ValueChanged<bool>? onExpansionChanged;
 
   /// The widgets that are displayed when the tile expands.
   ///
   /// Typically [ListTile] widgets.
-  final List<Widget> children;
+  final List<Widget>? children;
 
   /// The color to display behind the sublist when expanded.
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// The color to display the background of the header.
-  final Color headerBackgroundColor;
+  final Color? headerBackgroundColor;
 
   /// The color to display the icon of the header.
-  final Color iconColor;
+  final Color? iconColor;
 
   /// A widget to display instead of a rotating arrow icon.
-  final Widget trailing;
+  final Widget? trailing;
 
   /// Specifies if the list tile is initially expanded (true) or collapsed (false, the default).
-  final bool initiallyExpanded;
+  final bool? initiallyExpanded;
 
   @override
   _ExpansionTileState createState() => _ExpansionTileState();
@@ -95,13 +95,13 @@ class _ExpansionTileState extends State<ExpansionTile>
   final ColorTween _iconColorTween = ColorTween();
   final ColorTween _backgroundColorTween = ColorTween();
 
-  AnimationController _controller;
-  Animation<double> _iconTurns;
-  Animation<double> _heightFactor;
-  Animation<Color> _borderColor;
-  Animation<Color> _headerColor;
-  Animation<Color> _iconColor;
-  Animation<Color> _backgroundColor;
+  AnimationController? _controller;
+  Animation<double>? _iconTurns;
+  Animation<double>? _heightFactor;
+  Animation<Color>? _borderColor;
+  Animation<Color>? _headerColor;
+  Animation<Color>? _iconColor;
+  Animation<Color>? _backgroundColor;
 
   bool _isExpanded = false;
 
@@ -109,24 +109,24 @@ class _ExpansionTileState extends State<ExpansionTile>
   void initState() {
     super.initState();
     _controller = AnimationController(duration: _kExpand, vsync: this);
-    _heightFactor = _controller.drive(_easeInTween);
-    _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
-    _borderColor = _controller.drive(_borderColorTween.chain(_easeOutTween));
-    _headerColor = _controller.drive(_headerColorTween.chain(_easeInTween));
-    _iconColor = _controller.drive(_iconColorTween.chain(_easeInTween));
+    _heightFactor = _controller!.drive(_easeInTween);
+    _iconTurns = _controller!.drive(_halfTween.chain(_easeInTween));
+    _borderColor = _controller!.drive(_borderColorTween.chain(_easeOutTween!));
+    _headerColor = _controller!.drive(_headerColorTween.chain(_easeInTween!));
+    _iconColor = _controller!.drive(_iconColorTween.chain(_easeInTween!));
     _backgroundColor =
-        _controller.drive(_backgroundColorTween.chain(_easeOutTween));
+        _controller!.drive(_backgroundColorTween.chain(_easeOutTween!));
 
     _isExpanded =
         PageStorage.of(context)?.readState(context) ?? widget.initiallyExpanded;
     if (_isExpanded) {
-      _controller.value = 1.0;
+      _controller!.value = 1.0;
     }
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -134,9 +134,9 @@ class _ExpansionTileState extends State<ExpansionTile>
     // setState(() {
     _isExpanded = !_isExpanded;
     if (_isExpanded) {
-      _controller.forward();
+      _controller!.forward();
     } else {
-      _controller.reverse().then<void>((void value) {
+      _controller!.reverse().then<void>((void value) {
         if (!mounted) {
           return;
         }
@@ -148,17 +148,17 @@ class _ExpansionTileState extends State<ExpansionTile>
     PageStorage.of(context)?.writeState(context, _isExpanded);
     // });
     if (widget.onExpansionChanged != null) {
-      widget.onExpansionChanged(_isExpanded);
+      widget.onExpansionChanged!(_isExpanded);
     }
   }
 
   Widget _buildChildren(BuildContext context, Widget child) {
-    final Color borderSideColor = _borderColor.value ?? PsColors.transparent;
-    final Color titleColor = _headerColor.value;
+    final Color borderSideColor = _borderColor!.value ?? PsColors.transparent!;
+    final Color titleColor = _headerColor!.value;
 
     return Container(
       decoration: BoxDecoration(
-          color: _backgroundColor.value ?? PsColors.transparent,
+          color: _backgroundColor!.value ?? PsColors.transparent,
           border: Border(
             top: BorderSide(color: borderSideColor),
             bottom: BorderSide(color: borderSideColor),
@@ -167,7 +167,7 @@ class _ExpansionTileState extends State<ExpansionTile>
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           IconTheme.merge(
-            data: IconThemeData(color: _iconColor.value),
+            data: IconThemeData(color: _iconColor!.value),
             child: Container(
               color: widget.headerBackgroundColor ?? PsColors.black,
               child: ListTile(

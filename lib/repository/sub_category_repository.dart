@@ -12,8 +12,8 @@ import 'package:flutterbuyandsell/viewobject/sub_category.dart';
 
 class SubCategoryRepository extends PsRepository {
   SubCategoryRepository(
-      {@required PsApiService psApiService,
-      @required SubCategoryDao subCategoryDao}) {
+      {required PsApiService psApiService,
+      required SubCategoryDao subCategoryDao}) {
     _psApiService = psApiService;
     _subCategoryDao = subCategoryDao;
   }
@@ -52,7 +52,7 @@ class SubCategoryRepository extends PsRepository {
 
     if (_resource.status == PsStatus.SUCCESS) {
       await _subCategoryDao.deleteWithFinder(finder);
-      await _subCategoryDao.insertAll(_primaryKey, _resource.data);
+      await _subCategoryDao.insertAll(_primaryKey, _resource.data!);
     } else {
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
         await _subCategoryDao.deleteWithFinder(finder);
@@ -78,7 +78,7 @@ class SubCategoryRepository extends PsRepository {
 
     if (_resource.status == PsStatus.SUCCESS) {
       await _subCategoryDao.deleteWithFinder(finder);
-      await _subCategoryDao.insertAll(_primaryKey, _resource.data);
+      await _subCategoryDao.insertAll(_primaryKey, _resource.data!);
     }else{
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
         await _subCategoryDao.deleteWithFinder(finder);
@@ -105,7 +105,7 @@ class SubCategoryRepository extends PsRepository {
 
     if (_resource.status == PsStatus.SUCCESS) {
       _subCategoryDao
-          .insertAll(_primaryKey, _resource.data)
+          .insertAll(_primaryKey, _resource.data!)
           .then((dynamic data) async {
         subCategoryListStream.sink
             .add(await _subCategoryDao.getAll(finder: finder));

@@ -12,8 +12,8 @@ import 'Common/ps_repository.dart';
 
 class UserUnreadMessageRepository extends PsRepository {
   UserUnreadMessageRepository(
-      {@required PsApiService psApiService,
-      @required UserUnreadMessageDao userUnreadMessageDao}) {
+      {required PsApiService psApiService,
+      required UserUnreadMessageDao userUnreadMessageDao}) {
     _psApiService = psApiService;
     _userUnreadMessageDao = userUnreadMessageDao;
   }
@@ -60,12 +60,12 @@ class UserUnreadMessageRepository extends PsRepository {
         ));
     final PsResource<UserUnreadMessage> _resource =
         await _psApiService.postUserUnreadMessageCount(holder.toMap());
-    if(_resource != null && _resource.data != null && _resource.data.id == null){
-      _resource.data.id = '1';
+    if(_resource != null && _resource.data != null && _resource.data!.id == null){
+      _resource.data!.id = '1';
     }
     if (_resource.status == PsStatus.SUCCESS) {
       await _userUnreadMessageDao.deleteAll();
-      await _userUnreadMessageDao.insert(primaryKey, _resource.data);
+      await _userUnreadMessageDao.insert(primaryKey, _resource.data!);
     } else {
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
         // Delete and Insert Map Dao

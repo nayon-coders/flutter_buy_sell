@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class PsWidgetWithMultiProvider extends StatefulWidget {
   const PsWidgetWithMultiProvider({
-    Key key,
+    Key? key,
     this.child,
   }) : super(key: key);
 
-  final Widget child;
+  final Widget? child;
 
   @override
   _PsWidgetWithMultiProviderState createState() =>

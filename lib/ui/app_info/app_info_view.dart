@@ -26,14 +26,14 @@ class _AppInfoViewState extends State<AppInfoView>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  AboutUsProvider _aboutUsProvider;
+  AboutUsProvider? _aboutUsProvider;
 
-  AnimationController animationController;
-  Animation<double> animation;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -44,7 +44,7 @@ class _AppInfoViewState extends State<AppInfoView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _aboutUsProvider.nextAboutUsList();
+        _aboutUsProvider!.nextAboutUsList();
       }
     });
 
@@ -56,11 +56,11 @@ class _AppInfoViewState extends State<AppInfoView>
     animation = Tween<double>(
       begin: 0.0,
       end: 10.0,
-    ).animate(animationController);
+    ).animate(animationController!);
   }
 
-  AboutUsRepository repo1;
-  PsValueHolder valueHolder;
+  AboutUsRepository? repo1;
+  PsValueHolder? valueHolder;
   bool isConnectedToInternet = false;
   bool isSuccessfullyLoaded = true;
   
@@ -86,8 +86,8 @@ class _AppInfoViewState extends State<AppInfoView>
         appBarTitle: Utils.getString(context, 'setting__app_info'),
         initProvider: () {
           return AboutUsProvider(
-            repo: repo1,
-            psValueHolder: valueHolder,
+            repo: repo1!,
+            psValueHolder: valueHolder!,
           );
         },
         onProviderReady: (AboutUsProvider provider) {
@@ -98,7 +98,7 @@ class _AppInfoViewState extends State<AppInfoView>
             (BuildContext context, AboutUsProvider provider, Widget child) {
           if (provider.aboutUsList != null &&
               provider.aboutUsList.data != null &&
-              provider.aboutUsList.data.isNotEmpty) {
+              provider.aboutUsList.data!.isNotEmpty) {
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(PsDimens.space10),
@@ -179,10 +179,10 @@ class _AppInfoViewState extends State<AppInfoView>
 
 class _LinkAndTitle extends StatelessWidget {
   const _LinkAndTitle({
-    Key key,
-    @required this.icon,
-    @required this.title,
-    @required this.link,
+    Key? key,
+    required this.icon,
+    required this.title,
+    required this.link,
   }) : super(key: key);
 
   final IconData icon;
@@ -250,8 +250,8 @@ class _LinkAndTitle extends StatelessWidget {
 
 class _HeaderImageWidget extends StatelessWidget {
   const _HeaderImageWidget({
-    Key key,
-    @required this.photo,
+    Key? key,
+    required this.photo,
   }) : super(key: key);
 
   final DefaultPhoto photo;
@@ -274,8 +274,8 @@ class _HeaderImageWidget extends StatelessWidget {
 
 class ImageAndTextWidget extends StatelessWidget {
   const ImageAndTextWidget({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
   }) : super(key: key);
 
   final AboutUs data;
@@ -306,7 +306,7 @@ class ImageAndTextWidget extends StatelessWidget {
             children: <Widget>[
               Text(
                 data.aboutTitle,
-                style: Theme.of(context).textTheme.subtitle1.copyWith(
+                style: Theme.of(context).textTheme.subtitle1!.copyWith(
                       color: PsColors.mainColor,
                     ),
               ),
@@ -314,7 +314,7 @@ class ImageAndTextWidget extends StatelessWidget {
               InkWell(
                 child: Text(
                   data.aboutPhone,
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(),
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(),
                 ),
                 onTap: () async {
                   if (await canLaunch('tel://${data.aboutPhone}')) {
@@ -357,8 +357,8 @@ class ImageAndTextWidget extends StatelessWidget {
 
 class _PhoneAndContactWidget extends StatelessWidget {
   const _PhoneAndContactWidget({
-    Key key,
-    @required this.phone,
+    Key? key,
+    required this.phone,
   }) : super(key: key);
 
   final AboutUs phone;
@@ -399,7 +399,7 @@ class _PhoneAndContactWidget extends StatelessWidget {
                 InkWell(
                   child: Text(
                     phone.aboutPhone,
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(),
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(),
                   ),
                   onTap: () async {
                     if (await canLaunch('tel://${phone.aboutPhone}')) {
@@ -448,9 +448,9 @@ class _PhoneAndContactWidget extends StatelessWidget {
 }
 
 class _TitleAndDescriptionWidget extends StatelessWidget {
-  const _TitleAndDescriptionWidget({Key key, this.data}) : super(key: key);
+  const _TitleAndDescriptionWidget({Key? key, this.data}) : super(key: key);
 
-  final AboutUs data;
+  final AboutUs? data;
 
   @override
   Widget build(BuildContext context) {
@@ -459,9 +459,9 @@ class _TitleAndDescriptionWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Text(
-          data.aboutTitle,
+          data!.aboutTitle,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.subtitle1.copyWith(
+          style: Theme.of(context).textTheme.subtitle1!.copyWith(
                 color: PsColors.mainColor,
               ),
         ),
@@ -469,8 +469,8 @@ class _TitleAndDescriptionWidget extends StatelessWidget {
           height: PsDimens.space16,
         ),
         Text(
-          data.aboutDescription,
-          style: Theme.of(context).textTheme.bodyText1.copyWith(height: 1.3),
+          data!.aboutDescription,
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(height: 1.3),
         ),
         const SizedBox(
           height: PsDimens.space32,

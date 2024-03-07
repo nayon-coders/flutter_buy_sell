@@ -10,7 +10,7 @@ import 'Common/ps_repository.dart';
 
 class TokenRepository extends PsRepository {
   TokenRepository({
-    @required PsApiService psApiService,
+    required PsApiService psApiService,
   }) {
     _psApiService = psApiService;
   }

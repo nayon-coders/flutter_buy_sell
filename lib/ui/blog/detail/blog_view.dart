@@ -12,7 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class BlogView extends StatefulWidget {
-  const BlogView({Key key, @required this.blog, @required this.heroTagImage})
+  const BlogView({Key? key, required this.blog, required this.heroTagImage})
       : super(key: key);
 
   final Blog blog;
@@ -53,7 +53,7 @@ class _BlogViewState extends State<BlogView> {
               photoKey: widget.heroTagImage,
               height: PsDimens.space300,
               width: double.infinity,
-              defaultPhoto: widget.blog.defaultPhoto,
+              defaultPhoto: widget.blog!.defaultPhoto!,
               boxfit: BoxFit.cover,
             ),
           ),
@@ -70,8 +70,8 @@ class _BlogViewState extends State<BlogView> {
 
 class TextWidget extends StatefulWidget {
   const TextWidget({
-    Key key,
-    @required this.blog,
+    Key? key,
+    required this.blog,
   }) : super(key: key);
 
   final Blog blog;
@@ -109,10 +109,10 @@ class _TextWidgetState extends State<TextWidget> {
             Padding(
               padding: const EdgeInsets.all(PsDimens.space12),
               child: Text(
-                widget.blog.name,
+                widget.blog!.name!,
                 style: Theme.of(context)
                     .textTheme
-                    .headline6
+                    .headline6!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
             ),
@@ -121,7 +121,7 @@ class _TextWidgetState extends State<TextWidget> {
                     left: PsDimens.space12,
                     right: PsDimens.space12,
                     bottom: PsDimens.space12),
-                child: HtmlWidget(widget.blog.description)
+                child: HtmlWidget(widget.blog!.description!)
                 //  Text(
                 //   widget.blog.description,
                 //   style: Theme.of(context).textTheme.bodyText1.copyWith(height: 1.5),

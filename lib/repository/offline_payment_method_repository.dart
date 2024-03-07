@@ -10,7 +10,7 @@ import 'package:flutterbuyandsell/repository/Common/ps_repository.dart';
 
 class OfflinePaymentMethodRepository extends PsRepository {
   OfflinePaymentMethodRepository(
-      {@required PsApiService psApiService, @required OfflinePaymentMethodDao offlinePaymentMethodDao}) {
+      {required PsApiService psApiService, required OfflinePaymentMethodDao offlinePaymentMethodDao}) {
     _psApiService = psApiService;
     _offlinePaymentMethodDao = offlinePaymentMethodDao;
   }
@@ -49,7 +49,7 @@ class OfflinePaymentMethodRepository extends PsRepository {
       if (_resource.status == PsStatus.SUCCESS) {
         await _offlinePaymentMethodDao.deleteAll();
         _resource.data.id = '1';
-        await _offlinePaymentMethodDao.insert(_primaryKey, _resource.data);
+        await _offlinePaymentMethodDao.insert(_primaryKey, _resource.data!);
       }else{
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
           await _offlinePaymentMethodDao.deleteAll();
@@ -75,7 +75,7 @@ class OfflinePaymentMethodRepository extends PsRepository {
 
       if (_resource.status == PsStatus.SUCCESS) {
         _offlinePaymentMethodDao
-            .insert(_primaryKey, _resource.data)
+            .insert(_primaryKey, _resource.data!)
             .then((dynamic data) async {
           notiListStream.sink.add(await _offlinePaymentMethodDao.getOne());
         });

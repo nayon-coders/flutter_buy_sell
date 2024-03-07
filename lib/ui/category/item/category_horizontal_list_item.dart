@@ -7,13 +7,13 @@ import 'package:flutterbuyandsell/viewobject/category.dart';
 
 class CategoryHorizontalListItem extends StatelessWidget {
   const CategoryHorizontalListItem({
-    Key key,
-    @required this.category,
+    Key? key,
+    required this.category,
     this.onTap,
   }) : super(key: key);
 
   final Category category;
-  final Function onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +52,7 @@ class CategoryHorizontalListItem extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText2
+                          .bodyText2!
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                   ],
