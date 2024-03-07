@@ -1,22 +1,15 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
 class FBLoginParameterHolder extends PsHolder<FBLoginParameterHolder> {
-  FBLoginParameterHolder(
-      {@required this.facebookId,
-      @required this.userName,
-      @required this.userEmail,
-      @required this.profileImgId,
-      @required this.profilePhotoUrl,
-      @required this.deviceToken});
+  FBLoginParameterHolder({@required this.facebookId, @required this.userName, @required this.userEmail, @required this.profileImgId, @required this.profilePhotoUrl, @required this.deviceToken});
 
-  final String facebookId;
-  final String userName;
-  final String userEmail;
-  final String profileImgId;
-  final String profilePhotoUrl;
-  final String deviceToken;
+  final String? facebookId;
+  final String? userName;
+  final String? userEmail;
+  final String? profileImgId;
+  final String? profilePhotoUrl;
+  final String? deviceToken;
 
   @override
   Map<String, dynamic> toMap() {
@@ -49,23 +42,23 @@ class FBLoginParameterHolder extends PsHolder<FBLoginParameterHolder> {
     String key = '';
 
     if (facebookId != '') {
-      key += facebookId;
+      key += facebookId!;
     }
     if (userName != '') {
-      key += userName;
+      key += userName!;
     }
 
     if (userEmail != '') {
-      key += userEmail;
+      key += userEmail!;
     }
     if (profilePhotoUrl != '') {
-      key += profilePhotoUrl;
+      key += profilePhotoUrl!;
     }
     if (profileImgId != '') {
-      key += profileImgId;
+      key += profileImgId!;
     }
     if (deviceToken != '') {
-      key += deviceToken;
+      key += deviceToken!;
     }
     return key;
   }

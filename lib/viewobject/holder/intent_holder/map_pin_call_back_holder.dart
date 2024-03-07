@@ -6,6 +6,6 @@ class MapPinCallBackHolder {
     @required this.address,
     @required this.latLng,
   });
-  final String address;
-  final LatLng latLng;
+  final String? address;
+  final LatLng? latLng;
 }

@@ -11,15 +11,14 @@ class ApiStatus extends PsObject<ApiStatus> {
   String? message;
 
   @override
-  bool operator ==(dynamic other) =>
-      other is ApiStatus && status == other.status;
+  bool operator ==(dynamic other) => other is ApiStatus && status == other.status;
 
   @override
   int get hashCode => hash2(status.hashCode, status.hashCode);
 
   @override
   String getPrimaryKey() {
-    return status;
+    return status!;
   }
 
   @override
@@ -44,7 +43,7 @@ class ApiStatus extends PsObject<ApiStatus> {
         message: dynamicData['message'],
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -57,7 +56,7 @@ class ApiStatus extends PsObject<ApiStatus> {
 
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

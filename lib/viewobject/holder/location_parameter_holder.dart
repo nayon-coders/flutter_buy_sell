@@ -1,9 +1,8 @@
-
 import 'package:flutterbuyandsell/constant/ps_constants.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart';
 
 class LocationParameterHolder extends PsHolder<dynamic> {
-  LocationParameterHolder() {
+  LocationParameterHolder(this.keyword, this.orderBy, this.orderType) {
     keyword = '';
     orderBy = PsConst.FILTERING__ADDED_DATE;
     orderType = PsConst.FILTERING__DESC;
@@ -14,7 +13,6 @@ class LocationParameterHolder extends PsHolder<dynamic> {
   String orderType;
 
   LocationParameterHolder getDefaultParameterHolder() {
-    
     keyword = '';
     orderBy = PsConst.FILTERING__ORDERING;
     orderType = PsConst.FILTERING__DESC;

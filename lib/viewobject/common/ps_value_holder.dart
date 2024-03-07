@@ -1,44 +1,7 @@
 import 'package:flutter/cupertino.dart';
 
 class PsValueHolder {
-  PsValueHolder(
-      {@required this.loginUserId,
-      @required this.loginUserName,
-      @required this.locationId,
-      @required this.locactionName,
-      @required this.locationLat,
-      @required this.locationLng,
-      @required this.userIdToVerify,
-      @required this.userNameToVerify,
-      @required this.userEmailToVerify,
-      @required this.userPasswordToVerify,
-      @required this.deviceToken,
-      @required this.notiSetting,
-      @required this.isCustomCamera,
-      @required this.isToShowIntroSlider,
-      @required this.overAllTaxLabel,
-      @required this.overAllTaxValue,
-      @required this.shippingTaxLabel,
-      @required this.shopId,
-      @required this.messenger,
-      @required this.whatsApp,
-      @required this.phone,
-      @required this.shippingTaxValue,
-      @required this.appInfoVersionNo,
-      @required this.appInfoForceUpdate,
-      @required this.appInfoForceUpdateTitle,
-      @required this.appInfoForceUpdateMsg,
-      @required this.startDate,
-      @required this.endDate,
-      @required this.paypalEnabled,
-      @required this.stripeEnabled,
-      @required this.codEnabled,
-      @required this.bankEnabled,
-      @required this.publishKey,
-      @required this.shippingId,
-      @required this.standardShippingEnable,
-      @required this.zoneShippingEnable,
-      @required this.noShippingEnable});
+  PsValueHolder({required this.loginUserId, required this.loginUserName, required this.locationId, required this.locactionName, required this.locationLat, required this.locationLng, required this.userIdToVerify, required this.userNameToVerify, required this.userEmailToVerify, required this.userPasswordToVerify, required this.deviceToken, required this.notiSetting, required this.isCustomCamera, required this.isToShowIntroSlider, required this.overAllTaxLabel, required this.overAllTaxValue, required this.shippingTaxLabel, required this.shopId, required this.messenger, required this.whatsApp, required this.phone, required this.shippingTaxValue, required this.appInfoVersionNo, required this.appInfoForceUpdate, required this.appInfoForceUpdateTitle, required this.appInfoForceUpdateMsg, required this.startDate, required this.endDate, required this.paypalEnabled, required this.stripeEnabled, required this.codEnabled, required this.bankEnabled, required this.publishKey, required this.shippingId, required this.standardShippingEnable, required this.zoneShippingEnable, required this.noShippingEnable});
   String locationId;
   String locactionName;
   String locationLat;

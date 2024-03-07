@@ -1,15 +1,12 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
-class NotiUnRegisterParameterHolder
-    extends PsHolder<NotiUnRegisterParameterHolder> {
-  NotiUnRegisterParameterHolder(
-      {@required this.platformName, @required this.deviceId, this.userId});
+class NotiUnRegisterParameterHolder extends PsHolder<NotiUnRegisterParameterHolder> {
+  NotiUnRegisterParameterHolder({@required this.platformName, @required this.deviceId, this.userId});
 
-  final String platformName;
-  final String deviceId;
-  final String userId;
+  final String? platformName;
+  final String? deviceId;
+  final String? userId;
 
   @override
   Map<String, dynamic> toMap() {
@@ -24,10 +21,7 @@ class NotiUnRegisterParameterHolder
 
   @override
   NotiUnRegisterParameterHolder fromMap(dynamic dynamicData) {
-    return NotiUnRegisterParameterHolder(
-        platformName: dynamicData['platform_name'],
-        deviceId: dynamicData['device_token'],
-        userId: dynamicData['user_id']);
+    return NotiUnRegisterParameterHolder(platformName: dynamicData['platform_name'], deviceId: dynamicData['device_token'], userId: dynamicData['user_id']);
   }
 
   @override
@@ -35,10 +29,10 @@ class NotiUnRegisterParameterHolder
     String key = '';
 
     if (platformName != '') {
-      key += platformName;
+      key += platformName!;
     }
     if (deviceId != '') {
-      key += deviceId;
+      key += deviceId!;
     }
     return key;
   }

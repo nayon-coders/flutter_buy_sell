@@ -2,7 +2,7 @@ import 'package:flutterbuyandsell/constant/ps_constants.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart';
 
 class CategoryParameterHolder extends PsHolder<dynamic> {
-  CategoryParameterHolder() {
+  CategoryParameterHolder(this.orderBy) {
     orderBy = PsConst.FILTERING__ADDED_DATE;
   }
 

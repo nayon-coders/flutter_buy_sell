@@ -2,18 +2,13 @@ import 'package:quiver/core.dart';
 import 'common/ps_object.dart';
 
 class ItemCurrency extends PsObject<ItemCurrency> {
-  ItemCurrency(
-      {this.id,
-      this.currencyShortForm,
-      this.status,
-      this.addedDate,
-      this.currencySymbol});
+  ItemCurrency({this.id, this.currencyShortForm, this.status, this.addedDate, this.currencySymbol});
 
-  String id;
-  String currencyShortForm;
-  String status;
-  String addedDate;
-  String currencySymbol;
+  String? id;
+  String? currencyShortForm;
+  String? status;
+  String? addedDate;
+  String? currencySymbol;
 
   @override
   bool operator ==(dynamic other) => other is ItemCurrency && id == other.id;
@@ -23,7 +18,7 @@ class ItemCurrency extends PsObject<ItemCurrency> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
@@ -37,7 +32,7 @@ class ItemCurrency extends PsObject<ItemCurrency> {
         currencySymbol: dynamicData['currency_symbol'],
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -52,7 +47,7 @@ class ItemCurrency extends PsObject<ItemCurrency> {
       data['currency_symbol'] = object.currencySymbol;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

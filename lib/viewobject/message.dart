@@ -1,35 +1,25 @@
+// ignore_for_file: null_check_always_fails
+
 import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 import 'package:quiver/core.dart';
 
 class Message extends PsObject<Message> {
-  Message(
-      {this.addedDate,
-      this.id,
-      this.isSold,
-       this.isUserBought,
-      this.itemId,
-      this.message,
-      this.offerStatus,
-      this.sendByUserId,
-      this.sessionId,
-      this.type,
-      this.addedDateTimeStamp});
+  Message({this.addedDate, this.id, this.isSold, this.isUserBought, this.itemId, this.message, this.offerStatus, this.sendByUserId, this.sessionId, this.type, this.addedDateTimeStamp});
 
-  Map<String, String> addedDate;
-  int addedDateTimeStamp;
-  String id;
-  bool isSold;
-  bool isUserBought;
-  String itemId;
-  String message;
-  int offerStatus;
-  String sendByUserId;
-  String sessionId;
-  int type;
+  Map<String, String>? addedDate;
+  int? addedDateTimeStamp;
+  String? id;
+  bool? isSold;
+  bool? isUserBought;
+  String? itemId;
+  String? message;
+  int? offerStatus;
+  String? sendByUserId;
+  String? sessionId;
+  int? type;
 
   @override
-  bool operator ==(dynamic other) =>
-      other is Message && offerStatus == other.offerStatus;
+  bool operator ==(dynamic other) => other is Message && offerStatus == other.offerStatus;
 
   @override
   int get hashCode => hash2(offerStatus.hashCode, offerStatus.hashCode);
@@ -61,7 +51,7 @@ class Message extends PsObject<Message> {
         addedDateTimeStamp: dynamicData['addedDate'],
         id: dynamicData['id'],
         isSold: dynamicData['isSold'],
-          isUserBought: dynamicData['isUserBought'],
+        isUserBought: dynamicData['isUserBought'],
         itemId: dynamicData['itemId'],
         message: dynamicData['message'],
         offerStatus: dynamicData['offerStatus'],
@@ -70,7 +60,7 @@ class Message extends PsObject<Message> {
         type: dynamicData['type'],
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -80,7 +70,7 @@ class Message extends PsObject<Message> {
       data['addedDate'] = object.addedDate;
       data['id'] = object.id;
       data['isSold'] = object.isSold;
-       data['isUserBought'] = object.isUserBought;
+      data['isUserBought'] = object.isUserBought;
       data['itemId'] = object.itemId;
       data['message'] = object.message;
       data['offerStatus'] = object.offerStatus;
@@ -89,7 +79,7 @@ class Message extends PsObject<Message> {
       data['type'] = object.type;
       return data;
     } else {
-      return null;
+      return null!!;
     }
   }
 
@@ -99,7 +89,7 @@ class Message extends PsObject<Message> {
       data['addedDate'] = object.addedDate;
       data['id'] = object.id;
       data['isSold'] = object.isSold;
-       data['isUserBought'] = object.isUserBought;
+      data['isUserBought'] = object.isUserBought;
       data['itemId'] = object.itemId;
       data['message'] = object.message;
       data['offerStatus'] = object.offerStatus;
@@ -108,7 +98,7 @@ class Message extends PsObject<Message> {
       data['type'] = object.type;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -118,7 +108,7 @@ class Message extends PsObject<Message> {
       data['addedDate'] = object.addedDateTimeStamp;
       data['id'] = object.id;
       data['isSold'] = object.isSold;
-       data['isUserBought'] = object.isUserBought;
+      data['isUserBought'] = object.isUserBought;
       data['itemId'] = object.itemId;
       data['message'] = object.message;
       data['offerStatus'] = object.offerStatus;
@@ -127,7 +117,7 @@ class Message extends PsObject<Message> {
       data['type'] = object.type;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -146,6 +136,6 @@ class Message extends PsObject<Message> {
 
   @override
   Map<String, dynamic> toMap(Message object) {
-    return null;
+    return null!;
   }
 }

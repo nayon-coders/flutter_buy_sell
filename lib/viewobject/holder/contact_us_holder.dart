@@ -1,5 +1,4 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
 class ContactUsParameterHolder extends PsHolder<ContactUsParameterHolder> {
@@ -10,10 +9,10 @@ class ContactUsParameterHolder extends PsHolder<ContactUsParameterHolder> {
     @required this.phone,
   });
 
-  final String name;
-  final String email;
-  final String message;
-  final String phone;
+  final String? name;
+  final String? email;
+  final String? message;
+  final String? phone;
 
   @override
   Map<String, dynamic> toMap() {
@@ -41,16 +40,16 @@ class ContactUsParameterHolder extends PsHolder<ContactUsParameterHolder> {
     String key = '';
 
     if (name != '') {
-      key += name;
+      key += name!;
     }
     if (email != '') {
-      key += email;
+      key += email!;
     }
     if (message != '') {
-      key += message;
+      key += message!;
     }
     if (phone != '') {
-      key += phone;
+      key += phone!;
     }
 
     return key;

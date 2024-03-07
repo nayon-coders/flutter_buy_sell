@@ -11,34 +11,31 @@ import 'package:provider/provider.dart';
 
 class PhoneSignInContainerView extends StatefulWidget {
   @override
-  _CityPhoneSignInContainerViewState createState() =>
-      _CityPhoneSignInContainerViewState();
+  _CityPhoneSignInContainerViewState createState() => _CityPhoneSignInContainerViewState();
 }
 
-class _CityPhoneSignInContainerViewState extends State<PhoneSignInContainerView>
-    with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+class _CityPhoneSignInContainerViewState extends State<PhoneSignInContainerView> with SingleTickerProviderStateMixin {
+  AnimationController? animationController;
   @override
   void initState() {
-    animationController =
-        AnimationController(duration: PsConfig.animation_duration, vsync: this);
+    animationController = AnimationController(duration: PsConfig.animation_duration, vsync: this);
     super.initState();
   }
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  UserProvider userProvider;
-  UserRepository userRepo;
+  UserProvider? userProvider;
+  UserRepository? userRepo;
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -50,8 +47,7 @@ class _CityPhoneSignInContainerViewState extends State<PhoneSignInContainerView>
       return Future<bool>.value(false);
     }
 
-    print(
-        '............................Build UI Again ............................');
+    print('............................Build UI Again ............................');
     userRepo = Provider.of<UserRepository>(context);
     return WillPopScope(
         onWillPop: _requestPop,
@@ -62,30 +58,25 @@ class _CityPhoneSignInContainerViewState extends State<PhoneSignInContainerView>
               width: double.infinity,
               height: double.maxFinite,
             ),
-            CustomScrollView(
-                scrollDirection: Axis.vertical,
-                shrinkWrap: true,
-                slivers: <Widget>[
-                  _SliverAppbar(
-                    title: Utils.getString(context, 'home_phone_signin'),
-                    scaffoldKey: scaffoldKey,
-                  ),
-                  PhoneSignInView(
-                    animationController: animationController,
-                  ),
-                ])
+            CustomScrollView(scrollDirection: Axis.vertical, shrinkWrap: true, slivers: <Widget>[
+              _SliverAppbar(
+                title: Utils.getString(context, 'home_phone_signin'),
+                scaffoldKey: scaffoldKey,
+              ),
+              PhoneSignInView(
+                animationController: animationController!,
+              ),
+            ])
           ]),
         ));
   }
 }
 
 class _SliverAppbar extends StatefulWidget {
-  const _SliverAppbar(
-      {Key key, @required this.title, this.scaffoldKey, this.menuDrawer})
-      : super(key: key);
+  const _SliverAppbar({Key? key, required this.title, this.scaffoldKey, this.menuDrawer}) : super(key: key);
   final String title;
-  final GlobalKey<ScaffoldState> scaffoldKey;
-  final Drawer menuDrawer;
+  final GlobalKey<ScaffoldState>? scaffoldKey;
+  final Drawer? menuDrawer;
   @override
   _SliverAppbarState createState() => _SliverAppbarState();
 }
@@ -95,22 +86,15 @@ class _SliverAppbarState extends State<_SliverAppbar> {
   Widget build(BuildContext context) {
     return SliverAppBar(
       brightness: Utils.getBrightnessForAppBar(context),
-      iconTheme: Theme.of(context)
-          .iconTheme
-          .copyWith(color: PsColors.mainColorWithWhite),
+      iconTheme: Theme.of(context).iconTheme.copyWith(color: PsColors.mainColorWithWhite),
       title: Text(
         widget.title,
         textAlign: TextAlign.center,
-        style: Theme.of(context)
-            .textTheme
-            .headline6
-            .copyWith(fontWeight: FontWeight.bold)
-            .copyWith(color: PsColors.mainColorWithWhite),
+        style: Theme.of(context).textTheme.headline6!.copyWith(fontWeight: FontWeight.bold).copyWith(color: PsColors.mainColorWithWhite),
       ),
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.notifications_none,
-              color: Theme.of(context).iconTheme.color),
+          icon: Icon(Icons.notifications_none, color: Theme.of(context).iconTheme.color),
           onPressed: () {
             Navigator.pushNamed(
               context,
@@ -119,8 +103,7 @@ class _SliverAppbarState extends State<_SliverAppbar> {
           },
         ),
         IconButton(
-          icon:
-              Icon(Feather.book_open, color: Theme.of(context).iconTheme.color),
+          icon: Icon(Feather.book_open, color: Theme.of(context).iconTheme.color),
           onPressed: () {
             Navigator.pushNamed(
               context,

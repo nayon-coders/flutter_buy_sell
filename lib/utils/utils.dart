@@ -1,3 +1,5 @@
+// ignore_for_file: null_check_always_fails
+
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:camera/camera.dart';
@@ -39,8 +41,7 @@ mixin Utils {
   static bool isReachChatView = false;
   static bool isNotiFromToolbar = false;
 
-  static List<CameraDescription> cameras =
-      <CameraDescription>[]; //custom camera
+  static List<CameraDescription> cameras = <CameraDescription>[]; //custom camera
 
   static String getString(BuildContext context, String key) {
     if (key != '') {
@@ -59,13 +60,11 @@ mixin Utils {
   }
 
   static bool checkEmailFormat(String email) {
-    bool emailFormat;
+    bool? emailFormat;
     if (email != '') {
-      emailFormat = RegExp(
-              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
-          .hasMatch(email);
+      emailFormat = RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(email);
     }
-    return emailFormat;
+    return emailFormat!;
   }
 
   static DateTime? previous;
@@ -144,8 +143,7 @@ mixin Utils {
     if (timeStamp == null) {
       return '';
     }
-    final DateTime dateTime2 =
-        DateTime.fromMillisecondsSinceEpoch(timeStamp, isUtc: true);
+    final DateTime dateTime2 = DateTime.fromMillisecondsSinceEpoch(timeStamp, isUtc: true);
     final DateTime dateTime = dateTime2.toLocal();
     final DateFormat format = DateFormat.yMMMMd(); //"6:00 AM"
     return format.format(dateTime);
@@ -156,8 +154,7 @@ mixin Utils {
       return '';
     }
 
-    final DateTime dateTime2 =
-        DateTime.fromMillisecondsSinceEpoch(timeStamp, isUtc: true);
+    final DateTime dateTime2 = DateTime.fromMillisecondsSinceEpoch(timeStamp, isUtc: true);
     final DateTime dateTime = dateTime2.toLocal();
     final DateFormat format = DateFormat.jm(); //"6:00 AM"
     return format.format(dateTime);
@@ -178,9 +175,7 @@ mixin Utils {
     if (timeStamp == null || timeStamp == '') {
       return '';
     } else {
-      final String standardDateTime =
-          DateTime.fromMillisecondsSinceEpoch(int.parse(timeStamp) * 1000)
-              .toString();
+      final String standardDateTime = DateTime.fromMillisecondsSinceEpoch(int.parse(timeStamp) * 1000).toString();
       return changeDateTimeStandardFormat(standardDateTime);
     }
   }
@@ -189,14 +184,7 @@ mixin Utils {
     if (selectedDateTime == null) {
       return '';
     }
-    final String standardDateTime =
-        selectedDateTime.split(' ')[0].split('-')[2] +
-            '-' +
-            selectedDateTime.split(' ')[0].split('-')[1] +
-            '-' +
-            selectedDateTime.split(' ')[0].split('-')[0] +
-            ' ' +
-            selectedDateTime.split(' ')[1].split('.')[0];
+    final String standardDateTime = selectedDateTime.split(' ')[0].split('-')[2] + '-' + selectedDateTime.split(' ')[0].split('-')[1] + '-' + selectedDateTime.split(' ')[0].split('-')[0] + ' ' + selectedDateTime.split(' ')[1].split('.')[0];
     return standardDateTime;
   }
 
@@ -218,70 +206,43 @@ mixin Utils {
     if (status) {
       final Directory _appTempDir = await getTemporaryDirectory();
 
-      final Directory _appTempDirFolder =
-          Directory('${_appTempDir.path}/${PsConfig.tmpImageFolderName}');
+      final Directory _appTempDirFolder = Directory('${_appTempDir.path}/${PsConfig.tmpImageFolderName}');
 
       if (!_appTempDirFolder.existsSync()) {
         await _appTempDirFolder.create(recursive: true);
       }
       final File file = File('${_appTempDirFolder.path}/${asset.name}');
-      await file.writeAsBytes(byteData.buffer
-          .asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+      await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
 
       print(file.path);
-      final ImageProperties properties =
-          await FlutterNativeImage.getImageProperties(file.path);
-      final File compressedFile = await FlutterNativeImage.compressImage(
-          file.path,
-          quality: 80,
-          targetWidth: imageWidth,
-          targetHeight:
-              (properties.height * imageWidth / properties.width).round());
+      final ImageProperties properties = await FlutterNativeImage.getImageProperties(file.path);
+      final File compressedFile = await FlutterNativeImage.compressImage(file.path, quality: 80, targetWidth: imageWidth, targetHeight: (properties.height * imageWidth / properties.width).round());
       return compressedFile;
     } else {
       // Toast
       // We don't have permission to read/write images.
-      Fluttertoast.showToast(
-          msg: 'We don\'t have permission to read/write images.',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.blueGrey,
-          textColor: Colors.white);
-      return null;
+      Fluttertoast.showToast(msg: 'We don\'t have permission to read/write images.', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.blueGrey, textColor: Colors.white);
+      return null!;
     }
 
     // });
     // return null;
   }
 
-  static Future<File> getImageFileFromCameraImagePath(
-      String imagePath, int imageAize) async {
+  static Future<File> getImageFileFromCameraImagePath(String imagePath, int imageAize) async {
     final int imageWidth = imageAize;
     final bool status = await Utils.requestWritePermission();
 
     // bool status =await Utils.requestWritePermission().then((bool status) async {
     if (status) {
-      final ImageProperties properties =
-          await FlutterNativeImage.getImageProperties(imagePath);
-      final File compressedFile = await FlutterNativeImage.compressImage(
-          imagePath,
-          quality: 80,
-          targetWidth: imageWidth,
-          targetHeight:
-              (properties.height * imageWidth / properties.width).round());
+      final ImageProperties properties = await FlutterNativeImage.getImageProperties(imagePath);
+      final File compressedFile = await FlutterNativeImage.compressImage(imagePath, quality: 80, targetWidth: imageWidth, targetHeight: (properties.height * imageWidth / properties.width).round());
       return compressedFile;
     } else {
       // Toast
       // We don't have permission to read/write images.
-      Fluttertoast.showToast(
-          msg: 'We don\'t have permission to read/write images.',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.blueGrey,
-          textColor: Colors.white);
-      return null;
+      Fluttertoast.showToast(msg: 'We don\'t have permission to read/write images.', toastLength: Toast.LENGTH_SHORT, gravity: ToastGravity.BOTTOM, timeInSecForIosWeb: 1, backgroundColor: Colors.blueGrey, textColor: Colors.white);
+      return null!;
     }
 
     // });
@@ -318,8 +279,7 @@ mixin Utils {
   }
 
   static Future<bool> checkInternetConnectivity() async {
-    final ConnectivityResult connectivityResult =
-        await Connectivity().checkConnectivity();
+    final ConnectivityResult connectivityResult = await Connectivity().checkConnectivity();
     if (connectivityResult == ConnectivityResult.mobile) {
       // print('Mobile');
       return true;
@@ -337,8 +297,7 @@ mixin Utils {
   static dynamic launchURL() async {
     final PackageInfo packageInfo = await PackageInfo.fromPlatform();
     print(packageInfo.packageName);
-    final String url =
-        'https://play.google.com/store/apps/details?id=${packageInfo.packageName}';
+    final String url = 'https://play.google.com/store/apps/details?id=${packageInfo.packageName}';
     if (await canLaunch(url)) {
       await launch(url);
     } else {
@@ -346,22 +305,15 @@ mixin Utils {
     }
   }
 
-  static dynamic launchAppStoreURL(
-      {String? iOSAppId, bool writeReview = false}) async {
+  static dynamic launchAppStoreURL({String? iOSAppId, bool writeReview = false}) async {
     LaunchReview.launch(writeReview: writeReview, iOSAppId: iOSAppId);
   }
 
-  static dynamic navigateOnUserVerificationView(
-      dynamic provider, BuildContext context, Function onLoginSuccess) async {
+  static dynamic navigateOnUserVerificationView(dynamic provider, BuildContext context, Function onLoginSuccess) async {
     provider.psValueHolder = Provider.of<PsValueHolder>(context, listen: false);
 
-    if (provider == null ||
-        provider.psValueHolder.userIdToVerify == null ||
-        provider.psValueHolder.userIdToVerify == '') {
-      if (provider == null ||
-          provider.psValueHolder == null ||
-          provider.psValueHolder.loginUserId == null ||
-          provider.psValueHolder.loginUserId == '') {
+    if (provider == null || provider.psValueHolder.userIdToVerify == null || provider.psValueHolder.userIdToVerify == '') {
+      if (provider == null || provider.psValueHolder == null || provider.psValueHolder.loginUserId == null || provider.psValueHolder.loginUserId == '') {
         final dynamic returnData = await Navigator.pushNamed(
           context,
           RoutePaths.login_container,
@@ -369,16 +321,14 @@ mixin Utils {
 
         if (returnData != null && returnData is User) {
           final User user = returnData;
-          provider.psValueHolder =
-              Provider.of<PsValueHolder>(context, listen: false);
+          provider.psValueHolder = Provider.of<PsValueHolder>(context, listen: false);
           provider.psValueHolder.loginUserId = user.userId;
         }
       } else {
         onLoginSuccess();
       }
     } else {
-      Navigator.pushNamed(context, RoutePaths.user_verify_email_container,
-          arguments: provider.psValueHolder.userIdToVerify);
+      Navigator.pushNamed(context, RoutePaths.user_verify_email_container, arguments: provider.psValueHolder.userIdToVerify);
     }
   }
 
@@ -438,27 +388,20 @@ mixin Utils {
     }
   }
 
-  static Future<void> saveDeviceToken(
-      FirebaseMessaging _fcm, NotificationProvider notificationProvider) async {
+  static Future<bool> saveDeviceToken(FirebaseMessaging _fcm, NotificationProvider notificationProvider) async {
     // Get the token for this device
-    final String? fcmToken = await _fcm.getToken();
-    await notificationProvider.replaceNotiToken(fcmToken!);
+    final String fcmToken = await _fcm.getToken().toString();
+    await notificationProvider.replaceNotiToken(fcmToken);
 
-    final NotiRegisterParameterHolder notiRegisterParameterHolder =
-        NotiRegisterParameterHolder(
-            platformName: PsConst.PLATFORM,
-            deviceId: fcmToken,
-            loginUserId: checkUserLoginId(notificationProvider.psValueHolder));
+    final NotiRegisterParameterHolder notiRegisterParameterHolder = NotiRegisterParameterHolder(platformName: PsConst.PLATFORM, deviceId: fcmToken, loginUserId: checkUserLoginId(notificationProvider.psValueHolder));
     print('Token Key $fcmToken');
     if (fcmToken != null) {
-      await notificationProvider
-          .rawRegisterNotiToken(notiRegisterParameterHolder.toMap());
+      await notificationProvider.rawRegisterNotiToken(notiRegisterParameterHolder.toMap());
     }
     return true;
   }
 
-  static Future<void> _onSelectBroadCastNotification(
-      BuildContext context, String payload) async {
+  static Future<void> _onSelectBroadCastNotification(BuildContext context, String payload) async {
     if (context != null) {
       showDialog<dynamic>(
           context: context,
@@ -477,8 +420,7 @@ mixin Utils {
     }
   }
 
-  static Future<void> _onSelectReviewNotification(
-      BuildContext context, String payload, String userId) async {
+  static Future<void> _onSelectReviewNotification(BuildContext context, String payload, String userId) async {
     if (context != null) {
       showDialog<dynamic>(
           context: context,
@@ -488,15 +430,13 @@ mixin Utils {
                 leftButtonText: Utils.getString(context, 'chat_noti__cancel'),
                 rightButtonText: Utils.getString(context, 'chat_noti__open'),
                 onAgreeTap: () {
-                  Navigator.pushNamed(context, RoutePaths.ratingList,
-                      arguments: userId);
+                  Navigator.pushNamed(context, RoutePaths.ratingList, arguments: userId);
                 });
           });
     }
   }
 
-  static Future<void> _onSelectApprovalNotification(
-      BuildContext context, String payload) async {
+  static Future<void> _onSelectApprovalNotification(BuildContext context, String payload) async {
     if (context != null) {
       showDialog<dynamic>(
           context: context,
@@ -516,8 +456,7 @@ mixin Utils {
   //   }
   // }
 
-  static void fcmConfigure(
-      BuildContext context, FirebaseMessaging _fcm, String loginUserId) {
+  static void fcmConfigure(BuildContext context, FirebaseMessaging _fcm, String loginUserId) {
     // final FirebaseMessaging _fcm = FirebaseMessaging();
     if (Platform.isIOS) {
       // _fcm.requestNotificationPermissions(const IosNotificationSettings());
@@ -561,7 +500,7 @@ mixin Utils {
     });
     // Background
     FirebaseMessaging.onBackgroundMessage(myBackgroundMessageHandler);
-    
+
     //
     //   _fcm.configure(
     //     onMessage: (Map<String, dynamic> message) async {
@@ -601,8 +540,7 @@ mixin Utils {
     //   );
   }
 
-  static Future<dynamic> myBackgroundMessageHandler(
-      RemoteMessage event) async {
+  static Future<dynamic> myBackgroundMessageHandler(RemoteMessage event) async {
     final Map<String, dynamic> message = event.data;
     await Firebase.initializeApp();
 
@@ -650,14 +588,10 @@ mixin Utils {
   //   return true;
   // }
 
-  static dynamic takeDataFromNoti(
-      BuildContext context, Map<String, dynamic> message, String loginUserId) {
-    final UserRepository userRepository =
-        Provider.of<UserRepository>(context, listen: false);
-    final PsValueHolder psValueHolder =
-        Provider.of<PsValueHolder>(context, listen: false);
-    final UserProvider userProvider =
-        UserProvider(repo: userRepository, psValueHolder: psValueHolder);
+  static dynamic takeDataFromNoti(BuildContext context, Map<String, dynamic> message, String loginUserId) {
+    final UserRepository userRepository = Provider.of<UserRepository>(context, listen: false);
+    final PsValueHolder psValueHolder = Provider.of<PsValueHolder>(context, listen: false);
+    final UserProvider userProvider = UserProvider(repo: userRepository, psValueHolder: psValueHolder);
 
     final dynamic data = message['notification'] ?? message;
     if (Platform.isAndroid) {
@@ -686,24 +620,14 @@ mixin Utils {
         final String itemId = message['item_id'];
         final String action = message['action'];
 
-        if (userProvider.psValueHolder.loginUserId != null &&
-            userProvider.psValueHolder.loginUserId != '' &&
-            !isReachChatView) {
-          _showChatNotification(context, notiMessage, sellerId, buyerId,
-              senderName, senderProflePhoto, itemId, action, loginUserId);
+        if (userProvider.psValueHolder.loginUserId != null && userProvider.psValueHolder.loginUserId != '' && !isReachChatView) {
+          _showChatNotification(context, notiMessage, sellerId, buyerId, senderName, senderProflePhoto, itemId, action, loginUserId);
         }
       } else if (flag == 'review') {
         // final String rating = message['data']['rating'];
         final String rating = message['rating'];
-        final String ratingMessage =
-            Utils.getString(context, 'noti_message__text1') +
-                rating.split('.')[0] +
-                Utils.getString(context, 'noti_message__text2') +
-                '\n"' +
-                notiMessage +
-                '"';
-        _onSelectReviewNotification(
-            context, ratingMessage, userProvider.psValueHolder.loginUserId);
+        final String ratingMessage = Utils.getString(context, 'noti_message__text1') + rating.split('.')[0] + Utils.getString(context, 'noti_message__text2') + '\n"' + notiMessage + '"';
+        _onSelectReviewNotification(context, ratingMessage, userProvider.psValueHolder.loginUserId);
       } else {
         _onSelectApprovalNotification(context, notiMessage);
       }
@@ -726,39 +650,20 @@ mixin Utils {
         final String itemId = data['item_id'];
         final String action = data['action'];
 
-        if (userProvider.psValueHolder.loginUserId != null &&
-            userProvider.psValueHolder.loginUserId != '' &&
-            !isReachChatView) {
-          _showChatNotification(context, notiMessage, sellerId, buyerId,
-              senderName, senderProflePhoto, itemId, action, loginUserId);
+        if (userProvider.psValueHolder.loginUserId != null && userProvider.psValueHolder.loginUserId != '' && !isReachChatView) {
+          _showChatNotification(context, notiMessage, sellerId, buyerId, senderName, senderProflePhoto, itemId, action, loginUserId);
         }
       } else if (flag == 'review') {
         final String rating = data['rating'];
-        final String ratingMessage =
-            Utils.getString(context, 'noti_message__text1') +
-                rating.split('.')[0] +
-                Utils.getString(context, 'noti_message__text2') +
-                '\n"' +
-                notiMessage +
-                '"';
-        _onSelectReviewNotification(
-            context, ratingMessage, userProvider.psValueHolder.loginUserId);
+        final String ratingMessage = Utils.getString(context, 'noti_message__text1') + rating.split('.')[0] + Utils.getString(context, 'noti_message__text2') + '\n"' + notiMessage + '"';
+        _onSelectReviewNotification(context, ratingMessage, userProvider.psValueHolder.loginUserId);
       } else {
         _onSelectApprovalNotification(context, notiMessage);
       }
     }
   }
 
-  static Future<void> _showChatNotification(
-      BuildContext context,
-      String payload,
-      String sellerId,
-      String buyerId,
-      String senderName,
-      String senderProflePhoto,
-      String itemId,
-      String action,
-      String loginUserId) async {
+  static Future<void> _showChatNotification(BuildContext context, String payload, String sellerId, String buyerId, String senderName, String senderProflePhoto, String itemId, String action, String loginUserId) async {
     if (context != null) {
       return showDialog<dynamic>(
         context: context,
@@ -768,23 +673,14 @@ mixin Utils {
               leftButtonText: Utils.getString(context, 'dialog__cancel'),
               rightButtonText: Utils.getString(context, 'chat_noti__open'),
               onAgreeTap: () {
-                _navigateToChat(context, sellerId, buyerId, senderName,
-                    senderProflePhoto, itemId, action, loginUserId);
+                _navigateToChat(context, sellerId, buyerId, senderName, senderProflePhoto, itemId, action, loginUserId);
               });
         },
       );
     }
   }
 
-  static void _navigateToChat(
-      BuildContext context,
-      String sellerId,
-      String buyerId,
-      String senderName,
-      String senderProflePhoto,
-      String itemId,
-      String action,
-      String loginUserId) {
+  static void _navigateToChat(BuildContext context, String sellerId, String buyerId, String senderName, String senderProflePhoto, String itemId, String action, String loginUserId) {
     if (loginUserId == buyerId) {
       Navigator.pushNamed(context, RoutePaths.chatView,
           arguments: ChatHistoryIntentHolder(
@@ -794,12 +690,7 @@ mixin Utils {
             sellerUserId: sellerId,
           ));
     } else {
-      Navigator.pushNamed(context, RoutePaths.chatView,
-          arguments: ChatHistoryIntentHolder(
-              chatFlag: PsConst.CHAT_FROM_BUYER,
-              itemId: itemId,
-              buyerUserId: buyerId,
-              sellerUserId: sellerId));
+      Navigator.pushNamed(context, RoutePaths.chatView, arguments: ChatHistoryIntentHolder(chatFlag: PsConst.CHAT_FROM_BUYER, itemId: itemId, buyerUserId: buyerId, sellerUserId: sellerId));
     }
   }
 

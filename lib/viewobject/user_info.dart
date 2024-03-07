@@ -3,21 +3,20 @@ import 'package:quiver/core.dart';
 
 class UserInfo extends PsObject<UserInfo> {
   UserInfo({
-     this.userStatus,
+    this.userStatus,
   });
 
   String? userStatus;
 
   @override
-  bool operator ==(dynamic other) =>
-      other is UserInfo && userStatus == other.userStatus;
+  bool operator ==(dynamic other) => other is UserInfo && userStatus == other.userStatus;
 
   @override
   int get hashCode => hash2(userStatus.hashCode, userStatus.hashCode);
 
   @override
   String getPrimaryKey() {
-    return userStatus;
+    return userStatus!;
   }
 
   @override
@@ -41,7 +40,7 @@ class UserInfo extends PsObject<UserInfo> {
         userStatus: dynamicData['user_status'],
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -53,7 +52,7 @@ class UserInfo extends PsObject<UserInfo> {
 
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

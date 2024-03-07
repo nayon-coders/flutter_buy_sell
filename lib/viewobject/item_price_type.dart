@@ -1,15 +1,16 @@
+// ignore_for_file: null_check_always_fails
+
 import 'package:quiver/core.dart';
 import 'common/ps_object.dart';
 
 class ItemPriceType extends PsObject<ItemPriceType> {
-  ItemPriceType(
-      {this.id, this.name, this.status, this.addedDate, this.isEmptyObject});
+  ItemPriceType({this.id, this.name, this.status, this.addedDate, this.isEmptyObject});
 
-  String id;
-  String name;
-  String status;
-  String addedDate;
-  String isEmptyObject;
+  String? id;
+  String? name;
+  String? status;
+  String? addedDate;
+  String? isEmptyObject;
 
   @override
   bool operator ==(dynamic other) => other is ItemPriceType && id == other.id;
@@ -19,7 +20,7 @@ class ItemPriceType extends PsObject<ItemPriceType> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
@@ -33,7 +34,7 @@ class ItemPriceType extends PsObject<ItemPriceType> {
         isEmptyObject: dynamicData['is_empty_object'],
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -48,7 +49,7 @@ class ItemPriceType extends PsObject<ItemPriceType> {
       data['is_empty_object'] = object.isEmptyObject;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

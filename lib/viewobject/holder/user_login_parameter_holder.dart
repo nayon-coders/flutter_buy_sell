@@ -1,16 +1,12 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
 class UserLoginParameterHolder extends PsHolder<UserLoginParameterHolder> {
-  UserLoginParameterHolder(
-      {@required this.userEmail,
-      @required this.userPassword,
-      @required this.deviceToken});
+  UserLoginParameterHolder({@required this.userEmail, @required this.userPassword, @required this.deviceToken});
 
-  final String userEmail;
-  final String userPassword;
-  final String deviceToken;
+  final String? userEmail;
+  final String? userPassword;
+  final String? deviceToken;
 
   @override
   Map<String, dynamic> toMap() {
@@ -37,14 +33,14 @@ class UserLoginParameterHolder extends PsHolder<UserLoginParameterHolder> {
     String key = '';
 
     if (userEmail != '') {
-      key += userEmail;
+      key += userEmail!;
     }
     if (userPassword != '') {
-      key += userPassword;
+      key += userPassword!;
     }
 
     if (deviceToken != '') {
-      key += deviceToken;
+      key += deviceToken!;
     }
     return key;
   }

@@ -1,22 +1,17 @@
+// ignore_for_file: null_check_always_fails
+
 import 'package:quiver/core.dart';
 import 'common/ps_object.dart';
 
 class ItemLocation extends PsObject<ItemLocation> {
-  ItemLocation(
-      {this.id,
-      this.name,
-      this.lat,
-      this.lng,
-      this.status,
-      this.addedDate,
-      this.addedDateStr});
-  String id;
-  String name;
-  String lat;
-  String lng;
-  String status;
-  String addedDate;
-  String addedDateStr;
+  ItemLocation({this.id, this.name, this.lat, this.lng, this.status, this.addedDate, this.addedDateStr});
+  String? id;
+  String? name;
+  String? lat;
+  String? lng;
+  String? status;
+  String? addedDate;
+  String? addedDateStr;
 
   @override
   bool operator ==(dynamic other) => other is ItemLocation && id == other.id;
@@ -28,22 +23,15 @@ class ItemLocation extends PsObject<ItemLocation> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   ItemLocation fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return ItemLocation(
-          id: dynamicData['id'],
-          name: dynamicData['name'],
-          lat: dynamicData['lat'],
-          lng: dynamicData['lng'],
-          status: dynamicData['status'],
-          addedDate: dynamicData['added_date'],
-          addedDateStr: dynamicData['added_date_str']);
+      return ItemLocation(id: dynamicData['id'], name: dynamicData['name'], lat: dynamicData['lat'], lng: dynamicData['lng'], status: dynamicData['status'], addedDate: dynamicData['added_date'], addedDateStr: dynamicData['added_date_str']);
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -60,7 +48,7 @@ class ItemLocation extends PsObject<ItemLocation> {
       data['added_date_str'] = object.addedDateStr;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

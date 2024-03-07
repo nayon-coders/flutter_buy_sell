@@ -4,10 +4,10 @@ import 'common/ps_object.dart';
 class ConditionOfItem extends PsObject<ConditionOfItem> {
   ConditionOfItem({this.id, this.name, this.status, this.addedDate});
 
-  String id;
-  String name;
-  String status;
-  String addedDate;
+  String? id;
+  String? name;
+  String? status;
+  String? addedDate;
 
   @override
   bool operator ==(dynamic other) => other is ConditionOfItem && id == other.id;
@@ -17,7 +17,7 @@ class ConditionOfItem extends PsObject<ConditionOfItem> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
@@ -30,7 +30,7 @@ class ConditionOfItem extends PsObject<ConditionOfItem> {
         addedDate: dynamicData['added_date'],
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -44,7 +44,7 @@ class ConditionOfItem extends PsObject<ConditionOfItem> {
       data['added_date'] = object.addedDate;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

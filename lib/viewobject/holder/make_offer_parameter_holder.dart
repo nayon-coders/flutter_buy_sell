@@ -1,5 +1,4 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
 class MakeOfferParameterHolder extends PsHolder<MakeOfferParameterHolder> {
@@ -11,11 +10,11 @@ class MakeOfferParameterHolder extends PsHolder<MakeOfferParameterHolder> {
     @required this.type,
   });
 
-  final String itemId;
-  final String buyerUserId;
-  final String sellerUserId;
-  final String negoPrice;
-  final String type;
+  final String? itemId;
+  final String? buyerUserId;
+  final String? sellerUserId;
+  final String? negoPrice;
+  final String? type;
 
   @override
   Map<String, dynamic> toMap() {
@@ -44,19 +43,19 @@ class MakeOfferParameterHolder extends PsHolder<MakeOfferParameterHolder> {
     String key = '';
 
     if (itemId != '') {
-      key += itemId;
+      key += itemId!;
     }
     if (buyerUserId != '') {
-      key += buyerUserId;
+      key += buyerUserId!;
     }
     if (sellerUserId != '') {
-      key += sellerUserId;
+      key += sellerUserId!;
     }
     if (negoPrice != '') {
-      key += negoPrice;
+      key += negoPrice!;
     }
     if (type != '') {
-      key += type;
+      key += type!;
     }
 
     return key;

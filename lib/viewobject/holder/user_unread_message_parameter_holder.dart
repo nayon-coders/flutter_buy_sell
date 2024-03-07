@@ -1,16 +1,14 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
-class UserUnreadMessageParameterHolder
-    extends PsHolder<UserUnreadMessageParameterHolder> {
+class UserUnreadMessageParameterHolder extends PsHolder<UserUnreadMessageParameterHolder> {
   UserUnreadMessageParameterHolder({
     @required this.userId,
     @required this.deviceToken,
   });
 
-  final String userId;
-  final String deviceToken;
+  final String? userId;
+  final String? deviceToken;
 
   @override
   Map<String, dynamic> toMap() {
@@ -33,10 +31,10 @@ class UserUnreadMessageParameterHolder
     String key = '';
 
     if (userId != '') {
-      key += userId;
+      key += userId!;
     }
     if (deviceToken != '') {
-      key += deviceToken;
+      key += deviceToken!;
     }
 
     return key;

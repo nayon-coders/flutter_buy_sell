@@ -3,24 +3,16 @@ import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 import 'default_photo.dart';
 
 class Noti extends PsObject<Noti> {
-  Noti(
-      {this.id,
-      this.description,
-      this.message,
-      this.addedDate,
-      this.addedUserId,
-      this.isRead,
-      this.addedDateStr,
-      this.defaultPhoto});
+  Noti({this.id, this.description, this.message, this.addedDate, this.addedUserId, this.isRead, this.addedDateStr, this.defaultPhoto});
 
-  String id;
-  String description;
-  String message;
-  String addedDate;
-  String addedUserId;
-  String isRead;
-  String addedDateStr;
-  DefaultPhoto defaultPhoto;
+  String? id;
+  String? description;
+  String? message;
+  String? addedDate;
+  String? addedUserId;
+  String? isRead;
+  String? addedDateStr;
+  DefaultPhoto? defaultPhoto;
 
   @override
   bool operator ==(dynamic other) => other is Noti && id == other.id;
@@ -29,23 +21,15 @@ class Noti extends PsObject<Noti> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   Noti fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return Noti(
-          id: dynamicData['id'],
-          description: dynamicData['description'],
-          message: dynamicData['message'],
-          addedDate: dynamicData['added_date'],
-          addedUserId: dynamicData['added_user_id'],
-          isRead: dynamicData['is_read'],
-          addedDateStr: dynamicData['added_date_str'],
-          defaultPhoto: DefaultPhoto().fromMap(dynamicData['default_photo']));
+      return Noti(id: dynamicData['id'], description: dynamicData['description'], message: dynamicData['message'], addedDate: dynamicData['added_date'], addedUserId: dynamicData['added_user_id'], isRead: dynamicData['is_read'], addedDateStr: dynamicData['added_date_str'], defaultPhoto: DefaultPhoto().fromMap(dynamicData['default_photo']));
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -63,7 +47,7 @@ class Noti extends PsObject<Noti> {
       data['default_photo'] = DefaultPhoto().toMap(object.defaultPhoto);
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 class GetNotiParameterHolder extends PsHolder<GetNotiParameterHolder> {
   GetNotiParameterHolder({@required this.userId, @required this.deviceToken});
 
-  final String userId;
-  final String deviceToken;
+  final String? userId;
+  final String? deviceToken;
 
   @override
   Map<dynamic, dynamic> toMap() {
@@ -30,10 +30,10 @@ class GetNotiParameterHolder extends PsHolder<GetNotiParameterHolder> {
     String key = '';
 
     if (userId != '') {
-      key += userId;
+      key += userId!;
     }
     if (deviceToken != '') {
-      key += deviceToken;
+      key += deviceToken!;
     }
     return key;
   }

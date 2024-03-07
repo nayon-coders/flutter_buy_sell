@@ -15,18 +15,18 @@ class CouponDiscount extends PsObject<CouponDiscount> {
     this.addedDateStr,
     this.updatedUserId,
   });
-  String id;
-  String couponName;
-  String couponCode;
-  String couponAmount;
-  String isPublished;
-  String headerComment;
-  String updatedDate;
-  String addedDate;
-  String addedUserId;
-  String updatedUserId;
-  String addedDateStr;
-  String updatedFlag;
+  String? id;
+  String? couponName;
+  String? couponCode;
+  String? couponAmount;
+  String? isPublished;
+  String? headerComment;
+  String? updatedDate;
+  String? addedDate;
+  String? addedUserId;
+  String? updatedUserId;
+  String? addedDateStr;
+  String? updatedFlag;
 
   @override
   bool operator ==(dynamic other) => other is CouponDiscount && id == other.id;
@@ -38,26 +38,15 @@ class CouponDiscount extends PsObject<CouponDiscount> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   CouponDiscount fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return CouponDiscount(
-          id: dynamicData['id'],
-          couponName: dynamicData['coupon_name'],
-          couponCode: dynamicData['coupon_code'],
-          couponAmount: dynamicData['coupon_amount'],
-          isPublished: dynamicData['is_published'],
-          addedDate: dynamicData['added_date'],
-          updatedDate: dynamicData['updated_date'],
-          addedUserId: dynamicData['added_user_id'],
-          updatedUserId: dynamicData['updated_user_id'],
-          addedDateStr: dynamicData['added_date_str'],
-          updatedFlag: dynamicData['updated_flag']);
+      return CouponDiscount(id: dynamicData['id'], couponName: dynamicData['coupon_name'], couponCode: dynamicData['coupon_code'], couponAmount: dynamicData['coupon_amount'], isPublished: dynamicData['is_published'], addedDate: dynamicData['added_date'], updatedDate: dynamicData['updated_date'], addedUserId: dynamicData['added_user_id'], updatedUserId: dynamicData['updated_user_id'], addedDateStr: dynamicData['added_date_str'], updatedFlag: dynamicData['updated_flag']);
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -78,7 +67,7 @@ class CouponDiscount extends PsObject<CouponDiscount> {
       data['updated_flag'] = object.updatedFlag;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

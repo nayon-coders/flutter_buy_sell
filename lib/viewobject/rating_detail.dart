@@ -1,19 +1,7 @@
 import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 
 class RatingDetail extends PsObject<RatingDetail> {
-  RatingDetail(
-      { this.fiveStarCount,
-       this.fiveStarPercent,
-       this.fourStarCount,
-       this.fourStarPercent,
-       this.threeStarCount,
-       this.threeStarPercent,
-       this.twoStarCount,
-       this.twoStarPercent,
-       this.oneStarCount,
-       this.oneStarPercent,
-       this.totalRatingCount,
-       this.totalRatingValue});
+  RatingDetail({this.fiveStarCount, this.fiveStarPercent, this.fourStarCount, this.fourStarPercent, this.threeStarCount, this.threeStarPercent, this.twoStarCount, this.twoStarPercent, this.oneStarCount, this.oneStarPercent, this.totalRatingCount, this.totalRatingValue});
 
   String? fiveStarCount;
   String? fiveStarPercent;
@@ -36,21 +24,9 @@ class RatingDetail extends PsObject<RatingDetail> {
   @override
   RatingDetail fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return RatingDetail(
-          fiveStarCount: dynamicData['five_star_count'],
-          fiveStarPercent: dynamicData['five_star_percent'],
-          fourStarCount: dynamicData['four_star_count'],
-          fourStarPercent: dynamicData['four_star_percent'],
-          threeStarCount: dynamicData['three_star_count'],
-          threeStarPercent: dynamicData['three_star_percent'],
-          twoStarCount: dynamicData['two_star_count'],
-          twoStarPercent: dynamicData['two_star_percent'],
-          oneStarCount: dynamicData['one_star_count'],
-          oneStarPercent: dynamicData['one_star_percent'],
-          totalRatingCount: dynamicData['total_rating_count'],
-          totalRatingValue: dynamicData['total_rating_value']);
+      return RatingDetail(fiveStarCount: dynamicData['five_star_count'], fiveStarPercent: dynamicData['five_star_percent'], fourStarCount: dynamicData['four_star_count'], fourStarPercent: dynamicData['four_star_percent'], threeStarCount: dynamicData['three_star_count'], threeStarPercent: dynamicData['three_star_percent'], twoStarCount: dynamicData['two_star_count'], twoStarPercent: dynamicData['two_star_percent'], oneStarCount: dynamicData['one_star_count'], oneStarPercent: dynamicData['one_star_percent'], totalRatingCount: dynamicData['total_rating_count'], totalRatingValue: dynamicData['total_rating_value']);
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -72,7 +48,7 @@ class RatingDetail extends PsObject<RatingDetail> {
       data['total_rating_value'] = object.totalRatingValue;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

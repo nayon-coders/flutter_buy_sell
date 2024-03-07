@@ -1,11 +1,10 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
 class RatingListHolder extends PsHolder<RatingListHolder> {
   RatingListHolder({@required this.userId});
 
-  final String userId;
+  final String? userId;
 
   @override
   Map<String, dynamic> toMap() {
@@ -28,7 +27,7 @@ class RatingListHolder extends PsHolder<RatingListHolder> {
     String key = '';
 
     if (userId != '') {
-      key += userId;
+      key += userId!;
     }
     return key;
   }

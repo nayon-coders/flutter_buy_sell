@@ -70,7 +70,7 @@ class Blog extends PsObject<Blog> {
       data['default_photo'] = DefaultPhoto().toMap(object.defaultPhoto);
       return data;
     } else {
-      return {};
+      return null!;
     }
   }
 

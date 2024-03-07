@@ -1,20 +1,14 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
 class ChatNotiParameterHolder extends PsHolder<ChatNotiParameterHolder> {
-  ChatNotiParameterHolder(
-      {@required this.itemId,
-      @required this.buyerUserId,
-      @required this.sellerUserId,
-      @required this.message,
-      @required this.type});
+  ChatNotiParameterHolder({@required this.itemId, @required this.buyerUserId, @required this.sellerUserId, @required this.message, @required this.type});
 
-  final String itemId;
-  final String buyerUserId;
-  final String sellerUserId;
-  final String message;
-  final String type;
+  final String? itemId;
+  final String? buyerUserId;
+  final String? sellerUserId;
+  final String? message;
+  final String? type;
 
   @override
   Map<String, dynamic> toMap() {
@@ -45,20 +39,20 @@ class ChatNotiParameterHolder extends PsHolder<ChatNotiParameterHolder> {
     String key = '';
 
     if (itemId != '') {
-      key += itemId;
+      key += itemId!;
     }
     if (buyerUserId != '') {
-      key += buyerUserId;
+      key += buyerUserId!;
     }
 
     if (sellerUserId != '') {
-      key += sellerUserId;
+      key += sellerUserId!;
     }
     if (message != '') {
-      key += message;
+      key += message!;
     }
     if (type != '') {
-      key += type;
+      key += type!;
     }
     return key;
   }

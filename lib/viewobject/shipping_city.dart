@@ -3,16 +3,16 @@ import 'package:quiver/core.dart';
 
 class ShippingCity extends PsObject<ShippingCity> {
   ShippingCity({
-      this.id,
-     this.countryId,
-     this.name,
-     this.status,
-     this.addedDate,
-     this.addedUserId,
-     this.updatedDate,
-     this.updatedUserId,
-     this.updatedFlag,
-     this.addedDateStr,
+    this.id,
+    this.countryId,
+    this.name,
+    this.status,
+    this.addedDate,
+    this.addedUserId,
+    this.updatedDate,
+    this.updatedUserId,
+    this.updatedFlag,
+    this.addedDateStr,
   });
 
   String? id;
@@ -41,23 +41,12 @@ class ShippingCity extends PsObject<ShippingCity> {
 
   @override
   ShippingCity fromMap(dynamic dynamicData) {
-    return ShippingCity(
-        id: dynamicData['id'],
-        name: dynamicData['name'],
-        status: dynamicData['status'],
-        addedDate: dynamicData['added_date'],
-        addedUserId: dynamicData['added_user_id'],
-        updatedDate: dynamicData['updated_date'],
-        updatedUserId: dynamicData['updated_user_id'],
-        updatedFlag: dynamicData['updated_flag'],
-        countryId: dynamicData['country_id'],
-        addedDateStr: dynamicData['added_date_str']);
+    return ShippingCity(id: dynamicData['id'], name: dynamicData['name'], status: dynamicData['status'], addedDate: dynamicData['added_date'], addedUserId: dynamicData['added_user_id'], updatedDate: dynamicData['updated_date'], updatedUserId: dynamicData['updated_user_id'], updatedFlag: dynamicData['updated_flag'], countryId: dynamicData['country_id'], addedDateStr: dynamicData['added_date_str']);
   }
 
   @override
   Map<String, dynamic> toMap(ShippingCity object) {
     if (object != null) {
-
       final Map<String, dynamic> data = <String, dynamic>{};
       data['id'] = object.id;
       data['name'] = object.name;
@@ -72,7 +61,7 @@ class ShippingCity extends PsObject<ShippingCity> {
 
       return data;
     } else {
-      return {};
+      return null!;
     }
   }
 

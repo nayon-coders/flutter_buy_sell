@@ -4,8 +4,8 @@ import 'package:quiver/core.dart';
 class ShippingZone extends PsObject<ShippingZone> {
   ShippingZone({
     required this.id,
-     this.shippingZonePackageName,
-     this.shippingCost,
+    this.shippingZonePackageName,
+    this.shippingCost,
   });
 
   String id;
@@ -34,7 +34,7 @@ class ShippingZone extends PsObject<ShippingZone> {
         shippingCost: dynamicData['shipping_cost'],
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -47,7 +47,7 @@ class ShippingZone extends PsObject<ShippingZone> {
       data['shipping_cost'] = object.shippingCost;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

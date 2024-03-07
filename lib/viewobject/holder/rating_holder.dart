@@ -1,5 +1,4 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
 class RatingParameterHolder extends PsHolder<RatingParameterHolder> {
@@ -11,11 +10,11 @@ class RatingParameterHolder extends PsHolder<RatingParameterHolder> {
     @required this.rating,
   });
 
-  final String fromUserId;
-  final String toUserId;
-  final String title;
-  final String description;
-  final String rating;
+  final String? fromUserId;
+  final String? toUserId;
+  final String? title;
+  final String? description;
+  final String? rating;
 
   @override
   Map<String, dynamic> toMap() {
@@ -46,20 +45,20 @@ class RatingParameterHolder extends PsHolder<RatingParameterHolder> {
     String key = '';
 
     if (fromUserId != '') {
-      key += fromUserId;
+      key += fromUserId!;
     }
     if (toUserId != '') {
-      key += toUserId;
+      key += toUserId!;
     }
 
     if (title != '') {
-      key += title;
+      key += title!;
     }
     if (description != '') {
-      key += description;
+      key += description!;
     }
     if (rating != '') {
-      key += rating;
+      key += rating!;
     }
     return key;
   }

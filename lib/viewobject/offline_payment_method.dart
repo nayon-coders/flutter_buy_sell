@@ -3,30 +3,26 @@ import 'package:flutterbuyandsell/viewobject/offline_payment.dart';
 
 class OfflinePaymentMethod extends PsObject<OfflinePaymentMethod> {
   OfflinePaymentMethod({
-     this.id,
-     this.offlinePayment,
-     this.message,
+    this.id,
+    this.offlinePayment,
+    this.message,
   });
-  List<OfflinePayment> ?offlinePayment;
+  List<OfflinePayment>? offlinePayment;
   String? message;
-
 
   String? id;
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   OfflinePaymentMethod fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return OfflinePaymentMethod(
-          id : dynamicData['id'],
-          offlinePayment: OfflinePayment().fromMapList(dynamicData['offline_payment']),
-          message: dynamicData['message']);
+      return OfflinePaymentMethod(id: dynamicData['id'], offlinePayment: OfflinePayment().fromMapList(dynamicData['offline_payment']), message: dynamicData['message']);
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -39,7 +35,7 @@ class OfflinePaymentMethod extends PsObject<OfflinePaymentMethod> {
       data['message'] = object.message;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

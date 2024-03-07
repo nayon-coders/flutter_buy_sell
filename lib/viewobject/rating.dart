@@ -3,17 +3,7 @@ import 'package:flutterbuyandsell/viewobject/user.dart';
 import 'package:quiver/core.dart';
 
 class Rating extends PsObject<Rating> {
-  Rating(
-      { this.id,
-       this.fromUserId,
-       this.toUserId,
-       this.rating,
-       this.title,
-       this.description,
-       this.addedDate,
-       this.addedDateStr,
-       this.fromUser,
-       this.toUser});
+  Rating({this.id, this.fromUserId, this.toUserId, this.rating, this.title, this.description, this.addedDate, this.addedDateStr, this.fromUser, this.toUser});
   String? id;
   String? fromUserId;
   String? toUserId;
@@ -35,7 +25,7 @@ class Rating extends PsObject<Rating> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
@@ -54,7 +44,7 @@ class Rating extends PsObject<Rating> {
         toUser: User(userId: "").fromMap(dynamicData['to_user']),
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -69,12 +59,12 @@ class Rating extends PsObject<Rating> {
       data['title'] = object.title;
       data['description'] = object.description;
       data['added_date'] = object.addedDate;
-      data['from_user'] = User(userId: "").toMap(object.fromUser);
-      data['to_user'] = User(userId: "").toMap(object.toUser);
+      data['from_user'] = User(userId: "").toMap(object.fromUser!);
+      data['to_user'] = User(userId: "").toMap(object.toUser!);
       data['added_date_str'] = object.addedDateStr;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

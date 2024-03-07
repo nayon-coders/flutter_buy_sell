@@ -19,28 +19,22 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class VerifyEmailView extends StatefulWidget {
-  const VerifyEmailView(
-      {Key key,
-      this.animationController,
-      this.onProfileSelected,
-      this.onSignInSelected,
-      this.userId})
-      : super(key: key);
+  const VerifyEmailView({Key? key, this.animationController, this.onProfileSelected, this.onSignInSelected, this.userId}) : super(key: key);
 
-  final AnimationController animationController;
-  final Function onProfileSelected, onSignInSelected;
-  final String userId;
+  final AnimationController? animationController;
+  final Function? onProfileSelected, onSignInSelected;
+  final String? userId;
   @override
   _VerifyEmailViewState createState() => _VerifyEmailViewState();
 }
 
 class _VerifyEmailViewState extends State<VerifyEmailView> {
-  UserRepository repo1;
-  PsValueHolder valueHolder;
+  UserRepository? repo1;
+  PsValueHolder? valueHolder;
 
   @override
   Widget build(BuildContext context) {
-    widget.animationController.forward();
+    widget.animationController!.forward();
 
     const Widget _dividerWidget = Divider(
       height: PsDimens.space2,
@@ -52,13 +46,11 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
     return ChangeNotifierProvider<UserProvider>(
       lazy: false,
       create: (BuildContext context) {
-        final UserProvider provider =
-            UserProvider(repo: repo1, psValueHolder: valueHolder);
+        final UserProvider provider = UserProvider(repo: repo1!, psValueHolder: valueHolder!);
         // provider.postUserRegister(userRegisterParameterHolder.toMap());
         return provider;
       },
-      child: Consumer<UserProvider>(
-          builder: (BuildContext context, UserProvider provider, Widget child) {
+      child: Consumer<UserProvider>(builder: (BuildContext context, UserProvider provider, Widget? child) {
         return SingleChildScrollView(
             child: Stack(
           alignment: Alignment.bottomCenter,
@@ -92,9 +84,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
                           )
                         ],
                       ),
-                      _ChangeEmailAndRecentCodeWidget(
-                          provider: provider,
-                          onSignInSelected: widget.onSignInSelected),
+                      _ChangeEmailAndRecentCodeWidget(provider: provider, onSignInSelected: widget.onSignInSelected),
                     ],
                   ),
                 )),
@@ -113,13 +103,12 @@ class _TextFieldAndButtonWidget extends StatefulWidget {
     this.onProfileSelected,
     @required this.userId,
   });
-  final UserProvider provider;
-  final Function onProfileSelected;
-  final String userId;
+  final UserProvider? provider;
+  final Function? onProfileSelected;
+  final String? userId;
 
   @override
-  __TextFieldAndButtonWidgetState createState() =>
-      __TextFieldAndButtonWidgetState();
+  __TextFieldAndButtonWidgetState createState() => __TextFieldAndButtonWidgetState();
 }
 
 dynamic callWarningDialog(BuildContext context, String text) {
@@ -139,8 +128,7 @@ class __TextFieldAndButtonWidgetState extends State<_TextFieldAndButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final PsValueHolder psValueHolder =
-        Provider.of<PsValueHolder>(context, listen: false);
+    final PsValueHolder psValueHolder = Provider.of<PsValueHolder>(context, listen: false);
     return Column(
       children: <Widget>[
         const SizedBox(
@@ -151,12 +139,8 @@ class __TextFieldAndButtonWidgetState extends State<_TextFieldAndButtonWidget> {
           controller: codeController,
           decoration: InputDecoration(
             border: InputBorder.none,
-            hintText: Utils.getString(
-                context, 'email_verify__enter_verification_code'),
-            hintStyle: Theme.of(context)
-                .textTheme
-                .bodyText2
-                .copyWith(color: PsColors.textPrimaryLightColor),
+            hintText: Utils.getString(context, 'email_verify__enter_verification_code'),
+            hintStyle: Theme.of(context).textTheme.bodyText2!.copyWith(color: PsColors.textPrimaryLightColor),
           ),
           style: Theme.of(context).textTheme.headline4,
         ),
@@ -164,47 +148,33 @@ class __TextFieldAndButtonWidgetState extends State<_TextFieldAndButtonWidget> {
           height: PsDimens.space16,
         ),
         Container(
-            margin: const EdgeInsets.only(
-                left: PsDimens.space16, right: PsDimens.space16),
+            margin: const EdgeInsets.only(left: PsDimens.space16, right: PsDimens.space16),
             child: PSButtonWidget(
               hasShadow: true,
               width: double.infinity,
               titleText: Utils.getString(context, 'email_verify__submit'),
               onPressed: () async {
                 if (codeController.text.isEmpty) {
-                  callWarningDialog(context,
-                      Utils.getString(context, 'warning_dialog__code_require'));
+                  callWarningDialog(context, Utils.getString(context, 'warning_dialog__code_require'));
                 } else {
                   if (await Utils.checkInternetConnectivity()) {
-                    final EmailVerifyParameterHolder
-                        emailVerifyParameterHolder = EmailVerifyParameterHolder(
-                      userId: (psValueHolder.userIdToVerify == null ||
-                              psValueHolder.userIdToVerify == '')
-                          ? widget.userId
-                          : psValueHolder.userIdToVerify,
+                    final EmailVerifyParameterHolder emailVerifyParameterHolder = EmailVerifyParameterHolder(
+                      userId: (psValueHolder.userIdToVerify == null || psValueHolder.userIdToVerify == '') ? widget.userId : psValueHolder.userIdToVerify,
                       code: codeController.text,
                     );
 
-                    final PsResource<User> _apiStatus = await widget.provider
-                        .postUserEmailVerify(
-                            emailVerifyParameterHolder.toMap());
+                    final PsResource<User> _apiStatus = await widget.provider!.postUserEmailVerify(emailVerifyParameterHolder.toMap());
 
                     if (_apiStatus.data != null) {
-                      await widget.provider
-                          .replaceVerifyUserData('', '', '', '');
-                      await widget.provider
-                          .replaceLoginUserId(_apiStatus.data.userId);
-                      await widget.provider
-                          .replaceLoginUserName(_apiStatus.data.userName);
+                      await widget.provider!.replaceVerifyUserData('', '', '', '');
+                      await widget.provider!.replaceLoginUserId(_apiStatus.data!.userId!);
+                      await widget.provider!.replaceLoginUserName(_apiStatus.data!.userName!);
 
                       if (widget.onProfileSelected != null) {
-                        await widget.provider
-                            .replaceVerifyUserData('', '', '', '');
-                        await widget.provider
-                            .replaceLoginUserId(_apiStatus.data.userId);
-                        await widget.provider
-                            .replaceLoginUserName(_apiStatus.data.userName);
-                        await widget.onProfileSelected(_apiStatus.data.userId);
+                        await widget.provider!.replaceVerifyUserData('', '', '', '');
+                        await widget.provider!.replaceLoginUserId(_apiStatus.data!.userId!);
+                        await widget.provider!.replaceLoginUserName(_apiStatus.data!.userName!);
+                        await widget.onProfileSelected!(_apiStatus.data!.userId);
                       } else {
                         Navigator.pop(context, _apiStatus.data);
                       }
@@ -213,7 +183,7 @@ class __TextFieldAndButtonWidgetState extends State<_TextFieldAndButtonWidget> {
                           context: context,
                           builder: (BuildContext context) {
                             return ErrorDialog(
-                              message: _apiStatus.message,
+                              message: _apiStatus.message!,
                             );
                           });
                     }
@@ -222,8 +192,7 @@ class __TextFieldAndButtonWidgetState extends State<_TextFieldAndButtonWidget> {
                         context: context,
                         builder: (BuildContext context) {
                           return ErrorDialog(
-                            message: Utils.getString(
-                                context, 'error_dialog__no_internet'),
+                            message: Utils.getString(context, 'error_dialog__no_internet'),
                           );
                         });
                   }
@@ -237,20 +206,18 @@ class __TextFieldAndButtonWidgetState extends State<_TextFieldAndButtonWidget> {
 
 class _HeaderTextWidget extends StatelessWidget {
   const _HeaderTextWidget({@required this.userProvider});
-  final UserProvider userProvider;
+  final UserProvider? userProvider;
 
   @override
   Widget build(BuildContext context) {
-    final PsValueHolder valueHolder =
-        Provider.of<PsValueHolder>(context, listen: false);
+    final PsValueHolder valueHolder = Provider.of<PsValueHolder>(context, listen: false);
     return Container(
       height: PsDimens.space200,
       width: double.infinity,
       child: Stack(children: <Widget>[
         Container(
             color: PsColors.mainColor,
-            padding: const EdgeInsets.only(
-                left: PsDimens.space16, right: PsDimens.space16),
+            padding: const EdgeInsets.only(left: PsDimens.space16, right: PsDimens.space16),
             height: PsDimens.space160,
             width: double.infinity,
             child: Column(
@@ -261,19 +228,11 @@ class _HeaderTextWidget extends StatelessWidget {
                 Text(
                   Utils.getString(context, 'email_verify__title1'),
                   textAlign: TextAlign.center,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2
-                      .copyWith(color: PsColors.white),
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(color: PsColors.white),
                 ),
                 Text(
-                  (valueHolder.userEmailToVerify == null)
-                      ? ''
-                      : valueHolder.userEmailToVerify,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyText2
-                      .copyWith(color: PsColors.white),
+                  (valueHolder.userEmailToVerify == null) ? '' : valueHolder.userEmailToVerify,
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(color: PsColors.white),
                 ),
               ],
             )),
@@ -283,8 +242,7 @@ class _HeaderTextWidget extends StatelessWidget {
             width: 90,
             height: 90,
             child: const CircleAvatar(
-              backgroundImage:
-                  ExactAssetImage('assets/images/verify_email_icon.jpg'),
+              backgroundImage: ExactAssetImage('assets/images/verify_email_icon.jpg'),
             ),
           ),
         )
@@ -298,20 +256,17 @@ class _ChangeEmailAndRecentCodeWidget extends StatefulWidget {
     @required this.provider,
     this.onSignInSelected,
   });
-  final UserProvider provider;
-  final Function onSignInSelected;
+  final UserProvider? provider;
+  final Function? onSignInSelected;
 
   @override
-  __ChangeEmailAndRecentCodeWidgetState createState() =>
-      __ChangeEmailAndRecentCodeWidgetState();
+  __ChangeEmailAndRecentCodeWidgetState createState() => __ChangeEmailAndRecentCodeWidgetState();
 }
 
-class __ChangeEmailAndRecentCodeWidgetState
-    extends State<_ChangeEmailAndRecentCodeWidget> {
+class __ChangeEmailAndRecentCodeWidgetState extends State<_ChangeEmailAndRecentCodeWidget> {
   @override
   Widget build(BuildContext context) {
-    final PsValueHolder psValueHolder =
-        Provider.of<PsValueHolder>(context, listen: false);
+    final PsValueHolder psValueHolder = Provider.of<PsValueHolder>(context, listen: false);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: <Widget>[
@@ -323,7 +278,7 @@ class __ChangeEmailAndRecentCodeWidgetState
           textColor: PsColors.mainColor,
           onPressed: () {
             if (widget.onSignInSelected != null) {
-              widget.onSignInSelected();
+              widget.onSignInSelected!();
             } else {
               Navigator.pop(context);
               Navigator.pushReplacementNamed(
@@ -341,20 +296,18 @@ class __ChangeEmailAndRecentCodeWidgetState
           textColor: PsColors.mainColor,
           onPressed: () async {
             if (await Utils.checkInternetConnectivity()) {
-              final ResendCodeParameterHolder resendCodeParameterHolder =
-                  ResendCodeParameterHolder(
+              final ResendCodeParameterHolder resendCodeParameterHolder = ResendCodeParameterHolder(
                 userEmail: psValueHolder.userEmailToVerify,
               );
 
-              final PsResource<ApiStatus> _apiStatus = await widget.provider
-                  .postResendCode(resendCodeParameterHolder.toMap());
+              final PsResource<ApiStatus> _apiStatus = await widget.provider!.postResendCode(resendCodeParameterHolder.toMap());
 
               if (_apiStatus.data != null) {
                 showDialog<dynamic>(
                     context: context,
                     builder: (BuildContext context) {
                       return SuccessDialog(
-                        message: _apiStatus.data.message,
+                        message: _apiStatus.data!.message!,
                         onPressed: () {},
                       );
                     });
@@ -363,7 +316,7 @@ class __ChangeEmailAndRecentCodeWidgetState
                     context: context,
                     builder: (BuildContext context) {
                       return ErrorDialog(
-                        message: _apiStatus.message,
+                        message: _apiStatus.message!,
                       );
                     });
               }
@@ -372,8 +325,7 @@ class __ChangeEmailAndRecentCodeWidgetState
                   context: context,
                   builder: (BuildContext context) {
                     return ErrorDialog(
-                      message:
-                          Utils.getString(context, 'error_dialog__no_internet'),
+                      message: Utils.getString(context, 'error_dialog__no_internet'),
                     );
                   });
             }

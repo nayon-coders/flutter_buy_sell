@@ -2,7 +2,7 @@ import 'package:flutterbuyandsell/constant/ps_constants.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart';
 
 class OfferParameterHolder extends PsHolder<dynamic> {
-  OfferParameterHolder() {
+  OfferParameterHolder(this.userId, this.returnType) {
     userId = '';
     returnType = '';
   }

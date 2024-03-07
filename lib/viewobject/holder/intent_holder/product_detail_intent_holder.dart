@@ -8,8 +8,8 @@ class ProductDetailIntentHolder {
     this.heroTagTitle,
   });
 
-  final String id;
-  final String productId;
-  final String heroTagImage;
-  final String heroTagTitle;
+  final String? id;
+  final String? productId;
+  final String? heroTagImage;
+  final String? heroTagTitle;
 }

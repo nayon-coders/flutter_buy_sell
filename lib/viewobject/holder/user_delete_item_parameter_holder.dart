@@ -1,14 +1,12 @@
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 import 'package:flutter/cupertino.dart';
 
-class UserDeleteItemParameterHolder
-    extends PsHolder<UserDeleteItemParameterHolder> {
+class UserDeleteItemParameterHolder extends PsHolder<UserDeleteItemParameterHolder> {
   UserDeleteItemParameterHolder({
     @required this.itemId,
   });
 
-  final String itemId;
+  final String? itemId;
 
   @override
   Map<String, dynamic> toMap() {
@@ -29,7 +27,7 @@ class UserDeleteItemParameterHolder
     String key = '';
 
     if (itemId != '') {
-      key += itemId;
+      key += itemId!;
     }
 
     return key;

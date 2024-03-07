@@ -6,7 +6,7 @@ class VerifyPhoneIntentHolder {
     @required this.phoneNumber,
     @required this.phoneId,
   });
-  final String userName;
-  final String phoneNumber;
-  final String phoneId;
+  final String? userName;
+  final String? phoneNumber;
+  final String? phoneId;
 }

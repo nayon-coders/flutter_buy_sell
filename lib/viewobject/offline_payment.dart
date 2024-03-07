@@ -1,17 +1,11 @@
+// ignore_for_file: null_check_always_fails
+
 import 'package:flutterbuyandsell/viewobject/default_icon.dart';
 import 'package:quiver/core.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 
 class OfflinePayment extends PsObject<OfflinePayment> {
-  OfflinePayment(
-      { this.id,
-       this.description,
-       this.title,
-       this.addedDate,
-       this.addedUserId,
-       this.updatedDate,
-       this.updatedUserId,
-       this.defaultIcon});
+  OfflinePayment({this.id, this.description, this.title, this.addedDate, this.addedUserId, this.updatedDate, this.updatedUserId, this.defaultIcon});
 
   String? id;
   String? description;
@@ -29,23 +23,15 @@ class OfflinePayment extends PsObject<OfflinePayment> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   OfflinePayment fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return OfflinePayment(
-          id: dynamicData['id'],
-          description: dynamicData['description'],
-          title: dynamicData['title'],
-          addedDate: dynamicData['added_date'],
-          addedUserId: dynamicData['added_user_id'],
-          updatedDate: dynamicData['updated_date'],
-          updatedUserId: dynamicData['updated_user_id'],
-          defaultIcon: DefaultIcon().fromMap(dynamicData['default_icon']));
+      return OfflinePayment(id: dynamicData['id'], description: dynamicData['description'], title: dynamicData['title'], addedDate: dynamicData['added_date'], addedUserId: dynamicData['added_user_id'], updatedDate: dynamicData['updated_date'], updatedUserId: dynamicData['updated_user_id'], defaultIcon: DefaultIcon().fromMap(dynamicData['default_icon']));
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -60,10 +46,10 @@ class OfflinePayment extends PsObject<OfflinePayment> {
       data['added_user_id'] = object.addedUserId;
       data['updated_date'] = object.updatedDate;
       data['updated_user_id'] = object.updatedUserId;
-      data['default_icon'] = DefaultIcon().toMap(object.defaultIcon);
+      data['default_icon'] = DefaultIcon().toMap(object.defaultIcon!);
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

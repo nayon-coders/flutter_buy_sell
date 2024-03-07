@@ -2,18 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart';
 
 class AppleLoginParameterHolder extends PsHolder<AppleLoginParameterHolder> {
-  AppleLoginParameterHolder(
-      {@required this.appleId,
-      @required this.userName,
-      @required this.userEmail,
-      @required this.profilePhotoUrl,
-      @required this.deviceToken});
+  AppleLoginParameterHolder({@required this.appleId, @required this.userName, @required this.userEmail, @required this.profilePhotoUrl, @required this.deviceToken});
 
-  final String appleId;
-  final String userName;
-  final String userEmail;
-  final String profilePhotoUrl;
-  final String deviceToken;
+  final String? appleId;
+  final String? userName;
+  final String? userEmail;
+  final String? profilePhotoUrl;
+  final String? deviceToken;
 
   @override
   Map<String, dynamic> toMap() {
@@ -44,20 +39,20 @@ class AppleLoginParameterHolder extends PsHolder<AppleLoginParameterHolder> {
     String key = '';
 
     if (appleId != '') {
-      key += appleId;
+      key += appleId!;
     }
     if (userName != '') {
-      key += userName;
+      key += userName!;
     }
     if (userEmail != '') {
-      key += userEmail;
+      key += userEmail!;
     }
 
     if (profilePhotoUrl != '') {
-      key += profilePhotoUrl;
+      key += profilePhotoUrl!;
     }
     if (deviceToken != '') {
-      key += deviceToken;
+      key += deviceToken!;
     }
     return key;
   }

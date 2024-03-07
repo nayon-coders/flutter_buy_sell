@@ -6,6 +6,6 @@ class ProductListIntentHolder {
     @required this.productParameterHolder,
     @required this.appBarTitle,
   });
-  final ProductParameterHolder productParameterHolder;
-  final String appBarTitle;
+  final ProductParameterHolder? productParameterHolder;
+  final String? appBarTitle;
 }

@@ -1,3 +1,5 @@
+// ignore_for_file: null_check_always_fails
+
 import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 import 'package:quiver/core.dart';
 
@@ -8,9 +10,9 @@ class Chat extends PsObject<Chat> {
     this.senderId,
   });
 
-  String itemId;
-  String receiverId;
-  String senderId;
+  String? itemId;
+  String? receiverId;
+  String? senderId;
 
   @override
   bool operator ==(dynamic other) => other is Chat && itemId == other.itemId;
@@ -20,7 +22,7 @@ class Chat extends PsObject<Chat> {
 
   @override
   String getPrimaryKey() {
-    return itemId;
+    return itemId!;
   }
 
   @override
@@ -46,7 +48,7 @@ class Chat extends PsObject<Chat> {
         senderId: dynamicData['sender_id'],
       );
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -72,7 +74,7 @@ class Chat extends PsObject<Chat> {
       data['sender_id'] = object.senderId;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 }

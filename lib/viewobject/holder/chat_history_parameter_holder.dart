@@ -2,7 +2,7 @@ import 'package:flutterbuyandsell/constant/ps_constants.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart';
 
 class ChatHistoryParameterHolder extends PsHolder<dynamic> {
-  ChatHistoryParameterHolder() {
+  ChatHistoryParameterHolder(this.returnType, this.userId) {
     userId = '';
     returnType = '';
   }

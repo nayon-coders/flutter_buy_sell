@@ -3,10 +3,10 @@ import 'common/ps_object.dart';
 
 class DeleteObject extends PsObject<DeleteObject> {
   DeleteObject({this.id, this.typeId, this.typeName, this.deletedDate});
-  String id;
-  String typeId;
-  String typeName;
-  String deletedDate;
+  String? id;
+  String? typeId;
+  String? typeName;
+  String? deletedDate;
 
   @override
   bool operator ==(dynamic other) => other is DeleteObject && id == other.id;
@@ -15,19 +15,15 @@ class DeleteObject extends PsObject<DeleteObject> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override
   DeleteObject fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return DeleteObject(
-          id: dynamicData['id'],
-          typeId: dynamicData['type_id'],
-          typeName: dynamicData['type_name'],
-          deletedDate: dynamicData['deleted_date']);
+      return DeleteObject(id: dynamicData['id'], typeId: dynamicData['type_id'], typeName: dynamicData['type_name'], deletedDate: dynamicData['deleted_date']);
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -41,7 +37,7 @@ class DeleteObject extends PsObject<DeleteObject> {
       data['deleted_date'] = object.id;
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

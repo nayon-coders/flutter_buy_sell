@@ -1,32 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart'
-    show PsHolder;
+import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart' show PsHolder;
 
-class ItemPaidHistoryParameterHolder
-    extends PsHolder<ItemPaidHistoryParameterHolder> {
-  ItemPaidHistoryParameterHolder({
-    @required this.itemId,
-    @required this.amount,
-    @required this.startDate,
-    @required this.howManyDay,
-    @required this.paymentMethod,
-    @required this.paymentMethodNounce,
-    @required this.startTimeStamp,
-    @required this.razorId,
-    @required this.purchasedId,
-    @required this.isPaystack
-  });
+class ItemPaidHistoryParameterHolder extends PsHolder<ItemPaidHistoryParameterHolder> {
+  ItemPaidHistoryParameterHolder({@required this.itemId, @required this.amount, @required this.startDate, @required this.howManyDay, @required this.paymentMethod, @required this.paymentMethodNounce, @required this.startTimeStamp, @required this.razorId, @required this.purchasedId, @required this.isPaystack});
 
-  final String itemId;
-  final String amount;
-  final String startDate;
-  final String howManyDay;
-  final String paymentMethod;
-  final String paymentMethodNounce;
-  final String startTimeStamp;
-  final String razorId;
-  final String purchasedId;
-  final String isPaystack;
+  final String? itemId;
+  final String? amount;
+  final String? startDate;
+  final String? howManyDay;
+  final String? paymentMethod;
+  final String? paymentMethodNounce;
+  final String? startTimeStamp;
+  final String? razorId;
+  final String? purchasedId;
+  final String? isPaystack;
 
   @override
   Map<String, dynamic> toMap() {
@@ -67,34 +54,34 @@ class ItemPaidHistoryParameterHolder
     String key = '';
 
     if (itemId != '') {
-      key += itemId;
+      key += itemId!;
     }
     if (amount != '') {
-      key += amount;
+      key += amount!;
     }
     if (startDate != '') {
-      key += startDate;
+      key += startDate!;
     }
     if (howManyDay != '') {
-      key += howManyDay;
+      key += howManyDay!;
     }
     if (paymentMethod != '') {
-      key += paymentMethod;
+      key += paymentMethod!;
     }
     if (paymentMethodNounce != '') {
-      key += paymentMethodNounce;
+      key += paymentMethodNounce!;
     }
     if (startTimeStamp != '') {
-      key += startTimeStamp;
+      key += startTimeStamp!;
     }
     if (razorId != '') {
-      key += razorId;
+      key += razorId!;
     }
     if (purchasedId != '') {
-      key += purchasedId;
+      key += purchasedId!;
     }
     if (isPaystack != '') {
-      key += isPaystack;
+      key += isPaystack!;
     }
     return key;
   }

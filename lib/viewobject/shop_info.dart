@@ -4,76 +4,7 @@ import 'default_icon.dart';
 import 'default_photo.dart';
 
 class ShopInfo extends PsObject<ShopInfo> {
-  ShopInfo(
-      {required this.id,
-       this.shippingId,
-       this.name,
-       this.description,
-       this.email,
-       this.coordinate,
-       this.lat,
-       this.lng,
-       this.paypalEmail,
-       this.paypalEnvironment,
-       this.paypalAppidLive,
-       this.paypalMerchantname,
-       this.paypalCustomerid,
-       this.paypalIpnurl,
-       this.paypalMemo,
-       this.paypalMerchantId,
-       this.paypalPublicKey,
-       this.paypalPrivateKey,
-       this.paypalCustomerId,
-       this.bankAccount,
-       this.bankName,
-       this.bankCode,
-       this.branchCode,
-       this.swiftCode,
-       this.codEmail,
-       this.stripePublishableKey,
-       this.stripeSecretKey,
-       this.currencySymbol,
-       this.currencyShortForm,
-       this.senderEmail,
-       this.added,
-       this.status,
-       this.paypalEnabled,
-       this.stripeEnabled,
-       this.codEnabled,
-       this.banktransferEnabled,
-       this.isFeature,
-       this.overallTaxLabel,
-       this.overallTaxValue,
-       this.shippingTaxLabel,
-       this.shippingTaxValue,
-       this.whapsappNo,
-       this.refundPolicy,
-       this.privacyPolicy,
-       this.terms,
-       this.aboutWebsite,
-       this.facebook,
-       this.googlePlus,
-       this.instagram,
-       this.youtube,
-       this.pinterest,
-       this.touchCount,
-       this.aboutPhone1,
-       this.aboutPhone2,
-       this.aboutPhone3,
-       this.address1,
-       this.address2,
-       this.address3,
-       this.addedUserId,
-       this.updatedDate,
-       this.updatedUserId,
-       this.featuredDate,
-       this.messenger,
-       this.twitter,
-       this.standardShippingEnable,
-       this.zoneShippingEnable,
-       this.noShippingEnable,
-       this.defaultPhoto,
-       this.defaultIcon});
+  ShopInfo({required this.id, this.shippingId, this.name, this.description, this.email, this.coordinate, this.lat, this.lng, this.paypalEmail, this.paypalEnvironment, this.paypalAppidLive, this.paypalMerchantname, this.paypalCustomerid, this.paypalIpnurl, this.paypalMemo, this.paypalMerchantId, this.paypalPublicKey, this.paypalPrivateKey, this.paypalCustomerId, this.bankAccount, this.bankName, this.bankCode, this.branchCode, this.swiftCode, this.codEmail, this.stripePublishableKey, this.stripeSecretKey, this.currencySymbol, this.currencyShortForm, this.senderEmail, this.added, this.status, this.paypalEnabled, this.stripeEnabled, this.codEnabled, this.banktransferEnabled, this.isFeature, this.overallTaxLabel, this.overallTaxValue, this.shippingTaxLabel, this.shippingTaxValue, this.whapsappNo, this.refundPolicy, this.privacyPolicy, this.terms, this.aboutWebsite, this.facebook, this.googlePlus, this.instagram, this.youtube, this.pinterest, this.touchCount, this.aboutPhone1, this.aboutPhone2, this.aboutPhone3, this.address1, this.address2, this.address3, this.addedUserId, this.updatedDate, this.updatedUserId, this.featuredDate, this.messenger, this.twitter, this.standardShippingEnable, this.zoneShippingEnable, this.noShippingEnable, this.defaultPhoto, this.defaultIcon});
   String id;
   String? shippingId;
   String? name;
@@ -112,8 +43,8 @@ class ShopInfo extends PsObject<ShopInfo> {
   String? banktransferEnabled;
   String? isFeature;
   String? overallTaxLabel;
-  String ?overallTaxValue;
-  String ?shippingTaxLabel;
+  String? overallTaxValue;
+  String? shippingTaxLabel;
   String? shippingTaxValue;
   String? whapsappNo;
   String? refundPolicy;
@@ -152,78 +83,9 @@ class ShopInfo extends PsObject<ShopInfo> {
   @override
   ShopInfo fromMap(dynamic dynamicData) {
     if (dynamicData != null) {
-      return ShopInfo(
-          id: dynamicData['id'],
-          shippingId: dynamicData['shipping_id'],
-          name: dynamicData['name'],
-          description: dynamicData['description'],
-          email: dynamicData['email'],
-          coordinate: dynamicData['coordinate'],
-          privacyPolicy: dynamicData['privacy_policy'],
-          lat: dynamicData['lat'],
-          lng: dynamicData['lng'],
-          paypalEmail: dynamicData['paypal_email'],
-          paypalEnvironment: dynamicData['paypal_environment'],
-          paypalAppidLive: dynamicData['paypal_appid_live'],
-          paypalMerchantname: dynamicData['paypal_merchantname'],
-          paypalCustomerid: dynamicData['paypal_customerid'],
-          paypalIpnurl: dynamicData['paypal_ipnurl'],
-          paypalMemo: dynamicData['paypal_memo'],
-          paypalMerchantId: dynamicData['paypal_merchant_id'],
-          paypalPublicKey: dynamicData['paypal_public_key'],
-          paypalPrivateKey: dynamicData['paypal_private_key'],
-          paypalCustomerId: dynamicData['paypal_customerid'],
-          bankAccount: dynamicData['bank_account'],
-          bankName: dynamicData['bank_name'],
-          bankCode: dynamicData['bank_code'],
-          branchCode: dynamicData['branch_code'],
-          swiftCode: dynamicData['swift_code'],
-          codEmail: dynamicData['cod_email'],
-          stripePublishableKey: dynamicData['stripe_publishable_key'],
-          stripeSecretKey: dynamicData['stripe_secret_key'],
-          currencySymbol: dynamicData['currency_symbol'],
-          currencyShortForm: dynamicData['currency_short_form'],
-          senderEmail: dynamicData['sender_email'],
-          added: dynamicData['added'],
-          status: dynamicData['status'],
-          paypalEnabled: dynamicData['paypal_enabled'],
-          stripeEnabled: dynamicData['stripe_enabled'],
-          codEnabled: dynamicData['cod_enabled'],
-          banktransferEnabled: dynamicData['banktransfer_enabled'],
-          isFeature: dynamicData['is_feature'],
-          overallTaxLabel: dynamicData['overall_tax_label'],
-          overallTaxValue: dynamicData['overall_tax_value'],
-          shippingTaxLabel: dynamicData['shipping_tax_label'],
-          shippingTaxValue: dynamicData['shipping_tax_value'],
-          whapsappNo: dynamicData['whapsapp_no'],
-          refundPolicy: dynamicData['refund_policy'],
-          terms: dynamicData['terms'],
-          aboutWebsite: dynamicData['about_website'],
-          facebook: dynamicData['facebook'],
-          googlePlus: dynamicData['google_plus'],
-          instagram: dynamicData['instagram'],
-          youtube: dynamicData['youtube'],
-          pinterest: dynamicData['pinterest'],
-          twitter: dynamicData['twitter'],
-          aboutPhone1: dynamicData['about_phone1'],
-          aboutPhone2: dynamicData['about_phone2'],
-          aboutPhone3: dynamicData['about_phone3'],
-          address1: dynamicData['address1'],
-          address2: dynamicData['address2'],
-          address3: dynamicData['address3'],
-          touchCount: dynamicData['touch_count'],
-          addedUserId: dynamicData['added_user_id'],
-          updatedDate: dynamicData['updated_date'],
-          updatedUserId: dynamicData['updated_user_id'],
-          featuredDate: dynamicData['featured_date'],
-          messenger: dynamicData['messenger'],
-          standardShippingEnable: dynamicData['standard_shipping_enable'],
-          zoneShippingEnable: dynamicData['zone_shipping_enable'],
-          noShippingEnable: dynamicData['no_shipping_enable'],
-          defaultPhoto: DefaultPhoto().fromMap(dynamicData['default_photo']),
-          defaultIcon: DefaultIcon().fromMap(dynamicData['default_icon']));
+      return ShopInfo(id: dynamicData['id'], shippingId: dynamicData['shipping_id'], name: dynamicData['name'], description: dynamicData['description'], email: dynamicData['email'], coordinate: dynamicData['coordinate'], privacyPolicy: dynamicData['privacy_policy'], lat: dynamicData['lat'], lng: dynamicData['lng'], paypalEmail: dynamicData['paypal_email'], paypalEnvironment: dynamicData['paypal_environment'], paypalAppidLive: dynamicData['paypal_appid_live'], paypalMerchantname: dynamicData['paypal_merchantname'], paypalCustomerid: dynamicData['paypal_customerid'], paypalIpnurl: dynamicData['paypal_ipnurl'], paypalMemo: dynamicData['paypal_memo'], paypalMerchantId: dynamicData['paypal_merchant_id'], paypalPublicKey: dynamicData['paypal_public_key'], paypalPrivateKey: dynamicData['paypal_private_key'], paypalCustomerId: dynamicData['paypal_customerid'], bankAccount: dynamicData['bank_account'], bankName: dynamicData['bank_name'], bankCode: dynamicData['bank_code'], branchCode: dynamicData['branch_code'], swiftCode: dynamicData['swift_code'], codEmail: dynamicData['cod_email'], stripePublishableKey: dynamicData['stripe_publishable_key'], stripeSecretKey: dynamicData['stripe_secret_key'], currencySymbol: dynamicData['currency_symbol'], currencyShortForm: dynamicData['currency_short_form'], senderEmail: dynamicData['sender_email'], added: dynamicData['added'], status: dynamicData['status'], paypalEnabled: dynamicData['paypal_enabled'], stripeEnabled: dynamicData['stripe_enabled'], codEnabled: dynamicData['cod_enabled'], banktransferEnabled: dynamicData['banktransfer_enabled'], isFeature: dynamicData['is_feature'], overallTaxLabel: dynamicData['overall_tax_label'], overallTaxValue: dynamicData['overall_tax_value'], shippingTaxLabel: dynamicData['shipping_tax_label'], shippingTaxValue: dynamicData['shipping_tax_value'], whapsappNo: dynamicData['whapsapp_no'], refundPolicy: dynamicData['refund_policy'], terms: dynamicData['terms'], aboutWebsite: dynamicData['about_website'], facebook: dynamicData['facebook'], googlePlus: dynamicData['google_plus'], instagram: dynamicData['instagram'], youtube: dynamicData['youtube'], pinterest: dynamicData['pinterest'], twitter: dynamicData['twitter'], aboutPhone1: dynamicData['about_phone1'], aboutPhone2: dynamicData['about_phone2'], aboutPhone3: dynamicData['about_phone3'], address1: dynamicData['address1'], address2: dynamicData['address2'], address3: dynamicData['address3'], touchCount: dynamicData['touch_count'], addedUserId: dynamicData['added_user_id'], updatedDate: dynamicData['updated_date'], updatedUserId: dynamicData['updated_user_id'], featuredDate: dynamicData['featured_date'], messenger: dynamicData['messenger'], standardShippingEnable: dynamicData['standard_shipping_enable'], zoneShippingEnable: dynamicData['zone_shipping_enable'], noShippingEnable: dynamicData['no_shipping_enable'], defaultPhoto: DefaultPhoto().fromMap(dynamicData['default_photo']), defaultIcon: DefaultIcon().fromMap(dynamicData['default_icon']));
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -302,7 +164,7 @@ class ShopInfo extends PsObject<ShopInfo> {
 
       return data;
     } else {
-      return null;
+      return null!;
     }
   }
 

@@ -7,8 +7,8 @@ class LocationHolder {
     @required this.locationLat,
     @required this.locationLng,
   });
-  final String locationId;
-  final String locationName;
-  final String locationLat;
-  final String locationLng;
+  final String? locationId;
+  final String? locationName;
+  final String? locationLat;
+  final String? locationLng;
 }

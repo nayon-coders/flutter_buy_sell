@@ -1,3 +1,5 @@
+// ignore_for_file: null_check_always_fails
+
 import 'package:flutterbuyandsell/viewobject/product.dart';
 import 'package:flutterbuyandsell/viewobject/user.dart';
 import 'package:quiver/core.dart';
@@ -5,21 +7,21 @@ import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 
 class Offer extends PsObject<Offer> {
   Offer({
-     this.id,
-     this.itemId,
-     this.buyerUserId,
-     this.sellerUserId,
-     this.negoPrice,
-     this.buyerUnreadCount,
-     this.sellerUnreadCount,
-     this.isAccept,
-     this.addedDate,
-     this.isOffer,
-     this.offerAmount,
-     this.addedDateStr,
-     this.item,
-     this.buyer,
-     this.seller,
+    this.id,
+    this.itemId,
+    this.buyerUserId,
+    this.sellerUserId,
+    this.negoPrice,
+    this.buyerUnreadCount,
+    this.sellerUnreadCount,
+    this.isAccept,
+    this.addedDate,
+    this.isOffer,
+    this.offerAmount,
+    this.addedDateStr,
+    this.item,
+    this.buyer,
+    this.seller,
   });
 
   String? id;
@@ -90,7 +92,7 @@ class Offer extends PsObject<Offer> {
       data['seller'] = User().toMap(object.seller);
       return data;
     } else {
-      return {};
+      return null!;
     }
   }
 
