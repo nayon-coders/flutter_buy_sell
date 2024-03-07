@@ -13,11 +13,11 @@ class PSButtonWidgetRoundCorner extends StatefulWidget {
       this.gradient,
       this.hasShadow = false});
 
-  final Function onPressed;
+  final VoidCallback? onPressed;
   final String titleText;
-  final Color colorData;
-  final double width;
-  final Gradient gradient;
+  final Color? colorData;
+  final double? width;
+  final Gradient? gradient;
   final bool hasShadow;
   final TextAlign titleTextAlign;
 
@@ -26,8 +26,8 @@ class PSButtonWidgetRoundCorner extends StatefulWidget {
 }
 
 class _PSButtonWidgetRoundCornerState extends State<PSButtonWidgetRoundCorner> {
-  Gradient _gradient;
-  Color _color;
+  Gradient? _gradient;
+  Color? _color;
   @override
   Widget build(BuildContext context) {
     _color = widget.colorData;
@@ -37,8 +37,8 @@ class _PSButtonWidgetRoundCornerState extends State<PSButtonWidgetRoundCorner> {
 
     if (widget.gradient == null && _color == PsColors.mainColor) {
       _gradient = LinearGradient(colors: <Color>[
-        PsColors.mainColor,
-        PsColors.mainDarkColor,
+        PsColors.mainColor!,
+        PsColors.mainDarkColor!,
       ]);
     }
 
@@ -55,8 +55,8 @@ class _PSButtonWidgetRoundCornerState extends State<PSButtonWidgetRoundCorner> {
           if (widget.hasShadow)
             BoxShadow(
                 color: Utils.isLightMode(context)
-                    ? _color.withOpacity(0.6)
-                    : PsColors.mainShadowColor,
+                    ? _color!.withOpacity(0.6)
+                    : PsColors.mainShadowColor!,
                 offset: const Offset(0, 4),
                 blurRadius: 8.0,
                 spreadRadius: 3.0),
@@ -81,7 +81,7 @@ class _PSButtonWidgetRoundCornerState extends State<PSButtonWidgetRoundCorner> {
                 textAlign: widget.titleTextAlign,
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: PsColors.white),
               ),
             ),
@@ -104,40 +104,40 @@ class PSButtonWithIconWidget extends StatefulWidget {
       this.hasShadow = false,
       this.iconColor});
 
-  final Function onPressed;
+  final VoidCallback? onPressed;
   final String titleText;
-  final Color colorData;
-  final double width;
-  final IconData icon;
-  final Gradient gradient;
+  final Color? colorData;
+  final double? width;
+  final IconData? icon;
+  final Gradient? gradient;
   final MainAxisAlignment iconAlignment;
   final bool hasShadow;
-  final Color iconColor;
+  final Color? iconColor;
 
   @override
   _PSButtonWithIconWidgetState createState() => _PSButtonWithIconWidgetState();
 }
 
 class _PSButtonWithIconWidgetState extends State<PSButtonWithIconWidget> {
-  Gradient _gradient;
-  Color _color;
-  Color _iconColor;
+  Gradient? _gradient;
+  Color? _color;
+  Color? _iconColor;
 
   @override
   Widget build(BuildContext context) {
-    _color = widget.colorData;
+    _color = widget.colorData!;
     _gradient = null;
 
-    _iconColor = widget.iconColor;
+    _iconColor = widget.iconColor!;
 
-    _iconColor ??= PsColors.white;
+    _iconColor ??= PsColors.white!;
 
-    _color ??= PsColors.mainColor;
+    _color ??= PsColors.mainColor!;
 
     if (widget.gradient == null && _color == PsColors.mainColor) {
       _gradient = LinearGradient(colors: <Color>[
-        PsColors.mainColor,
-        PsColors.mainDarkColor,
+        PsColors.mainColor!,
+        PsColors.mainDarkColor!,
       ]);
     }
 
@@ -154,8 +154,8 @@ class _PSButtonWithIconWidgetState extends State<PSButtonWithIconWidget> {
           if (widget.hasShadow)
             BoxShadow(
                 color: Utils.isLightMode(context)
-                    ? _color.withOpacity(0.6)
-                    : PsColors.mainShadowColor,
+                    ? _color!.withOpacity(0.6)
+                    : PsColors.mainShadowColor!,
                 offset: const Offset(0, 4),
                 blurRadius: 8.0,
                 spreadRadius: 3.0),
@@ -183,7 +183,7 @@ class _PSButtonWithIconWidgetState extends State<PSButtonWithIconWidget> {
                 widget.titleText.toUpperCase(),
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: PsColors.white),
               ),
             ],

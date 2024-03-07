@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 
 class PsDropdownBaseWithControllerWidget extends StatelessWidget {
   const PsDropdownBaseWithControllerWidget(
-      {Key key,
-      @required this.title,
-      @required this.onTap,
+      {Key? key,
+      required this.title,
+      required this.onTap,
       this.textEditingController,
       this.isStar = false})
       : super(key: key);
 
   final String title;
-  final TextEditingController textEditingController;
-  final Function onTap;
+  final TextEditingController? textEditingController;
+  final VoidCallback onTap;
   final bool isStar;
 
   @override
@@ -27,7 +27,7 @@ class PsDropdownBaseWithControllerWidget extends StatelessWidget {
         Text(' *',
             style: Theme.of(context)
                 .textTheme
-                .bodyText2
+                .bodyText2!
                 .copyWith(color: PsColors.mainColor))
       ],
     );
@@ -55,7 +55,7 @@ class PsDropdownBaseWithControllerWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: PsColors.backgroundColor,
               borderRadius: BorderRadius.circular(PsDimens.space4),
-              border: Border.all(color: PsColors.mainDividerColor),
+              border: Border.all(color: PsColors.mainDividerColor!),
             ),
             child: Ink(
               child: Container(
@@ -66,11 +66,11 @@ class PsDropdownBaseWithControllerWidget extends StatelessWidget {
                     InkWell(
                       child: Ink(
                         child: Text(
-                          textEditingController.text == ''
+                          textEditingController!.text == ''
                               ? Utils.getString(context, 'home_search__not_set')
-                              : textEditingController.text,
-                          style: textEditingController.text == ''
-                              ? Theme.of(context).textTheme.bodyText1.copyWith(
+                              : textEditingController!.text,
+                          style: textEditingController!.text == ''
+                              ? Theme.of(context).textTheme.bodyText1!.copyWith(
                                   color: PsColors.textPrimaryLightColor)
                               : Theme.of(context).textTheme.bodyText1,
                         ),

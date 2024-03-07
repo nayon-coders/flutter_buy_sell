@@ -28,9 +28,9 @@ class PsExpansionTile extends StatefulWidget {
   /// the tile to reveal or hide the [children]. The [initiallyExpanded] property must
   /// be non-null.
   const PsExpansionTile({
-    Key key,
+    Key? key,
     this.leading,
-    @required this.title,
+    required this.title,
     this.subtitle,
     this.backgroundColor,
     this.onExpansionChanged,
@@ -43,7 +43,7 @@ class PsExpansionTile extends StatefulWidget {
   /// A widget to display before the title.
   ///
   /// Typically a [CircleAvatar] widget.
-  final Widget leading;
+  final Widget? leading;
 
   /// The primary content of the list item.
   ///
@@ -53,28 +53,28 @@ class PsExpansionTile extends StatefulWidget {
   /// Additional content displayed below the title.
   ///
   /// Typically a [Text] widget.
-  final Widget subtitle;
+  final Widget? subtitle;
 
   /// Called when the tile expands or collapses.
   ///
   /// When the tile starts expanding, this function is called with the value
   /// true. When the tile starts collapsing, this function is called with
   /// the value false.
-  final ValueChanged<bool> onExpansionChanged;
+  final ValueChanged<bool>? onExpansionChanged;
 
   /// The widgets that are displayed when the tile expands.
   ///
   /// Typically [ListTile] widgets.
-  final List<Widget> children;
+  final List<Widget>? children;
 
   /// The color to display behind the sublist when expanded.
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// A widget to display instead of a rotating arrow icon.
-  final Widget trailing;
+  final Widget? trailing;
 
   /// Specifies if the list tile is initially expanded (true) or collapsed (false, the default).
-  final bool initiallyExpanded;
+  final bool? initiallyExpanded;
 
   @override
   _PsExpansionTileState createState() => _PsExpansionTileState();
@@ -94,12 +94,12 @@ class _PsExpansionTileState extends State<PsExpansionTile>
   final ColorTween _iconColorTween = ColorTween();
   final ColorTween _backgroundColorTween = ColorTween();
 
-  AnimationController _controller;
-  Animation<double> _iconTurns;
-  Animation<double> _heightFactor;
-  Animation<Color> _headerColor;
-  Animation<Color> _iconColor;
-  Animation<Color> _backgroundColor;
+  AnimationController? _controller;
+  Animation<double>? _iconTurns;
+  Animation<double>? _heightFactor;
+  Animation<Color?>? _headerColor;
+  Animation<Color?>? _iconColor;
+  Animation<Color?>? _backgroundColor;
 
   bool _isExpanded = false;
 
@@ -107,22 +107,22 @@ class _PsExpansionTileState extends State<PsExpansionTile>
   void initState() {
     super.initState();
     _controller = AnimationController(duration: _kExpand, vsync: this);
-    _heightFactor = _controller.drive(_easeInTween);
-    _iconTurns = _controller.drive(_halfTween.chain(_easeInTween));
-    _headerColor = _controller.drive(_headerColorTween.chain(_easeInTween));
-    _iconColor = _controller.drive(_iconColorTween.chain(_easeInTween));
+    _heightFactor = _controller!.drive(_easeInTween)!;
+    _iconTurns = _controller!.drive(_halfTween.chain(_easeInTween));
+    _headerColor = _controller!.drive(_headerColorTween.chain(_easeInTween)!);
+    _iconColor = _controller!.drive(_iconColorTween.chain(_easeInTween));
     _backgroundColor =
-        _controller.drive(_backgroundColorTween.chain(_easeOutTween));
+        _controller!.drive(_backgroundColorTween.chain(_easeOutTween));
 
     _isExpanded =
         PageStorage.of(context)?.readState(context) ?? widget.initiallyExpanded;
     if (_isExpanded)
-    _controller.value = 1.0;
+    _controller!.value = 1.0;
   }
 
   @override
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
@@ -130,9 +130,9 @@ class _PsExpansionTileState extends State<PsExpansionTile>
     setState(() {
       _isExpanded = !_isExpanded;
       if (_isExpanded) {
-        _controller.forward();
+        _controller!.forward();
       } else {
-        _controller.reverse().then<void>((void value) {
+        _controller!.reverse().then<void>((void value) {
           // if (!mounted) return;
           // setState(() {
           //   // Rebuild without widget.children.
@@ -142,27 +142,27 @@ class _PsExpansionTileState extends State<PsExpansionTile>
       PageStorage.of(context)?.writeState(context, _isExpanded);
     });
     if (widget.onExpansionChanged != null)
-      widget.onExpansionChanged(_isExpanded);
+      widget.onExpansionChanged!(_isExpanded);
   }
 
-  Widget _buildChildren(BuildContext context, Widget child) {
-    final Color borderSideColor =
+  Widget _buildChildren(BuildContext context, Widget? child) {
+    final Color? borderSideColor =
         PsColors.transparent; //_borderColor.value ?? Colors.transparent;
 
     return Container(
       decoration: BoxDecoration(
-        color: _backgroundColor.value ?? PsColors.transparent,
+        color: _backgroundColor!.value ?? PsColors.transparent,
         border: Border(
-          top: BorderSide(color: borderSideColor),
-          bottom: BorderSide(color: borderSideColor),
+          top: BorderSide(color: borderSideColor!),
+          bottom: BorderSide(color: borderSideColor!),
         ),
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
           ListTileTheme.merge(
-            iconColor: _iconColor.value,
-            textColor: _headerColor.value,
+            iconColor: _iconColor!.value,
+            textColor: _headerColor!.value,
             child: ListTile(
               onTap: _handleTap,
               leading: widget.leading,
@@ -170,14 +170,14 @@ class _PsExpansionTileState extends State<PsExpansionTile>
               subtitle: widget.subtitle,
               trailing: widget.trailing ??
                   RotationTransition(
-                    turns: _iconTurns,
+                    turns: _iconTurns!,
                     child: const Icon(Icons.expand_more),
                   ),
             ),
           ),
           ClipRect(
             child: Align(
-              heightFactor: _heightFactor.value,
+              heightFactor: _heightFactor!.value,
               child: child,
             ),
           ),
@@ -191,7 +191,7 @@ class _PsExpansionTileState extends State<PsExpansionTile>
     final ThemeData theme = Theme.of(context);
     _borderColorTween..end = theme.dividerColor;
     _headerColorTween
-      ..begin = theme.textTheme.subtitle1.color
+      ..begin = theme.textTheme.subtitle1!.color
       ..end = theme.accentColor;
     _iconColorTween
       ..begin = theme.unselectedWidgetColor
@@ -202,11 +202,11 @@ class _PsExpansionTileState extends State<PsExpansionTile>
 
   @override
   Widget build(BuildContext context) {
-    final bool closed = !_isExpanded && _controller.isDismissed;
+    final bool closed = !_isExpanded && _controller!.isDismissed;
     return AnimatedBuilder(
-      animation: _controller.view,
+      animation: _controller!.view,
       builder: _buildChildren,
-      child: closed ? null : Column(children: widget.children),
+      child: closed ? null : Column(children: widget.children!),
     );
   }
 }

@@ -76,15 +76,15 @@ class _ImageAndTextWidget extends StatelessWidget {
             height: PsDimens.space40,
             child: PsNetworkCircleImageForUser(
               photoKey: '',
-              imagePath: chatHistory.item.user!.userProfilePhoto!,
+              imagePath: chatHistory.item!.user!.userProfilePhoto!,
               // width: PsDimens.space40,
               // height: PsDimens.space40,
               boxfit: BoxFit.cover,
               onTap: () {
                 Navigator.pushNamed(context, RoutePaths.userDetail,
                     arguments: UserIntentHolder(
-                        userId: chatHistory.seller.userId!,
-                        userName: chatHistory.seller.userName!));
+                        userId: chatHistory.seller!.userId!,
+                        userName: chatHistory.seller!.userName!));
               },
             ),
           ),
@@ -99,9 +99,9 @@ class _ImageAndTextWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      chatHistory.seller.userName == ''
+                      chatHistory.seller!.userName == ''
                           ? Utils.getString(context, 'default__user_name')
-                          : chatHistory.seller.userName!,
+                          : chatHistory.seller!.userName!,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
                           .textTheme
@@ -124,7 +124,7 @@ class _ImageAndTextWidget extends StatelessWidget {
                                   : Colors.black87),
                         ),
                         child: Text(
-                          chatHistory.buyerUnreadCount,
+                          chatHistory.buyerUnreadCount!,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
@@ -145,12 +145,12 @@ class _ImageAndTextWidget extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        chatHistory.item.title!,
+                        chatHistory.item!.title!,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
-                    if (chatHistory.item.isSoldOut == '1')
+                    if (chatHistory.item!.isSoldOut == '1')
                       Container(
                         padding: const EdgeInsets.all(PsDimens.space4),
                         decoration: BoxDecoration(
@@ -182,9 +182,9 @@ class _ImageAndTextWidget extends StatelessWidget {
                   children: <Widget>[
                     Text(
                       chatHistory.item != null &&
-                              chatHistory.item.price != '0' &&
-                              chatHistory.item.price != ''
-                          ? '${chatHistory.item.itemCurrency!.currencySymbol}  ${Utils.getPriceFormat(chatHistory.item.price!)}'
+                              chatHistory.item!.price != '0' &&
+                              chatHistory.item!.price != ''
+                          ? '${chatHistory.item!.itemCurrency!.currencySymbol}  ${Utils.getPriceFormat(chatHistory.item!.price!)}'
                           : Utils.getString(context, 'item_price_free'),
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
@@ -196,7 +196,7 @@ class _ImageAndTextWidget extends StatelessWidget {
                       width: PsDimens.space8,
                     ),
                     Text(
-                      '( ${chatHistory.item.conditionOfItem!.name} )',
+                      '( ${chatHistory.item!.conditionOfItem!.name} )',
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
                           .textTheme
@@ -207,7 +207,7 @@ class _ImageAndTextWidget extends StatelessWidget {
                 ),
                 _spacingWidget,
                 Text(
-                  chatHistory.addedDateStr,
+                  chatHistory.addedDateStr!,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.caption,
                 ),
@@ -226,7 +226,7 @@ class _ImageAndTextWidget extends StatelessWidget {
                 // height: PsDimens.space60,
                 // width: PsDimens.space60,
                 photoKey: '',
-                defaultPhoto: chatHistory.item.defaultPhoto!,
+                defaultPhoto: chatHistory.item!.defaultPhoto!,
                 boxfit: BoxFit.cover,
               ),
             ),

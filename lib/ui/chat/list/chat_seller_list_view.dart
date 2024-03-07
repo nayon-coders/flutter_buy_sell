@@ -110,14 +110,14 @@ class _ChatSellerListViewState extends State<ChatSellerListView>
                             ),
                             chatHistory: provider.chatHistoryList.data![index],
                             onTap: () async {
-                              print(provider.chatHistoryList.data![index].item.id);
+                              print(provider.chatHistoryList.data![index].item!.id);
                               final dynamic returnData =
                                   await Navigator.pushNamed(
                                       context, RoutePaths.chatView,
                                       arguments: ChatHistoryIntentHolder(
                                           chatFlag: PsConst.CHAT_FROM_SELLER,
                                           itemId: provider.chatHistoryList
-                                              .data![index].item.id!,
+                                              .data![index].item!.id!,
                                           buyerUserId: provider.chatHistoryList
                                               .data![index].buyerUserId,
                                           sellerUserId: provider.chatHistoryList

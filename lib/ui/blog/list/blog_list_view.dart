@@ -12,7 +12,7 @@ import 'package:flutterbuyandsell/constant/route_paths.dart';
 import 'package:flutterbuyandsell/ui/common/ps_ui_widget.dart';
 
 class BlogListView extends StatefulWidget {
-  const BlogListView({Key key, @required this.animationController})
+  const BlogListView({Key? key, required this.animationController})
       : super(key: key);
   final AnimationController animationController;
   @override
@@ -23,8 +23,8 @@ class _BlogListViewState extends State<BlogListView>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  BlogProvider _blogProvider;
-  Animation<double> animation;
+  BlogProvider? _blogProvider;
+  Animation<double>? animation;
 
   @override
   void dispose() {
@@ -37,14 +37,14 @@ class _BlogListViewState extends State<BlogListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _blogProvider.nextBlogList();
+        _blogProvider!.nextBlogList();
       }
     });
 
     super.initState();
   }
 
-  BlogRepository repo1;
+  BlogRepository? repo1;
   dynamic data;
   bool isConnectedToInternet = false;
   bool isSuccessfullyLoaded = true;
@@ -72,13 +72,13 @@ class _BlogListViewState extends State<BlogListView>
     return ChangeNotifierProvider<BlogProvider>(
       lazy: false,
       create: (BuildContext context) {
-        final BlogProvider provider = BlogProvider(repo: repo1);
+        final BlogProvider provider = BlogProvider(repo: repo1!);
         provider.loadBlogList();
         _blogProvider = provider;
-        return _blogProvider;
+        return _blogProvider!;
       },
       child: Consumer<BlogProvider>(
-        builder: (BuildContext context, BlogProvider provider, Widget child) {
+        builder: (BuildContext context, BlogProvider provider, Widget? child) {
           return Column(
             children: <Widget>[
               const PsAdMobBannerWidget(),
@@ -101,9 +101,9 @@ class _BlogListViewState extends State<BlogListView>
                                   delegate: SliverChildBuilderDelegate(
                                     (BuildContext context, int index) {
                                       if (provider.blogList.data != null ||
-                                          provider.blogList.data.isNotEmpty) {
+                                          provider.blogList.data!.isNotEmpty) {
                                         final int count =
-                                            provider.blogList.data.length;
+                                            provider.blogList.data!.length;
                                         return BlogListItem(
                                           animationController:
                                               widget.animationController,
@@ -118,21 +118,21 @@ class _BlogListViewState extends State<BlogListView>
                                                   curve: Curves.fastOutSlowIn),
                                             ),
                                           ),
-                                          blog: provider.blogList.data[index],
+                                          blog: provider.blogList.data![index],
                                           onTap: () {
-                                            print(provider.blogList.data[index]
-                                                .defaultPhoto.imgPath);
+                                            print(provider.blogList.data![index]
+                                                .defaultPhoto!.imgPath);
                                             Navigator.pushNamed(
                                                 context, RoutePaths.blogDetail,
                                                 arguments: provider
-                                                    .blogList.data[index]);
+                                                    .blogList.data![index]);
                                           },
                                         );
                                       } else {
                                         return null;
                                       }
                                     },
-                                    childCount: provider.blogList.data.length,
+                                    childCount: provider.blogList.data!.length,
                                   ),
                                 ),
                               ]),

@@ -87,7 +87,7 @@ class _ChatMakeOfferDialogState extends State<ChatMakeOfferDialog> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          widget.itemDetail.itemCurrency!.currencySymbol,
+          widget.itemDetail.itemCurrency!.currencySymbol!,
           style: Theme.of(context).textTheme.subtitle1,
         ),
         Container(

@@ -11,7 +11,7 @@ class PsWidget<T extends ChangeNotifier> extends StatefulWidget {
       this.actions = const <Widget>[]})
       : super(key: key);
 
-  final Widget Function(BuildContext context, T provider, Widget child) builder;
+  final Widget Function(BuildContext context, T provider, Widget? child) builder;
   final Function initProvider;
   final Widget? child;
   final Function(T)? onProviderReady;

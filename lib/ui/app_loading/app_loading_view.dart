@@ -264,6 +264,10 @@ class AppLoadingView extends StatelessWidget {
     }
   }
 
+  Future<bool> cance()async{
+    return true;
+  }
+
   dynamic callVersionUpdateDialog(BuildContext context, PSAppInfo psAppInfo,
       AppInfoProvider appInfoProvider) {
     showDialog<dynamic>(
@@ -272,8 +276,8 @@ class AppLoadingView extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return WillPopScope(
-              onWillPop: () {
-                return ;
+              onWillPop:(){
+               return cance();
               },
               child: VersionUpdateDialog(
                 title: psAppInfo.psAppVersion!.versionTitle!,
@@ -341,7 +345,7 @@ class AppLoadingView extends StatelessWidget {
     AppInfoRepository repo1;
     AppInfoProvider provider;
     ClearAllDataRepository clearAllDataRepository;
-    ClearAllDataProvider clearAllDataProvider;
+    ClearAllDataProvider? clearAllDataProvider;
     PsValueHolder valueHolder;
 
     PsColors.loadColor(context);
@@ -362,7 +366,7 @@ class AppLoadingView extends StatelessWidget {
               clearAllDataProvider = ClearAllDataProvider(
                   repo: clearAllDataRepository, psValueHolder: valueHolder);
 
-              return clearAllDataProvider;
+              return clearAllDataProvider!;
             }),
         ChangeNotifierProvider<AppInfoProvider>(
             lazy: false,
@@ -370,14 +374,14 @@ class AppLoadingView extends StatelessWidget {
               provider =
                   AppInfoProvider(repo: repo1, psValueHolder: valueHolder);
 
-              callDateFunction(provider, clearAllDataProvider, context);
+              callDateFunction(provider, clearAllDataProvider!, context);
 
               return provider;
             }),
       ],
       child: Consumer<AppInfoProvider>(
         builder: (BuildContext context, AppInfoProvider clearAllDataProvider,
-            Widget child) {
+            Widget? child) {
           return Container(
               height: 400,
               color: PsColors.mainColor,

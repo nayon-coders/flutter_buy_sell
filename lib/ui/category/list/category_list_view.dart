@@ -165,7 +165,7 @@ class _CategoryListViewState extends State<CategoryListView>
                                                           .getLatestParameterHolder();
                                                   productParameterHolder.catId =
                                                       provider.categoryList
-                                                          .data![index].catId;
+                                                          .data![index].catId!;
                                                   Navigator.pushNamed(
                                                       context,
                                                       RoutePaths

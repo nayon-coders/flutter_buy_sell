@@ -39,7 +39,7 @@ class CategoryVerticalListItem extends StatelessWidget {
                           children: <Widget>[
                             PsNetworkImage(
                               photoKey: '',
-                              defaultPhoto: category.defaultPhoto,
+                              defaultPhoto: category.defaultPhoto!,
                               width: PsDimens.space200,
                               height: double.infinity,
                               boxfit: BoxFit.cover,
@@ -52,7 +52,7 @@ class CategoryVerticalListItem extends StatelessWidget {
                           ],
                         )),
                     Text(
-                      category.catName,
+                      category.catName!,
                       textAlign: TextAlign.center,
                       style: Theme.of(context).textTheme.subtitle2!.copyWith(
                           color: PsColors.white, fontWeight: FontWeight.bold),
@@ -66,7 +66,7 @@ class CategoryVerticalListItem extends StatelessWidget {
                         height: PsDimens.space40,
                         child: PsNetworkCircleIconImage(
                           photoKey: '',
-                          defaultIcon: category.defaultIcon,
+                          defaultIcon: category.defaultIcon!,
                           // width: PsDimens.space40,
                           // height: PsDimens.space40,
                           boxfit: BoxFit.cover,

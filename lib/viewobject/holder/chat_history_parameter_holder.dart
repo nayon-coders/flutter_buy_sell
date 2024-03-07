@@ -2,13 +2,13 @@ import 'package:flutterbuyandsell/constant/ps_constants.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_holder.dart';
 
 class ChatHistoryParameterHolder extends PsHolder<dynamic> {
-  ChatHistoryParameterHolder(this.returnType, this.userId) {
+  ChatHistoryParameterHolder({this.returnType, this.userId}) {
     userId = '';
     returnType = '';
   }
 
-  String userId;
-  String returnType;
+  String? userId;
+  String? returnType;
 
   ChatHistoryParameterHolder getSellerHistoryList() {
     userId = '';
@@ -52,10 +52,10 @@ class ChatHistoryParameterHolder extends PsHolder<dynamic> {
     String result = '';
 
     if (userId != '') {
-      result += userId + ':';
+      result += (userId! + ':')!;
     }
     if (returnType != '') {
-      result += returnType + ':';
+      result += returnType! + ':';
     }
     return result;
   }

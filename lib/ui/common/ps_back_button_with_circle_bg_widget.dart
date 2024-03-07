@@ -5,21 +5,21 @@ import 'package:flutterbuyandsell/constant/ps_dimens.dart';
 import 'package:flutter/material.dart';
 
 class PsBackButtonWithCircleBgWidget extends StatelessWidget {
-  const PsBackButtonWithCircleBgWidget({Key key, this.isReadyToShow})
+  const PsBackButtonWithCircleBgWidget({Key? key, this.isReadyToShow})
       : super(key: key);
 
-  final bool isReadyToShow;
+  final bool? isReadyToShow;
 
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: isReadyToShow,
+      visible: isReadyToShow!,
       child: Container(
         margin: const EdgeInsets.only(
             left: PsDimens.space12, right: PsDimens.space4),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: PsColors.black.withAlpha(100),
+          color: PsColors.black!.withAlpha(100),
         ),
         child: Align(
           alignment: Alignment.center,

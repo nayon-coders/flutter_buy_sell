@@ -34,7 +34,7 @@ class CategoryFilterListItem extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(PsDimens.space16),
               child: Text(
-                category!.catName,
+                category!.catName!,
                 textAlign: TextAlign.start,
                 style: Theme.of(context)
                     .textTheme

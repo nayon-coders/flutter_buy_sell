@@ -15,7 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 class ContactUsView extends StatefulWidget {
-  const ContactUsView({Key key, @required this.animationController})
+  const ContactUsView({Key? key, required this.animationController})
       : super(key: key);
   final AnimationController animationController;
   @override
@@ -23,7 +23,7 @@ class ContactUsView extends StatefulWidget {
 }
 
 class _ContactUsViewState extends State<ContactUsView> {
-  ContactUsRepository contactUsRepo;
+  ContactUsRepository? contactUsRepo;
   final TextEditingController nameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -43,12 +43,12 @@ class _ContactUsViewState extends State<ContactUsView> {
         lazy: false,
         create: (BuildContext context) {
           final ContactUsProvider contactUsProvide =
-              ContactUsProvider(repo: contactUsRepo);
+              ContactUsProvider(repo: contactUsRepo!);
           return contactUsProvide;
         },
         child: Consumer<ContactUsProvider>(
           builder:
-              (BuildContext context, ContactUsProvider provider, Widget child) {
+              (BuildContext context, ContactUsProvider provider, Widget? child) {
             return AnimatedBuilder(
                 animation: widget.animationController,
                 child: SingleChildScrollView(
@@ -105,7 +105,7 @@ class _ContactUsViewState extends State<ContactUsView> {
                     ],
                   ),
                 )),
-                builder: (BuildContext context, Widget child) {
+                builder: (BuildContext context, Widget? child) {
                   return FadeTransition(
                       opacity: animation,
                       child: Transform(
@@ -120,11 +120,11 @@ class _ContactUsViewState extends State<ContactUsView> {
 
 class PsButtonWidget extends StatelessWidget {
   const PsButtonWidget({
-    @required this.nameText,
-    @required this.emailText,
-    @required this.messageText,
-    @required this.phoneText,
-    @required this.provider,
+    required this.nameText,
+    required this.emailText,
+    required this.messageText,
+    required this.phoneText,
+    required this.provider,
   });
 
   final TextEditingController nameText, emailText, messageText, phoneText;
@@ -162,16 +162,16 @@ class PsButtonWidget extends StatelessWidget {
                 showDialog<dynamic>(
                     context: context,
                     builder: (BuildContext context) {
-                      if (_apiStatus.data.status == 'success') {
+                      if (_apiStatus.data!.status == 'success') {
                         return SuccessDialog(
-                          message: _apiStatus.data.status,
+                          message: _apiStatus.data!.status!,
                           onPressed: () {
                             // Navigator.pop(context);
                           },
                         );
                       } else {
                         return ErrorDialog(
-                          message: _apiStatus.data.status,
+                          message: _apiStatus.data!.status!,
                         );
                       }
                     });

@@ -531,14 +531,12 @@ class _ChatViewState extends State<ChatView>
                                 buyerUserId: widget.buyerUserId,
                                 sellerUserId: widget.sellerUserId,
                                 chatHistoryProvider: getChatHistoryProvider!,
-                                isOffer:
-                                    (getChatHistoryProvider!.chatHistory.data !=
-                                                null &&
-                                            getChatHistoryProvider!
+                                isOffer: (getChatHistoryProvider!.chatHistory.data != null &&
+                                    getChatHistoryProvider!
                                                     .chatHistory.data!.id !=
                                                 '')
                                         ? getChatHistoryProvider!
-                                            .chatHistory.data!.isOffer
+                                            .chatHistory.data!.isOffer!
                                         : '0',
                               ),
                             )),
@@ -571,7 +569,7 @@ class _ChatViewState extends State<ChatView>
                                     Message().fromMap(snapshot.value);
                                 final String chatDateString =
                                     Utils.convertTimeStampToDate(
-                                        messages.addedDateTimeStamp);
+                                        messages.addedDateTimeStamp!);
 
                                 if (index == 0 || lastTimeStamp == null) {
                                   lastTimeStamp = chatDateString;
@@ -600,7 +598,7 @@ class _ChatViewState extends State<ChatView>
                                   index: index,
                                 );
 
-                                Widget _dateWidget;
+                                Widget? _dateWidget;
                                 if (!isSameDate) {
                                   _dateWidget = Container(
                                     margin: const EdgeInsets.only(
@@ -653,7 +651,7 @@ class _ChatViewState extends State<ChatView>
                                         mainAxisSize: MainAxisSize.min,
                                         children: <Widget>[///TODO: need to fix
                                           _chatCell,
-                                          _dateWidget,
+                                          _dateWidget!,
                                         ],
                                       );
                               },
@@ -744,8 +742,8 @@ class __ChatPageWidgetState extends State<_ChatPageWidget> {
           if (widget.psValueHolder.loginUserId == widget.sellerUserId &&
               widget.messageObj.isSold != null &&
               widget.messageObj.isUserBought != null &&
-              !widget.messageObj.isSold &&
-              !widget.messageObj.isUserBought) {
+              !widget.messageObj.isSold! &&
+              !widget.messageObj.isUserBought!) {
             return _OfferAcceptedWithIsUserBoughtWidget(
               messageObj: widget.messageObj,
               updateDataToFireBase: widget.updateDataToFireBase,
@@ -759,8 +757,8 @@ class __ChatPageWidgetState extends State<_ChatPageWidget> {
           } else if (widget.psValueHolder.loginUserId == widget.sellerUserId &&
               widget.messageObj.isSold != null &&
               widget.messageObj.isUserBought != null &&
-              widget.messageObj.isSold &&
-              widget.messageObj.isUserBought) {
+              widget.messageObj.isSold! &&
+              widget.messageObj.isUserBought!) {
             return Container();
           } else {
             return _ChatAcceptedOrRejectedOfferSenderBoxWidget(
@@ -844,8 +842,8 @@ class __ChatPageWidgetState extends State<_ChatPageWidget> {
           if (widget.psValueHolder.loginUserId == widget.sellerUserId &&
               widget.messageObj.isSold != null &&
               widget.messageObj.isUserBought != null &&
-              !widget.messageObj.isSold &&
-              !widget.messageObj.isUserBought) {
+              !widget.messageObj.isSold! &&
+              !widget.messageObj.isUserBought!) {
             return _OfferAcceptedWithIsUserBoughtWidget(
               messageObj: widget.messageObj,
               updateDataToFireBase: widget.updateDataToFireBase,
@@ -859,8 +857,8 @@ class __ChatPageWidgetState extends State<_ChatPageWidget> {
           } else if (widget.psValueHolder.loginUserId == widget.buyerUserId &&
               widget.messageObj.isSold != null &&
               widget.messageObj.isUserBought != null &&
-              widget.messageObj.isSold &&
-              widget.messageObj.isUserBought) {
+              widget.messageObj.isSold! &&
+              widget.messageObj.isUserBought!) {
             return Container();
           } else {
             return _ChatAcceptedOrRejectedOfferReceiverBoxWidget(
@@ -1127,7 +1125,7 @@ class _ChatImageReceiverWidget extends StatelessWidget {
             borderRadius: BorderRadius.circular(PsDimens.space8),
             child: PsNetworkImageWithUrl(
               photoKey: '',
-              imagePath: widget.messageObj.message,
+              imagePath: widget.messageObj.message!,
               width: double.infinity,
               height: PsDimens.space200,
               boxfit: BoxFit.cover,
@@ -1140,7 +1138,7 @@ class _ChatImageReceiverWidget extends StatelessWidget {
         )),
         Expanded(
           child: Text(
-            Utils.convertTimeStampToTime(widget.messageObj.addedDateTimeStamp),
+            Utils.convertTimeStampToTime(widget.messageObj.addedDateTimeStamp!),
             style: Theme.of(context).textTheme.caption,
           ),
         ),
@@ -1168,7 +1166,7 @@ class _ChatImageSenderWidget extends StatelessWidget {
       children: <Widget>[
         Flexible(
           child: Text(
-            Utils.convertTimeStampToTime(widget.messageObj.addedDateTimeStamp),
+            Utils.convertTimeStampToTime(widget.messageObj.addedDateTimeStamp!),
             style: Theme.of(context).textTheme.caption,
           ),
         ),
@@ -1208,7 +1206,7 @@ class _ChatImageSenderWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(PsDimens.space8),
                 child: PsNetworkImageWithUrl(
                   photoKey: '',
-                  imagePath: widget.messageObj.message,
+                  imagePath: widget.messageObj.message!,
                   width: double.infinity,
                   height: PsDimens.space200,
                   boxfit: BoxFit.cover,
@@ -1340,8 +1338,7 @@ class __ChatTextReceiverWidgetState extends State<_ChatTextReceiverWidget> {
                     ],
                     position: RelativeRect.fromRect( ///TODO: need to fix
                         _tapPosition &  Size(1, 1),
-                        Offset.zero &
-                            overlay!.depth // Bigger rect, the entire screen
+                        Offset.zero & Size(1,1) // Bigger rect, the entire screen
                         ));
               },
               onTapDown: _storePosition,
@@ -1359,7 +1356,7 @@ class __ChatTextReceiverWidgetState extends State<_ChatTextReceiverWidget> {
         Expanded(
           child: Text(
             Utils.convertTimeStampToTime(
-                widget.widget.messageObj.addedDateTimeStamp),
+                widget.widget.messageObj.addedDateTimeStamp!),
             style: Theme.of(context).textTheme.caption,
           ),
         ),
@@ -1399,7 +1396,7 @@ class __ChatTextSenderWidgetState extends State<_ChatTextSenderWidget> {
         Flexible(
           child: Text(
             Utils.convertTimeStampToTime(
-                widget.widget.messageObj.addedDateTimeStamp),
+                widget.widget.messageObj.addedDateTimeStamp!),
             style: Theme.of(context).textTheme.caption,
           ),
         ),
@@ -1514,7 +1511,7 @@ class __ChatTextSenderWidgetState extends State<_ChatTextSenderWidget> {
                   position: RelativeRect.fromRect(
                       _tapPosition & const Size(1, 1),
                       Offset.zero & ///TODO:need to fix
-                          overlay.size // Bigger rect, the entire screen
+                          Size(1,1)// Bigger rect, the entire screen
                       ));
             },
             onTapDown: _storePosition,
@@ -1593,7 +1590,7 @@ class __MakeIsUserBoughtWidgetState extends State<_MakeIsUserBoughtWidget> {
                   const SizedBox(height: PsDimens.space12),
                   Text(
                     widget.itemDetail.price != '0'
-                        ? Utils.getChatPriceFormat(widget.messageObj.message)
+                        ? Utils.getChatPriceFormat(widget.messageObj.message!)
                         : Utils.getString(context, 'item_price_free'),
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
@@ -1755,7 +1752,7 @@ class __MakeMarkAsSoldWidgetState extends State<_MakeMarkAsSoldWidget> {
                   const SizedBox(height: PsDimens.space12),
                   Text(
                     widget.itemDetail.price != '0'
-                        ? Utils.getChatPriceFormat(widget.messageObj.message)
+                        ? Utils.getChatPriceFormat(widget.messageObj.message!)
                         : Utils.getString(context, 'item_price_free'),
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
@@ -1824,7 +1821,7 @@ class __MakeIsUserBoughtForBuyerWidgetState
                   const SizedBox(height: PsDimens.space12),
                   Text(
                     widget.itemDetail.price != '0'
-                        ? Utils.getChatPriceFormat(widget.messageObj.message)
+                        ? Utils.getChatPriceFormat(widget.messageObj.message!)
                         : Utils.getString(context, 'item_price_free'),
                     textAlign: TextAlign.center,
                     style: Theme.of(context)
@@ -1916,7 +1913,7 @@ class _OfferReceivedBoxWithoutAcceptAndRejectWidget extends StatelessWidget {
               const SizedBox(height: PsDimens.space12),
               Text(
                 itemDetail.price != '0'
-                    ? Utils.getChatPriceFormat(messageObj.message)
+                    ? Utils.getChatPriceFormat(messageObj.message!)
                     : Utils.getString(context, 'item_price_free'),
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
@@ -1928,7 +1925,7 @@ class _OfferReceivedBoxWithoutAcceptAndRejectWidget extends StatelessWidget {
           ),
         ),
         Text(
-          Utils.convertTimeStampToTime(messageObj.addedDateTimeStamp),
+          Utils.convertTimeStampToTime(messageObj.addedDateTimeStamp!),
           style: Theme.of(context).textTheme.caption,
         )
       ],
@@ -1988,7 +1985,7 @@ class _OfferReceivedBoxWithAcceptAndRejectWidget extends StatelessWidget {
               const SizedBox(height: PsDimens.space12),
               Text(
                 itemDetail.price != '0'
-                    ? Utils.getChatPriceFormat(messageObj.message)
+                    ? Utils.getChatPriceFormat(messageObj.message!)
                     : Utils.getString(context, 'item_price_free'),
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
@@ -2045,7 +2042,7 @@ class _OfferReceivedBoxWithAcceptAndRejectWidget extends StatelessWidget {
                                   buyerUserId: buyerUserId,
                                   sellerUserId: sellerUserId,
                                   negoPrice:
-                                      Utils.splitMessage(messageObj.message),
+                                      Utils.splitMessage(messageObj.message!),
                                   type: PsConst.CHAT_TO_BUYER);
                               chatHistoryProvider.postAcceptedOffer(
                                   makeOfferHolder.toMap(), loginUserId);
@@ -2055,7 +2052,7 @@ class _OfferReceivedBoxWithAcceptAndRejectWidget extends StatelessWidget {
                                   buyerUserId: buyerUserId,
                                   sellerUserId: sellerUserId,
                                   negoPrice:
-                                      Utils.splitMessage(messageObj.message),
+                                      Utils.splitMessage(messageObj.message!),
                                   type: PsConst.CHAT_TO_SELLER);
                               chatHistoryProvider.postAcceptedOffer(
                                   makeOfferHolder.toMap(), loginUserId);
@@ -2163,7 +2160,7 @@ class _OfferReceivedBoxWithAcceptAndRejectWidget extends StatelessWidget {
               ),
             ),
             Text(
-              Utils.convertTimeStampToTime(messageObj.addedDateTimeStamp),
+              Utils.convertTimeStampToTime(messageObj.addedDateTimeStamp!),
               style: Theme.of(context).textTheme.caption,
             ),
           ],
@@ -2282,7 +2279,7 @@ class _AcceptedOrRejectedMessageWidget extends StatelessWidget {
       children: <Widget>[
         Flexible(
           child: Text(
-            Utils.convertTimeStampToTime(messageObj.addedDateTimeStamp),
+            Utils.convertTimeStampToTime(messageObj.addedDateTimeStamp!),
             style: Theme.of(context).textTheme.caption,
           ),
         ),
@@ -2317,7 +2314,7 @@ class _AcceptedOrRejectedMessageWidget extends StatelessWidget {
                 const SizedBox(height: PsDimens.space12),
                 Text(
                   itemDetail.price != '0'
-                      ? Utils.getChatPriceFormat(messageObj.message)
+                      ? Utils.getChatPriceFormat(messageObj.message!)
                       : Utils.getString(context, 'item_price_free'),
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
@@ -2924,14 +2921,14 @@ class _ChatMakeOfferSenderBoxWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(
-        '******Make Offer time ${Utils.convertTimeStampToTime(messageObj.addedDateTimeStamp)}');
+        '******Make Offer time ${Utils.convertTimeStampToTime(messageObj.addedDateTimeStamp!)}');
     return Row(
       mainAxisAlignment: MainAxisAlignment.end,
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         Container(
           child: Text(
-            Utils.convertTimeStampToTime(messageObj.addedDateTimeStamp),
+            Utils.convertTimeStampToTime(messageObj.addedDateTimeStamp!),
             style: Theme.of(context).textTheme.caption,
           ),
         ),
@@ -2958,7 +2955,7 @@ class _ChatMakeOfferSenderBoxWidget extends StatelessWidget {
               const SizedBox(height: PsDimens.space12),
               Text(
                 itemDetail.price != '0'
-                    ? Utils.getChatPriceFormat(messageObj.message)
+                    ? Utils.getChatPriceFormat(messageObj.message!)
                     : Utils.getString(context, 'item_price_free'),
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
@@ -3069,7 +3066,7 @@ class _ChatAcceptedOrRejectedOfferReceiverBoxWidget extends StatelessWidget {
               const SizedBox(height: PsDimens.space12),
               Text(
                 itemDetail.price != '0'
-                    ? Utils.getChatPriceFormat(messageObj.message)
+                    ? Utils.getChatPriceFormat(messageObj.message!)
                     : Utils.getString(context, 'item_price_free'),
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
@@ -3081,7 +3078,7 @@ class _ChatAcceptedOrRejectedOfferReceiverBoxWidget extends StatelessWidget {
           ),
         ),
         Text(
-          Utils.convertTimeStampToTime(messageObj.addedDateTimeStamp),
+          Utils.convertTimeStampToTime(messageObj.addedDateTimeStamp!),
           style: Theme.of(context).textTheme.caption,
         ),
       ],
@@ -3103,7 +3100,7 @@ class _ChatAcceptedOrRejectedOfferSenderBoxWidget extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: <Widget>[
         Text(
-          Utils.convertTimeStampToTime(messageObj.addedDateTimeStamp),
+          Utils.convertTimeStampToTime(messageObj.addedDateTimeStamp!),
           style: Theme.of(context).textTheme.caption,
         ),
         Container(
@@ -3135,7 +3132,7 @@ class _ChatAcceptedOrRejectedOfferSenderBoxWidget extends StatelessWidget {
               const SizedBox(height: PsDimens.space12),
               Text(
                 itemDetail.price != '0'
-                    ? Utils.getChatPriceFormat(messageObj.message)
+                    ? Utils.getChatPriceFormat(messageObj.message!)
                     : Utils.getString(context, 'item_price_free'),
                 textAlign: TextAlign.center,
                 style: Theme.of(context)

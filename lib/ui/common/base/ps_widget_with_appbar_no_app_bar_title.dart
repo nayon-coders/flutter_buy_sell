@@ -12,7 +12,7 @@ class PsWidgetWithAppBarNoAppBarTitle<T extends ChangeNotifier>
       this.appBarTitle})
       : super(key: key);
 
-  final Widget Function(BuildContext context, T provider, Widget child) builder;
+  final Widget Function(BuildContext context, T provider, Widget? child) builder;
   final Function initProvider;
   final Widget? child;
   final Function(T)? onProviderReady;

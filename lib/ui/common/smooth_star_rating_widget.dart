@@ -8,7 +8,7 @@ typedef RatingChangeCallback = void Function(double rating);
 
 class SmoothStarRating extends StatefulWidget {
   const SmoothStarRating({
-    Key key,
+    Key? key,
     this.isRTl,
     this.starCount = 5,
     this.isReadOnly = false,
@@ -27,10 +27,10 @@ class SmoothStarRating extends StatefulWidget {
 
   final int starCount;
   final double rating;
-  final bool isRTl;
-  final RatingChangeCallback onRated;
-  final Color color;
-  final Color borderColor;
+  final bool? isRTl;
+  final RatingChangeCallback? onRated;
+  final Color? color;
+  final Color? borderColor;
   final double size;
   final bool allowHalfRating;
   final IconData filledIconData;
@@ -50,8 +50,8 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
 
   //tracks for user tapping on this widget
   bool isWidgetTapped = false;
-  double currentRating;
-  Timer debounceTimer;
+  double? currentRating;
+  Timer? debounceTimer;
   @override
   void initState() {
     currentRating = widget.rating;
@@ -61,7 +61,7 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
   @override
   void dispose() {
     debounceTimer?.cancel();
-    debounceTimer = null;
+    debounceTimer = null!;
     super.dispose();
   }
 
@@ -77,27 +77,27 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
     );
   }
 
-  Widget buildStar(BuildContext context, int index) {
+  Widget buildStar(BuildContext? context, int index) {
     Icon icon;
-    if (index >= currentRating) {
+    if (index >= currentRating!) {
       icon = Icon(
         widget.defaultIconData,
-        color: widget.borderColor ?? Theme.of(context).primaryColor,
+        color: widget.borderColor ?? Theme.of(context!).primaryColor,
         size: widget.size,
       );
     } else if (index >
-            currentRating -
+            currentRating! -
                 (widget.allowHalfRating ? halfStarThreshold : 1.0) &&
-        index < currentRating) {
+        index < currentRating!) {
       icon = Icon(
         widget.halfFilledIconData,
-        color: widget.color ?? Theme.of(context).primaryColor,
+        color: widget.color ?? Theme.of(context!).primaryColor,
         size: widget.size,
       );
     } else {
       icon = Icon(
         widget.filledIconData,
-        color: widget.color ?? Theme.of(context).primaryColor,
+        color: widget.color ?? Theme.of(context!).primaryColor,
         size: widget.size,
       );
     }
@@ -117,8 +117,8 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
                   isWidgetTapped = false; //reset
                 },
                 onHover: (PointerHoverEvent event) {
-                  final RenderBox box = context.findRenderObject();
-                  final Offset _pos = box.globalToLocal(event.position);
+                  final RenderObject? box = context?.findRenderObject();
+                  final Offset _pos = box!.globalToLocal(event.position);
                   final double i = _pos.dx / widget.size;
                   double newRating =
                       widget.allowHalfRating ? i : i.round().toDouble();
@@ -129,7 +129,7 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
                     newRating = 0.0;
                   }
                   setState(() {
-                    if (widget.isRTl) {
+                    if (widget.isRTl!) {
                       currentRating = widget.starCount - newRating;
                     } else {
                       currentRating = newRating;
@@ -153,20 +153,20 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
                       newRating = 0.0;
                     }
                     setState(() {
-                      if (widget.isRTl) {
+                      if (widget.isRTl!) {
                         currentRating = widget.starCount - newRating;
                       } else {
                         currentRating = newRating;
                       }
                     });
                     
-                    widget.onRated(currentRating);
+                    widget.onRated!(currentRating!);
                     
                   },
                   onHorizontalDragUpdate: (DragUpdateDetails dragDetails) {
                     isWidgetTapped = true;
 
-                    final RenderBox box = context.findRenderObject();
+                    final RenderObject box = context.findRenderObject();
                     final Offset _pos =
                         box.globalToLocal(dragDetails.globalPosition);
                     final double i = _pos.dx / widget.size;
@@ -179,7 +179,7 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
                       newRating = 0.0;
                     }
                     setState(() {
-                      if (widget.isRTl) {
+                      if (widget.isRTl!) {
                         currentRating = widget.starCount - newRating;
                       } else {
                         currentRating = newRating;
@@ -189,7 +189,7 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
                     debounceTimer =
                         Timer(const Duration(milliseconds: 100), () {
                       
-                      widget.onRated(currentRating);
+                      widget.onRated!(currentRating!);
                       
                     });
                   },
@@ -198,8 +198,8 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
               )
             : GestureDetector(
                 onTapDown: (TapDownDetails detail) {
-                  final RenderBox box = context.findRenderObject();
-                  final Offset _pos = box.globalToLocal(detail.globalPosition);
+                  final RenderObject? box = context.findRenderObject();
+                  final Offset _pos = box!.globalToLocal!(detail.globalPosition)!;
                   final double i = (_pos.dx - widget.spacing) / widget.size;
                   double newRating =
                       widget.allowHalfRating ? i : i.round().toDouble();
@@ -211,7 +211,7 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
                   }
                   newRating = normalizeRating(newRating);
                   setState(() {
-                    if (widget.isRTl) {
+                    if (widget.isRTl!) {
                       currentRating = widget.starCount - newRating;
                     } else {
                       currentRating = newRating;
@@ -221,14 +221,14 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
                 onTapUp: (TapUpDetails e) {
                   if (widget.onRated != null) {
                     
-                    widget.onRated(currentRating);
+                    widget.onRated!(currentRating!);
                     
                   }
                 },
                 onHorizontalDragUpdate: (DragUpdateDetails dragDetails) {
-                  final RenderBox box = context.findRenderObject();
+                  final RenderObject? box = context.findRenderObject();
                   final Offset _pos =
-                      box.globalToLocal(dragDetails.globalPosition);
+                      box?.globalToLocal(dragDetails.globalPosition);
                   final double i = _pos.dx / widget.size;
                   double newRating =
                       widget.allowHalfRating ? i : i.round().toDouble();
@@ -239,7 +239,7 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
                     newRating = 0.0;
                   }
                   setState(() {
-                    if (widget.isRTl) {
+                    if (widget.isRTl!) {
                       currentRating = widget.starCount - newRating;
                     } else {
                       currentRating = newRating;
@@ -249,7 +249,7 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
                   debounceTimer = Timer(const Duration(milliseconds: 100), () {
                     if (widget.onRated != null) {
                       
-                      widget.onRated(currentRating);
+                      widget.onRated!(currentRating!);
                       
                     }
                   });

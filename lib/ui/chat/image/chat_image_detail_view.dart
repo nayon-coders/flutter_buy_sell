@@ -35,7 +35,7 @@ class _ChatImageDetailViewState extends State<ChatImageDetailView> {
             return PhotoViewGalleryPageOptions.customChild(
               child: PsNetworkImageWithUrl(
                 photoKey: '',
-                imagePath: widget.messageObj.message,
+                imagePath: widget.messageObj.message!,
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 boxfit: BoxFit.contain,

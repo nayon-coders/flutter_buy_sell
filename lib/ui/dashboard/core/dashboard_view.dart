@@ -78,10 +78,10 @@ class _HomeViewState extends State<DashboardView>
     with TickerProviderStateMixin, WidgetsBindingObserver {
   final ScrollController _scrollController = ScrollController();
 
-  AnimationController animationController;
-  AnimationController animationControllerForFab;
+  AnimationController? animationController;
+  AnimationController? animationControllerForFab;
 
-  Animation<double> animation;
+  Animation<double>? animation;
 
   String appBarTitle = 'Home';
   int _currentIndex = PsConst.REQUEST_CODE__MENU_HOME_FRAGMENT;
@@ -92,8 +92,8 @@ class _HomeViewState extends State<DashboardView>
   String phoneUserName = '';
   String phoneNumber = '';
   String phoneId = '';
-  UserProvider provider;
-  AppInfoProvider appInfoProvider;
+  UserProvider? provider;
+  AppInfoProvider? appInfoProvider;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   bool isResumed = false;
@@ -139,7 +139,7 @@ class _HomeViewState extends State<DashboardView>
   }
 
   Future<void> updateSelectedIndexWithAnimation(String title, int index) async {
-    await animationController.reverse().then<dynamic>((void data) {
+    await animationController!.reverse().then<dynamic>((void data) {
       if (!mounted) {
         return;
       }
@@ -154,7 +154,7 @@ class _HomeViewState extends State<DashboardView>
 
   Future<void> updateSelectedIndexWithAnimationUserId(
       String title, int index, String userId) async {
-    await animationController.reverse().then<dynamic>((void data) {
+    await animationController!.reverse().then<dynamic>((void data) {
       if (!mounted) {
         return;
       }
@@ -182,8 +182,8 @@ class _HomeViewState extends State<DashboardView>
 
   @override
   void dispose() {
-    animationController.dispose();
-    animationControllerForFab.dispose();
+    animationController!.dispose();
+    animationControllerForFab!.dispose();
     WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
@@ -196,7 +196,7 @@ class _HomeViewState extends State<DashboardView>
           await FirebaseDynamicLinks.instance.getInitialLink();
 
       if (data != null && data?.link != null) {
-        final Uri deepLink = data?.link;
+        final Uri? deepLink = data?.link!;
         if (deepLink != null) {
           final String path = deepLink.path;
           final List<String> pathList = path.split('=');
@@ -213,7 +213,7 @@ class _HomeViewState extends State<DashboardView>
 
     FirebaseDynamicLinks.instance.onLink(
         onSuccess: (PendingDynamicLinkData dynamicLink) async {
-      final Uri deepLink = dynamicLink?.link;
+      final Uri? deepLink = dynamicLink?.link;
       if (deepLink != null) {
         final String path = deepLink.path;
         final List<String> pathList = path.split('=');
@@ -330,17 +330,17 @@ class _HomeViewState extends State<DashboardView>
     return <dynamic>[title, index];
   }
 
-  CategoryRepository categoryRepository;
-  UserRepository userRepository;
-  AppInfoRepository appInfoRepository;
-  ProductRepository productRepository;
-  PsValueHolder valueHolder;
-  DeleteTaskRepository deleteTaskRepository;
-  DeleteTaskProvider deleteTaskProvider;
-  UserUnreadMessageProvider userUnreadMessageProvider;
-  UserUnreadMessageRepository userUnreadMessageRepository;
-  NotificationRepository notificationRepository;
-  UserUnreadMessageParameterHolder userUnreadMessageHolder;
+  CategoryRepository? categoryRepository;
+  UserRepository? userRepository;
+  AppInfoRepository? appInfoRepository;
+  ProductRepository? productRepository;
+  PsValueHolder? valueHolder;
+  DeleteTaskRepository? deleteTaskRepository;
+  DeleteTaskProvider? deleteTaskProvider;
+  UserUnreadMessageProvider? userUnreadMessageProvider;
+  UserUnreadMessageRepository? userUnreadMessageRepository;
+  NotificationRepository? notificationRepository;
+  UserUnreadMessageParameterHolder? userUnreadMessageHolder;
   String appBarTitleName = '';
   void changeAppBarTitle(String categoryName) {
     appBarTitleName = categoryName;
@@ -364,8 +364,8 @@ class _HomeViewState extends State<DashboardView>
     if (isFirstTime) {
       appBarTitle = ''; //Utils.getString(context, 'app_name');
 
-      Utils.subscribeToTopic(valueHolder.notiSetting ?? true);
-      Utils.fcmConfigure(context, _fcm, valueHolder.loginUserId);
+      Utils.subscribeToTopic(valueHolder!.notiSetting ?? true);
+      Utils.fcmConfigure(context, _fcm, valueHolder!.loginUserId);
       isFirstTime = false;
     }
 
@@ -404,7 +404,7 @@ class _HomeViewState extends State<DashboardView>
 
     final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(
-            parent: animationController,
+            parent: animationController!,
             curve: const Interval(0.5 * 1, 1.0, curve: Curves.fastOutSlowIn)));
 
     // return EasyLocalizationProvider(
@@ -421,19 +421,19 @@ class _HomeViewState extends State<DashboardView>
                   lazy: false,
                   create: (BuildContext context) {
                     return UserProvider(
-                        repo: userRepository, psValueHolder: valueHolder);
+                        repo: userRepository!, psValueHolder: valueHolder!);
                   }),
               ChangeNotifierProvider<DeleteTaskProvider>(
                   lazy: false,
                   create: (BuildContext context) {
                     deleteTaskProvider = DeleteTaskProvider(
-                        repo: deleteTaskRepository, psValueHolder: valueHolder);
-                    return deleteTaskProvider;
+                        repo: deleteTaskRepository!, psValueHolder: valueHolder!);
+                    return deleteTaskProvider!;
                   }),
             ],
             child: Consumer<UserProvider>(
               builder:
-                  (BuildContext context, UserProvider provider, Widget child) {
+                  (BuildContext context, UserProvider provider, Widget? child) {
                 print(provider.psValueHolder.loginUserId);
                 return ListView(padding: EdgeInsets.zero, children: <Widget>[
                   _DrawerHeaderWidget(),
@@ -503,8 +503,8 @@ class _HomeViewState extends State<DashboardView>
                       onTap: (String title, int index) {
                         Navigator.pop(context);
                         title = (valueHolder == null ||
-                                valueHolder.userIdToVerify == null ||
-                                valueHolder.userIdToVerify == '')
+                                valueHolder!.userIdToVerify == null ||
+                                valueHolder!.userIdToVerify == '')
                             ? Utils.getString(
                                 context, 'home__menu_drawer_profile')
                             : Utils.getString(
@@ -649,7 +649,7 @@ class _HomeViewState extends State<DashboardView>
                                             await provider.userLogout(
                                                 userlogoutHolder.toMap());
 
-                                        await userUnreadMessageProvider
+                                        await userUnreadMessageProvider!
                                             .userDeleteUnreadMessageCount();
 
                                         PsProgressDialog.dismissDialog();
@@ -657,7 +657,7 @@ class _HomeViewState extends State<DashboardView>
                                         if (apiStatus.data != null) {
                                           callLogout(
                                               provider,
-                                              deleteTaskProvider,
+                                              deleteTaskProvider!,
                                               PsConst
                                                   .REQUEST_CODE__MENU_HOME_FRAGMENT);
                                         } else {
