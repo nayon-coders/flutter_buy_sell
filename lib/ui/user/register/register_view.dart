@@ -13,26 +13,26 @@ import 'package:provider/provider.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView(
-      {Key key,
+      {Key? key,
       this.animationController,
       this.onRegisterSelected,
       this.goToLoginSelected})
       : super(key: key);
-  final AnimationController animationController;
-  final Function onRegisterSelected, goToLoginSelected;
+  final AnimationController? animationController;
+  final Function? onRegisterSelected, goToLoginSelected;
   @override
   _RegisterViewState createState() => _RegisterViewState();
 }
 
 class _RegisterViewState extends State<RegisterView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
 
-  UserRepository repo1;
-  PsValueHolder valueHolder;
-  TextEditingController nameController;
-  TextEditingController emailController;
-  TextEditingController passwordController;
+  UserRepository? repo1;
+  PsValueHolder? valueHolder;
+  TextEditingController? nameController;
+  TextEditingController? emailController;
+  TextEditingController? passwordController;
 
   @override
   void initState() {
@@ -44,7 +44,7 @@ class _RegisterViewState extends State<RegisterView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     // nameController.dispose();
     // emailController.dispose();
     // passwordController.dispose();
@@ -55,10 +55,10 @@ class _RegisterViewState extends State<RegisterView>
   Widget build(BuildContext context) {
     final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(
-            parent: animationController,
+            parent: animationController!,
             curve: const Interval(0.5 * 1, 1.0, curve: Curves.fastOutSlowIn)));
 
-    animationController.forward();
+    animationController!.forward();
 
     repo1 = Provider.of<UserRepository>(context);
     valueHolder = Provider.of<PsValueHolder>(context);
@@ -68,12 +68,12 @@ class _RegisterViewState extends State<RegisterView>
         lazy: false,
         create: (BuildContext context) {
           final UserProvider provider =
-              UserProvider(repo: repo1, psValueHolder: valueHolder);
+              UserProvider(repo: repo1!, psValueHolder: valueHolder!);
 
           return provider;
         },
         child: Consumer<UserProvider>(builder:
-            (BuildContext context, UserProvider provider, Widget child) {
+            (BuildContext context, UserProvider provider, Widget? child) {
           nameController = TextEditingController(
               text: provider.psValueHolder.userNameToVerify);
           emailController = TextEditingController(
@@ -85,47 +85,47 @@ class _RegisterViewState extends State<RegisterView>
             children: <Widget>[
               SingleChildScrollView(
                   child: AnimatedBuilder(
-                      animation: animationController,
+                      animation: animationController!,
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
                           _HeaderIconAndTextWidget(),
                           _TextFieldWidget(
-                            nameText: nameController,
-                            emailText: emailController,
-                            passwordText: passwordController,
+                            nameText: nameController!,
+                            emailText: emailController!,
+                            passwordText: passwordController!,
                           ),
                           const SizedBox(
                             height: PsDimens.space8,
                           ),
                           _TermsAndConCheckbox(
                             provider: provider,
-                            nameTextEditingController: nameController,
-                            emailTextEditingController: emailController,
-                            passwordTextEditingController: passwordController,
+                            nameTextEditingController: nameController!,
+                            emailTextEditingController: emailController!,
+                            passwordTextEditingController: passwordController!,
                           ),
                           const SizedBox(
                             height: PsDimens.space8,
                           ),
                           _SignInButtonWidget(
                             provider: provider,
-                            nameTextEditingController: nameController,
-                            emailTextEditingController: emailController,
-                            passwordTextEditingController: passwordController,
-                            onRegisterSelected: widget.onRegisterSelected,
+                            nameTextEditingController: nameController!,
+                            emailTextEditingController: emailController!,
+                            passwordTextEditingController: passwordController!,
+                            onRegisterSelected: widget.onRegisterSelected!,
                           ),
                           const SizedBox(
                             height: PsDimens.space16,
                           ),
                           _TextWidget(
-                            goToLoginSelected: widget.goToLoginSelected,
+                            goToLoginSelected: widget.goToLoginSelected!,
                           ),
                           const SizedBox(
                             height: PsDimens.space64,
                           ),
                         ],
                       ),
-                      builder: (BuildContext context, Widget child) {
+                      builder: (BuildContext context, Widget? child) {
                         return FadeTransition(
                             opacity: animation,
                             child: Transform(
@@ -143,10 +143,10 @@ class _RegisterViewState extends State<RegisterView>
 
 class _TermsAndConCheckbox extends StatefulWidget {
   const _TermsAndConCheckbox({
-    @required this.provider,
-    @required this.nameTextEditingController,
-    @required this.emailTextEditingController,
-    @required this.passwordTextEditingController,
+    required this.provider,
+    required this.nameTextEditingController,
+    required this.emailTextEditingController,
+    required this.passwordTextEditingController,
   });
 
   final UserProvider provider;
@@ -168,7 +168,7 @@ class __TermsAndConCheckboxState extends State<_TermsAndConCheckbox> {
         Checkbox(
           activeColor: PsColors.mainColor,
           value: widget.provider.isCheckBoxSelect,
-          onChanged: (bool value) {
+          onChanged: (bool? value) {
             setState(() {
               updateCheckBox(
                   widget.provider.isCheckBoxSelect,
@@ -226,7 +226,7 @@ void updateCheckBox(
 
 class _TextWidget extends StatefulWidget {
   const _TextWidget({this.goToLoginSelected});
-  final Function goToLoginSelected;
+  final Function? goToLoginSelected;
   @override
   __TextWidgetState createState() => __TextWidgetState();
 }
@@ -242,14 +242,14 @@ class __TextWidgetState extends State<_TextWidget> {
             Utils.getString(context, 'register__login'),
             style: Theme.of(context)
                 .textTheme
-                .bodyText2
+                .bodyText2!
                 .copyWith(color: PsColors.mainColor),
           ),
         ),
       ),
       onTap: () {
         if (widget.goToLoginSelected != null) {
-          widget.goToLoginSelected();
+          widget.goToLoginSelected!();
         } else {
           Navigator.pushReplacementNamed(
             context,
@@ -263,9 +263,9 @@ class __TextWidgetState extends State<_TextWidget> {
 
 class _TextFieldWidget extends StatefulWidget {
   const _TextFieldWidget({
-    @required this.nameText,
-    @required this.emailText,
-    @required this.passwordText,
+    required this.nameText,
+    required this.emailText,
+    required this.passwordText,
   });
 
   final TextEditingController nameText, emailText, passwordText;
@@ -295,13 +295,13 @@ class __TextFieldWidgetState extends State<_TextFieldWidget> {
             margin: _marginEdgeInsetWidget,
             child: TextField(
               controller: widget.nameText,
-              style: Theme.of(context).textTheme.button.copyWith(),
+              style: Theme.of(context).textTheme.button!.copyWith(),
               decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: Utils.getString(context, 'register__user_name'),
                   hintStyle: Theme.of(context)
                       .textTheme
-                      .button
+                      .button!
                       .copyWith(color: PsColors.textPrimaryLightColor),
                   icon: Icon(Icons.people,
                       color: Theme.of(context).iconTheme.color)),
@@ -312,14 +312,14 @@ class __TextFieldWidgetState extends State<_TextFieldWidget> {
             margin: _marginEdgeInsetWidget,
             child: TextField(
               controller: widget.emailText,
-              style: Theme.of(context).textTheme.button.copyWith(),
+              style: Theme.of(context).textTheme.button!.copyWith(),
               keyboardType: TextInputType.emailAddress,
               decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: Utils.getString(context, 'register__email'),
                   hintStyle: Theme.of(context)
                       .textTheme
-                      .button
+                      .button!
                       .copyWith(color: PsColors.textPrimaryLightColor),
                   icon: Icon(Icons.email,
                       color: Theme.of(context).iconTheme.color)),
@@ -331,13 +331,13 @@ class __TextFieldWidgetState extends State<_TextFieldWidget> {
             child: TextField(
               controller: widget.passwordText,
               obscureText: true,
-              style: Theme.of(context).textTheme.button.copyWith(),
+              style: Theme.of(context).textTheme.button!.copyWith(),
               decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: Utils.getString(context, 'register__password'),
                   hintStyle: Theme.of(context)
                       .textTheme
-                      .button
+                      .button!
                       .copyWith(color: PsColors.textPrimaryLightColor),
                   icon: Icon(Icons.lock,
                       color: Theme.of(context).iconTheme.color)),
@@ -370,7 +370,7 @@ class _HeaderIconAndTextWidget extends StatelessWidget {
         ),
         Text(
           Utils.getString(context, 'app_name'),
-          style: Theme.of(context).textTheme.headline6.copyWith(
+          style: Theme.of(context).textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: PsColors.mainColor,
               ),
@@ -385,13 +385,13 @@ class _HeaderIconAndTextWidget extends StatelessWidget {
 
 class _SignInButtonWidget extends StatefulWidget {
   const _SignInButtonWidget(
-      {@required this.provider,
-      @required this.nameTextEditingController,
-      @required this.emailTextEditingController,
-      @required this.passwordTextEditingController,
+      {required this.provider,
+      required this.nameTextEditingController,
+      required this.emailTextEditingController,
+      required this.passwordTextEditingController,
       this.onRegisterSelected});
   final UserProvider provider;
-  final Function onRegisterSelected;
+  final Function? onRegisterSelected;
   final TextEditingController nameTextEditingController,
       emailTextEditingController,
       passwordTextEditingController;
@@ -435,7 +435,7 @@ class __SignInButtonWidgetState extends State<_SignInButtonWidget> {
             if(Utils.checkEmailFormat(widget.emailTextEditingController.text.trim())){
             await widget.provider.signUpWithEmailId(
                 context,
-                widget.onRegisterSelected,
+                widget.onRegisterSelected!,
                 widget.nameTextEditingController.text,
                 widget.emailTextEditingController.text.trim(),
                 widget.passwordTextEditingController.text);

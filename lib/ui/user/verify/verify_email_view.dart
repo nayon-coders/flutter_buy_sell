@@ -19,7 +19,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class VerifyEmailView extends StatefulWidget {
-  const VerifyEmailView({Key key, this.animationController, this.onProfileSelected, this.onSignInSelected, this.userId}) : super(key: key);
+  const VerifyEmailView({Key? key, this.animationController, this.onProfileSelected, this.onSignInSelected, this.userId}) : super(key: key);
 
   final AnimationController? animationController;
   final Function? onProfileSelected, onSignInSelected;
@@ -50,7 +50,7 @@ class _VerifyEmailViewState extends State<VerifyEmailView> {
         // provider.postUserRegister(userRegisterParameterHolder.toMap());
         return provider;
       },
-      child: Consumer<UserProvider>(builder: (BuildContext context, UserProvider provider, Widget child) {
+      child: Consumer<UserProvider>(builder: (BuildContext context, UserProvider provider, Widget? child) {
         return SingleChildScrollView(
             child: Stack(
           alignment: Alignment.bottomCenter,
@@ -163,18 +163,18 @@ class __TextFieldAndButtonWidgetState extends State<_TextFieldAndButtonWidget> {
                       code: codeController.text,
                     );
 
-                    final PsResource<User> _apiStatus = await widget.provider.postUserEmailVerify(emailVerifyParameterHolder.toMap());
+                    final PsResource<User> _apiStatus = await widget.provider!.postUserEmailVerify(emailVerifyParameterHolder.toMap());
 
                     if (_apiStatus.data != null) {
                       await widget.provider!.replaceVerifyUserData('', '', '', '');
-                      await widget.provider!.replaceLoginUserId(_apiStatus.data.userId);
-                      await widget.provider!.replaceLoginUserName(_apiStatus.data.userName);
+                      await widget.provider!.replaceLoginUserId(_apiStatus.data!.userId!);
+                      await widget.provider!.replaceLoginUserName(_apiStatus.data!.userName!);
 
                       if (widget.onProfileSelected != null) {
                         await widget.provider!.replaceVerifyUserData('', '', '', '');
                         await widget.provider!.replaceLoginUserId(_apiStatus.data!.userId!);
                         await widget.provider!.replaceLoginUserName(_apiStatus.data!.userName!);
-                        await widget.onProfileSelected(_apiStatus.data!.userId);
+                        await widget.onProfileSelected!(_apiStatus.data!.userId);
                       } else {
                         Navigator.pop(context, _apiStatus.data);
                       }
@@ -300,7 +300,7 @@ class __ChangeEmailAndRecentCodeWidgetState extends State<_ChangeEmailAndRecentC
                 userEmail: psValueHolder.userEmailToVerify,
               );
 
-              final PsResource<ApiStatus> _apiStatus = await widget.provider.postResendCode(resendCodeParameterHolder.toMap());
+              final PsResource<ApiStatus> _apiStatus = await widget.provider!.postResendCode(resendCodeParameterHolder.toMap());
 
               if (_apiStatus.data != null) {
                 showDialog<dynamic>(

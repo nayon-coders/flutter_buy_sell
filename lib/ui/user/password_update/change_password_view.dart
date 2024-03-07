@@ -22,11 +22,10 @@ class ChangePasswordView extends StatefulWidget {
 }
 
 class _ChangePasswordViewState extends State<ChangePasswordView> {
-  UserRepository userRepo;
-  PsValueHolder psValueHolder;
+  UserRepository? userRepo;
+  PsValueHolder? psValueHolder;
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+  final TextEditingController confirmPasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +37,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
     return PsWidgetWithAppBar<UserProvider>(
         appBarTitle: Utils.getString(context, 'change_password__title') ?? '',
         initProvider: () {
-          return UserProvider(repo: userRepo, psValueHolder: psValueHolder);
+          return UserProvider(repo: userRepo!, psValueHolder: psValueHolder!);
         },
         onProviderReady: (UserProvider provider) {
           return provider;
@@ -50,20 +49,8 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                PsTextFieldWidget(
-                    titleText:
-                        Utils.getString(context, 'change_password__password'),
-                    textAboutMe: false,
-                    hintText:
-                        Utils.getString(context, 'change_password__password'),
-                    textEditingController: passwordController),
-                PsTextFieldWidget(
-                    titleText: Utils.getString(
-                        context, 'change_password__confirm_password'),
-                    textAboutMe: false,
-                    hintText: Utils.getString(
-                        context, 'change_password__confirm_password'),
-                    textEditingController: confirmPasswordController),
+                PsTextFieldWidget(titleText: Utils.getString(context, 'change_password__password'), textAboutMe: false, hintText: Utils.getString(context, 'change_password__password'), textEditingController: passwordController),
+                PsTextFieldWidget(titleText: Utils.getString(context, 'change_password__confirm_password'), textAboutMe: false, hintText: Utils.getString(context, 'change_password__confirm_password'), textEditingController: confirmPasswordController),
                 Container(
                   margin: const EdgeInsets.all(PsDimens.space12),
                   width: double.infinity,
@@ -83,9 +70,9 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
 
 class PsButtonWidget extends StatelessWidget {
   const PsButtonWidget({
-    @required this.passwordController,
-    @required this.confirmPasswordController,
-    @required this.provider,
+    required this.passwordController,
+    required this.confirmPasswordController,
+    required this.provider,
   });
 
   final TextEditingController passwordController, confirmPasswordController;
@@ -103,37 +90,23 @@ class PsButtonWidget extends StatelessWidget {
             ? provider.isLoading
                 ? Text(
                     Utils.getString(context, 'login__loading'),
-                    style: Theme.of(context)
-                        .textTheme
-                        .button
-                        .copyWith(color: Colors.white),
+                    style: Theme.of(context).textTheme.button!.copyWith(color: Colors.white),
                   )
                 : Text(
                     Utils.getString(context, 'change_password__save'),
-                    style: Theme.of(context)
-                        .textTheme
-                        .button
-                        .copyWith(color: Colors.white),
+                    style: Theme.of(context).textTheme.button!.copyWith(color: Colors.white),
                   )
             : Text(
                 Utils.getString(context, 'login__sign_in'),
-                style: Theme.of(context)
-                    .textTheme
-                    .button
-                    .copyWith(color: Colors.white),
+                style: Theme.of(context).textTheme.button!.copyWith(color: Colors.white),
               ),
         onPressed: () async {
-          if (passwordController.text != '' &&
-              confirmPasswordController.text != '') {
+          if (passwordController.text != '' && confirmPasswordController.text != '') {
             if (passwordController.text == confirmPasswordController.text) {
               if (await Utils.checkInternetConnectivity()) {
-                final ChangePasswordParameterHolder contactUsParameterHolder =
-                    ChangePasswordParameterHolder(
-                        userId: provider.psValueHolder.loginUserId,
-                        userPassword: passwordController.text);
+                final ChangePasswordParameterHolder contactUsParameterHolder = ChangePasswordParameterHolder(userId: provider.psValueHolder.loginUserId, userPassword: passwordController.text);
 
-                final PsResource<ApiStatus> _apiStatus = await provider
-                    .postChangePassword(contactUsParameterHolder.toMap());
+                final PsResource<ApiStatus> _apiStatus = await provider.postChangePassword(contactUsParameterHolder.toMap());
 
                 if (_apiStatus.data != null) {
                   passwordController.clear();
@@ -143,7 +116,7 @@ class PsButtonWidget extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) {
                         return SuccessDialog(
-                          message: _apiStatus.data.status,
+                          message: _apiStatus.data!.status!,
                           onPressed: () {},
                         );
                       });
@@ -152,7 +125,7 @@ class PsButtonWidget extends StatelessWidget {
                       context: context,
                       builder: (BuildContext context) {
                         return ErrorDialog(
-                          message: _apiStatus.message,
+                          message: _apiStatus.message!,
                         );
                       });
                 }
@@ -161,8 +134,7 @@ class PsButtonWidget extends StatelessWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return ErrorDialog(
-                        message: Utils.getString(
-                            context, 'error_dialog__no_internet'),
+                        message: Utils.getString(context, 'error_dialog__no_internet'),
                       );
                     });
               }
@@ -171,8 +143,7 @@ class PsButtonWidget extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return ErrorDialog(
-                      message: Utils.getString(
-                          context, 'change_password__not_equal'),
+                      message: Utils.getString(context, 'change_password__not_equal'),
                     );
                   });
             }
