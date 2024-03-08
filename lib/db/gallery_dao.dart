@@ -22,7 +22,7 @@ class GalleryDao extends PsDao<DefaultPhoto> {
 
   @override
   String getPrimaryKey(DefaultPhoto object) {
-    return object.imgId!;
+    return object!.imgId!;
   }
 
   @override

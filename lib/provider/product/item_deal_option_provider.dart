@@ -20,7 +20,7 @@ class ItemDealOptionProvider extends PsProvider {
 
     itemDealOptionListStream =
         StreamController<PsResource<List<DealOption>>>.broadcast();
-    subscription = itemDealOptionListStream.stream.listen((dynamic resource) {
+    subscription = itemDealOptionListStream!.stream.listen((dynamic resource) {
       updateOffset(resource.data.length);
 
       _itemDealOptionList = resource;
@@ -36,20 +36,20 @@ class ItemDealOptionProvider extends PsProvider {
     });
   }
 
-  StreamController<PsResource<List<DealOption>>> itemDealOptionListStream;
-  ItemDealOptionRepository _repo;
+  StreamController<PsResource<List<DealOption>>>? itemDealOptionListStream;
+  ItemDealOptionRepository? _repo;
 
-  PsResource<List<DealOption>> _itemDealOptionList =
+  PsResource<List<DealOption>>? _itemDealOptionList =
       PsResource<List<DealOption>>(PsStatus.NOACTION, '', <DealOption>[]);
 
-  PsResource<List<DealOption>> get itemDealOptionList => _itemDealOptionList;
-  StreamSubscription<PsResource<List<DealOption>>> subscription;
+  PsResource<List<DealOption>>? get itemDealOptionList => _itemDealOptionList;
+  StreamSubscription<PsResource<List<DealOption>>>? subscription;
 
   String categoryId = '';
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Item Condition Provider Dispose: $hashCode');
     super.dispose();
@@ -58,7 +58,7 @@ class ItemDealOptionProvider extends PsProvider {
   Future<dynamic> loadItemDealOptionList() async {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getItemDealOptionList(itemDealOptionListStream,
+    await _repo!.getItemDealOptionList(itemDealOptionListStream!,
         isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
   }
 
@@ -67,7 +67,7 @@ class ItemDealOptionProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-      await _repo.getNextPageItemDealOptionList(itemDealOptionListStream,
+      await _repo!.getNextPageItemDealOptionList(itemDealOptionListStream!,
           isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
     }
   }
@@ -79,8 +79,8 @@ class ItemDealOptionProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getItemDealOptionList(
-      itemDealOptionListStream,
+    await _repo!.getItemDealOptionList(
+      itemDealOptionListStream!,
       isConnectedToInternet,
       limit,
       offset,
