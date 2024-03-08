@@ -13,18 +13,18 @@ import 'package:optimized_cached_image/optimized_cached_image.dart';
 
 class PsNetworkImage extends StatelessWidget {
   const PsNetworkImage(
-      {Key key,
-      @required this.photoKey,
-      @required this.defaultPhoto,
+      {Key? key,
+      required this.photoKey,
+      required this.defaultPhoto,
       this.width,
       this.height,
       this.onTap,
       this.boxfit = BoxFit.fill})
       : super(key: key);
 
-  final double width;
-  final double height;
-  final Function onTap;
+  final double? width;
+  final double? height;
+  final VoidCallback? onTap;
   final String photoKey;
   final BoxFit boxfit;
   final DefaultPhoto defaultPhoto;
@@ -72,7 +72,7 @@ class PsNetworkImage extends StatelessWidget {
             height: height,
             fit: boxfit,
             imageUrl: fullImagePath,
-            errorWidget: (BuildContext context, String url, Object error) =>
+            errorWidget: (BuildContext context, String url, Object? error) =>
                 Image.asset(
               'assets/images/placeholder_image.png',
               // width: width,
@@ -88,18 +88,18 @@ class PsNetworkImage extends StatelessWidget {
 
 class PsNetworkImageWithUrl extends StatelessWidget {
   const PsNetworkImageWithUrl(
-      {Key key,
-      @required this.photoKey,
-      @required this.imagePath,
+      {Key? key,
+      required this.photoKey,
+      required this.imagePath,
       this.width,
       this.height,
       this.onTap,
       this.boxfit = BoxFit.cover})
       : super(key: key);
 
-  final double width;
-  final double height;
-  final Function onTap;
+  final double? width;
+  final double? height;
+  final VoidCallback? onTap;
   final String photoKey;
   final BoxFit boxfit;
   final String imagePath;
@@ -143,7 +143,7 @@ class PsNetworkImageWithUrl extends StatelessWidget {
             height: height,
             fit: boxfit,
             imageUrl: fullImagePath,
-            errorWidget: (BuildContext context, String url, Object error) =>
+            errorWidget: (BuildContext context, String url, Object? error) =>
                 Image.asset(
               'assets/images/placeholder_image.png',
               width: width,
@@ -175,7 +175,7 @@ class PsNetworkImageWithUrl extends StatelessWidget {
             height: height,
             fit: boxfit,
             imageUrl: '${PsConfig.ps_app_image_url}$imagePath',
-            errorWidget: (BuildContext context, String url, Object error) =>
+            errorWidget: (BuildContext context, String url, Object? error) =>
                 Image.asset(
               'assets/images/placeholder_image.png',
               width: width,
@@ -191,18 +191,18 @@ class PsNetworkImageWithUrl extends StatelessWidget {
 
 class PsNetworkImageWithUrlForUser extends StatelessWidget {
   const PsNetworkImageWithUrlForUser(
-      {Key key,
-      @required this.photoKey,
-      @required this.imagePath,
+      {Key? key,
+      required this.photoKey,
+      required this.imagePath,
       this.width,
       this.height,
       this.onTap,
       this.boxfit = BoxFit.cover})
       : super(key: key);
 
-  final double width;
-  final double height;
-  final Function onTap;
+  final double? width;
+  final double? height;
+  final VoidCallback? onTap;
   final String photoKey;
   final BoxFit boxfit;
   final String imagePath;
@@ -246,7 +246,7 @@ class PsNetworkImageWithUrlForUser extends StatelessWidget {
             height: height,
             fit: boxfit,
             imageUrl: fullImagePath,
-            errorWidget: (BuildContext context, String url, Object error) =>
+            errorWidget: (BuildContext context, String url, Object? error) =>
                 Image.asset(
               'assets/images/user_default_photo.png',
               width: width,
@@ -278,7 +278,7 @@ class PsNetworkImageWithUrlForUser extends StatelessWidget {
             height: height,
             fit: boxfit,
             imageUrl: '${PsConfig.ps_app_image_url}$imagePath',
-            errorWidget: (BuildContext context, String url, Object error) =>
+            errorWidget: (BuildContext context, String url, Object? error) =>
                 Image.asset(
               'assets/images/user_default_photo.png',
               width: width,
@@ -294,18 +294,18 @@ class PsNetworkImageWithUrlForUser extends StatelessWidget {
 
 class PsFileImage extends StatelessWidget {
   const PsFileImage(
-      {Key key,
-      @required this.photoKey,
-      @required this.file,
+      {Key? key,
+      required this.photoKey,
+      required this.file,
       this.width,
       this.height,
       this.onTap,
       this.boxfit = BoxFit.cover})
       : super(key: key);
 
-  final double width;
-  final double height;
-  final Function onTap;
+  final double? width;
+  final double? height;
+  final VoidCallback? onTap;
   final String photoKey;
   final BoxFit boxfit;
   final File file;
@@ -341,8 +341,8 @@ class PsFileImage extends StatelessWidget {
 
 class PsNetworkCircleImage extends StatelessWidget {
   const PsNetworkCircleImage(
-      {Key key,
-      @required this.photoKey,
+      {Key? key,
+      required this.photoKey,
       this.imagePath,
       this.asset,
       this.width,
@@ -351,13 +351,13 @@ class PsNetworkCircleImage extends StatelessWidget {
       this.boxfit = BoxFit.cover})
       : super(key: key);
 
-  final double width;
-  final double height;
-  final Function onTap;
+  final double? width;
+  final double? height;
+  final VoidCallback? onTap;
   final String photoKey;
   final BoxFit boxfit;
-  final String imagePath;
-  final String asset;
+  final String? imagePath;
+  final String? asset;
 
   @override
   Widget build(BuildContext context) {
@@ -382,7 +382,7 @@ class PsNetworkCircleImage extends StatelessWidget {
               tag: '$photoKey$asset',
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10000.0),
-                child: Image.asset(asset,
+                child: Image.asset(asset!,
                     width: width, height: height, fit: boxfit),
               ),
             ));
@@ -417,7 +417,7 @@ class PsNetworkCircleImage extends StatelessWidget {
                 height: height,
                 fit: boxfit,
                 imageUrl: fullImagePath,
-                errorWidget: (BuildContext context, String url, Object error) =>
+                errorWidget: (BuildContext context, String url, Object? error) =>
                     Image.asset(
                   'assets/images/placeholder_image.png',
                   width: width,
@@ -454,7 +454,7 @@ class PsNetworkCircleImage extends StatelessWidget {
                   fit: boxfit,
                   imageUrl: '${PsConfig.ps_app_image_url}$imagePath',
                   errorWidget:
-                      (BuildContext context, String url, Object error) =>
+                      (BuildContext context, String url, Object? error) =>
                           Image.asset(
                     'assets/images/placeholder_image.png',
                     width: width,
@@ -471,8 +471,8 @@ class PsNetworkCircleImage extends StatelessWidget {
 
 class PsNetworkCircleImageForUser extends StatelessWidget {
   const PsNetworkCircleImageForUser(
-      {Key key,
-      @required this.photoKey,
+      {Key? key,
+      required this.photoKey,
       this.imagePath,
       this.asset,
       this.width,
@@ -481,13 +481,13 @@ class PsNetworkCircleImageForUser extends StatelessWidget {
       this.boxfit = BoxFit.cover})
       : super(key: key);
 
-  final double width;
-  final double height;
-  final Function onTap;
+  final double? width;
+  final double? height;
+  final VoidCallback? onTap;
   final String photoKey;
   final BoxFit boxfit;
-  final String imagePath;
-  final String asset;
+  final String? imagePath;
+  final String? asset;
 
   @override
   Widget build(BuildContext context) {
@@ -512,7 +512,7 @@ class PsNetworkCircleImageForUser extends StatelessWidget {
               tag: '$photoKey$asset',
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10000.0),
-                child: Image.asset(asset,
+                child: Image.asset(asset!,
                     width: width, height: height, fit: boxfit),
               ),
             ));
@@ -547,7 +547,7 @@ class PsNetworkCircleImageForUser extends StatelessWidget {
                 height: height,
                 fit: boxfit,
                 imageUrl: fullImagePath,
-                errorWidget: (BuildContext context, String url, Object error) =>
+                errorWidget: (BuildContext context, String url, Object? error) =>
                     Image.asset(
                   'assets/images/user_default_photo.png',
                   width: width,
@@ -584,7 +584,7 @@ class PsNetworkCircleImageForUser extends StatelessWidget {
                   fit: boxfit,
                   imageUrl: '${PsConfig.ps_app_image_url}$imagePath',
                   errorWidget:
-                      (BuildContext context, String url, Object error) =>
+                      (BuildContext context, String url, Object? error) =>
                           Image.asset(
                     'assets/images/user_default_photo.png',
                     width: width,
@@ -601,8 +601,8 @@ class PsNetworkCircleImageForUser extends StatelessWidget {
 
 class PsFileCircleImage extends StatelessWidget {
   const PsFileCircleImage(
-      {Key key,
-      @required this.photoKey,
+      {Key? key,
+      required this.photoKey,
       this.file,
       this.asset,
       this.width,
@@ -611,13 +611,13 @@ class PsFileCircleImage extends StatelessWidget {
       this.boxfit = BoxFit.cover})
       : super(key: key);
 
-  final double width;
-  final double height;
-  final Function onTap;
+  final double? width;
+  final double? height;
+  final VoidCallback? onTap;
   final String photoKey;
   final BoxFit boxfit;
-  final File file;
-  final String asset;
+  final File? file;
+  final String? asset;
 
   @override
   Widget build(BuildContext context) {
@@ -640,7 +640,7 @@ class PsFileCircleImage extends StatelessWidget {
               tag: '$photoKey$asset',
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10000.0),
-                child: Image.asset(asset,
+                child: Image.asset(asset!,
                     width: width, height: height, fit: boxfit),
               ),
             ));
@@ -652,16 +652,16 @@ class PsFileCircleImage extends StatelessWidget {
             child: ClipRRect(
                 borderRadius: BorderRadius.circular(10000.0),
                 child: Image(
-                  image: FileImage(file),
+                  image: FileImage(file!),
                 )));
       } else {
         return GestureDetector(
           onTap: onTap,
           child: Hero(
-              tag: file,
+              tag: file!,
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(10000.0),
-                  child: Image(image: FileImage(file)))),
+                  child: Image(image: FileImage(file!)))),
         );
       }
     }
@@ -671,7 +671,7 @@ class PsFileCircleImage extends StatelessWidget {
 class PSProgressIndicator extends StatefulWidget {
   const PSProgressIndicator(this._status, {this.message});
   final PsStatus _status;
-  final String message;
+  final String? message;
 
   @override
   _PSProgressIndicator createState() => _PSProgressIndicator();
@@ -706,18 +706,18 @@ class _PSProgressIndicator extends State<PSProgressIndicator> {
 
 class PsNetworkCircleIconImage extends StatelessWidget {
   const PsNetworkCircleIconImage(
-      {Key key,
-      @required this.photoKey,
-      @required this.defaultIcon,
+      {Key? key,
+      required this.photoKey,
+      required this.defaultIcon,
       this.width,
       this.height,
       this.onTap,
       this.boxfit = BoxFit.cover})
       : super(key: key);
 
-  final double width;
-  final double height;
-  final Function onTap;
+  final double? width;
+  final double? height;
+  final VoidCallback? onTap;
   final String photoKey;
   final BoxFit boxfit;
   final DefaultIcon defaultIcon;
@@ -766,7 +766,7 @@ class PsNetworkCircleIconImage extends StatelessWidget {
                 height: height,
                 fit: boxfit,
                 imageUrl: fullImagePath,
-                errorWidget: (BuildContext context, String url, Object error) =>
+                errorWidget: (BuildContext context, String url, Object? error) =>
                     Image.asset(
                   'assets/images/placeholder_image.png',
                   width: width,
@@ -805,7 +805,7 @@ class PsNetworkCircleIconImage extends StatelessWidget {
                   imageUrl:
                       '${PsConfig.ps_app_image_url}${defaultIcon.imgPath}',
                   errorWidget:
-                      (BuildContext context, String url, Object error) =>
+                      (BuildContext context, String url, Object? error) =>
                           Image.asset(
                     'assets/images/placeholder_image.png',
                     width: width,

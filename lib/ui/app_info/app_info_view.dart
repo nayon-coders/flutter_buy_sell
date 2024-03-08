@@ -26,14 +26,14 @@ class _AppInfoViewState extends State<AppInfoView>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  AboutUsProvider _aboutUsProvider;
+  AboutUsProvider? _aboutUsProvider;
 
-  AnimationController animationController;
-  Animation<double> animation;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -44,7 +44,7 @@ class _AppInfoViewState extends State<AppInfoView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _aboutUsProvider.nextAboutUsList();
+        _aboutUsProvider!.nextAboutUsList();
       }
     });
 
@@ -56,11 +56,11 @@ class _AppInfoViewState extends State<AppInfoView>
     animation = Tween<double>(
       begin: 0.0,
       end: 10.0,
-    ).animate(animationController);
+    ).animate(animationController!);
   }
 
-  AboutUsRepository repo1;
-  PsValueHolder valueHolder;
+  AboutUsRepository? repo1;
+  PsValueHolder? valueHolder;
   bool isConnectedToInternet = false;
   bool isSuccessfullyLoaded = true;
   
@@ -86,8 +86,8 @@ class _AppInfoViewState extends State<AppInfoView>
         appBarTitle: Utils.getString(context, 'setting__app_info'),
         initProvider: () {
           return AboutUsProvider(
-            repo: repo1,
-            psValueHolder: valueHolder,
+            repo: repo1!,
+            psValueHolder: valueHolder!,
           );
         },
         onProviderReady: (AboutUsProvider provider) {
@@ -98,7 +98,7 @@ class _AppInfoViewState extends State<AppInfoView>
             (BuildContext context, AboutUsProvider provider, Widget child) {
           if (provider.aboutUsList != null &&
               provider.aboutUsList.data != null &&
-              provider.aboutUsList.data.isNotEmpty) {
+              provider.aboutUsList.data!.isNotEmpty) {
             return SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.all(PsDimens.space10),
@@ -106,8 +106,7 @@ class _AppInfoViewState extends State<AppInfoView>
                   children: <Widget>[
                     const PsAdMobBannerWidget(),
                     _HeaderImageWidget(
-                      photo: provider.aboutUsList.data[0].defaultPhoto ?? '',
-                    ),
+                      photo: provider.aboutUsList.data![0].defaultPhoto!),
                     Container(
                       margin: const EdgeInsets.only(
                           left: PsDimens.space16,
@@ -117,46 +116,46 @@ class _AppInfoViewState extends State<AppInfoView>
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
                           _TitleAndDescriptionWidget(
-                            data: provider.aboutUsList.data[0],
+                            data: provider.aboutUsList.data![0],
                           ),
                           _PhoneAndContactWidget(
-                            phone: provider.aboutUsList.data[0],
+                            phone: provider.aboutUsList.data![0],
                           ),
                           _LinkAndTitle(
                               icon: FontAwesome.wordpress,
                               title: Utils.getString(
                                   context, 'shop_info__visit_our_website'),
-                              link: provider.aboutUsList.data[0].aboutWebsite),
+                              link: provider.aboutUsList.data![0].aboutWebsite!),
                           _LinkAndTitle(
                               icon: FontAwesome.facebook,
                               title: Utils.getString(
                                   context, 'shop_info__facebook'),
-                              link: provider.aboutUsList.data[0].facebook),
+                              link: provider.aboutUsList.data![0].facebook!),
                           _LinkAndTitle(
                               icon: FontAwesome.google_plus_circle,
                               title: Utils.getString(
                                   context, 'shop_info__google_plus'),
-                              link: provider.aboutUsList.data[0].googlePlus),
+                              link: provider.aboutUsList.data![0].googlePlus!),
                           _LinkAndTitle(
                               icon: FontAwesome.twitter_square,
                               title: Utils.getString(
                                   context, 'shop_info__twitter'),
-                              link: provider.aboutUsList.data[0].twitter),
+                              link: provider.aboutUsList.data![0].twitter!),
                           _LinkAndTitle(
                               icon: FontAwesome.instagram,
                               title: Utils.getString(
                                   context, 'shop_info__instagram'),
-                              link: provider.aboutUsList.data[0].instagram),
+                              link: provider.aboutUsList.data![0].instagram!),
                           _LinkAndTitle(
                               icon: FontAwesome.youtube,
                               title: Utils.getString(
                                   context, 'shop_info__youtube'),
-                              link: provider.aboutUsList.data[0].youtube),
+                              link: provider.aboutUsList.data![0].youtube!),
                           _LinkAndTitle(
                               icon: FontAwesome.pinterest,
                               title: Utils.getString(
                                   context, 'shop_info__pinterest'),
-                              link: provider.aboutUsList.data[0].pinterest),
+                              link: provider.aboutUsList.data![0].pinterest!),
                           const SizedBox(
                             height: PsDimens.space36,
                           ),
@@ -179,10 +178,10 @@ class _AppInfoViewState extends State<AppInfoView>
 
 class _LinkAndTitle extends StatelessWidget {
   const _LinkAndTitle({
-    Key key,
-    @required this.icon,
-    @required this.title,
-    @required this.link,
+    Key? key,
+    required this.icon,
+    required this.title,
+    required this.link,
   }) : super(key: key);
 
   final IconData icon;
@@ -250,8 +249,8 @@ class _LinkAndTitle extends StatelessWidget {
 
 class _HeaderImageWidget extends StatelessWidget {
   const _HeaderImageWidget({
-    Key key,
-    @required this.photo,
+    Key? key,
+    required this.photo,
   }) : super(key: key);
 
   final DefaultPhoto photo;
@@ -261,7 +260,7 @@ class _HeaderImageWidget extends StatelessWidget {
       children: <Widget>[
         PsNetworkImage(
           photoKey: '',
-          defaultPhoto: photo ?? '',
+          defaultPhoto: photo ,
           width: MediaQuery.of(context).size.width,
           height: 300,
           boxfit: BoxFit.cover,
@@ -274,8 +273,8 @@ class _HeaderImageWidget extends StatelessWidget {
 
 class ImageAndTextWidget extends StatelessWidget {
   const ImageAndTextWidget({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
   }) : super(key: key);
 
   final AboutUs data;
@@ -287,7 +286,7 @@ class ImageAndTextWidget extends StatelessWidget {
 
     final Widget _imageWidget = PsNetworkImage(
       photoKey: '',
-      defaultPhoto: data.defaultPhoto,
+      defaultPhoto: data.defaultPhoto!,
       width: 50,
       height: 50,
       boxfit: BoxFit.cover,
@@ -305,16 +304,16 @@ class ImageAndTextWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                data.aboutTitle,
-                style: Theme.of(context).textTheme.subtitle1.copyWith(
+                data.aboutTitle!,
+                style: Theme.of(context).textTheme.subtitle1!.copyWith(
                       color: PsColors.mainColor,
                     ),
               ),
               _spacingWidget,
               InkWell(
                 child: Text(
-                  data.aboutPhone,
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(),
+                  data.aboutPhone!,
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(),
                 ),
                 onTap: () async {
                   if (await canLaunch('tel://${data.aboutPhone}')) {
@@ -335,7 +334,7 @@ class ImageAndTextWidget extends StatelessWidget {
                     width: PsDimens.space8,
                   ),
                   InkWell(
-                    child: Text(data.aboutEmail,
+                    child: Text(data.aboutEmail!,
                         style: Theme.of(context).textTheme.bodyText1),
                     onTap: () async {
                       if (await canLaunch('mailto:teamps.is.cool@gmail.com')) {
@@ -357,8 +356,8 @@ class ImageAndTextWidget extends StatelessWidget {
 
 class _PhoneAndContactWidget extends StatelessWidget {
   const _PhoneAndContactWidget({
-    Key key,
-    @required this.phone,
+    Key? key,
+    required this.phone,
   }) : super(key: key);
 
   final AboutUs phone;
@@ -398,8 +397,8 @@ class _PhoneAndContactWidget extends StatelessWidget {
                 _spacingWidget,
                 InkWell(
                   child: Text(
-                    phone.aboutPhone,
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(),
+                    phone.aboutPhone!,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(),
                   ),
                   onTap: () async {
                     if (await canLaunch('tel://${phone.aboutPhone}')) {
@@ -448,9 +447,9 @@ class _PhoneAndContactWidget extends StatelessWidget {
 }
 
 class _TitleAndDescriptionWidget extends StatelessWidget {
-  const _TitleAndDescriptionWidget({Key key, this.data}) : super(key: key);
+  const _TitleAndDescriptionWidget({Key? key, this.data}) : super(key: key);
 
-  final AboutUs data;
+  final AboutUs? data;
 
   @override
   Widget build(BuildContext context) {
@@ -459,9 +458,9 @@ class _TitleAndDescriptionWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
         Text(
-          data.aboutTitle,
+          data!.aboutTitle!,
           textAlign: TextAlign.center,
-          style: Theme.of(context).textTheme.subtitle1.copyWith(
+          style: Theme.of(context).textTheme.subtitle1!.copyWith(
                 color: PsColors.mainColor,
               ),
         ),
@@ -469,8 +468,8 @@ class _TitleAndDescriptionWidget extends StatelessWidget {
           height: PsDimens.space16,
         ),
         Text(
-          data.aboutDescription,
-          style: Theme.of(context).textTheme.bodyText1.copyWith(height: 1.3),
+          data!.aboutDescription!,
+          style: Theme.of(context).textTheme.bodyText1!.copyWith(height: 1.3),
         ),
         const SizedBox(
           height: PsDimens.space32,

@@ -7,12 +7,12 @@ import 'package:flutterbuyandsell/viewobject/blog.dart';
 
 class BlogSliderView extends StatefulWidget {
   const BlogSliderView({
-    Key key,
-    @required this.blogList,
+    Key? key,
+    required this.blogList,
     this.onTap,
   }) : super(key: key);
 
-  final Function onTap;
+  final VoidCallback? onTap;
   final List<Blog> blogList;
 
   @override
@@ -20,7 +20,7 @@ class BlogSliderView extends StatefulWidget {
 }
 
 class _BlogSliderState extends State<BlogSliderView> {
-  String _currentId;
+  String? _currentId;
   @override
   Widget build(BuildContext context) {
     return Stack(
@@ -34,7 +34,7 @@ class _BlogSliderState extends State<BlogSliderView> {
               autoPlayInterval: const Duration(seconds: 5),
               onPageChanged: (int i, CarouselPageChangedReason reason) {
                 setState(() {
-                  _currentId = widget.blogList[i].id;
+                  _currentId = widget.blogList[i].id!;
                 });
               },
             ),
@@ -42,13 +42,13 @@ class _BlogSliderState extends State<BlogSliderView> {
               return Container(
                 decoration: BoxDecoration(
                   border: Border.all(
-                    color: PsColors.mainLightShadowColor,
+                    color: PsColors.mainLightShadowColor!,
                   ),
                   borderRadius:
                       const BorderRadius.all(Radius.circular(PsDimens.space8)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                        color: PsColors.mainLightShadowColor,
+                        color: PsColors.mainLightShadowColor!,
                         offset: const Offset(1.1, 1.1),
                         blurRadius: PsDimens.space8),
                   ],
@@ -59,24 +59,24 @@ class _BlogSliderState extends State<BlogSliderView> {
                       borderRadius: BorderRadius.circular(PsDimens.space4),
                       child: PsNetworkImage(
                           photoKey: '',
-                          defaultPhoto: blogProduct.defaultPhoto,
+                          defaultPhoto: blogProduct.defaultPhoto!,
                           width: MediaQuery.of(context).size.width,
                           height: double.infinity,
                           onTap: () {
-                            widget.onTap(blogProduct);
+                            widget.onTap!();
                           }),
                     ),
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: InkWell(
                         onTap: () {
-                          widget.onTap(blogProduct);
+                          widget.onTap!();
                         },
                         child: Container(
                           height: 60,
                           width: MediaQuery.of(context).size.width,
                           decoration: BoxDecoration(
-                              color: PsColors.black.withAlpha(200)),
+                              color: PsColors.black!.withAlpha(200)),
                           padding: const EdgeInsets.only(
                               top: PsDimens.space8,
                               left: PsDimens.space8,
@@ -85,12 +85,12 @@ class _BlogSliderState extends State<BlogSliderView> {
                           child: Ink(
                             color: PsColors.backgroundColor,
                             child: Text(
-                              blogProduct.name,
+                              blogProduct.name!,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyText2
+                                  .bodyText2!
                                   .copyWith(
                                       fontSize: PsDimens.space16,
                                       color: PsColors.white),

@@ -5,13 +5,13 @@ import 'package:flutter/material.dart';
 
 class PsWidgetWithAppBarAndMultiProvider extends StatefulWidget {
   const PsWidgetWithAppBarAndMultiProvider(
-      {Key key,
+      {Key? key,
       this.child,
-      @required this.appBarTitle,
+      required this.appBarTitle,
       this.actions = const <Widget>[]})
       : super(key: key);
 
-  final Widget child;
+  final Widget? child;
   final String appBarTitle;
   final List<Widget> actions;
 
@@ -39,7 +39,7 @@ class _PsWidgetWithAppBarAndMultiProviderState
           brightness: Utils.getBrightnessForAppBar(context),
           iconTheme: IconThemeData(color: PsColors.mainColorWithWhite),
           title: Text(widget.appBarTitle,
-              style: Theme.of(context).textTheme.headline6.copyWith(
+              style: Theme.of(context).textTheme.headline6!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: PsColors.mainColorWithWhite)),
           actions: widget.actions,

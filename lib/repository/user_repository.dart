@@ -17,12 +17,12 @@ import 'package:sembast/sembast.dart';
 
 class UserRepository extends PsRepository {
   UserRepository(
-      {@required PsApiService psApiService,
-      @required UserDao userDao,
-      UserLoginDao userLoginDao}) {
+      {required PsApiService psApiService,
+      required UserDao userDao,
+      UserLoginDao? userLoginDao}) {
     _psApiService = psApiService;
     _userDao = userDao;
-    _userLoginDao = userLoginDao;
+    _userLoginDao = userLoginDao!;
   }
 
   PsApiService _psApiService;
@@ -101,8 +101,8 @@ class UserRepository extends PsRepository {
         await _psApiService.postUserLogin(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       await _userLoginDao.deleteAll();
-      await insert(_resource.data);
-      final String userId = _resource.data.userId;
+      await insert(_resource.data!);
+      final String userId = _resource.data!.userId!;
       final UserLogin userLogin =
           UserLogin(id: userId, login: true, user: _resource.data);
       await insertUserLogin(userLogin);
@@ -138,8 +138,8 @@ class UserRepository extends PsRepository {
         await _psApiService.postUserEmailVerify(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       await _userLoginDao.deleteAll();
-      await insert(_resource.data);
-      final String userId = _resource.data.userId;
+      await insert(_resource.data!);
+      final String userId = _resource.data!.userId!;
       final UserLogin userLogin =
           UserLogin(id: userId, login: true, user: _resource.data);
       await insertUserLogin(userLogin);
@@ -158,8 +158,8 @@ class UserRepository extends PsRepository {
     final PsResource<User> _resource =
         await _psApiService.postImageUpload(userId, platformName, imageFile);
     if (_resource.status == PsStatus.SUCCESS) {
-      await insert(_resource.data);
-      final String userId = _resource.data.userId;
+      await insert(_resource.data!);
+      final String userId = _resource.data!.userId!;
       final UserLogin userLogin =
           UserLogin(id: userId, login: true, user: _resource.data);
       await insertUserLogin(userLogin);
@@ -227,8 +227,8 @@ class UserRepository extends PsRepository {
     final PsResource<User> _resource =
         await _psApiService.postProfileUpdate(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
-      await insert(_resource.data);
-      final String userId = _resource.data.userId;
+      await insert(_resource.data!);
+      final String userId = _resource.data!.userId!;
       final UserLogin userLogin =
           UserLogin(id: userId, login: true, user: _resource.data);
       await insertUserLogin(userLogin);
@@ -248,8 +248,8 @@ class UserRepository extends PsRepository {
         await _psApiService.postPhoneLogin(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       await _userLoginDao.deleteAll();
-      await insert(_resource.data);
-      final String userId = _resource.data.userId;
+      await insert(_resource.data!);
+      final String userId = _resource.data!.userId!;
       final UserLogin userLogin =
           UserLogin(id: userId, login: true, user: _resource.data);
       await insertUserLogin(userLogin);
@@ -268,8 +268,8 @@ class UserRepository extends PsRepository {
     final PsResource<User> _resource =
         await _psApiService.postUserFollow(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
-      await insert(_resource.data);
-      final String userId = _resource.data.userId;
+      await insert(_resource.data!);
+      final String userId = _resource.data!.userId!;
       final UserLogin userLogin =
           UserLogin(id: userId, login: true, user: _resource.data);
       await insertUserLogin(userLogin);
@@ -288,8 +288,8 @@ class UserRepository extends PsRepository {
     final PsResource<User> _resource = await _psApiService.postFBLogin(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       await _userLoginDao.deleteAll();
-      await insert(_resource.data);
-      final String userId = _resource.data.userId;
+      await insert(_resource.data!);
+      final String userId = _resource.data!.userId!;
       final UserLogin userLogin =
           UserLogin(id: userId, login: true, user: _resource.data);
       await insertUserLogin(userLogin);
@@ -309,8 +309,8 @@ class UserRepository extends PsRepository {
         await _psApiService.postGoogleLogin(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       await _userLoginDao.deleteAll();
-      await insert(_resource.data);
-      final String userId = _resource.data.userId;
+      await insert(_resource.data!);
+      final String userId = _resource.data!.userId!;
       final UserLogin userLogin =
           UserLogin(id: userId, login: true, user: _resource.data);
       await insertUserLogin(userLogin);
@@ -330,8 +330,8 @@ class UserRepository extends PsRepository {
         await _psApiService.postAppleLogin(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       await _userLoginDao.deleteAll();
-      await insert(_resource.data);
-      final String userId = _resource.data.userId;
+      await insert(_resource.data!);
+      final String userId = _resource.data!.userId!;
       final UserLogin userLogin =
           UserLogin(id: userId, login: true, user: _resource.data);
       await insertUserLogin(userLogin);
@@ -372,7 +372,7 @@ class UserRepository extends PsRepository {
 
       if (_resource.status == PsStatus.SUCCESS) {
         await _userDao.deleteWithFinder(finder);
-        await _userDao.insertAll(_userPrimaryKey, _resource.data);
+        await _userDao.insertAll(_userPrimaryKey, _resource.data!);
         // UserLogin(loginUserId,true,_resource.data);
         sinkUserDetailStream(
             userListStream, await _userDao.getOne(finder: finder));
@@ -396,8 +396,8 @@ class UserRepository extends PsRepository {
 
       if (_resource.status == PsStatus.SUCCESS) {
         await _userLoginDao.deleteAll();
-        await insert(_resource.data);
-        final String userId = _resource.data.userId;
+        await insert(_resource.data!);
+        final String userId = _resource.data!.userId!;
         final UserLogin userLogin =
             UserLogin(id: userId, login: true, user: _resource.data);
         await insertUserLogin(userLogin);
@@ -424,7 +424,7 @@ class UserRepository extends PsRepository {
 
       if (_resource.status == PsStatus.SUCCESS) {
         await _userDao.deleteAll();
-        await _userDao.insert(_userPrimaryKey, _resource.data);
+        await _userDao.insert(_userPrimaryKey, _resource.data!);
         sinkUserDetailStream(
             userListStream, await _userDao.getOne(finder: finder));
       }
@@ -505,9 +505,9 @@ class UserRepository extends PsRepository {
         // Create Map List
         final List<UserMap> userMapList = <UserMap>[];
         int i = 0;
-        for (User data in _resource.data) {
+        for (User data in _resource.data!) {
           userMapList.add(UserMap(
-              id: data.userId + paramKey,
+              id: data.userId! + paramKey,
               mapKey: paramKey,
               userId: data.userId,
               sorting: i++,
@@ -522,7 +522,7 @@ class UserRepository extends PsRepository {
         await userMapDao.insertAll(_userPrimaryKey, userMapList);
 
         // Insert User
-        await _userDao.insertAll(_userPrimaryKey, _resource.data);
+        await _userDao.insertAll(_userPrimaryKey, _resource.data!);
       }
       // Load updated Data from Db and Send to UI
       sinkUserListStream(
@@ -560,11 +560,11 @@ class UserRepository extends PsRepository {
 
         int i = 0;
         if (existingMapList != null) {
-          i = existingMapList.data.length + 1;
+          i = existingMapList.data!.length + 1;
         }
-        for (User data in _resource.data) {
+        for (User data in _resource.data!) {
           userMapList.add(UserMap(
-              id: data.userId + paramKey,
+              id: data.userId! + paramKey,
               mapKey: paramKey,
               userId: data.userId,
               sorting: i++,
@@ -574,7 +574,7 @@ class UserRepository extends PsRepository {
         await userMapDao.insertAll(_userPrimaryKey, userMapList);
 
         // Insert User
-        await _userDao.insertAll(_userPrimaryKey, _resource.data);
+        await _userDao.insertAll(_userPrimaryKey, _resource.data!);
       }
       sinkUserListStream(
           userListStream,

@@ -15,13 +15,13 @@ class PsTextFieldWidgetWithIcon extends StatelessWidget {
       this.clickEnterFunction,
       this.clickSearchButton});
 
-  final TextEditingController textEditingController;
-  final String hintText;
+  final TextEditingController? textEditingController;
+  final String? hintText;
   final double height;
   final TextInputType keyboardType;
-  final PsValueHolder psValueHolder;
-  final Function clickEnterFunction;
-  final Function clickSearchButton;
+  final PsValueHolder? psValueHolder;
+  final Function? clickEnterFunction;
+  final Function? clickSearchButton;
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +44,7 @@ class PsTextFieldWidgetWithIcon extends StatelessWidget {
                 color: PsColors.mainColor,
               ),
               onTap: () {
-                clickSearchButton();
+                clickSearchButton!();
                 // productParameterHolder.searchTerm = textEditingController.text;
                 // Utils.psPrint(productParameterHolder.searchTerm);
                 // Navigator.pushNamed(context, RoutePaths.filterProductList,
@@ -55,7 +55,7 @@ class PsTextFieldWidgetWithIcon extends StatelessWidget {
               }), 
         ),
         onSubmitted: (String value) {
-         clickEnterFunction();
+         clickEnterFunction!();
       },);
 
     return Column(
@@ -69,7 +69,7 @@ class PsTextFieldWidgetWithIcon extends StatelessWidget {
             borderRadius: BorderRadius.circular(PsDimens.space4),
             border: Border.all(
                 color: Utils.isLightMode(context)
-                    ? Colors.grey[200]
+                    ? Colors.grey.shade200
                     : Colors.black87),
           ),
           child: _productTextFieldWidget,

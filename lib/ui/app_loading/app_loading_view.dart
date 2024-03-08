@@ -62,7 +62,7 @@ class AppLoadingView extends StatelessWidget {
         print(Utils.getString(context, 'dialog__cancel'));
         print(Utils.getString(context, 'app_info__update_button_name'));
 
-        if (_psAppInfo.data.userInfo.userStatus == PsConst.USER_BANNED) {
+        if (_psAppInfo.data!.userInfo!.userStatus == PsConst.USER_BANNED) {
           callLogout(
               provider,
               // deleteTaskProvider,
@@ -74,13 +74,13 @@ class AppLoadingView extends StatelessWidget {
                 return WarningDialog(
                   message: Utils.getString(context, 'user_status__banned'),
                   onPressed: () {
-                    checkVersionNumber(context, _psAppInfo.data, provider,
+                    checkVersionNumber(context, _psAppInfo.data!, provider,
                         clearAllDataProvider);
                     realStartDate = realEndDate;
                   },
                 );
               });
-        } else if (_psAppInfo.data.userInfo.userStatus ==
+        } else if (_psAppInfo.data!.userInfo!.userStatus ==
             PsConst.USER_DELECTED) {
           callLogout(
               provider,
@@ -100,7 +100,7 @@ class AppLoadingView extends StatelessWidget {
           //     },
           //   );
           // });
-        } else if (_psAppInfo.data.userInfo.userStatus ==
+        } else if (_psAppInfo.data!.userInfo!.userStatus ==
             PsConst.USER_UN_PUBLISHED) {
           callLogout(
               provider,
@@ -113,7 +113,7 @@ class AppLoadingView extends StatelessWidget {
                 return WarningDialog(
                   message: Utils.getString(context, 'user_status__unpublished'),
                   onPressed: () {
-                    checkVersionNumber(context, _psAppInfo.data, provider,
+                    checkVersionNumber(context, _psAppInfo.data!, provider,
                         clearAllDataProvider);
                     realStartDate = realEndDate;
                   },
@@ -121,7 +121,7 @@ class AppLoadingView extends StatelessWidget {
               });
         } else {
           checkVersionNumber(
-              context, _psAppInfo.data, provider, clearAllDataProvider);
+              context, _psAppInfo.data!, provider, clearAllDataProvider);
           realStartDate = realEndDate;
         }
       } else if (_psAppInfo.status == PsStatus.ERROR) {
@@ -192,8 +192,8 @@ class AppLoadingView extends StatelessWidget {
       PSAppInfo psAppInfo,
       AppInfoProvider appInfoProvider,
       ClearAllDataProvider clearAllDataProvider) async {
-    if (PsConfig.app_version != psAppInfo.psAppVersion.versionNo) {
-      if (psAppInfo.psAppVersion.versionNeedClearData == PsConst.ONE) {
+    if (PsConfig.app_version != psAppInfo.psAppVersion!.versionNo) {
+      if (psAppInfo.psAppVersion!.versionNeedClearData == PsConst.ONE) {
         await clearAllDataProvider.clearAllData();
         checkForceUpdate(context, psAppInfo, appInfoProvider);
       } else {
@@ -226,19 +226,19 @@ class AppLoadingView extends StatelessWidget {
 
   dynamic checkForceUpdate(BuildContext context, PSAppInfo psAppInfo,
       AppInfoProvider appInfoProvider) async {
-    if (psAppInfo.psAppVersion.versionForceUpdate == PsConst.ONE) {
+    if (psAppInfo.psAppVersion!.versionForceUpdate == PsConst.ONE) {
       await appInfoProvider.replaceAppInfoData(
-          psAppInfo.psAppVersion.versionNo,
+          psAppInfo.psAppVersion!.versionNo!,
           true,
-          psAppInfo.psAppVersion.versionTitle,
-          psAppInfo.psAppVersion.versionMessage);
+          psAppInfo.psAppVersion!.versionTitle!,
+          psAppInfo.psAppVersion!.versionMessage!);
 
       Navigator.pushReplacementNamed(
         context,
         RoutePaths.force_update,
         arguments: psAppInfo.psAppVersion,
       );
-    } else if (psAppInfo.psAppVersion.versionForceUpdate == PsConst.ZERO) {
+    } else if (psAppInfo.psAppVersion!.versionForceUpdate == PsConst.ZERO) {
       await appInfoProvider.replaceVersionForceUpdateData(false);
       callVersionUpdateDialog(context, psAppInfo, appInfoProvider);
     } else {
@@ -264,6 +264,10 @@ class AppLoadingView extends StatelessWidget {
     }
   }
 
+  Future<bool> cance()async{
+    return true;
+  }
+
   dynamic callVersionUpdateDialog(BuildContext context, PSAppInfo psAppInfo,
       AppInfoProvider appInfoProvider) {
     showDialog<dynamic>(
@@ -272,12 +276,12 @@ class AppLoadingView extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return WillPopScope(
-              onWillPop: () {
-                return;
+              onWillPop:(){
+               return cance();
               },
               child: VersionUpdateDialog(
-                title: psAppInfo.psAppVersion.versionTitle,
-                description: psAppInfo.psAppVersion.versionMessage,
+                title: psAppInfo.psAppVersion!.versionTitle!,
+                description: psAppInfo.psAppVersion!.versionMessage!,
                 leftButtonText:
                     Utils.getString(context, 'app_info__cancel_button_name'),
                 rightButtonText:
@@ -341,7 +345,7 @@ class AppLoadingView extends StatelessWidget {
     AppInfoRepository repo1;
     AppInfoProvider provider;
     ClearAllDataRepository clearAllDataRepository;
-    ClearAllDataProvider clearAllDataProvider;
+    ClearAllDataProvider? clearAllDataProvider;
     PsValueHolder valueHolder;
 
     PsColors.loadColor(context);
@@ -362,7 +366,7 @@ class AppLoadingView extends StatelessWidget {
               clearAllDataProvider = ClearAllDataProvider(
                   repo: clearAllDataRepository, psValueHolder: valueHolder);
 
-              return clearAllDataProvider;
+              return clearAllDataProvider!;
             }),
         ChangeNotifierProvider<AppInfoProvider>(
             lazy: false,
@@ -370,14 +374,14 @@ class AppLoadingView extends StatelessWidget {
               provider =
                   AppInfoProvider(repo: repo1, psValueHolder: valueHolder);
 
-              callDateFunction(provider, clearAllDataProvider, context);
+              callDateFunction(provider, clearAllDataProvider!, context);
 
               return provider;
             }),
       ],
       child: Consumer<AppInfoProvider>(
         builder: (BuildContext context, AppInfoProvider clearAllDataProvider,
-            Widget child) {
+            Widget? child) {
           return Container(
               height: 400,
               color: PsColors.mainColor,
@@ -400,7 +404,7 @@ class AppLoadingView extends StatelessWidget {
                       ),
                       Text(
                         Utils.getString(context, 'app_name'),
-                        style: Theme.of(context).textTheme.headline6.copyWith(
+                        style: Theme.of(context).textTheme.headline6!.copyWith(
                             fontWeight: FontWeight.bold, color: PsColors.white),
                       ),
                       const SizedBox(
@@ -408,7 +412,7 @@ class AppLoadingView extends StatelessWidget {
                       ),
                       Text(
                         Utils.getString(context, 'app_info__splash_name'),
-                        style: Theme.of(context).textTheme.subtitle2.copyWith(
+                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
                             fontWeight: FontWeight.bold, color: PsColors.white),
                       ),
                       Container(
@@ -428,8 +432,8 @@ class AppLoadingView extends StatelessWidget {
 
 class PsButtonWidget extends StatefulWidget {
   const PsButtonWidget({
-    @required this.provider,
-    @required this.text,
+    required this.provider,
+    required this.text,
   });
   final AppInfoProvider provider;
   final String text;

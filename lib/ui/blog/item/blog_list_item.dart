@@ -6,35 +6,35 @@ import 'package:flutter/material.dart';
 
 class BlogListItem extends StatelessWidget {
   const BlogListItem(
-      {Key key,
-      @required this.blog,
-      this.onTap,
+      {Key? key,
+      required this.blog,
+       this.onTap,
       this.animationController,
       this.animation})
       : super(key: key);
 
   final Blog blog;
-  final Function onTap;
-  final AnimationController animationController;
-  final Animation<double> animation;
+  final VoidCallback? onTap;
+  final AnimationController? animationController;
+  final Animation<double>? animation;
 
   @override
   Widget build(BuildContext context) {
-    animationController.forward();
+    animationController!.forward();
     return AnimatedBuilder(
-        animation: animationController,
+        animation: animationController!,
         child: GestureDetector(
             onTap: onTap,
             child: Container(
                 margin: const EdgeInsets.all(PsDimens.space8),
                child: BlogListItemWidget(blog: blog))
         ),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return FadeTransition(
-              opacity: animation,
+              opacity: animation!,
               child: Transform(
                   transform: Matrix4.translationValues(
-                      0.0, 100 * (1.0 - animation.value), 0.0),
+                      0.0, 100 * (1.0 - animation!.value), 0.0),
                   child: child));
         });
   }
@@ -42,8 +42,8 @@ class BlogListItem extends StatelessWidget {
 
 class BlogListItemWidget extends StatelessWidget {
   const BlogListItemWidget({
-    Key key,
-    @required this.blog,
+    Key? key,
+    required this.blog,
   }) : super(key: key);
 
   final Blog blog;
@@ -58,8 +58,8 @@ class BlogListItemWidget extends StatelessWidget {
           child: PsNetworkImage(
             height: PsDimens.space200,
             width: double.infinity,
-            photoKey: blog.id,
-            defaultPhoto: blog.defaultPhoto,
+            photoKey: blog.id!,
+            defaultPhoto: blog.defaultPhoto!,
             boxfit: BoxFit.cover,
           ),
         ),
@@ -69,10 +69,10 @@ class BlogListItemWidget extends StatelessWidget {
               right: PsDimens.space8,
               top: PsDimens.space12),
           child: Text(
-            blog.name,
+            blog.name!,
             style: Theme.of(context)
                 .textTheme
-                .subtitle1
+                .subtitle1!
                 .copyWith(fontWeight: FontWeight.bold),
           ),
         ),

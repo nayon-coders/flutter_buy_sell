@@ -13,8 +13,8 @@ import 'package:provider/provider.dart';
 
 class ChatBuyerListView extends StatefulWidget {
   const ChatBuyerListView({
-    Key key,
-    @required this.animationController,
+    Key? key,
+    required this.animationController,
   }) : super(key: key);
 
   final AnimationController animationController;
@@ -25,14 +25,14 @@ class ChatBuyerListView extends StatefulWidget {
 class _ChatBuyerListViewState extends State<ChatBuyerListView>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
-  ChatHistoryListProvider _chatHistoryListProvider;
+  ChatHistoryListProvider? _chatHistoryListProvider;
 
-  AnimationController animationController;
-  Animation<double> animation;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -42,8 +42,8 @@ class _ChatBuyerListViewState extends State<ChatBuyerListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        holder.getBuyerHistoryList().userId = psValueHolder.loginUserId;
-        _chatHistoryListProvider.nextChatHistoryList(holder);
+        holder!.getBuyerHistoryList().userId = psValueHolder!.loginUserId;
+        _chatHistoryListProvider!.nextChatHistoryList(holder!);
       }
     });
 
@@ -53,16 +53,16 @@ class _ChatBuyerListViewState extends State<ChatBuyerListView>
     super.initState();
   }
 
-  ChatHistoryRepository chatHistoryRepository;
-  ChatHistoryListProvider chattingBuyerProvider;
-  PsValueHolder psValueHolder;
-  ChatHistoryParameterHolder holder;
+  ChatHistoryRepository? chatHistoryRepository;
+  ChatHistoryListProvider? chattingBuyerProvider;
+  PsValueHolder? psValueHolder;
+  ChatHistoryParameterHolder? holder;
   dynamic data;
   @override
   Widget build(BuildContext context) {
     psValueHolder = Provider.of<PsValueHolder>(context);
     holder = ChatHistoryParameterHolder().getBuyerHistoryList();
-    holder.getBuyerHistoryList().userId = psValueHolder.loginUserId;
+    holder!.getBuyerHistoryList().userId = psValueHolder!.loginUserId;
 
     chatHistoryRepository = Provider.of<ChatHistoryRepository>(context);
 
@@ -70,16 +70,16 @@ class _ChatBuyerListViewState extends State<ChatBuyerListView>
       lazy: false,
       create: (BuildContext context) {
         final ChatHistoryListProvider provider =
-            ChatHistoryListProvider(repo: chatHistoryRepository);
-        provider.loadChatHistoryList(holder);
+            ChatHistoryListProvider(repo: chatHistoryRepository!);
+        provider.loadChatHistoryList(holder!);
         return provider;
       },
       child: Consumer<ChatHistoryListProvider>(builder: (BuildContext context,
-          ChatHistoryListProvider provider, Widget child) {
+          ChatHistoryListProvider provider, Widget? child) {
         if (provider.chatHistoryList != null &&
             provider.chatHistoryList.data != null &&
-            provider.chatHistoryList.data.isNotEmpty &&
-            psValueHolder.loginUserId != null) {
+            provider.chatHistoryList.data!.isNotEmpty &&
+            psValueHolder!.loginUserId != null) {
           return Scaffold(
             body: Column(
               mainAxisSize: MainAxisSize.max,
@@ -95,10 +95,10 @@ class _ChatBuyerListViewState extends State<ChatBuyerListView>
                         context: context,
                             child: ListView.builder(
                               shrinkWrap: true,
-                              itemCount: provider.chatHistoryList.data.length,
+                              itemCount: provider.chatHistoryList.data!.length,
                               itemBuilder: (BuildContext context, int index) {
                                 final int count =
-                                    provider.chatHistoryList.data.length;
+                                    provider.chatHistoryList.data!.length;
                                 widget.animationController.forward();
                                 return ChatBuyerListItem(
                                   animationController: widget.animationController,
@@ -111,10 +111,10 @@ class _ChatBuyerListViewState extends State<ChatBuyerListView>
                                     ),
                                   ),
                                   chatHistory:
-                                      provider.chatHistoryList.data[index],
+                                      provider.chatHistoryList.data![index],
                                   onTap: () async {
                                     print(provider
-                                        .chatHistoryList.data[index].item.title);
+                                        .chatHistoryList.data![index].item!.title);
                                     final dynamic returnData =
                                         await Navigator.pushNamed(
                                       context,
@@ -122,14 +122,14 @@ class _ChatBuyerListViewState extends State<ChatBuyerListView>
                                       arguments: ChatHistoryIntentHolder(
                                           chatFlag: PsConst.CHAT_FROM_BUYER,
                                           itemId: provider.chatHistoryList
-                                              .data[index].item.id,
+                                              .data![index].item!.id!,
                                           buyerUserId: provider.chatHistoryList
-                                              .data[index].buyerUserId,
+                                              .data![index].buyerUserId,
                                           sellerUserId: provider.chatHistoryList
-                                              .data[index].sellerUserId),
+                                              .data![index].sellerUserId),
                                     );
                                     if (returnData == null) {
-                                      provider.loadChatHistoryListFromDB(holder);
+                                      provider.loadChatHistoryListFromDB(holder!);
                                     }
                                   },
                                 );
@@ -137,7 +137,7 @@ class _ChatBuyerListViewState extends State<ChatBuyerListView>
                             ),
                           ),
                           onRefresh: () {
-                            return provider.resetChatHistoryList(holder);
+                            return provider.resetChatHistoryList(holder!);
                           },
                         ),
                       ),

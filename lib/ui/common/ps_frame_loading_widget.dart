@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 class PsFrameUIForLoading extends StatelessWidget {
   const PsFrameUIForLoading({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

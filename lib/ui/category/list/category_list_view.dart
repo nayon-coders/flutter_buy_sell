@@ -25,15 +25,15 @@ class _CategoryListViewState extends State<CategoryListView>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  CategoryProvider _categoryProvider;
+  CategoryProvider? _categoryProvider;
   final CategoryParameterHolder categoryIconList = CategoryParameterHolder();
 
-  AnimationController animationController;
-  Animation<double> animation;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -43,7 +43,7 @@ class _CategoryListViewState extends State<CategoryListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _categoryProvider.nextCategoryList();
+        _categoryProvider!.nextCategoryList();
       }
     });
 
@@ -53,8 +53,8 @@ class _CategoryListViewState extends State<CategoryListView>
     super.initState();
   }
 
-  CategoryRepository repo1;
-  PsValueHolder psValueHolder;
+  CategoryRepository? repo1;
+  PsValueHolder? psValueHolder;
   dynamic data;
   bool isConnectedToInternet = false;
   bool isSuccessfullyLoaded = true;
@@ -75,7 +75,7 @@ class _CategoryListViewState extends State<CategoryListView>
       checkConnection();
     }
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -101,14 +101,14 @@ class _CategoryListViewState extends State<CategoryListView>
                 lazy: false,
                 create: (BuildContext context) {
                   final CategoryProvider provider = CategoryProvider(
-                      repo: repo1, psValueHolder: psValueHolder);
+                      repo: repo1!, psValueHolder: psValueHolder!);
                   provider.loadCategoryList();
                   _categoryProvider = provider;
-                  return _categoryProvider;
+                  return _categoryProvider!;
                 },
                 child: Consumer<CategoryProvider>(builder:
                     (BuildContext context, CategoryProvider provider,
-                        Widget child) {
+                        Widget? child) {
                   return Column(
                     children: <Widget>[
                       const PsAdMobBannerWidget(),
@@ -133,31 +133,31 @@ class _CategoryListViewState extends State<CategoryListView>
                                           (BuildContext context, int index) {
                                             if (provider.categoryList.data !=
                                                     null ||
-                                                provider.categoryList.data
+                                                provider.categoryList.data!
                                                     .isNotEmpty) {
                                               final int count = provider
-                                                  .categoryList.data.length;
+                                                  .categoryList.data!.length;
                                               return CategoryVerticalListItem(
                                                 animationController:
                                                     animationController,
                                                 animation: Tween<double>(
                                                         begin: 0.0, end: 1.0)
                                                     .animate(CurvedAnimation(
-                                                  parent: animationController,
+                                                  parent: animationController!,
                                                   curve: Interval(
                                                       (1 / count) * index, 1.0,
                                                       curve:
                                                           Curves.fastOutSlowIn),
                                                 )),
                                                 category: provider
-                                                    .categoryList.data[index],
+                                                    .categoryList.data![index],
                                                 onTap: () {
                                                   if (PsConfig.isShowSubCategory) {
                                                     Navigator.pushNamed(
                                                     context, RoutePaths.subCategoryGrid,
                                                     arguments: provider
                                                     .categoryList
-                                                      .data[index]);
+                                                      .data![index]);
                                                   } else {
                                                   final ProductParameterHolder
                                                       productParameterHolder =
@@ -165,7 +165,7 @@ class _CategoryListViewState extends State<CategoryListView>
                                                           .getLatestParameterHolder();
                                                   productParameterHolder.catId =
                                                       provider.categoryList
-                                                          .data[index].catId;
+                                                          .data![index].catId!;
                                                   Navigator.pushNamed(
                                                       context,
                                                       RoutePaths
@@ -174,7 +174,7 @@ class _CategoryListViewState extends State<CategoryListView>
                                                           ProductListIntentHolder(
                                                         appBarTitle: provider
                                                             .categoryList
-                                                            .data[index]
+                                                            .data![index]
                                                             .catName,
                                                         productParameterHolder:
                                                             productParameterHolder,
@@ -187,7 +187,7 @@ class _CategoryListViewState extends State<CategoryListView>
                                             }
                                           },
                                           childCount:
-                                              provider.categoryList.data.length,
+                                              provider.categoryList.data!.length,
                                         ),
                                       ),
                                     ]),

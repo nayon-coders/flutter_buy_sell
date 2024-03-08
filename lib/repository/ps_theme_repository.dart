@@ -5,7 +5,7 @@ import 'package:flutterbuyandsell/db/common/ps_shared_preferences.dart';
 import 'package:flutterbuyandsell/repository/Common/ps_repository.dart';
 
 class PsThemeRepository extends PsRepository {
-  PsThemeRepository({@required PsSharedPreferences psSharedPreferences}) {
+  PsThemeRepository({required PsSharedPreferences psSharedPreferences}) {
     _psSharedPreferences = psSharedPreferences;
   }
 

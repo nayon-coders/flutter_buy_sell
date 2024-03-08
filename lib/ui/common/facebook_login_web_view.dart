@@ -3,7 +3,7 @@ import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 
 class FacebookLoginWebView extends StatefulWidget {
   const FacebookLoginWebView({this.selectedUrl});
-  final String selectedUrl;
+  final String? selectedUrl;
 
   @override
   _FacebookLoginWebViewState createState() => _FacebookLoginWebViewState();

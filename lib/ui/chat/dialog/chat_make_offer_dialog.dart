@@ -8,7 +8,7 @@ import 'package:flutterbuyandsell/viewobject/product.dart';
 
 class ChatMakeOfferDialog extends StatefulWidget {
   const ChatMakeOfferDialog(
-      {Key key, @required this.itemDetail, @required this.onMakeOfferTap})
+      {Key? key, required this.itemDetail, required this.onMakeOfferTap})
       : super(key: key);
 
   final Product itemDetail;
@@ -22,7 +22,7 @@ class _ChatMakeOfferDialogState extends State<ChatMakeOfferDialog> {
 
   @override
   Widget build(BuildContext context) {
-    priceController.text = widget.itemDetail.price;
+    priceController.text = widget.itemDetail.price!;
     const Widget _spacingWidget = SizedBox(
       height: PsDimens.space4,
     );
@@ -36,7 +36,7 @@ class _ChatMakeOfferDialogState extends State<ChatMakeOfferDialog> {
           textAlign: TextAlign.center,
           style: Theme.of(context)
               .textTheme
-              .subtitle1
+              .subtitle1!
               .copyWith(color: Colors.white)),
     );
 
@@ -48,7 +48,7 @@ class _ChatMakeOfferDialogState extends State<ChatMakeOfferDialog> {
           children: <Widget>[
             PsNetworkImage(
               photoKey: '',
-              defaultPhoto: widget.itemDetail.defaultPhoto,
+              defaultPhoto: widget.itemDetail.defaultPhoto!,
               width: PsDimens.space76,
               height: PsDimens.space76,
               boxfit: BoxFit.cover,
@@ -65,12 +65,12 @@ class _ChatMakeOfferDialogState extends State<ChatMakeOfferDialog> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
-                  Text(widget.itemDetail.title,
+                  Text(widget.itemDetail.title!,
                       style: Theme.of(context).textTheme.bodyText1),
                   const SizedBox(height: PsDimens.space20),
                   Text(
                     widget.itemDetail != null &&  widget.itemDetail.price != '0' &&  widget.itemDetail.price != ''
-                        ? '${Utils.getString(context, 'make_offer_dialog__price')}  ${widget.itemDetail.itemCurrency.currencySymbol} ${Utils.getPriceFormat(widget.itemDetail.price)}'
+                        ? '${Utils.getString(context, 'make_offer_dialog__price')}  ${widget.itemDetail.itemCurrency!.currencySymbol} ${Utils.getPriceFormat(widget.itemDetail.price!)}'
                         : Utils.getString(context, 'item_price_free'),
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
@@ -87,7 +87,7 @@ class _ChatMakeOfferDialogState extends State<ChatMakeOfferDialog> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Text(
-          widget.itemDetail.itemCurrency.currencySymbol,
+          widget.itemDetail.itemCurrency!.currencySymbol!,
           style: Theme.of(context).textTheme.subtitle1,
         ),
         Container(
@@ -99,7 +99,7 @@ class _ChatMakeOfferDialogState extends State<ChatMakeOfferDialog> {
             borderRadius: BorderRadius.circular(PsDimens.space4),
             border: Border.all(
                 color: Utils.isLightMode(context)
-                    ? Colors.grey[200]
+                    ? Colors.grey.shade200
                     : Colors.black87),
           ),
           child: TextField(

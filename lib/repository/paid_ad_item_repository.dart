@@ -12,8 +12,8 @@ import 'Common/ps_repository.dart';
 
 class PaidAdItemRepository extends PsRepository {
   PaidAdItemRepository(
-      {@required PsApiService psApiService,
-      @required PaidAdItemDao paidAdItemDao}) {
+      {required PsApiService psApiService,
+      required PaidAdItemDao paidAdItemDao}) {
     _psApiService = psApiService;
     _paidAdItemDao = paidAdItemDao;
   }
@@ -56,7 +56,7 @@ class PaidAdItemRepository extends PsRepository {
         if (isNeedDelete) {
           await _paidAdItemDao.deleteWithFinder(finder);
         }
-        await _paidAdItemDao.insertAll(primaryKey, _resource.data);
+        await _paidAdItemDao.insertAll(primaryKey, _resource.data!);
       }else{
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
           if (isNeedDelete) {
@@ -87,7 +87,7 @@ class PaidAdItemRepository extends PsRepository {
           await _psApiService.getPaidAdItemList(loginUserId, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _paidAdItemDao.insertAll(primaryKey, _resource.data);
+        await _paidAdItemDao.insertAll(primaryKey, _resource.data!);
       }
       paidAdItemListStream.sink
           .add(await _paidAdItemDao.getAll(finder: finder));

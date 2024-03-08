@@ -5,12 +5,12 @@ import 'package:flutter/material.dart';
 
 class PsDropdownBaseWidget extends StatelessWidget {
   const PsDropdownBaseWidget(
-      {Key key, @required this.title, @required this.onTap, this.selectedText})
+      {Key? key, required this.title, required this.onTap, this.selectedText})
       : super(key: key);
 
   final String title;
-  final String selectedText;
-  final Function onTap;
+  final String? selectedText;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +42,7 @@ class PsDropdownBaseWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: PsColors.backgroundColor,
               borderRadius: BorderRadius.circular(PsDimens.space4),
-              border: Border.all(color: PsColors.mainDividerColor),
+              border: Border.all(color: PsColors.mainDividerColor!),
             ),
             child: Ink(
               color: PsColors.backgroundColor,
@@ -60,12 +60,12 @@ class PsDropdownBaseWidget extends StatelessWidget {
                             selectedText == ''
                                 ? Utils.getString(
                                     context, 'home_search__not_set')
-                                : selectedText,
+                                : selectedText!,
                             overflow: TextOverflow.ellipsis,
                             style: selectedText == ''
                                 ? Theme.of(context)
                                     .textTheme
-                                    .bodyText1
+                                    .bodyText1!
                                     .copyWith(
                                         color: PsColors.textPrimaryLightColor)
                                 : Theme.of(context).textTheme.bodyText1,

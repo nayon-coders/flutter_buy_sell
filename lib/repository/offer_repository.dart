@@ -14,7 +14,7 @@ import 'package:flutterbuyandsell/repository/Common/ps_repository.dart';
 
 class OfferRepository extends PsRepository {
   OfferRepository(
-      {@required PsApiService psApiService, @required OfferDao offerDao}) {
+      {required PsApiService psApiService, required OfferDao offerDao}) {
     _psApiService = psApiService;
     _offerDao = offerDao;
   }
@@ -72,9 +72,9 @@ class OfferRepository extends PsRepository {
         // Create Map List
         final List<OfferMap> offerMapList = <OfferMap>[];
         int i = 0;
-        for (Offer data in _resource.data) {
+        for (Offer data in _resource.data!) {
           offerMapList.add(OfferMap(
-              id: data.id + paramKey,
+              id: data.id! + paramKey,
               mapKey: paramKey,
               offerId: data.id,
               sorting: i++,
@@ -89,7 +89,7 @@ class OfferRepository extends PsRepository {
         await offerMapDao.insertAll(primaryKey, offerMapList);
 
         // Insert Offer
-        await _offerDao.insertAll(primaryKey, _resource.data);
+        await _offerDao.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
         // Delete and Insert Map Dao
@@ -133,9 +133,9 @@ class OfferRepository extends PsRepository {
 
         int i = 0;
         if (existingMapList != null) {
-          i = existingMapList.data.length + 1;
+          i = existingMapList.data!.length + 1;
         }
-        for (Offer data in _resource.data) {
+        for (Offer data in _resource.data!) {
           offerMapList.add(OfferMap(
               id: data.id + paramKey,
               mapKey: paramKey,
@@ -147,7 +147,7 @@ class OfferRepository extends PsRepository {
         await offerMapDao.insertAll(primaryKey, offerMapList);
 
         // Insert Offer
-        await _offerDao.insertAll(primaryKey, _resource.data);
+        await _offerDao.insertAll(primaryKey, _resource.data!);
       }
       sinkOfferListStream(
           offerListStream,

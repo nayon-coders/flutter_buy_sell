@@ -9,7 +9,7 @@ import 'category_list_view.dart';
 class CategoryListViewContainerView extends StatefulWidget {
   const CategoryListViewContainerView({this.appBarTitle});
 
-  final String appBarTitle;
+  final String? appBarTitle;
   @override
   _CategoryListWithFilterContainerViewState createState() =>
       _CategoryListWithFilterContainerViewState();
@@ -18,7 +18,7 @@ class CategoryListViewContainerView extends StatefulWidget {
 class _CategoryListWithFilterContainerViewState
     extends State<CategoryListViewContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -28,7 +28,7 @@ class _CategoryListWithFilterContainerViewState
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -37,7 +37,7 @@ class _CategoryListWithFilterContainerViewState
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -60,9 +60,9 @@ class _CategoryListWithFilterContainerViewState
               .iconTheme
               .copyWith(color: PsColors.mainColorWithWhite),
           title: Text(
-            widget.appBarTitle,
+            widget.appBarTitle!,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: PsColors.mainColorWithWhite),
           ),

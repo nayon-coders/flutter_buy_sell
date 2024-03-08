@@ -8,20 +8,20 @@ import 'package:provider/single_child_widget.dart';
 class PsWidgetWithAppBarWithTwoProvider<T extends ChangeNotifier,
     V extends ChangeNotifier> extends StatefulWidget {
   const PsWidgetWithAppBarWithTwoProvider(
-      {Key key,
-      @required this.initProvider1,
-      @required this.initProvider2,
+      {Key? key,
+      required this.initProvider1,
+      required this.initProvider2,
       this.child,
       this.onProviderReady1,
       this.onProviderReady2,
-      @required this.appBarTitle,
+      required this.appBarTitle,
       this.actions = const <Widget>[]})
       : super(key: key);
 
   final Function initProvider1, initProvider2;
-  final Widget child;
-  final Function(T) onProviderReady1;
-  final Function(V) onProviderReady2;
+  final Widget? child;
+  final Function(T)? onProviderReady1;
+  final Function(V)? onProviderReady2;
   final String appBarTitle;
   final List<Widget> actions;
 
@@ -51,7 +51,7 @@ class _PsWidgetWithAppBarWithTwoProviderState<T extends ChangeNotifier,
               .iconTheme
               .copyWith(color: PsColors.mainColorWithWhite),
           title: Text(widget.appBarTitle,
-              style: Theme.of(context).textTheme.headline6.copyWith(
+              style: Theme.of(context).textTheme.headline6!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: PsColors.mainColorWithWhite)),
           actions: widget.actions,
@@ -67,7 +67,7 @@ class _PsWidgetWithAppBarWithTwoProviderState<T extends ChangeNotifier,
               final T providerObj1 = widget.initProvider1();
 
               if (widget.onProviderReady1 != null) {
-                widget.onProviderReady1(providerObj1);
+                widget.onProviderReady1!(providerObj1);
               }
 
               return providerObj1;
@@ -78,7 +78,7 @@ class _PsWidgetWithAppBarWithTwoProviderState<T extends ChangeNotifier,
             create: (BuildContext context) {
               final V providerObj2 = widget.initProvider2();
               if (widget.onProviderReady2 != null) {
-                widget.onProviderReady2(providerObj2);
+                widget.onProviderReady2!(providerObj2);
               }
 
               return providerObj2;

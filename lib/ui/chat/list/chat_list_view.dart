@@ -9,8 +9,8 @@ int _selectedIndex = 0;
 
 class ChatListView extends StatefulWidget {
   const ChatListView({
-    Key key,
-    @required this.animationController,
+    Key? key,
+    required this.animationController,
   }) : super(key: key);
 
   final AnimationController animationController;

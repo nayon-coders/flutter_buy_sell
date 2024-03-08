@@ -10,8 +10,8 @@ import 'package:flutterbuyandsell/viewobject/reported_item.dart';
 
 class ReportedItemRepository extends PsRepository {
   ReportedItemRepository(
-      {@required PsApiService psApiService,
-      @required ReportedItemDao reportedItemDao}) {
+      {required PsApiService psApiService,
+      required ReportedItemDao reportedItemDao}) {
     _psApiService = psApiService;
     _itemTypeDao = reportedItemDao;
   }
@@ -48,7 +48,7 @@ class ReportedItemRepository extends PsRepository {
 
     if (_resource.status == PsStatus.SUCCESS) {
       await _itemTypeDao.deleteAll();
-      await _itemTypeDao.insertAll(_primaryKey, _resource.data);
+      await _itemTypeDao.insertAll(_primaryKey, _resource.data!);
       
     }else{
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
@@ -73,7 +73,7 @@ class ReportedItemRepository extends PsRepository {
 
     if (_resource.status == PsStatus.SUCCESS) {
       _itemTypeDao
-          .insertAll(_primaryKey, _resource.data)
+          .insertAll(_primaryKey, _resource.data!)
           .then((dynamic data) async {
         itemTypeListStream.sink.add(await _itemTypeDao.getAll());
       });

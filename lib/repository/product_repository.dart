@@ -22,7 +22,7 @@ import 'package:flutterbuyandsell/viewobject/product_map.dart';
 
 class ProductRepository extends PsRepository {
   ProductRepository(
-      {@required PsApiService psApiService, @required ProductDao productDao}) {
+      {required PsApiService psApiService, required ProductDao productDao}) {
     _psApiService = psApiService;
     _productDao = productDao;
   }
@@ -131,9 +131,9 @@ class ProductRepository extends PsRepository {
         // Create Map List
         final List<ProductMap> productMapList = <ProductMap>[];
         int i = 0;
-        for (Product data in _resource.data) {
+        for (Product data in _resource.data!) {
           productMapList.add(ProductMap(
-              id: data.id + paramKey,
+              id: data.id! + paramKey,
               mapKey: paramKey,
               productId: data.id,
               sorting: i++,
@@ -149,7 +149,7 @@ class ProductRepository extends PsRepository {
         await productMapDao.insertAll(primaryKey, productMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data);
+        await _productDao.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
           print('delete all');
@@ -213,11 +213,11 @@ class ProductRepository extends PsRepository {
 
         int i = 0;
         if (existingMapList != null) {
-          i = existingMapList.data.length + 1;
+          i = existingMapList.data!.length + 1;
         }
-        for (Product data in _resource.data) {
+        for (Product data in _resource.data!) {
           productMapList.add(ProductMap(
-              id: data.id + paramKey,
+              id: data.id! + paramKey,
               mapKey: paramKey,
               productId: data.id,
               sorting: i++,
@@ -227,7 +227,7 @@ class ProductRepository extends PsRepository {
         await productMapDao.insertAll(primaryKey, productMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data);
+        await _productDao.insertAll(primaryKey, _resource.data!);
       }
       sinkProductListStream(
           productListStream,
@@ -253,7 +253,7 @@ class ProductRepository extends PsRepository {
 
       if (_resource.status == PsStatus.SUCCESS) {
         // await _productDao.deleteWithFinder(finder);
-        await _productDao.insert(primaryKey, _resource.data);
+        await _productDao.insert(primaryKey, _resource.data!);
       }
       // sinkItemDetailStream(
       //     itemDetailStream, await _productDao.getOne(finder: finder));
@@ -323,7 +323,7 @@ class ProductRepository extends PsRepository {
 
       if (_resource.status == PsStatus.SUCCESS) {
         // await _productDao.deleteWithFinder(finder);
-        await _productDao.insert(primaryKey, _resource.data);
+        await _productDao.insert(primaryKey, _resource.data!);
         sinkItemDetailStream(
             productDetailStream, await _productDao.getOne(finder: finder));
       }
@@ -360,9 +360,9 @@ class ProductRepository extends PsRepository {
         final List<FavouriteProduct> favouriteProductMapList =
             <FavouriteProduct>[];
         int i = 0;
-        for (Product data in _resource.data) {
+        for (Product data in _resource.data!) {
           favouriteProductMapList.add(FavouriteProduct(
-            id: data.id,
+            id: data.id!,
             sorting: i++,
           ));
         }
@@ -373,7 +373,7 @@ class ProductRepository extends PsRepository {
             primaryKey, favouriteProductMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data);
+        await _productDao.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
           // Delete and Insert Map Dao
@@ -418,11 +418,11 @@ class ProductRepository extends PsRepository {
 
         int i = 0;
         if (existingMapList != null) {
-          i = existingMapList.data.length + 1;
+          i = existingMapList.data!.length + 1;
         }
-        for (Product data in _resource.data) {
+        for (Product data in _resource.data!) {
           favouriteProductMapList.add(FavouriteProduct(
-            id: data.id,
+            id: data.id!,
             sorting: i++,
           ));
         }
@@ -431,7 +431,7 @@ class ProductRepository extends PsRepository {
             primaryKey, favouriteProductMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data);
+        await _productDao.insertAll(primaryKey, _resource.data!);
       }
       sinkFavouriteProductListStream(
           favouriteProductListStream,
@@ -500,7 +500,7 @@ class ProductRepository extends PsRepository {
         // Create Map List
         final List<RelatedProduct> relatedProductMapList = <RelatedProduct>[];
         int i = 0;
-        for (Product data in _resource.data) {
+        for (Product data in _resource.data!) {
           relatedProductMapList.add(RelatedProduct(
             id: data.id,
             sorting: i++,
@@ -512,7 +512,7 @@ class ProductRepository extends PsRepository {
         await relatedProductDao.insertAll(primaryKey, relatedProductMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data);
+        await _productDao.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
           // Delete and Insert Map Dao
@@ -554,9 +554,9 @@ class ProductRepository extends PsRepository {
         // Create Map List
         final List<FollowerItem> followerItemMapList = <FollowerItem>[];
         int i = 0;
-        for (Product data in _resource.data) {
+        for (Product data in _resource.data!) {
           followerItemMapList.add(FollowerItem(
-            id: data.id,
+            id: data.id!,
             sorting: i++,
           ));
         }
@@ -566,7 +566,7 @@ class ProductRepository extends PsRepository {
         await followerItemDao.insertAll(primaryKey, followerItemMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data);
+        await _productDao.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
           // Delete and Insert Map Dao
@@ -627,11 +627,11 @@ class ProductRepository extends PsRepository {
 
         int i = 0;
         if (existingMapList != null) {
-          i = existingMapList.data.length + 1;
+          i = existingMapList.data!.length + 1;
         }
-        for (Product data in _resource.data) {
+        for (Product data in _resource.data!) {
           followerItemMapList.add(FollowerItem(
-            id: data.id,
+            id: data.id!,
             sorting: i++,
           ));
         }
@@ -639,7 +639,7 @@ class ProductRepository extends PsRepository {
         await followerItemDao.insertAll(primaryKey, followerItemMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data);
+        await _productDao.insertAll(primaryKey, _resource.data!);
       }
       sinkFavouriteProductListStream(
           itemListFromFollowersStream,
@@ -678,9 +678,9 @@ class ProductRepository extends PsRepository {
         // Create Map List
         final List<ProductMap> productMapList = <ProductMap>[];
         int i = 0;
-        for (Product data in _resource.data) {
+        for (Product data in _resource.data!) {
           productMapList.add(ProductMap(
-              id: data.id + paramKey,
+              id: data.id! + paramKey,
               mapKey: paramKey,
               productId: data.id,
               sorting: i++,
@@ -696,7 +696,7 @@ class ProductRepository extends PsRepository {
         await productMapDao.insertAll(primaryKey, productMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data);
+        await _productDao.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
           // Delete and Insert Map Dao
@@ -756,11 +756,11 @@ class ProductRepository extends PsRepository {
 
         int i = 0;
         if (existingMapList != null) {
-          i = existingMapList.data.length + 1;
+          i = existingMapList.data!.length + 1;
         }
-        for (Product data in _resource.data) {
+        for (Product data in _resource.data!) {
           productMapList.add(ProductMap(
-              id: data.id + paramKey,
+              id: data.id! + paramKey,
               mapKey: paramKey,
               productId: data.id,
               sorting: i++,
@@ -770,7 +770,7 @@ class ProductRepository extends PsRepository {
         await productMapDao.insertAll(primaryKey, productMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data);
+        await _productDao.insertAll(primaryKey, _resource.data!);
       }
       sinkProductListStream(
           productListStream,
@@ -796,7 +796,7 @@ class ProductRepository extends PsRepository {
 
       if (_resource.status == PsStatus.SUCCESS) {
         //await _productDao.deleteAll();
-        await _productDao.update(_resource.data);
+        await _productDao.update(_resource.data!);
         sinkItemDetailStream(markSoldOutStream, await _productDao.getOne());
       }
     }
@@ -809,7 +809,7 @@ class ProductRepository extends PsRepository {
         await _psApiService.postItemEntry(jsonMap);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      await insert(_resource.data);
+      await insert(_resource.data!);
       return _resource;
     } else {
       final Completer<PsResource<Product>> completer =

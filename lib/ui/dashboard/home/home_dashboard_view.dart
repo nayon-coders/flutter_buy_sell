@@ -68,7 +68,7 @@ class HomeDashboardViewWidget extends StatefulWidget {
 }
 
 class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
-  PsValueHolder valueHolder;
+  PsValueHolder? valueHolder;
   CategoryRepository repo1;
   ProductRepository repo2;
   BlogRepository repo3;
@@ -521,10 +521,10 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
 
 class _HomePopularProductHorizontalListWidget extends StatelessWidget {
   const _HomePopularProductHorizontalListWidget(
-      {Key key,
-      @required this.animationController,
-      @required this.animation,
-      @required this.psValueHolder})
+      {Key? key,
+      required this.animationController,
+      required this.animation,
+      required this.psValueHolder})
       : super(key: key);
 
   final AnimationController animationController;

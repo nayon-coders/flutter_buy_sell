@@ -11,7 +11,7 @@ class BlogListContainerView extends StatefulWidget {
 
 class _BlogListContainerViewState extends State<BlogListContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  late AnimationController animationController;
   @override
   void initState() {
     animationController =
@@ -54,7 +54,7 @@ class _BlogListContainerViewState extends State<BlogListContainerView>
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
-                  .headline6
+                  .headline6!
                   .copyWith(fontWeight: FontWeight.bold)
                   .copyWith(color: PsColors.mainColorWithWhite)),
           elevation: 0,

@@ -14,9 +14,9 @@ class PsTextFieldWidget extends StatelessWidget {
       this.keyboardType = TextInputType.text,
       this.isStar = false});
 
-  final TextEditingController textEditingController;
+  final TextEditingController? textEditingController;
   final String titleText;
-  final String hintText;
+  final String? hintText;
   final double height;
   final bool textAboutMe;
   final TextInputType keyboardType;
@@ -46,7 +46,7 @@ class PsTextFieldWidget extends StatelessWidget {
                       Text(' *',
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2
+                              .bodyText2!
                               .copyWith(color: PsColors.mainColor))
                     ],
                   )
@@ -66,7 +66,7 @@ class PsTextFieldWidget extends StatelessWidget {
             decoration: BoxDecoration(
               color: PsColors.backgroundColor,
               borderRadius: BorderRadius.circular(PsDimens.space4),
-              border: Border.all(color: PsColors.mainDividerColor),
+              border: Border.all(color: PsColors.mainDividerColor!),
             ),
             child: TextField(
                 keyboardType: keyboardType,
@@ -88,7 +88,7 @@ class PsTextFieldWidget extends StatelessWidget {
                         hintText: hintText,
                         hintStyle: Theme.of(context)
                             .textTheme
-                            .bodyText2
+                            .bodyText2!
                             .copyWith(color: PsColors.textPrimaryLightColor),
                       )
                     : InputDecoration(
@@ -100,7 +100,7 @@ class PsTextFieldWidget extends StatelessWidget {
                         hintText: hintText,
                         hintStyle: Theme.of(context)
                             .textTheme
-                            .bodyText2
+                            .bodyText2!
                             .copyWith(color: PsColors.textPrimaryLightColor),
                       ))),
       ],

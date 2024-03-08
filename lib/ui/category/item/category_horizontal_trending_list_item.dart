@@ -8,16 +8,16 @@ import 'package:flutterbuyandsell/viewobject/category.dart';
 
 class CategoryHorizontalTrendingListItem extends StatelessWidget {
   const CategoryHorizontalTrendingListItem(
-      {Key key,
-      @required this.category,
-      this.onTap,
-      @required this.animationController,
-      @required this.animation})
+      {Key? key,
+      required this.category,
+       this.onTap,
+      required this.animationController,
+      required this.animation})
       : super(key: key);
 
   final Category category;
 
-  final Function onTap;
+  final VoidCallback? onTap;
   final AnimationController animationController;
   final Animation<double> animation;
 
@@ -47,23 +47,23 @@ class CategoryHorizontalTrendingListItem extends StatelessWidget {
                             Container(
                               child: PsNetworkImage(
                                   photoKey: '',
-                                  defaultPhoto: category.defaultPhoto,
+                                  defaultPhoto: category.defaultPhoto!,
                                   width: PsDimens.space200,
                                   height: double.infinity,
                                   boxfit: BoxFit.cover,
-                                  onTap: onTap),
+                                  onTap: onTap!),
                             ),
                             Container(
                                 width: 200,
                                 height: double.infinity,
-                                color: PsColors.black.withAlpha(110)),
+                                color: PsColors.black!.withAlpha(110)),
                           ],
                         ),
                       ),
                       Text(
-                        category.catName,
+                        category.catName!,
                         textAlign: TextAlign.start,
-                        style: Theme.of(context).textTheme.subtitle2.copyWith(
+                        style: Theme.of(context).textTheme.subtitle2!.copyWith(
                             color: PsColors.white, fontWeight: FontWeight.bold),
                       ),
                       Container(
@@ -72,16 +72,16 @@ class CategoryHorizontalTrendingListItem extends StatelessWidget {
                         left: 10,
                         child: PsNetworkCircleIconImage(
                             photoKey: '',
-                            defaultIcon: category.defaultIcon,
+                            defaultIcon: category.defaultIcon!,
                             width: PsDimens.space40,
                             height: PsDimens.space40,
                             boxfit: BoxFit.cover,
-                            onTap: onTap),
+                            onTap: onTap!),
                       )),
                     ],
                   ),
                 ))),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return FadeTransition(
             opacity: animation,
             child: Transform(

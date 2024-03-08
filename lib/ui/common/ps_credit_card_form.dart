@@ -6,40 +6,40 @@ import 'package:flutter_credit_card/flutter_credit_card.dart';
 
 class PsCreditCardForm extends StatefulWidget {
   const PsCreditCardForm({
-    Key key,
+    Key? key,
     this.cardNumber,
     this.expiryDate,
     this.cardHolderName,
     this.cvvCode,
-    @required this.onCreditCardModelChange,
+    required this.onCreditCardModelChange,
     this.themeColor,
     this.textColor,
     this.cursorColor,
   }) : super(key: key);
 
-  final String cardNumber;
-  final String expiryDate;
-  final String cardHolderName;
-  final String cvvCode;
+  final String? cardNumber;
+  final String? expiryDate;
+  final String? cardHolderName;
+  final String? cvvCode;
   final void Function(CreditCardModel) onCreditCardModelChange;
-  final Color themeColor;
-  final Color textColor;
-  final Color cursorColor;
+  final Color? themeColor;
+  final Color? textColor;
+  final Color? cursorColor;
 
   @override
   _PsCreditCardFormState createState() => _PsCreditCardFormState();
 }
 
 class _PsCreditCardFormState extends State<PsCreditCardForm> {
-  String cardNumber;
-  String expiryDate;
-  String cardHolderName;
-  String cvvCode;
+  String? cardNumber;
+  String? expiryDate;
+  String? cardHolderName;
+  String? cvvCode;
   bool isCvvFocused = false;
-  Color themeColor;
+  Color? themeColor;
 
-  void Function(CreditCardModel) onCreditCardModelChange;
-  CreditCardModel creditCardModel;
+  void Function(CreditCardModel)? onCreditCardModelChange;
+  CreditCardModel? creditCardModel;
 
   final MaskedTextController _cardNumberController =
       MaskedTextController(mask: '0000 0000 0000 0000');
@@ -53,8 +53,8 @@ class _PsCreditCardFormState extends State<PsCreditCardForm> {
   FocusNode cvvFocusNode = FocusNode();
 
   void textFieldFocusDidChange() {
-    creditCardModel.isCvvFocused = cvvFocusNode.hasFocus;
-    onCreditCardModelChange(creditCardModel);
+    creditCardModel!.isCvvFocused = cvvFocusNode.hasFocus;
+    onCreditCardModelChange!(creditCardModel!);
   }
 
   void createCreditCardModel() {
@@ -80,32 +80,32 @@ class _PsCreditCardFormState extends State<PsCreditCardForm> {
     _cardNumberController.addListener(() {
       setState(() {
         cardNumber = _cardNumberController.text;
-        creditCardModel.cardNumber = cardNumber;
-        onCreditCardModelChange(creditCardModel);
+        creditCardModel!.cardNumber = cardNumber;
+        onCreditCardModelChange!(creditCardModel!);
       });
     });
 
     _expiryDateController.addListener(() {
       setState(() {
         expiryDate = _expiryDateController.text;
-        creditCardModel.expiryDate = expiryDate;
-        onCreditCardModelChange(creditCardModel);
+        creditCardModel!.expiryDate = expiryDate;
+        onCreditCardModelChange!(creditCardModel!);
       });
     });
 
     _cardHolderNameController.addListener(() {
       setState(() {
         cardHolderName = _cardHolderNameController.text;
-        creditCardModel.cardHolderName = cardHolderName;
-        onCreditCardModelChange(creditCardModel);
+        creditCardModel!.cardHolderName = cardHolderName;
+        onCreditCardModelChange!(creditCardModel!);
       });
     });
 
     _cvvCodeController.addListener(() {
       setState(() {
         cvvCode = _cvvCodeController.text;
-        creditCardModel.cvvCode = cvvCode;
-        onCreditCardModelChange(creditCardModel);
+        creditCardModel!.cvvCode = cvvCode;
+        onCreditCardModelChange!(creditCardModel!);
       });
     });
   }

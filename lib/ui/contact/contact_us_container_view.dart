@@ -11,7 +11,7 @@ class ContactUsContainerView extends StatefulWidget {
 
 class _ContactUsContainerViewState extends State<ContactUsContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -21,14 +21,14 @@ class _ContactUsContainerViewState extends State<ContactUsContainerView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -54,7 +54,7 @@ class _ContactUsContainerViewState extends State<ContactUsContainerView>
               textAlign: TextAlign.center,
               style: Theme.of(context)
                   .textTheme
-                  .headline6
+                  .headline6!
                   .copyWith(fontWeight: FontWeight.bold)
                   .copyWith(color: PsColors.mainColorWithWhite)),
           elevation: 0,
@@ -63,7 +63,7 @@ class _ContactUsContainerViewState extends State<ContactUsContainerView>
           color: PsColors.coreBackgroundColor,
           height: double.infinity,
           child: ContactUsView(
-            animationController: animationController,
+            animationController: animationController!,
           ),
         ),
       ),

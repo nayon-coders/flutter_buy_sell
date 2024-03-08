@@ -12,7 +12,7 @@ import 'Common/ps_repository.dart';
 
 class RatingRepository extends PsRepository {
   RatingRepository(
-      {@required PsApiService psApiService, @required RatingDao ratingDao}) {
+      {required PsApiService psApiService, required RatingDao ratingDao}) {
     _psApiService = psApiService;
     _ratingDao = ratingDao;
   }
@@ -55,7 +55,7 @@ class RatingRepository extends PsRepository {
         if (isNeedDelete) {
           await _ratingDao.deleteWithFinder(finder);
         }
-        await _ratingDao.insertAll(primaryKey, _resource.data);
+        await _ratingDao.insertAll(primaryKey, _resource.data!);
         
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
@@ -100,7 +100,7 @@ class RatingRepository extends PsRepository {
           await _psApiService.getRatingList(jsonMap, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _ratingDao.insertAll(primaryKey, _resource.data);
+        await _ratingDao.insertAll(primaryKey, _resource.data!);
       }
       ratingListStream.sink.add(await _ratingDao.getAll(finder: finder));
     }
@@ -117,7 +117,7 @@ class RatingRepository extends PsRepository {
     if (_resource.status == PsStatus.SUCCESS) {
       // await _ratingDao
       //     .deleteWithFinder(Finder(filter: Filter.equals(primaryKey,jsonMap['id'])));
-      await _ratingDao.insert(primaryKey, _resource.data);
+      await _ratingDao.insert(primaryKey, _resource.data!);
     } 
     
     // final dynamic subscription = _ratingDao.getOneWithSubscription(

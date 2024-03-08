@@ -6,10 +6,10 @@ import 'package:provider/provider.dart';
 
 class SpecialCheckTextWidget extends StatefulWidget {
   const SpecialCheckTextWidget({
-    Key key,
-    @required this.title,
-    @required this.icon,
-    @required this.checkTitle,
+    Key? key,
+    required this.title,
+    required this.icon,
+    required this.checkTitle,
     this.size = PsDimens.space20,
   }) : super(key: key);
 
