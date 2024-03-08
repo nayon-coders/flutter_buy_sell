@@ -26,7 +26,7 @@ class FavouriteItemProvider extends PsProvider {
     favouriteListStream =
         StreamController<PsResource<List<Product>>>.broadcast();
     subscription =
-        favouriteListStream.stream.listen((PsResource<List<Product>> resource) {
+        favouriteListStream!.stream.listen((PsResource<List<Product>> resource) {
       updateOffset(resource.data!.length);
 
       _favouriteItemList = resource;
@@ -43,10 +43,10 @@ class FavouriteItemProvider extends PsProvider {
     });
   }
 
-  StreamController<PsResource<List<Product>>> favouriteListStream;
+  StreamController<PsResource<List<Product>>>? favouriteListStream;
 
-  ProductRepository _repo;
-  PsValueHolder psValueHolder;
+  ProductRepository? _repo;
+  PsValueHolder? psValueHolder;
 
   PsResource<Product> _favourite =
       PsResource<Product>(PsStatus.NOACTION, '', null);
@@ -56,11 +56,11 @@ class FavouriteItemProvider extends PsProvider {
       PsResource<List<Product>>(PsStatus.NOACTION, '', <Product>[]);
 
   PsResource<List<Product>> get favouriteItemList => _favouriteItemList;
-  StreamSubscription<PsResource<List<Product>>> subscription;
+  StreamSubscription<PsResource<List<Product>>>? subscription;
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Favourite Item Provider Dispose: $hashCode');
     super.dispose();
@@ -70,9 +70,9 @@ class FavouriteItemProvider extends PsProvider {
     isLoading = true;
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getAllFavouritesList(
-        favouriteListStream,
-        psValueHolder.loginUserId,
+    await _repo!.getAllFavouritesList(
+        favouriteListStream!,
+        psValueHolder!.loginUserId,
         isConnectedToInternet,
         limit,
         offset,
@@ -84,9 +84,9 @@ class FavouriteItemProvider extends PsProvider {
 
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
-      await _repo.getNextPageFavouritesList(
-          favouriteListStream,
-          psValueHolder.loginUserId,
+      await _repo!.getNextPageFavouritesList(
+          favouriteListStream!,
+          psValueHolder!.loginUserId,
           isConnectedToInternet,
           limit,
           offset,
@@ -100,9 +100,9 @@ class FavouriteItemProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getAllFavouritesList(
-        favouriteListStream,
-        psValueHolder.loginUserId,
+    await _repo!.getAllFavouritesList(
+        favouriteListStream!,
+        psValueHolder!.loginUserId,
         isConnectedToInternet,
         limit,
         offset,
@@ -118,7 +118,7 @@ class FavouriteItemProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _favourite = await _repo.postFavourite(
+    _favourite = await _repo!.postFavourite(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _favourite;

@@ -18,7 +18,7 @@ class ItemCurrencyProvider extends PsProvider {
 
     itemCurrencyListStream =
         StreamController<PsResource<List<ItemCurrency>>>.broadcast();
-    subscription = itemCurrencyListStream.stream.listen((dynamic resource) {
+    subscription = itemCurrencyListStream!.stream.listen((dynamic resource) {
       updateOffset(resource.data.length);
 
       _itemCurrencyList = resource;
@@ -34,20 +34,20 @@ class ItemCurrencyProvider extends PsProvider {
     });
   }
 
-  StreamController<PsResource<List<ItemCurrency>>> itemCurrencyListStream;
-  ItemCurrencyRepository _repo;
+  StreamController<PsResource<List<ItemCurrency>>>? itemCurrencyListStream;
+  ItemCurrencyRepository? _repo;
 
   PsResource<List<ItemCurrency>> _itemCurrencyList =
       PsResource<List<ItemCurrency>>(PsStatus.NOACTION, '', <ItemCurrency>[]);
 
   PsResource<List<ItemCurrency>> get itemCurrencyList => _itemCurrencyList;
-  StreamSubscription<PsResource<List<ItemCurrency>>> subscription;
+  StreamSubscription<PsResource<List<ItemCurrency>>>? subscription;
 
   String categoryId = '';
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Item Currency Provider Dispose: $hashCode');
     super.dispose();
@@ -56,7 +56,7 @@ class ItemCurrencyProvider extends PsProvider {
   Future<dynamic> loadItemCurrencyList() async {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getItemCurrencyList(itemCurrencyListStream,
+    await _repo!.getItemCurrencyList(itemCurrencyListStream!,
         isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
   }
 
@@ -65,7 +65,7 @@ class ItemCurrencyProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-      await _repo.getNextPageItemCurrencyList(itemCurrencyListStream,
+      await _repo!.getNextPageItemCurrencyList(itemCurrencyListStream!,
           isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
     }
   }
@@ -77,8 +77,8 @@ class ItemCurrencyProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getItemCurrencyList(
-      itemCurrencyListStream,
+    await _repo!.getItemCurrencyList(
+      itemCurrencyListStream!,
       isConnectedToInternet,
       limit,
       offset,

@@ -21,7 +21,7 @@ class AddedItemProvider extends PsProvider {
 
     itemListStream = StreamController<PsResource<List<Product>>>.broadcast();
     subscription =
-        itemListStream.stream.listen((PsResource<List<Product>> resource) {
+        itemListStream!.stream.listen((PsResource<List<Product>> resource) {
       updateOffset(resource.data!.length);
 
       _itemList = resource;
@@ -36,7 +36,7 @@ class AddedItemProvider extends PsProvider {
       }
     });
   }
-  ProductRepository _repo;
+  ProductRepository? _repo;
   PsValueHolder? psValueHolder;
   ProductParameterHolder addedUserParameterHolder =
       ProductParameterHolder().getLatestParameterHolder();
@@ -44,13 +44,13 @@ class AddedItemProvider extends PsProvider {
       PsResource<List<Product>>(PsStatus.NOACTION, '', <Product>[]);
 
   PsResource<List<Product>> get itemList => _itemList;
-  StreamSubscription<PsResource<List<Product>>> subscription;
-  StreamController<PsResource<List<Product>>> itemListStream;
+  StreamSubscription<PsResource<List<Product>>>? subscription;
+  StreamController<PsResource<List<Product>>>? itemListStream;
   dynamic daoSubscription;
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
 
     if (daoSubscription != null) {
       daoSubscription.cancel();
@@ -67,8 +67,8 @@ class AddedItemProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-     daoSubscription = await _repo.getItemListByUserId(
-        itemListStream,
+     daoSubscription = await _repo!.getItemListByUserId(
+        itemListStream!,
         loginUserId,
         isConnectedToInternet,
         limit,
@@ -84,8 +84,8 @@ class AddedItemProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-       await _repo.getNextPageItemListByUserId(
-          itemListStream,
+       await _repo!.getNextPageItemListByUserId(
+          itemListStream!,
           loginUserId,
           isConnectedToInternet,
           limit,
@@ -102,8 +102,8 @@ class AddedItemProvider extends PsProvider {
 
     updateOffset(0);
 
-     daoSubscription = await _repo.getItemListByUserId(
-        itemListStream,
+     daoSubscription = await _repo!.getItemListByUserId(
+        itemListStream!,
         loginUserId,
         isConnectedToInternet,
         limit,

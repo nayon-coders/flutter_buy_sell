@@ -20,7 +20,7 @@ class ItemConditionProvider extends PsProvider {
 
     itemConditionListStream =
         StreamController<PsResource<List<ConditionOfItem>>>.broadcast();
-    subscription = itemConditionListStream.stream.listen((dynamic resource) {
+    subscription = itemConditionListStream!.stream.listen((dynamic resource) {
       updateOffset(resource.data.length);
 
       _itemConditionList = resource;
@@ -36,21 +36,21 @@ class ItemConditionProvider extends PsProvider {
     });
   }
 
-  StreamController<PsResource<List<ConditionOfItem>>> itemConditionListStream;
-  ItemConditionRepository _repo;
+  StreamController<PsResource<List<ConditionOfItem>>>? itemConditionListStream;
+  ItemConditionRepository? _repo;
 
   PsResource<List<ConditionOfItem>> _itemConditionList =
       PsResource<List<ConditionOfItem>>(
           PsStatus.NOACTION, '', <ConditionOfItem>[]);
 
   PsResource<List<ConditionOfItem>> get itemConditionList => _itemConditionList;
-  StreamSubscription<PsResource<List<ConditionOfItem>>> subscription;
+  StreamSubscription<PsResource<List<ConditionOfItem>>>? subscription;
 
   String categoryId = '';
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Item Condition Provider Dispose: $hashCode');
     super.dispose();
@@ -59,7 +59,7 @@ class ItemConditionProvider extends PsProvider {
   Future<dynamic> loadItemConditionList() async {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getItemConditionList(itemConditionListStream,
+    await _repo!.getItemConditionList(itemConditionListStream!,
         isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
   }
 
@@ -68,7 +68,7 @@ class ItemConditionProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-      await _repo.getNextPageItemConditionList(itemConditionListStream,
+      await _repo!.getNextPageItemConditionList(itemConditionListStream!,
           isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
     }
   }
@@ -80,8 +80,8 @@ class ItemConditionProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getItemConditionList(
-      itemConditionListStream,
+    await _repo!.getItemConditionList(
+      itemConditionListStream!,
       isConnectedToInternet,
       limit,
       offset,

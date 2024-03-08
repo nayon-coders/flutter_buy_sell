@@ -18,7 +18,7 @@ class RatingProvider extends PsProvider {
 
     ratingStream = StreamController<PsResource<Rating>>.broadcast();
     subscription =
-        ratingStream.stream.listen((PsResource<Rating> resource) {
+        ratingStream!.stream.listen((PsResource<Rating> resource) {
 
       _ratingList = resource;
 
@@ -33,20 +33,20 @@ class RatingProvider extends PsProvider {
     });
   }
 
-  RatingRepository _repo;
+  RatingRepository? _repo;
 
   PsResource<Rating> _ratingList =
       PsResource<Rating>(PsStatus.NOACTION, '', null);
 
   PsResource<Rating> get ratingData => _ratingList;
-  StreamSubscription<PsResource<Rating>> subscription;
-  StreamController<PsResource<Rating>> ratingStream;
+  StreamSubscription<PsResource<Rating>>? subscription;
+  StreamController<PsResource<Rating>>? ratingStream;
 
   dynamic daoSubscription;
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
      if (daoSubscription != null) {
       daoSubscription.cancel();
     }
@@ -62,8 +62,8 @@ class RatingProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    daoSubscription = await _repo.postRating(
-        ratingStream, jsonMap, isConnectedToInternet,PsStatus.PROGRESS_LOADING);
+    daoSubscription = await _repo!.postRating(
+        ratingStream!, jsonMap, isConnectedToInternet,PsStatus.PROGRESS_LOADING);
 
     return daoSubscription;
   }

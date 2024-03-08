@@ -8,10 +8,14 @@ import 'package:flutterbuyandsell/provider/common/ps_provider.dart';
 import 'package:flutterbuyandsell/viewobject/item_paid_history.dart';
 
 class ItemPromotionProvider extends PsProvider {
-  ItemPromotionProvider(
-      {required ItemPaidHistoryRepository itemPaidHistoryRepository,
-      int limit = 0})
-      : super(itemPaidHistoryRepository, limit) {
+  ItemPromotionProvider({required ItemPaidHistoryRepository itemPaidHistoryRepository,int limit = 0}) : super(itemPaidHistoryRepository, limit) {
+
+    String selectedDate;
+    DateTime selectedDateTime;
+    StreamSubscription<PsResource<ItemPaidHistory>>? subscription;
+    StreamController<PsResource<ItemPaidHistory>> itemPaidHistoryStream;
+    ItemPaidHistoryRepository _repo;
+
     _repo = itemPaidHistoryRepository;
     isDispose = false;
     print('Item Paid History Provider: $hashCode');
@@ -38,33 +42,28 @@ class ItemPromotionProvider extends PsProvider {
     });
   }
 
-  String selectedDate;
-  DateTime selectedDateTime;
 
-  ItemPaidHistoryRepository _repo;
   PsResource<ItemPaidHistory> _itemPaidHistoryEntry =
       PsResource<ItemPaidHistory>(PsStatus.NOACTION, '', null);
   PsResource<ItemPaidHistory> get item => _itemPaidHistoryEntry;
 
-  StreamSubscription<PsResource<ItemPaidHistory>> subscription;
-  StreamController<PsResource<ItemPaidHistory>> itemPaidHistoryStream;
 
   @override
   void dispose() {
-    subscription.cancel();
     isDispose = true;
     print('Item Paid History Provider Dispose: $hashCode');
     super.dispose();
   }
-
+  ItemPaidHistoryRepository? repo;
   Future<dynamic> postItemHistoryEntry(
     Map<dynamic, dynamic> jsonMap,
   ) async {
+
     isLoading = true;
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _itemPaidHistoryEntry = await _repo.postItemPaidHistory(
+    _itemPaidHistoryEntry = await repo!.postItemPaidHistory(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _itemPaidHistoryEntry;

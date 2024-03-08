@@ -18,7 +18,7 @@ class RatingListProvider extends PsProvider {
 
     ratingListStream = StreamController<PsResource<List<Rating>>>.broadcast();
     subscription =
-        ratingListStream.stream.listen((PsResource<List<Rating>> resource) {
+        ratingListStream!.stream.listen((PsResource<List<Rating>> resource) {
       updateOffset(resource.data!.length);
 
       _ratingList = resource;
@@ -34,20 +34,20 @@ class RatingListProvider extends PsProvider {
     });
   }
 
-  RatingRepository _repo;
+  RatingRepository? _repo;
 
   PsResource<List<Rating>> _ratingList =
       PsResource<List<Rating>>(PsStatus.NOACTION, '', <Rating>[]);
 
   PsResource<List<Rating>> get ratingList => _ratingList;
-  StreamSubscription<PsResource<List<Rating>>> subscription;
-  StreamController<PsResource<List<Rating>>> ratingListStream;
+  StreamSubscription<PsResource<List<Rating>>>? subscription;
+  StreamController<PsResource<List<Rating>>>? ratingListStream;
 
   dynamic daoSubscription;
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
      if (daoSubscription != null) {
       daoSubscription.cancel();
     }
@@ -61,7 +61,7 @@ class RatingListProvider extends PsProvider {
     isLoading = true;
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    daoSubscription = await _repo.getAllRatingList(ratingListStream, jsonMap, itemUserId,
+    daoSubscription = await _repo!.getAllRatingList(ratingListStream!, jsonMap, itemUserId,
         isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
   }
 
@@ -71,7 +71,7 @@ class RatingListProvider extends PsProvider {
 
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
-      await _repo.getNextPageRatingList(ratingListStream, jsonMap, itemUserId,
+      await _repo!.getNextPageRatingList(ratingListStream!, jsonMap, itemUserId,
           isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
     }
   }
@@ -83,7 +83,7 @@ class RatingListProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getAllRatingList(ratingListStream, jsonMap, itemUserId,
+    await _repo!.getAllRatingList(ratingListStream!, jsonMap, itemUserId,
         isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
 
     isLoading = false;
@@ -94,7 +94,7 @@ class RatingListProvider extends PsProvider {
     isLoading = true;
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getAllRatingList(ratingListStream, jsonMap, itemUserId,
+    await _repo!.getAllRatingList(ratingListStream!, jsonMap, itemUserId,
         isConnectedToInternet, limit, 0, PsStatus.PROGRESS_LOADING,
         isNeedDelete: false);
   }

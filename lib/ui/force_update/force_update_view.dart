@@ -8,7 +8,7 @@ import 'package:flutterbuyandsell/viewobject/ps_app_version.dart';
 import 'package:flutter/material.dart';
 
 class ForceUpdateView extends StatelessWidget {
-  ForceUpdateView({@required this.psAppVersion});
+  ForceUpdateView({required this.psAppVersion});
   final PSAppVersion psAppVersion;
   final Widget _imageWidget = Container(
     width: 90,

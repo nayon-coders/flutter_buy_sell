@@ -36,14 +36,14 @@ class SubCategoryProvider extends PsProvider {
     });
   }
 
-  StreamController<PsResource<List<SubCategory>>> subCategoryListStream;
-  SubCategoryRepository _repo;
+  StreamController<PsResource<List<SubCategory>>>? subCategoryListStream;
+  SubCategoryRepository? _repo;
 
   PsResource<List<SubCategory>> _subCategoryList =
       PsResource<List<SubCategory>>(PsStatus.NOACTION, '', <SubCategory>[]);
 
   PsResource<List<SubCategory>> get subCategoryList => _subCategoryList;
-  StreamSubscription<PsResource<List<SubCategory>>> subscription;
+  StreamSubscription<PsResource<List<SubCategory>>>? subscription;
 
   String categoryId = '';
   ProductParameterHolder subCategoryByCatIdParamenterHolder =
@@ -51,7 +51,7 @@ class SubCategoryProvider extends PsProvider {
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('SubCategory Provider Dispose: $hashCode');
     super.dispose();
@@ -60,7 +60,7 @@ class SubCategoryProvider extends PsProvider {
   Future<dynamic> loadSubCategoryList(String categoryId) async {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getSubCategoryListByCategoryId(
+    await _repo!.getSubCategoryListByCategoryId(
         subCategoryListStream,
         isConnectedToInternet,
         limit,
@@ -72,7 +72,7 @@ class SubCategoryProvider extends PsProvider {
   Future<dynamic> loadAllSubCategoryList(String categoryId) async {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getAllSubCategoryListByCategoryId(subCategoryListStream,
+    await _repo!.getAllSubCategoryListByCategoryId(subCategoryListStream,
         isConnectedToInternet, PsStatus.PROGRESS_LOADING, categoryId);
   }
 
@@ -81,7 +81,7 @@ class SubCategoryProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-      await _repo.getNextPageSubCategoryList(
+      await _repo!.getNextPageSubCategoryList(
           subCategoryListStream,
           isConnectedToInternet,
           limit,
@@ -98,7 +98,7 @@ class SubCategoryProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getSubCategoryListByCategoryId(
+    await _repo!.getSubCategoryListByCategoryId(
         subCategoryListStream,
         isConnectedToInternet,
         limit,

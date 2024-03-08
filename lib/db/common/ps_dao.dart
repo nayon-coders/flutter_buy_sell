@@ -8,10 +8,11 @@ import 'package:flutterbuyandsell/viewobject/common/ps_object.dart';
 import 'package:flutterbuyandsell/api/common/ps_status.dart';
 
 abstract class PsDao<T extends PsObject<T>> {
+  StoreRef<String, dynamic>? dao;
   PsDao();
 
-  StoreRef<String, dynamic> dao;
-  T obj;
+
+  T? obj;
   String sortingKey = 'sort';
 
   // Private getter to shorten the amount of code needed to get the
@@ -38,7 +39,7 @@ abstract class PsDao<T extends PsObject<T>> {
     //   print(exp);
     // }
     // await dao.add(await db, obj.toMap(object));
-    await dao.record(object.getPrimaryKey()).put(await db, obj.toMap(object));
+    await dao!.record(object.getPrimaryKey()).put(await db, obj!.toMap(object));
 
     return true;
   }
@@ -46,7 +47,7 @@ abstract class PsDao<T extends PsObject<T>> {
   Future<dynamic> insertAll(String primaryKey, List<T> objectList) async {
     final List<String> idList = <String>[];
 
-    final dynamic recordSnapshots = await dao.find(
+    final dynamic recordSnapshots = await dao!.find(
       await db,
       finder: Finder(),
     );
@@ -56,12 +57,12 @@ abstract class PsDao<T extends PsObject<T>> {
     for (T data in objectList) {
       idList.add(data.getPrimaryKey());
     }
-    final List<Map<String, dynamic>> jsonList = obj.toMapList(objectList);
+    final List<Map<String, dynamic>> jsonList = obj!.toMapList(objectList);
     for (int i = 0; i < jsonList.length; i++) {
       jsonList[i][sortingKey] = count++;
     }
     await dao
-        .records(idList)
+        !.records(idList)
         .put(await db, jsonList); //obj.toMapList(objectList));
   }
 
@@ -70,21 +71,21 @@ abstract class PsDao<T extends PsObject<T>> {
     // we use a Finder.
     finder ??= Finder(filter: getFilter(object));
 
-    return await dao.update(await db, obj.toMap(object), finder: finder);
+    return await dao!.update(await db, obj!.toMap(object), finder: finder);
   }
 
   Future<dynamic> updateWithFinder(T object, Finder finder) async {
     // For filtering by key (ID), RegEx, greater than, and many other criteria,
     // we use a Finder.
-    await dao.update(
+    await dao!.update(
       await db,
-      obj.toMap(object),
+      obj!.toMap(object),
       finder: finder,
     );
   }
 
   Future<dynamic> deleteAll() async {
-    await dao.delete(await db);
+    await dao!.delete(await db);
   }
 
   Future<dynamic> delete(T object, {Finder? finder}) async {
@@ -93,14 +94,14 @@ abstract class PsDao<T extends PsObject<T>> {
     finder ??= Finder(filter: getFilter(object));
 
     //final Finder finder = Finder(filter: finder);
-    await dao.delete(
+    await dao!.delete(
       await db,
       finder: finder,
     );
   }
 
   Future<dynamic> deleteWithFinder(Finder finder) async {
-    await dao.delete(
+    await dao!.delete(
       await db,
       finder: finder,
     );
@@ -114,13 +115,13 @@ abstract class PsDao<T extends PsObject<T>> {
       finder.sortOrders = sortOrderList;
     }
 
-    final dynamic recordSnapshots = await dao.find(
+    final dynamic recordSnapshots = await dao!.find(
       await db,
       finder: finder,
     );
     final List<T> resultList = <T>[];
     recordSnapshots.forEach((dynamic snapshot) {
-      resultList.add(obj.fromMap(snapshot.value));
+      resultList.add(obj!.fromMap(snapshot.value));
     });
 
     return PsResource<List<T>>(status, '', resultList);
@@ -133,13 +134,13 @@ abstract class PsDao<T extends PsObject<T>> {
       Function? onDataUpdated}) async {
     finder ??= Finder();
 
-    final dynamic query = dao.query(finder: finder);
+    final dynamic query = dao!.query(finder: finder);
     final dynamic subscription =
         await query.onSnapshots(await db).listen((dynamic recordSnapshots) {
       T result;
 
       for (dynamic snapshot in recordSnapshots) {
-        final T localObj = obj.fromMap(snapshot.value);
+        final T localObj = obj!.fromMap(snapshot.value);
         localObj.key = snapshot.key;
         result = localObj;
         break;
@@ -158,12 +159,12 @@ abstract class PsDao<T extends PsObject<T>> {
       Function? onDataUpdated}) async {
     finder ??= Finder(sortOrders: <SortOrder> [SortOrder(sortingKey, true)]);
 
-    final dynamic query = dao.query(finder: finder);
+    final dynamic query = dao!.query(finder: finder);
     final dynamic subscription =
         await query.onSnapshots(await db).listen((dynamic recordSnapshots2) {
       final List<T> resultList = <T>[];
       recordSnapshots2.forEach((dynamic snapshot) {
-        final T localObj = obj.fromMap(snapshot.value);
+        final T localObj = obj!.fromMap(snapshot.value);
         localObj.key = snapshot.key;
         resultList.add(localObj);
       });
@@ -184,9 +185,9 @@ abstract class PsDao<T extends PsObject<T>> {
       List<SortOrder>? sortOrderList,
       PsStatus status = PsStatus.SUCCESS,
       Function? onDataUpdated}) async {
-    final PsResource<List<PsObject<dynamic>>> dataList = await mapDao.getAll(
+    final PsResource<List<PsObject<dynamic>>> dataList = await mapDao!.getAll(
         finder: Finder(
-            filter: Filter.equals(mapKey?, paramKey),
+            filter: Filter.equals(mapKey, paramKey, anyInList: true),
             sortOrders: <SortOrder>[SortOrder('sorting', true)]));
     final List<String> valueList = mapObj.getIdList(dataList.data);
 
