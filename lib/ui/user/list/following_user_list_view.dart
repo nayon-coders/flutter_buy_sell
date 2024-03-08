@@ -24,13 +24,13 @@ class _FollowingUserListViewState extends State<FollowingUserListView>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  UserListProvider _userListProvider;
+  UserListProvider? _userListProvider;
 
-  AnimationController animationController;
+  AnimationController? animationController;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -43,21 +43,21 @@ class _FollowingUserListViewState extends State<FollowingUserListView>
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         final String loginUserId =
-            Utils.checkUserLoginId(_userListProvider.psValueHolder);
-        _userListProvider.followingUserParameterHolder.loginUserId =
+            Utils.checkUserLoginId(_userListProvider!.psValueHolder!);
+        _userListProvider!.followingUserParameterHolder.loginUserId =
             loginUserId;
-        _userListProvider
-            .nextUserList(_userListProvider.followingUserParameterHolder);
+        _userListProvider!
+            .nextUserList(_userListProvider!.followingUserParameterHolder);
       }
     });
   }
 
-  UserRepository repo1;
-  PsValueHolder psValueHolder;
+  UserRepository? repo1;
+  PsValueHolder? psValueHolder;
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -78,18 +78,18 @@ class _FollowingUserListViewState extends State<FollowingUserListView>
       child: PsWidgetWithAppBar<UserListProvider>(
           appBarTitle: Utils.getString(context, 'following__title') ?? '',
           initProvider: () {
-            return UserListProvider(repo: repo1, psValueHolder: psValueHolder);
+            return UserListProvider(repo: repo1!, psValueHolder: psValueHolder);
           },
           onProviderReady: (UserListProvider provider) {
             final String loginUserId =
-                Utils.checkUserLoginId(provider.psValueHolder);
+                Utils.checkUserLoginId(provider.psValueHolder!);
             provider.followingUserParameterHolder.loginUserId = loginUserId;
             provider.loadUserList(provider.followingUserParameterHolder);
 
             _userListProvider = provider;
           },
           builder:
-              (BuildContext context, UserListProvider provider, Widget child) {
+              (BuildContext context, UserListProvider provider, Widget? child) {
             return Stack(children: <Widget>[
               Container(
                   margin: const EdgeInsets.only(
@@ -105,44 +105,44 @@ class _FollowingUserListViewState extends State<FollowingUserListView>
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                                 if (provider.userList.data != null ||
-                                    provider.userList.data.isNotEmpty) {
+                                    provider.userList.data!.isNotEmpty) {
                                   final int count =
-                                      provider.userList.data.length;
+                                      provider.userList.data!.length;
                                   return UserVerticalListItem(
-                                    animationController: animationController,
+                                    animationController: animationController!,
                                     animation:
                                         Tween<double>(begin: 0.0, end: 1.0)
                                             .animate(
                                       CurvedAnimation(
-                                        parent: animationController,
+                                        parent: animationController!,
                                         curve: Interval(
                                             (1 / count) * index, 1.0,
                                             curve: Curves.fastOutSlowIn),
                                       ),
                                     ),
-                                    user: provider.userList.data[index],
+                                    user: provider.userList.data![index],
                                     onTap: () {
                                       Navigator.pushNamed(
                                           context, RoutePaths.userDetail,
                                           arguments: UserIntentHolder(
                                               userId: provider
-                                                  .userList.data[index].userId,
+                                                  .userList.data![index].userId,
                                               userName: provider.userList
-                                                  .data[index].userName));
+                                                  .data![index].userName));
                                     },
                                   );
                                 } else {
                                   return null;
                                 }
                               },
-                              childCount: provider.userList.data.length,
+                              childCount: provider.userList.data!.length,
                             ),
                           ),
                         ]),
                     onRefresh: () async {
                       provider.followingUserParameterHolder.loginUserId =
-                          provider.psValueHolder.loginUserId;
-                      return _userListProvider
+                          provider.psValueHolder!.loginUserId;
+                      return _userListProvider!
                           .resetUserList(provider.followingUserParameterHolder);
                     },
                   )),

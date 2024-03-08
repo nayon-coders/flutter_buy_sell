@@ -42,7 +42,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
         onProviderReady: (UserProvider provider) {
           return provider;
         },
-        builder: (BuildContext context, UserProvider provider, Widget child) {
+        builder: (BuildContext context, UserProvider provider, Widget? child) {
           return SingleChildScrollView(
               child: Container(
             padding: const EdgeInsets.all(PsDimens.space16),

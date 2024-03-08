@@ -21,11 +21,11 @@ import 'package:provider/provider.dart';
 
 class VerifyPhoneView extends StatefulWidget {
   const VerifyPhoneView(
-      {Key key,
-      @required this.userName,
-      @required this.phoneNumber,
-      @required this.phoneId,
-      @required this.animationController,
+      {Key? key,
+      required this.userName,
+      required this.phoneNumber,
+      required this.phoneId,
+      required this.animationController,
       this.onProfileSelected,
       this.onSignInSelected})
       : super(key: key);
@@ -34,14 +34,14 @@ class VerifyPhoneView extends StatefulWidget {
   final String phoneNumber;
   final String phoneId;
   final AnimationController animationController;
-  final Function onProfileSelected, onSignInSelected;
+  final Function? onProfileSelected, onSignInSelected;
   @override
   _VerifyPhoneViewState createState() => _VerifyPhoneViewState();
 }
 
 class _VerifyPhoneViewState extends State<VerifyPhoneView> {
-  UserRepository repo1;
-  PsValueHolder valueHolder;
+  UserRepository? repo1;
+  PsValueHolder? valueHolder;
 
   @override
   Widget build(BuildContext context) {
@@ -58,12 +58,12 @@ class _VerifyPhoneViewState extends State<VerifyPhoneView> {
       lazy: false,
       create: (BuildContext context) {
         final UserProvider provider =
-            UserProvider(repo: repo1, psValueHolder: valueHolder);
+            UserProvider(repo: repo1!, psValueHolder: valueHolder!);
         // provider.postUserRegister(userRegisterParameterHolder.toMap());
         return provider;
       },
       child: Consumer<UserProvider>(
-          builder: (BuildContext context, UserProvider provider, Widget child) {
+          builder: (BuildContext context, UserProvider provider, Widget? child) {
         return SingleChildScrollView(
             child: Stack(
           alignment: Alignment.bottomCenter,
@@ -84,7 +84,7 @@ class _VerifyPhoneViewState extends State<VerifyPhoneView> {
                         phoneNumber: widget.phoneNumber,
                         phoneId: widget.phoneId,
                         provider: provider,
-                        onProfileSelected: widget.onProfileSelected,
+                        onProfileSelected: widget.onProfileSelected!,
                       ),
                       Column(
                         children: const <Widget>[
@@ -108,14 +108,14 @@ class _VerifyPhoneViewState extends State<VerifyPhoneView> {
                                     context, 'phone_signin__back_login'),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText2
+                                    .bodyText2!
                                     .copyWith(color: PsColors.mainColor),
                               ),
                             ),
                           ),
                           onTap: () {
                             if (widget.onSignInSelected != null) {
-                              widget.onSignInSelected();
+                              widget.onSignInSelected!();
                             } else {
                               Navigator.pop(context);
                               Navigator.pushReplacementNamed(
@@ -137,10 +137,10 @@ class _VerifyPhoneViewState extends State<VerifyPhoneView> {
 
 class _TextFieldAndButtonWidget extends StatefulWidget {
   const _TextFieldAndButtonWidget({
-    @required this.userName,
-    @required this.phoneNumber,
-    @required this.phoneId,
-    @required this.provider,
+    required this.userName,
+    required this.phoneNumber,
+    required this.phoneId,
+    required this.provider,
     this.onProfileSelected,
     // @required this.userId,
   });
@@ -149,7 +149,7 @@ class _TextFieldAndButtonWidget extends StatefulWidget {
   final String phoneNumber;
   final String phoneId;
   final UserProvider provider;
-  final Function onProfileSelected;
+  final Function? onProfileSelected;
   // final String userId;
 
   @override
@@ -189,14 +189,14 @@ dynamic gotoProfile(
 
     if (_apiStatus.data != null) {
      await provider.replaceVerifyUserData('', '', '', '');
-     await provider.replaceLoginUserId(_apiStatus.data.userId);
-     await provider.replaceLoginUserName(_apiStatus.data.userName);
+     await provider.replaceLoginUserId(_apiStatus.data!.userId!);
+     await provider.replaceLoginUserName(_apiStatus.data!.userName!);
 
       if (onProfileSelected != null) {
         await provider.replaceVerifyUserData('', '', '', '');
-        await provider.replaceLoginUserId(_apiStatus.data.userId);
-        await provider.replaceLoginUserName(_apiStatus.data.userName);
-        await onProfileSelected(_apiStatus.data.userId);
+        await provider.replaceLoginUserId(_apiStatus.data!.userId!);
+        await provider.replaceLoginUserName(_apiStatus.data!.userName!);
+        await onProfileSelected(_apiStatus.data!.userId!);
       } else {
         Navigator.pop(context, _apiStatus.data);
       }
@@ -206,7 +206,7 @@ dynamic gotoProfile(
           context: context,
           builder: (BuildContext context) {
             return ErrorDialog(
-              message: _apiStatus.message,
+              message: _apiStatus.message!,
             );
           });
     }
@@ -241,7 +241,7 @@ class __TextFieldAndButtonWidgetState extends State<_TextFieldAndButtonWidget> {
                 context, 'email_verify__enter_verification_code'),
             hintStyle: Theme.of(context)
                 .textTheme
-                .bodyText2
+                .bodyText2!
                 .copyWith(color: PsColors.textPrimaryLightColor),
           ),
           style: Theme.of(context).textTheme.headline4,
@@ -264,7 +264,7 @@ class __TextFieldAndButtonWidgetState extends State<_TextFieldAndButtonWidget> {
                 callWarningDialog(context, 'Verification OTP code is wrong');
               } else {
                 final fb_auth.User user =
-                    fb_auth.FirebaseAuth.instance.currentUser;
+                    fb_auth.FirebaseAuth.instance.currentUser!;
 
                 if (user != null) {
                   print('correct code');
@@ -274,7 +274,7 @@ class __TextFieldAndButtonWidgetState extends State<_TextFieldAndButtonWidget> {
                       widget.userName,
                       widget.phoneNumber,
                       widget.provider,
-                      widget.onProfileSelected);
+                      widget.onProfileSelected!);
                 } else {
                   final fb_auth.AuthCredential credential =
                       fb_auth.PhoneAuthProvider.credential(
@@ -289,11 +289,11 @@ class __TextFieldAndButtonWidgetState extends State<_TextFieldAndButtonWidget> {
                         print('correct code again');
                         await gotoProfile(
                             context,
-                            user.user.uid,
+                            user.user!.uid,
                             widget.userName,
                             widget.phoneNumber,
                             widget.provider,
-                            widget.onProfileSelected);
+                            widget.onProfileSelected!);
                       }
                     });
                   } on Exception {
@@ -319,7 +319,7 @@ class __TextFieldAndButtonWidgetState extends State<_TextFieldAndButtonWidget> {
 
 class _HeaderTextWidget extends StatelessWidget {
   const _HeaderTextWidget(
-      {@required this.userProvider, @required this.phoneNumber});
+      {required this.userProvider, required this.phoneNumber});
   final UserProvider userProvider;
   final String phoneNumber;
   @override
@@ -344,14 +344,14 @@ class _HeaderTextWidget extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText2
+                      .bodyText2!
                       .copyWith(color: PsColors.white),
                 ),
                 Text(
                   (phoneNumber == null) ? '' : phoneNumber,
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText2
+                      .bodyText2!
                       .copyWith(color: PsColors.white),
                 ),
               ],
@@ -374,13 +374,13 @@ class _HeaderTextWidget extends StatelessWidget {
 
 class _ChangeEmailAndRecentCodeWidget extends StatefulWidget {
   const _ChangeEmailAndRecentCodeWidget({
-    @required this.provider,
-    @required this.userEmailText,
+    required this.provider,
+    required this.userEmailText,
     this.onSignInSelected,
   });
   final UserProvider provider;
   final String userEmailText;
-  final Function onSignInSelected;
+  final Function? onSignInSelected;
 
   @override
   __ChangeEmailAndRecentCodeWidgetState createState() =>
@@ -403,7 +403,7 @@ class __ChangeEmailAndRecentCodeWidgetState
           textColor: PsColors.mainColor,
           onPressed: () {
             if (widget.onSignInSelected != null) {
-              widget.onSignInSelected();
+              widget.onSignInSelected!();
             } else {
               Navigator.pop(context);
               Navigator.pushReplacementNamed(
@@ -444,7 +444,7 @@ class __ChangeEmailAndRecentCodeWidgetState
                     context: context,
                     builder: (BuildContext context) {
                       return SuccessDialog(
-                        message: _apiStatus.data.message,
+                        message: _apiStatus.data!.message!,
                         onPressed: () {},
                       );
                     });
@@ -453,7 +453,7 @@ class __ChangeEmailAndRecentCodeWidgetState
                     context: context,
                     builder: (BuildContext context) {
                       return ErrorDialog(
-                        message: _apiStatus.message,
+                        message: _apiStatus.message!,
                       );
                     });
               }

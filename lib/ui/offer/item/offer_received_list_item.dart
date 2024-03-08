@@ -7,22 +7,22 @@ import 'package:flutterbuyandsell/viewobject/offer.dart';
 
 class OfferReceivedListItem extends StatelessWidget {
   const OfferReceivedListItem({
-    Key key,
-    @required this.offer,
+    Key? key,
+    required this.offer,
     this.animationController,
     this.animation,
     this.onTap,
   }) : super(key: key);
 
   final Offer offer;
-  final Function onTap;
-  final AnimationController animationController;
-  final Animation<double> animation;
+  final VoidCallback? onTap;
+  final AnimationController? animationController;
+  final Animation<double>? animation;
 
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-        animation: animationController,
+        animation: animationController!,
         child: offer != null
             ? InkWell(
                 onTap: onTap,
@@ -40,12 +40,12 @@ class OfferReceivedListItem extends StatelessWidget {
                 ),
               )
             : Container(),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return FadeTransition(
-              opacity: animation,
+              opacity: animation!,
               child: Transform(
                   transform: Matrix4.translationValues(
-                      0.0, 100 * (1.0 - animation.value), 0.0),
+                      0.0, 100 * (1.0 - animation!.value), 0.0),
                   child: child));
         });
   }
@@ -53,8 +53,8 @@ class OfferReceivedListItem extends StatelessWidget {
 
 class _ImageAndTextWidget extends StatelessWidget {
   const _ImageAndTextWidget({
-    Key key,
-    @required this.offer,
+    Key? key,
+    required this.offer,
   }) : super(key: key);
 
   final Offer offer;
@@ -74,7 +74,7 @@ class _ImageAndTextWidget extends StatelessWidget {
             height: PsDimens.space40,
             child: PsNetworkCircleImageForUser(
               photoKey: '',
-              imagePath: offer.buyer.userProfilePhoto,
+              imagePath: offer.buyer!.userProfilePhoto,
               // width: PsDimens.space40,
               // height: PsDimens.space40,
               boxfit: BoxFit.cover,
@@ -92,13 +92,13 @@ class _ImageAndTextWidget extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      offer.buyer.userName == ''
+                      offer.buyer!.userName == ''
                           ? Utils.getString(context, 'default__user_name')
-                          : offer.buyer.userName,
+                          : offer.buyer!.userName!,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
                           .textTheme
-                          .caption
+                          .caption!
                           .copyWith(color: Colors.grey),
                     ),
                     if (offer.buyerUnreadCount != null &&
@@ -113,16 +113,16 @@ class _ImageAndTextWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(PsDimens.space8),
                           border: Border.all(
                               color: Utils.isLightMode(context)
-                                  ? Colors.grey[200]
+                                  ? Colors.grey.shade200
                                   : Colors.black87),
                         ),
                         child: Text(
-                          offer.buyerUnreadCount,
+                          offer.buyerUnreadCount!,
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
                               .textTheme
-                              .caption
+                              .caption!
                               .copyWith(color: Colors.white),
                         ),
                       )
@@ -138,12 +138,12 @@ class _ImageAndTextWidget extends StatelessWidget {
                   children: <Widget>[
                     Expanded(
                       child: Text(
-                        offer.item.title,
+                        offer.item!.title!,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ),
-                    if (offer.item.isSoldOut == '1')
+                    if (offer.item!.isSoldOut == '1')
                       Container(
                         padding: const EdgeInsets.all(PsDimens.space4),
                         decoration: BoxDecoration(
@@ -151,7 +151,7 @@ class _ImageAndTextWidget extends StatelessWidget {
                           borderRadius: BorderRadius.circular(PsDimens.space8),
                           border: Border.all(
                               color: Utils.isLightMode(context)
-                                  ? Colors.grey[200]
+                                  ? Colors.grey.shade200
                                   : Colors.black87),
                         ),
                         child: Text(
@@ -162,7 +162,7 @@ class _ImageAndTextWidget extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
                               .textTheme
-                              .caption
+                              .caption!
                               .copyWith(color: Colors.white),
                         ),
                       )
@@ -174,32 +174,32 @@ class _ImageAndTextWidget extends StatelessWidget {
                 Row(
                   children: <Widget>[
                     Text(
-                      offer.item != null && offer.item.price != '0' &&  offer.item.price != ''
-                          ? '${offer.item.itemCurrency.currencySymbol}  ${Utils.getPriceFormat(offer.item.price)}'
+                      offer.item != null && offer.item!.price != '0' &&  offer.item!.price != ''
+                          ? '${offer.item!.itemCurrency!.currencySymbol}  ${Utils.getPriceFormat(offer.item!.price!)}'
                           : Utils.getString(
                                         context, 'item_price_free'),
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText2
+                          .bodyText2!
                           .copyWith(color: PsColors.mainColor),
                     ),
                     const SizedBox(
                       width: PsDimens.space8,
                     ),
                     Text(
-                      '( ${offer.item.conditionOfItem.name} )',
+                      '( ${offer.item!.conditionOfItem!.name!} )',
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText2
+                          .bodyText2!
                           .copyWith(color: Colors.blue),
                     ),
                   ],
                 ),
                 _spacingWidget,
                 Text(
-                  offer.addedDateStr,
+                  offer.addedDateStr!,
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context).textTheme.caption,
                 ),
@@ -218,7 +218,7 @@ class _ImageAndTextWidget extends StatelessWidget {
                 // height: PsDimens.space60,
                 // width: PsDimens.space60,
                 photoKey: '',
-                defaultPhoto: offer.item.defaultPhoto,
+                defaultPhoto: offer.item!.defaultPhoto!,
                 boxfit: BoxFit.cover,
               ),
             ),

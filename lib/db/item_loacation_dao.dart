@@ -22,7 +22,7 @@ class ItemLocationDao extends PsDao<ItemLocation> {
 
   @override
   String getPrimaryKey(ItemLocation object) {
-    return object.id;
+    return object.id!;
   }
 
   @override

@@ -51,22 +51,22 @@ import 'package:geolocator/geolocator.dart';
 
 class ItemEntryView extends StatefulWidget {
   const ItemEntryView(
-      {Key key, this.flag, this.item, @required this.animationController})
+      {Key? key, this.flag, this.item, required this.animationController})
       : super(key: key);
   final AnimationController animationController;
-  final String flag;
-  final Product item;
+  final String? flag;
+  final Product? item;
 
   @override
   State<StatefulWidget> createState() => _ItemEntryViewState();
 }
 
 class _ItemEntryViewState extends State<ItemEntryView> {
-  ProductRepository repo1;
-  GalleryRepository galleryRepository;
-  ItemEntryProvider _itemEntryProvider;
-  GalleryProvider galleryProvider;
-  PsValueHolder valueHolder;
+  ProductRepository? repo1;
+  GalleryRepository? galleryRepository;
+  ItemEntryProvider? _itemEntryProvider;
+  GalleryProvider? galleryProvider;
+  PsValueHolder? valueHolder;
   final TextEditingController userInputListingTitle = TextEditingController();
   final TextEditingController userInputBrand = TextEditingController();
   final TextEditingController userInputHighLightInformation =
@@ -88,23 +88,23 @@ class _ItemEntryViewState extends State<ItemEntryView> {
   final TextEditingController dealOptionController = TextEditingController();
   final TextEditingController locationController = TextEditingController();
 
-  LatLng latlng;
+  LatLng? latlng;
   final double zoom = 16;
   bool bindDataFirstTime = true;
   // New Images From Image Picker
   List<Asset> images = <Asset>[];
-  Asset firstSelectedImageAsset;
-  Asset secondSelectedImageAsset;
-  Asset thirdSelectedImageAsset;
-  Asset fouthSelectedImageAsset;
-  Asset fifthSelectedImageAsset;
-  String firstCameraImagePath;
-  String secondCameraImagePath;
-  String thirdCameraImagePath;
-  String fouthCameraImagePath;
-  String fifthCameraImagePath;
+  Asset? firstSelectedImageAsset;
+  Asset? secondSelectedImageAsset;
+  Asset? thirdSelectedImageAsset;
+  Asset? fouthSelectedImageAsset;
+  Asset? fifthSelectedImageAsset;
+  String? firstCameraImagePath;
+  String? secondCameraImagePath;
+  String? thirdCameraImagePath;
+  String? fouthCameraImagePath;
+  String? fifthCameraImagePath;
 
-  Asset defaultAssetImage;
+  Asset? defaultAssetImage;
 
   // New Images Checking from Image Picker
   bool isSelectedFirstImagePath = false;
@@ -144,14 +144,14 @@ class _ItemEntryViewState extends State<ItemEntryView> {
 
       if (isSelectedFirstImagePath) {
         final PsResource<DefaultPhoto> _apiStatus =
-            await galleryProvider.postItemImageUpload(
+            await galleryProvider!.postItemImageUpload(
                 itemId,
-                _itemEntryProvider.firstImageId,
+                _itemEntryProvider!.firstImageId,
                 firstSelectedImageAsset == null
                     ? await Utils.getImageFileFromCameraImagePath(
-                        firstCameraImagePath, PsConfig.uploadImageSize)
+                        firstCameraImagePath!, PsConfig.uploadImageSize)
                     : await Utils.getImageFileFromAssets(
-                        firstSelectedImageAsset, PsConfig.uploadImageSize));
+                        firstSelectedImageAsset!, PsConfig.uploadImageSize));
         if (_apiStatus.data != null) {
           isSelectedFirstImagePath = false;
           _isFirstDone = isSelectedFirstImagePath;
@@ -178,14 +178,14 @@ class _ItemEntryViewState extends State<ItemEntryView> {
       }
       if (isSelectedSecondImagePath) {
         final PsResource<DefaultPhoto> _apiStatus =
-            await galleryProvider.postItemImageUpload(
+            await galleryProvider!.postItemImageUpload(
                 itemId,
-                _itemEntryProvider.secondImageId,
+                _itemEntryProvider!.secondImageId,
                 secondSelectedImageAsset == null
                     ? await Utils.getImageFileFromCameraImagePath(
-                        secondCameraImagePath, PsConfig.uploadImageSize)
+                        secondCameraImagePath!, PsConfig.uploadImageSize)
                     : await Utils.getImageFileFromAssets(
-                        secondSelectedImageAsset, PsConfig.uploadImageSize));
+                        secondSelectedImageAsset!, PsConfig.uploadImageSize));
         if (_apiStatus.data != null) {
           isSelectedSecondImagePath = false;
           _isSecondDone = isSelectedSecondImagePath;
@@ -211,14 +211,14 @@ class _ItemEntryViewState extends State<ItemEntryView> {
 
       if (isSelectedThirdImagePath) {
         final PsResource<DefaultPhoto> _apiStatus =
-            await galleryProvider.postItemImageUpload(
+            await galleryProvider!.postItemImageUpload(
                 itemId,
-                _itemEntryProvider.thirdImageId,
+                _itemEntryProvider!.thirdImageId,
                 thirdSelectedImageAsset == null
                     ? await Utils.getImageFileFromCameraImagePath(
-                        thirdCameraImagePath, PsConfig.uploadImageSize)
+                        thirdCameraImagePath!, PsConfig.uploadImageSize)
                     : await Utils.getImageFileFromAssets(
-                        thirdSelectedImageAsset, PsConfig.uploadImageSize));
+                        thirdSelectedImageAsset!, PsConfig.uploadImageSize));
         if (_apiStatus.data != null) {
           isSelectedThirdImagePath = false;
           _isThirdDone = isSelectedThirdImagePath;
@@ -242,14 +242,14 @@ class _ItemEntryViewState extends State<ItemEntryView> {
 
       if (isSelectedFouthImagePath) {
         final PsResource<DefaultPhoto> _apiStatus =
-            await galleryProvider.postItemImageUpload(
+            await galleryProvider!.postItemImageUpload(
                 itemId,
-                _itemEntryProvider.fourthImageId,
+                _itemEntryProvider!.fourthImageId,
                 fouthSelectedImageAsset == null
                     ? await Utils.getImageFileFromCameraImagePath(
-                        fouthCameraImagePath, PsConfig.uploadImageSize)
+                        fouthCameraImagePath!, PsConfig.uploadImageSize)
                     : await Utils.getImageFileFromAssets(
-                        fouthSelectedImageAsset, PsConfig.uploadImageSize));
+                        fouthSelectedImageAsset!, PsConfig.uploadImageSize));
         if (_apiStatus.data != null) {
           isSelectedFouthImagePath = false;
           _isFouthDone = isSelectedFouthImagePath;
@@ -273,14 +273,14 @@ class _ItemEntryViewState extends State<ItemEntryView> {
 
       if (isSelectedFifthImagePath) {
         final PsResource<DefaultPhoto> _apiStatus =
-            await galleryProvider.postItemImageUpload(
+            await galleryProvider!.postItemImageUpload(
                 itemId,
-                _itemEntryProvider.fiveImageId,
+                _itemEntryProvider!.fiveImageId,
                 fifthSelectedImageAsset == null
                     ? await Utils.getImageFileFromCameraImagePath(
-                        fifthCameraImagePath, PsConfig.uploadImageSize)
+                        fifthCameraImagePath!, PsConfig.uploadImageSize)
                     : await Utils.getImageFileFromAssets(
-                        fifthSelectedImageAsset, PsConfig.uploadImageSize));
+                        fifthSelectedImageAsset!, PsConfig.uploadImageSize));
         if (_apiStatus.data != null) {
           print('5 image uploaded');
           isSelectedFifthImagePath = false;
@@ -445,36 +445,36 @@ class _ItemEntryViewState extends State<ItemEntryView> {
                 lazy: false,
                 create: (BuildContext context) {
                   _itemEntryProvider = ItemEntryProvider(
-                      repo: repo1, psValueHolder: valueHolder);
+                      repo: repo1!, psValueHolder: valueHolder!);
 
-                  _itemEntryProvider.item = widget.item;
+                  _itemEntryProvider!.item = widget!.item!;
 
                   latlng = LatLng(
                       double.parse(
-                          _itemEntryProvider.psValueHolder.locationLat),
+                          _itemEntryProvider!.psValueHolder.locationLat),
                       double.parse(
-                          _itemEntryProvider.psValueHolder.locationLng));
-                  if (_itemEntryProvider.itemLocationId != null ||
-                      _itemEntryProvider.itemLocationId != '')
-                    _itemEntryProvider.itemLocationId =
-                        _itemEntryProvider.psValueHolder.locationId;
+                          _itemEntryProvider!.psValueHolder.locationLng));
+                  if (_itemEntryProvider!.itemLocationId != null ||
+                      _itemEntryProvider!.itemLocationId != '')
+                    _itemEntryProvider!.itemLocationId =
+                        _itemEntryProvider!.psValueHolder.locationId;
                   if (userInputLattitude.text.isEmpty)
                     userInputLattitude.text =
-                        _itemEntryProvider.psValueHolder.locationLat;
+                        _itemEntryProvider!.psValueHolder.locationLat;
                   if (userInputLongitude.text.isEmpty)
                     userInputLongitude.text =
-                        _itemEntryProvider.psValueHolder.locationLng;
-                  _itemEntryProvider.getItemFromDB(widget.item.id);
+                        _itemEntryProvider!.psValueHolder.locationLng;
+                  _itemEntryProvider!.getItemFromDB(widget.item!.id!);
 
-                  return _itemEntryProvider;
+                  return _itemEntryProvider!;
                 }),
             ChangeNotifierProvider<GalleryProvider>(
                 lazy: false,
                 create: (BuildContext context) {
-                  galleryProvider = GalleryProvider(repo: galleryRepository);
+                  galleryProvider = GalleryProvider(repo: galleryRepository!);
                   if (widget.flag == PsConst.EDIT_ITEM) {
-                    galleryProvider.loadImageList(
-                        widget.item.defaultPhoto.imgParentId,
+                    galleryProvider!.loadImageList(
+                        widget.item!.defaultPhoto!.imgParentId!,
                         PsConst.ITEM_TYPE);
 
                     // firstImageId = galleryProvider.galleryList.data[0].imgId;
@@ -489,7 +489,7 @@ class _ItemEntryViewState extends State<ItemEntryView> {
                     // Utils.psPrint(fourthImageId);
                     // Utils.psPrint(fiveImageId);
                   }
-                  return galleryProvider;
+                  return galleryProvider!;
                 }),
           ],
           child: SingleChildScrollView(
@@ -526,111 +526,111 @@ class _ItemEntryViewState extends State<ItemEntryView> {
                             Text(' *',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText2
+                                    .bodyText2!
                                     .copyWith(color: PsColors.mainColor))
                           ],
                         ),
                       ),
                       //  _largeSpacingWidget,
                       Consumer<GalleryProvider>(builder: (BuildContext context,
-                          GalleryProvider provider, Widget child) {
+                          GalleryProvider provider, Widget? child) {
                         if (provider != null &&
-                            provider.galleryList.data.isNotEmpty) {
+                            provider.galleryList.data!.isNotEmpty!) {
                           for (int imageId = 0;
-                              imageId < provider.galleryList.data.length;
+                              imageId < provider.galleryList.data!.length!;
                               imageId++) {
                             if (imageId == 0) {
-                              _itemEntryProvider.firstImageId =
-                                  provider.galleryList.data[imageId].imgId;
+                              _itemEntryProvider!.firstImageId =
+                                  provider.galleryList.data![imageId].imgId!;
                             }
                             if (imageId == 1) {
-                              _itemEntryProvider.secondImageId =
-                                  provider.galleryList.data[imageId].imgId;
+                              _itemEntryProvider!.secondImageId =
+                                  provider.galleryList.data![imageId].imgId!;
                             }
                             if (imageId == 2) {
-                              _itemEntryProvider.thirdImageId =
-                                  provider.galleryList.data[imageId].imgId;
+                              _itemEntryProvider!.thirdImageId =
+                                  provider.galleryList.data![imageId].imgId!;
                             }
                             if (imageId == 3) {
-                              _itemEntryProvider.fourthImageId =
-                                  provider.galleryList.data[imageId].imgId;
+                              _itemEntryProvider!.fourthImageId =
+                                  provider.galleryList.data![imageId].imgId!;
                             }
                             if (imageId == 4) {
-                              _itemEntryProvider.fiveImageId =
-                                  provider.galleryList.data[imageId].imgId;
+                              _itemEntryProvider!.fiveImageId =
+                                  provider.galleryList.data![imageId].imgId!;
                             }
                           }
                         }
 
                         return ImageUploadHorizontalList(
-                          flag: widget.flag,
+                          flag: widget.flag!,
                           images: images,
-                          selectedImageList: galleryProvider.selectedImageList,
+                          selectedImageList: galleryProvider!.selectedImageList,
                           updateImages: updateImages,
                           updateImagesFromCustomCamera:
                               updateImagesFromCustomCamera,
-                          firstImagePath: firstSelectedImageAsset,
-                          secondImagePath: secondSelectedImageAsset,
-                          thirdImagePath: thirdSelectedImageAsset,
-                          fouthImagePath: fouthSelectedImageAsset,
-                          fifthImagePath: fifthSelectedImageAsset,
-                          firstCameraImagePath: firstCameraImagePath,
-                          secondCameraImagePath: secondCameraImagePath,
-                          thirdCameraImagePath: thirdCameraImagePath,
-                          fouthCameraImagePath: fouthCameraImagePath,
-                          fifthCameraImagePath: fifthCameraImagePath,
+                          firstImagePath: firstSelectedImageAsset!,
+                          secondImagePath: secondSelectedImageAsset!,
+                          thirdImagePath: thirdSelectedImageAsset!,
+                          fouthImagePath: fouthSelectedImageAsset!,
+                          fifthImagePath: fifthSelectedImageAsset!,
+                          firstCameraImagePath: firstCameraImagePath!,
+                          secondCameraImagePath: secondCameraImagePath!,
+                          thirdCameraImagePath: thirdCameraImagePath!,
+                          fouthCameraImagePath: fouthCameraImagePath!,
+                          fifthCameraImagePath: fifthCameraImagePath!,
                         );
                       }),
 
                       Consumer<ItemEntryProvider>(builder:
                           (BuildContext context, ItemEntryProvider provider,
-                              Widget child) {
+                              Widget? child) {
                         if (provider != null &&
                             provider.item != null &&
                             provider.item.id != null) {
                           if (bindDataFirstTime) {
-                            userInputListingTitle.text = provider.item.title;
-                            userInputBrand.text = provider.item.brand;
+                            userInputListingTitle.text = provider.item.title!;
+                            userInputBrand.text = provider.item.brand!;
                             userInputHighLightInformation.text =
-                                provider.item.highlightInformation;
+                                provider.item.highlightInformation!;
                             userInputDescription.text =
-                                provider.item.description;
+                                provider.item.description!;
                             userInputDealOptionText.text =
-                                provider.item.dealOptionRemark;
-                            userInputLattitude.text = provider.item.lat;
-                            userInputLongitude.text = provider.item.lng;
-                            userInputAddress.text = provider.item.address;
-                            userInputPrice.text = provider.item.price;
+                                provider.item.dealOptionRemark!;
+                            userInputLattitude.text = provider.item.lat!;
+                            userInputLongitude.text = provider.item.lng!;
+                            userInputAddress.text = provider.item.address!;
+                            userInputPrice.text = provider.item.price!;
                             categoryController.text =
-                                provider.item.category.catName;
+                                provider.item.category!.catName!;
                             subCategoryController.text =
-                                provider.item.subCategory.name;
-                            typeController.text = provider.item.itemType.name;
+                                provider.item.subCategory!.name!;
+                            typeController.text = provider.item.itemType!.name!;
                             itemConditionController.text =
-                                provider.item.conditionOfItem.name;
+                                provider.item.conditionOfItem!.name!;
                             priceTypeController.text =
-                                provider.item.itemPriceType.name;
+                                provider.item.itemPriceType!.name!;
                             priceController.text =
-                                provider.item.itemCurrency.currencySymbol;
+                                provider.item.itemCurrency!.currencySymbol!;
                             dealOptionController.text =
-                                provider.item.dealOption.name;
+                                provider.item.dealOption!.name!;
                             locationController.text =
-                                provider.item.itemLocation.name;
+                                provider.item.itemLocation!.name!;
 
-                            provider.categoryId = provider.item.category.catId;
+                            provider.categoryId = provider.item.category!.catId!;
                             provider.subCategoryId =
-                                provider.item.subCategory.id;
-                            provider.itemTypeId = provider.item.itemType.id;
+                                provider.item.subCategory!.id!;
+                            provider.itemTypeId = provider.item.itemType!.id!;
                             provider.itemConditionId =
-                                provider.item.conditionOfItem.id;
+                                provider.item.conditionOfItem!.id!;
                             provider.itemCurrencyId =
-                                provider.item.itemCurrency.id;
+                                provider.item.itemCurrency!.id!;
                             provider.itemDealOptionId =
-                                provider.item.dealOption.id;
+                                provider.item.dealOption!.id!;
                             provider.itemLocationId =
-                                provider.item.itemLocation.id;
+                                provider.item.itemLocation!.id!;
                             provider.itemPriceTypeId =
-                                provider.item.itemPriceType.id;
+                                provider.item.itemPriceType!.id!;
                             bindDataFirstTime = false;
 
                             if (provider.item.businessMode == '1') {
@@ -666,11 +666,11 @@ class _ItemEntryViewState extends State<ItemEntryView> {
                           userInputPrice: userInputPrice,
                           mapController: mapController,
                           zoom: zoom,
-                          flag: widget.flag,
-                          item: widget.item,
+                          flag: widget.flag!,
+                          item: widget.item!,
                           provider: provider,
-                          galleryProvider: galleryProvider,
-                          latlng: latlng,
+                          galleryProvider: galleryProvider!,
+                          latlng: latlng!,
                           uploadImage: (String itemId) {
                             if (isSelectedFirstImagePath ||
                                 isSelectedSecondImagePath ||
@@ -690,8 +690,8 @@ class _ItemEntryViewState extends State<ItemEntryView> {
                     ],
                   ),
                 ),
-                builder: (BuildContext context, Widget child) {
-                  return child;
+                builder: (BuildContext context, Widget? child) {
+                  return child!;
                 }),
           )),
     );
@@ -700,7 +700,7 @@ class _ItemEntryViewState extends State<ItemEntryView> {
 
 class AllControllerTextWidget extends StatefulWidget {
   const AllControllerTextWidget(
-      {Key key,
+      {Key? key,
       this.userInputListingTitle,
       this.categoryController,
       this.subCategoryController,
@@ -738,42 +738,42 @@ class AllControllerTextWidget extends StatefulWidget {
       this.fiveImageId})
       : super(key: key);
 
-  final TextEditingController userInputListingTitle;
-  final TextEditingController categoryController;
-  final TextEditingController subCategoryController;
-  final TextEditingController typeController;
-  final TextEditingController itemConditionController;
-  final TextEditingController userInputBrand;
-  final TextEditingController priceTypeController;
-  final TextEditingController priceController;
-  final TextEditingController userInputHighLightInformation;
-  final TextEditingController userInputDescription;
-  final TextEditingController dealOptionController;
-  final TextEditingController userInputDealOptionText;
-  final TextEditingController locationController;
-  final TextEditingController userInputLattitude;
-  final TextEditingController userInputLongitude;
-  final TextEditingController userInputAddress;
-  final TextEditingController userInputPrice;
-  final MapController mapController;
-  final ItemEntryProvider provider;
-  final double zoom;
-  final String flag;
-  final Product item;
-  final LatLng latlng;
-  final Function uploadImage;
-  final bool isSelectedFirstImagePath;
-  final bool isSelectedSecondImagePath;
-  final bool isSelectedThirdImagePath;
-  final bool isSelectedFouthImagePath;
-  final bool isSelectedFifthImagePath;
+  final TextEditingController? userInputListingTitle;
+  final TextEditingController? categoryController;
+  final TextEditingController? subCategoryController;
+  final TextEditingController? typeController;
+  final TextEditingController? itemConditionController;
+  final TextEditingController? userInputBrand;
+  final TextEditingController? priceTypeController;
+  final TextEditingController? priceController;
+  final TextEditingController? userInputHighLightInformation;
+  final TextEditingController? userInputDescription;
+  final TextEditingController? dealOptionController;
+  final TextEditingController? userInputDealOptionText;
+  final TextEditingController? locationController;
+  final TextEditingController? userInputLattitude;
+  final TextEditingController? userInputLongitude;
+  final TextEditingController? userInputAddress;
+  final TextEditingController? userInputPrice;
+  final MapController? mapController;
+  final ItemEntryProvider? provider;
+  final double? zoom;
+  final String? flag;
+  final Product? item;
+  final LatLng? latlng;
+  final Function? uploadImage;
+  final bool? isSelectedFirstImagePath;
+  final bool? isSelectedSecondImagePath;
+  final bool? isSelectedThirdImagePath;
+  final bool? isSelectedFouthImagePath;
+  final bool? isSelectedFifthImagePath;
 
-  final String firstImageId;
-  final String secondImageId;
-  final String thirdImageId;
-  final String fourthImageId;
-  final String fiveImageId;
-  final GalleryProvider galleryProvider;
+  final String? firstImageId;
+  final String? secondImageId;
+  final String? thirdImageId;
+  final String? fourthImageId;
+  final String? fiveImageId;
+  final GalleryProvider? galleryProvider;
 
   @override
   _AllControllerTextWidgetState createState() =>
@@ -781,9 +781,9 @@ class AllControllerTextWidget extends StatefulWidget {
 }
 
 class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
-  LatLng _latlng;
-  PsValueHolder valueHolder;
-  ItemEntryProvider itemEntryProvider;
+  LatLng? _latlng;
+  PsValueHolder? valueHolder;
+  ItemEntryProvider? itemEntryProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -791,16 +791,16 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
     valueHolder = Provider.of<PsValueHolder>(context, listen: false);
     _latlng ??= widget.latlng;
     ((widget.flag == PsConst.ADD_NEW_ITEM &&
-                widget.locationController.text ==
-                    itemEntryProvider.psValueHolder.locactionName) ||
+                widget.locationController!.text ==
+                    itemEntryProvider!.psValueHolder.locactionName) ||
             (widget.flag == PsConst.ADD_NEW_ITEM &&
-                widget.locationController.text.isEmpty))
-        ? widget.locationController.text =
-            itemEntryProvider.psValueHolder.locactionName
+                widget.locationController!.text.isEmpty))
+        ? widget.locationController!.text =
+            itemEntryProvider!.psValueHolder.locactionName
         : Container();
-    if (itemEntryProvider.item != null && widget.flag == PsConst.EDIT_ITEM) {
-      _latlng = LatLng(double.parse(itemEntryProvider.item.lat),
-          double.parse(itemEntryProvider.item.lng));
+    if (itemEntryProvider!.item != null && widget.flag == PsConst.EDIT_ITEM) {
+      _latlng = LatLng(double.parse(itemEntryProvider!.item.lat!),
+          double.parse(itemEntryProvider!.item.lng!));
     }
 
     final Widget _uploadItemWidget = Container(
@@ -816,12 +816,12 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
           width: double.infinity,
           titleText: Utils.getString(context, 'login__submit'),
           onPressed: () async {
-            if (!widget.isSelectedFirstImagePath &&
-                !widget.isSelectedSecondImagePath &&
-                !widget.isSelectedThirdImagePath &&
-                !widget.isSelectedFouthImagePath &&
-                !widget.isSelectedFifthImagePath &&
-                widget.galleryProvider.galleryList.data.isEmpty) {
+            if (!widget.isSelectedFirstImagePath! &&
+                !widget.isSelectedSecondImagePath! &&
+                !widget.isSelectedThirdImagePath! &&
+                !widget.isSelectedFouthImagePath! &&
+                !widget.isSelectedFifthImagePath! &&
+                widget.galleryProvider!.galleryList.data!.isEmpty) {
               showDialog<dynamic>(
                   context: context,
                   builder: (BuildContext context) {
@@ -831,8 +831,8 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                       onPressed: () {},
                     );
                   });
-            } else if (widget.userInputListingTitle.text == null ||
-                widget.userInputListingTitle.text == '') {
+            } else if (widget.userInputListingTitle!.text == null ||
+                widget.userInputListingTitle!.text == '') {
               showDialog<dynamic>(
                   context: context,
                   builder: (BuildContext context) {
@@ -842,8 +842,8 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                       onPressed: () {},
                     );
                   });
-            } else if (widget.categoryController.text == null ||
-                widget.categoryController.text == '') {
+            } else if (widget.categoryController!.text == null ||
+                widget.categoryController!.text == '') {
               showDialog<dynamic>(
                   context: context,
                   builder: (BuildContext context) {
@@ -853,8 +853,8 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                       onPressed: () {},
                     );
                   });
-            } else if (widget.subCategoryController.text == null ||
-                widget.subCategoryController.text == '') {
+            } else if (widget.subCategoryController!.text == null ||
+                widget.subCategoryController!.text == '') {
               showDialog<dynamic>(
                   context: context,
                   builder: (BuildContext context) {
@@ -864,8 +864,8 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                       onPressed: () {},
                     );
                   });
-            } else if (widget.typeController.text == null ||
-                widget.typeController.text == '') {
+            } else if (widget.typeController!.text == null ||
+                widget.typeController!.text == '') {
               showDialog<dynamic>(
                   context: context,
                   builder: (BuildContext context) {
@@ -874,8 +874,8 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                       onPressed: () {},
                     );
                   });
-            } else if (widget.itemConditionController.text == null ||
-                widget.itemConditionController.text == '') {
+            } else if (widget.itemConditionController!.text == null ||
+                widget.itemConditionController!.text == '') {
               showDialog<dynamic>(
                   context: context,
                   builder: (BuildContext context) {
@@ -885,8 +885,8 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                       onPressed: () {},
                     );
                   });
-            } else if (widget.priceController.text == null ||
-                widget.priceController.text == '') {
+            } else if (widget.priceController!.text == null ||
+                widget.priceController!.text == '') {
               showDialog<dynamic>(
                   context: context,
                   builder: (BuildContext context) {
@@ -896,8 +896,8 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                       onPressed: () {},
                     );
                   });
-            } else if (widget.userInputPrice.text == null ||
-                widget.userInputPrice.text == '') {
+            } else if (widget.userInputPrice!.text == null ||
+                widget.userInputPrice!.text == '') {
               showDialog<dynamic>(
                   context: context,
                   builder: (BuildContext context) {
@@ -907,8 +907,8 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                       onPressed: () {},
                     );
                   });
-            } else if (widget.userInputDescription.text == null ||
-                widget.userInputDescription.text == '') {
+            } else if (widget.userInputDescription!.text == null ||
+                widget.userInputDescription!.text == '') {
               showDialog<dynamic>(
                   context: context,
                   builder: (BuildContext context) {
@@ -918,8 +918,8 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                       onPressed: () {},
                     );
                   });
-            } else if (widget.dealOptionController.text == null ||
-                widget.dealOptionController.text == '') {
+            } else if (widget.dealOptionController!.text == null ||
+                widget.dealOptionController!.text == '') {
               showDialog<dynamic>(
                   context: context,
                   builder: (BuildContext context) {
@@ -929,10 +929,10 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                       onPressed: () {},
                     );
                   });
-            } else if (widget.userInputLattitude.text == PsConst.ZERO ||
-                widget.userInputLattitude.text == PsConst.ZERO ||
-                widget.userInputLattitude.text == PsConst.INVALID_LAT_LNG ||
-                widget.userInputLattitude.text == PsConst.INVALID_LAT_LNG) {
+            } else if (widget.userInputLattitude!.text == PsConst.ZERO ||
+                widget.userInputLattitude!.text == PsConst.ZERO ||
+                widget.userInputLattitude!.text == PsConst.INVALID_LAT_LNG ||
+                widget.userInputLattitude!.text == PsConst.INVALID_LAT_LNG) {
               showDialog<dynamic>(
                   context: context,
                   builder: (BuildContext context) {
@@ -953,43 +953,43 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                 //add new
                 final ItemEntryParameterHolder itemEntryParameterHolder =
                     ItemEntryParameterHolder(
-                  catId: widget.provider.categoryId,
-                  subCatId: widget.provider.subCategoryId,
-                  itemTypeId: widget.provider.itemTypeId,
-                  conditionOfItemId: widget.provider.itemConditionId,
-                  itemPriceTypeId: widget.provider.itemPriceTypeId,
-                  itemCurrencyId: widget.provider.itemCurrencyId,
-                  price: widget.userInputPrice.text,
-                  dealOptionId: widget.provider.itemDealOptionId,
-                  itemLocationId: widget.provider.itemLocationId,
-                  businessMode: widget.provider.checkOrNotShop,
+                  catId: widget.provider!.categoryId,
+                  subCatId: widget.provider!.subCategoryId,
+                  itemTypeId: widget.provider!.itemTypeId,
+                  conditionOfItemId: widget.provider!.itemConditionId,
+                  itemPriceTypeId: widget.provider!.itemPriceTypeId,
+                  itemCurrencyId: widget.provider!.itemCurrencyId,
+                  price: widget.userInputPrice!.text,
+                  dealOptionId: widget.provider!.itemDealOptionId,
+                  itemLocationId: widget.provider!.itemLocationId,
+                  businessMode: widget.provider!.checkOrNotShop,
                   isSoldOut: '', //must be ''
-                  title: widget.userInputListingTitle.text,
-                  brand: widget.userInputBrand.text,
+                  title: widget.userInputListingTitle!.text,
+                  brand: widget.userInputBrand!.text,
                   highlightInfomation:
-                      widget.userInputHighLightInformation.text,
-                  description: widget.userInputDescription.text,
-                  dealOptionRemark: widget.userInputDealOptionText.text,
-                  latitude: widget.userInputLattitude.text,
-                  longitude: widget.userInputLongitude.text,
-                  address: widget.userInputAddress.text,
-                  id: widget.provider.itemId, //must be '' <<< ID
-                  addedUserId: widget.provider.psValueHolder.loginUserId,
+                      widget.userInputHighLightInformation!.text,
+                  description: widget.userInputDescription!.text,
+                  dealOptionRemark: widget.userInputDealOptionText!.text,
+                  latitude: widget.userInputLattitude!.text,
+                  longitude: widget.userInputLongitude!.text,
+                  address: widget.userInputAddress!.text,
+                  id: widget.provider!.itemId, //must be '' <<< ID
+                  addedUserId: widget.provider!.psValueHolder.loginUserId,
                 );
 
-                final PsResource<Product> itemData = await widget.provider
+                final PsResource<Product> itemData = await widget.provider!
                     .postItemEntry(itemEntryParameterHolder.toMap());
                 PsProgressDialog.dismissDialog();
 
                 if (itemData.status == PsStatus.SUCCESS) {
-                  widget.provider.itemId = itemData.data.id;
+                  widget.provider!.itemId = itemData.data!.id!;
                   if (itemData.data != null) {
-                    if (widget.isSelectedFirstImagePath ||
-                        widget.isSelectedSecondImagePath ||
-                        widget.isSelectedThirdImagePath ||
-                        widget.isSelectedFouthImagePath ||
-                        widget.isSelectedFifthImagePath) {
-                      widget.uploadImage(itemData.data.id);
+                    if (widget.isSelectedFirstImagePath! ||
+                        widget.isSelectedSecondImagePath! ||
+                        widget.isSelectedThirdImagePath! ||
+                        widget.isSelectedFouthImagePath! ||
+                        widget.isSelectedFifthImagePath!) {
+                      widget.uploadImage!(itemData.data!.id!);
                     }
                   }
                 } else {
@@ -997,7 +997,7 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                       context: context,
                       builder: (BuildContext context) {
                         return ErrorDialog(
-                          message: itemData.message,
+                          message: itemData.message!,
                         );
                       });
                 }
@@ -1006,31 +1006,31 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
 
                 final ItemEntryParameterHolder itemEntryParameterHolder =
                     ItemEntryParameterHolder(
-                  catId: widget.provider.categoryId,
-                  subCatId: widget.provider.subCategoryId,
-                  itemTypeId: widget.provider.itemTypeId,
-                  conditionOfItemId: widget.provider.itemConditionId,
-                  itemPriceTypeId: widget.provider.itemPriceTypeId,
-                  itemCurrencyId: widget.provider.itemCurrencyId,
-                  price: widget.userInputPrice.text,
-                  dealOptionId: widget.provider.itemDealOptionId,
-                  itemLocationId: widget.provider.itemLocationId,
-                  businessMode: widget.provider.checkOrNotShop,
-                  isSoldOut: widget.item.isSoldOut,
-                  title: widget.userInputListingTitle.text,
-                  brand: widget.userInputBrand.text,
+                  catId: widget.provider!.categoryId,
+                  subCatId: widget.provider!.subCategoryId,
+                  itemTypeId: widget.provider!.itemTypeId,
+                  conditionOfItemId: widget.provider!.itemConditionId,
+                  itemPriceTypeId: widget.provider!.itemPriceTypeId,
+                  itemCurrencyId: widget.provider!.itemCurrencyId,
+                  price: widget.userInputPrice!.text,
+                  dealOptionId: widget.provider!.itemDealOptionId,
+                  itemLocationId: widget.provider!.itemLocationId,
+                  businessMode: widget.provider!.checkOrNotShop,
+                  isSoldOut: widget.item!.isSoldOut,
+                  title: widget.userInputListingTitle!.text,
+                  brand: widget.userInputBrand!.text,
                   highlightInfomation:
-                      widget.userInputHighLightInformation.text,
-                  description: widget.userInputDescription.text,
-                  dealOptionRemark: widget.userInputDealOptionText.text,
-                  latitude: widget.userInputLattitude.text,
-                  longitude: widget.userInputLongitude.text,
-                  address: widget.userInputAddress.text,
-                  id: widget.item.id,
-                  addedUserId: widget.provider.psValueHolder.loginUserId,
+                      widget.userInputHighLightInformation!.text,
+                  description: widget.userInputDescription!.text,
+                  dealOptionRemark: widget.userInputDealOptionText!.text,
+                  latitude: widget.userInputLattitude!.text,
+                  longitude: widget.userInputLongitude!.text,
+                  address: widget.userInputAddress!.text,
+                  id: widget.item!.id,
+                  addedUserId: widget.provider!.psValueHolder.loginUserId,
                 );
 
-                final PsResource<Product> itemData = await widget.provider
+                final PsResource<Product> itemData = await widget.provider!
                     .postItemEntry(itemEntryParameterHolder.toMap());
                 PsProgressDialog.dismissDialog();
 
@@ -1044,12 +1044,12 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                         backgroundColor: Colors.blueGrey,
                         textColor: Colors.white);
 
-                    if (widget.isSelectedFirstImagePath ||
-                        widget.isSelectedSecondImagePath ||
-                        widget.isSelectedThirdImagePath ||
-                        widget.isSelectedFouthImagePath ||
-                        widget.isSelectedFifthImagePath) {
-                      widget.uploadImage(itemData.data.id);
+                    if (widget.isSelectedFirstImagePath! ||
+                        widget.isSelectedSecondImagePath! ||
+                        widget.isSelectedThirdImagePath! ||
+                        widget.isSelectedFouthImagePath! ||
+                        widget.isSelectedFifthImagePath!) {
+                      widget.uploadImage!(itemData.data!.id!);
                     }
                   }
                 } else {
@@ -1057,7 +1057,7 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                       context: context,
                       builder: (BuildContext context) {
                         return ErrorDialog(
-                          message: itemData.message,
+                          message: itemData.message!,
                         );
                       });
                 }
@@ -1087,13 +1087,13 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
               await Navigator.pushNamed(context, RoutePaths.searchCategory);
 
           if (categoryResult != null && categoryResult is Category) {
-            provider.categoryId = categoryResult.catId;
-            widget.categoryController.text = categoryResult.catName;
+            provider.categoryId = categoryResult.catId!;
+            widget.categoryController!.text = categoryResult.catName!;
             provider.subCategoryId = '';
 
             setState(() {
-              widget.categoryController.text = categoryResult.catName;
-              widget.subCategoryController.text = '';
+              widget.categoryController!.text = categoryResult.catName!;
+              widget.subCategoryController!.text = '';
             });
           }
         },
@@ -1112,9 +1112,9 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                   arguments: provider.categoryId);
               if (subCategoryResult != null &&
                   subCategoryResult is SubCategory) {
-                provider.subCategoryId = subCategoryResult.id;
+                provider.subCategoryId = subCategoryResult.id!;
 
-                widget.subCategoryController.text = subCategoryResult.name;
+                widget.subCategoryController!.text = subCategoryResult.name!;
               }
             } else {
               showDialog<dynamic>(
@@ -1141,10 +1141,10 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                 await Navigator.pushNamed(context, RoutePaths.itemType);
 
             if (itemTypeResult != null && itemTypeResult is ItemType) {
-              provider.itemTypeId = itemTypeResult.id;
+              provider.itemTypeId = itemTypeResult.id!;
 
               setState(() {
-                widget.typeController.text = itemTypeResult.name;
+                widget.typeController!.text = itemTypeResult.name!;
               });
             }
           }),
@@ -1162,10 +1162,10 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
 
             if (itemConditionResult != null &&
                 itemConditionResult is ConditionOfItem) {
-              provider.itemConditionId = itemConditionResult.id;
+              provider.itemConditionId = itemConditionResult.id!;
 
               setState(() {
-                widget.itemConditionController.text = itemConditionResult.name;
+                widget.itemConditionController!.text = itemConditionResult.name!;
               });
             }
           }),
@@ -1187,18 +1187,18 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
 
             if (itemPriceTypeResult != null &&
                 itemPriceTypeResult is ItemPriceType) {
-              provider.itemPriceTypeId = itemPriceTypeResult.id;
+              provider.itemPriceTypeId = itemPriceTypeResult.id!;
               // provider.subCategoryId = '';
 
               setState(() {
-                widget.priceTypeController.text = itemPriceTypeResult.name;
+                widget.priceTypeController!.text = itemPriceTypeResult.name!;
                 // provider.selectedSubCategoryName = '';
               });
             }
           }),
       PriceDropDownControllerWidget(
-          currencySymbolController: widget.priceController,
-          userInputPriceController: widget.userInputPrice),
+          currencySymbolController: widget.priceController!,
+          userInputPriceController: widget.userInputPrice!),
       const SizedBox(height: PsDimens.space8),
       Column(
         // mainAxisAlignment: MainAxisAlignment.start,
@@ -1216,10 +1216,10 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                 style: Theme.of(context).textTheme.bodyText2),
           ),
           BusinessModeCheckbox(
-            provider: widget.provider,
+            provider: widget.provider!,
             onCheckBoxClick: () {
               setState(() {
-                updateCheckBox(context, widget.provider);
+                updateCheckBox(context, widget.provider!);
               });
             },
           ),
@@ -1264,11 +1264,11 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
 
                 if (itemDealOptionResult != null &&
                     itemDealOptionResult is DealOption) {
-                  provider.itemDealOptionId = itemDealOptionResult.id;
+                  provider.itemDealOptionId = itemDealOptionResult.id!;
 
                   setState(() {
-                    widget.dealOptionController.text =
-                        itemDealOptionResult.name;
+                    widget.dealOptionController!.text =
+                        itemDealOptionResult.name!;
                   });
                 }
               }),
@@ -1285,7 +1285,7 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
               borderRadius: BorderRadius.circular(PsDimens.space4),
               border: Border.all(
                   color: Utils.isLightMode(context)
-                      ? Colors.grey[200]
+                      ? Colors.grey.shade200
                       : Colors.black87),
             ),
             child: TextField(
@@ -1302,7 +1302,7 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                 hintText: Utils.getString(context, 'item_entry__remark'),
                 hintStyle: Theme.of(context)
                     .textTheme
-                    .bodyText2
+                    .bodyText2!
                     .copyWith(color: PsColors.textPrimaryLightColor),
               ),
             ),
@@ -1331,33 +1331,33 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
 
             if (itemLocationResult != null &&
                 itemLocationResult is ItemLocation) {
-              provider.itemLocationId = itemLocationResult.id;
+              provider.itemLocationId = itemLocationResult.id!;
               setState(() {
-                widget.locationController.text = itemLocationResult.name;
-                _latlng = LatLng(double.parse(itemLocationResult.lat),
-                    double.parse(itemLocationResult.lng));
+                widget.locationController!.text = itemLocationResult.name!;
+                _latlng = LatLng(double.parse(itemLocationResult.lat!),
+                    double.parse(itemLocationResult.lng!));
 
-                widget.mapController.move(_latlng, widget.zoom);
+                widget.mapController!.move(_latlng, widget.zoom);
 
-                widget.userInputLattitude.text = itemLocationResult.lat;
-                widget.userInputLongitude.text = itemLocationResult.lng;
+                widget.userInputLattitude!.text = itemLocationResult.lat!;
+                widget.userInputLongitude!.text = itemLocationResult.lng!;
 
-                widget.userInputAddress.text = '';
+                widget.userInputAddress!.text = '';
               });
             }
           }),
       CurrentLocationWidget(
         androidFusedLocation: true,
-        textEditingController: widget.userInputAddress,
-        latController: widget.userInputLattitude,
-        lngController: widget.userInputLongitude,
-        valueHolder: valueHolder,
+        textEditingController: widget.userInputAddress!,
+        latController: widget.userInputLattitude!,
+        lngController: widget.userInputLongitude!,
+        valueHolder: valueHolder!,
         updateLatLng: (Position currentPosition) {
           if (currentPosition != null) {
             setState(() {
               _latlng =
                   LatLng(currentPosition.latitude, currentPosition.longitude);
-              widget.mapController.move(_latlng, widget.zoom);
+              widget.mapController!.move(_latlng, widget.zoom);
             });
           }
         },
@@ -1374,7 +1374,7 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
                 zoom: widget.zoom, //10.0,
                 onTap: (LatLng latLngr) {
                   FocusScope.of(context).requestFocus(FocusNode());
-                  _handleTap(_latlng, widget.mapController);
+                  _handleTap(_latlng!, widget.mapController!);
                 }),
             layers: <LayerOptions>[
               TileLayerOptions(
@@ -1426,40 +1426,40 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
     final dynamic result = await Navigator.pushNamed(context, RoutePaths.mapPin,
         arguments: MapPinIntentHolder(
             flag: PsConst.PIN_MAP,
-            mapLat: _latlng.latitude.toString(),
-            mapLng: _latlng.longitude.toString()));
+            mapLat: _latlng!.latitude.toString(),
+            mapLng: _latlng!.longitude.toString()));
     if (result != null && result is MapPinCallBackHolder) {
       setState(() {
         _latlng = result.latLng;
         mapController.move(_latlng, widget.zoom);
-        widget.userInputAddress.text = result.address;
-        widget.userInputAddress.text = '';
+        widget.userInputAddress!.text = result.address!;
+        widget.userInputAddress!.text = '';
         // tappedPoints = <LatLng>[];
         // tappedPoints.add(latlng);
       });
-      widget.userInputLattitude.text = result.latLng.latitude.toString();
-      widget.userInputLongitude.text = result.latLng.longitude.toString();
+      widget.userInputLattitude!.text = result.latLng!.latitude.toString();
+      widget.userInputLongitude!.text = result.latLng!.longitude.toString();
     }
   }
 }
 
 class ImageUploadHorizontalList extends StatefulWidget {
   const ImageUploadHorizontalList(
-      {@required this.flag,
-      @required this.images,
-      @required this.selectedImageList,
-      @required this.updateImages,
-      @required this.updateImagesFromCustomCamera,
-      @required this.firstImagePath,
-      @required this.secondImagePath,
-      @required this.thirdImagePath,
-      @required this.fouthImagePath,
-      @required this.fifthImagePath,
-      @required this.firstCameraImagePath,
-      @required this.secondCameraImagePath,
-      @required this.thirdCameraImagePath,
-      @required this.fouthCameraImagePath,
-      @required this.fifthCameraImagePath});
+      {required this.flag,
+      required this.images,
+      required this.selectedImageList,
+      required this.updateImages,
+      required this.updateImagesFromCustomCamera,
+      required this.firstImagePath,
+      required this.secondImagePath,
+      required this.thirdImagePath,
+      required this.fouthImagePath,
+      required this.fifthImagePath,
+      required this.firstCameraImagePath,
+      required this.secondCameraImagePath,
+      required this.thirdCameraImagePath,
+      required this.fouthCameraImagePath,
+      required this.fifthCameraImagePath});
   final String flag;
   final List<Asset> images;
   final List<DefaultPhoto> selectedImageList;
@@ -1482,7 +1482,7 @@ class ImageUploadHorizontalList extends StatefulWidget {
 }
 
 class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
-  ItemEntryProvider provider;
+  ItemEntryProvider? provider;
   Future<void> loadPickMultiImage() async {
     List<Asset> resultList = <Asset>[];
 
@@ -1493,15 +1493,15 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
         // selectedAssets: widget.images,
         cupertinoOptions: const CupertinoOptions(takePhotoIcon: 'chat'),
         materialOptions: MaterialOptions(
-          actionBarColor: Utils.convertColorToString(PsColors.black),
-          actionBarTitleColor: Utils.convertColorToString(PsColors.white),
-          statusBarColor: Utils.convertColorToString(PsColors.black),
+          actionBarColor: Utils.convertColorToString(PsColors.black!),
+          actionBarTitleColor: Utils.convertColorToString(PsColors.white!),
+          statusBarColor: Utils.convertColorToString(PsColors.black!),
           lightStatusBar: false,
           actionBarTitle: '',
           allViewTitle: 'All Photos',
           useDetailsView: false,
           selectCircleStrokeColor:
-              Utils.convertColorToString(PsColors.mainColor),
+              Utils.convertColorToString(PsColors.mainColor!),
         ),
       );
     } on Exception catch (e) {
@@ -1540,15 +1540,15 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
         selectedAssets: widget.images, //widget.images,
         cupertinoOptions: const CupertinoOptions(takePhotoIcon: 'chat'),
         materialOptions: MaterialOptions(
-          actionBarColor: Utils.convertColorToString(PsColors.black),
-          actionBarTitleColor: Utils.convertColorToString(PsColors.white),
-          statusBarColor: Utils.convertColorToString(PsColors.black),
+          actionBarColor: Utils.convertColorToString(PsColors.black!),
+          actionBarTitleColor: Utils.convertColorToString(PsColors.white!),
+          statusBarColor: Utils.convertColorToString(PsColors.black!),
           lightStatusBar: false,
           actionBarTitle: '',
           allViewTitle: 'All Photos',
           useDetailsView: false,
           selectCircleStrokeColor:
-              Utils.convertColorToString(PsColors.mainColor),
+              Utils.convertColorToString(PsColors.mainColor!),
         ),
       );
     } on Exception catch (e) {
@@ -1577,7 +1577,7 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
 
   @override
   Widget build(BuildContext context) {
-    Asset defaultAssetImage;
+    Asset? defaultAssetImage;
     DefaultPhoto defaultUrlImage;
     provider = Provider.of<ItemEntryProvider>(context, listen: false);
 
@@ -1594,7 +1594,7 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
                   images: (widget.firstImagePath != null)
                       ? widget.firstImagePath
                       : defaultAssetImage,
-                  cameraImagePath: (widget.firstCameraImagePath != null)
+                  cameraImagePath: (widget.firstCameraImagePath != nul)
                       ? widget.firstCameraImagePath
                       : defaultAssetImage,
                   selectedImage: (widget.selectedImageList.isNotEmpty &&
@@ -1605,7 +1605,7 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
                   // (widget.firstImagePath != null) ? null : defaultUrlImage,
                   onTap: () {
                     FocusScope.of(context).requestFocus(FocusNode());
-                    if (provider.psValueHolder.isCustomCamera ?? true) {
+                    if (provider!.psValueHolder.isCustomCamera ?? true) {
                       showDialog<dynamic>(
                           context: context,
                           builder: (BuildContext context) {
@@ -1655,7 +1655,7 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
                   onTap: () {
                     FocusScope.of(context).requestFocus(FocusNode());
 
-                    if (provider.psValueHolder.isCustomCamera ?? true) {
+                    if (provider!.psValueHolder.isCustomCamera ?? true) {
                       showDialog<dynamic>(
                           context: context,
                           builder: (BuildContext context) {
@@ -1705,7 +1705,7 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
                   onTap: () {
                     FocusScope.of(context).requestFocus(FocusNode());
 
-                    if (provider.psValueHolder.isCustomCamera ?? true) {
+                    if (provider?.psValueHolder.isCustomCamera ?? true) {
                       showDialog<dynamic>(
                           context: context,
                           builder: (BuildContext context) {
@@ -1755,7 +1755,7 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
                   onTap: () {
                     FocusScope.of(context).requestFocus(FocusNode());
 
-                    if (provider.psValueHolder.isCustomCamera ?? true) {
+                    if (provider!.psValueHolder.isCustomCamera ?? true) {
                       showDialog<dynamic>(
                           context: context,
                           builder: (BuildContext context) {
@@ -1806,7 +1806,7 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
                           : null,
                   onTap: () {
                     FocusScope.of(context).requestFocus(FocusNode());
-                    if (provider.psValueHolder.isCustomCamera ?? true) {
+                    if (provider!.psValueHolder.isCustomCamera ?? true) {
                       showDialog<dynamic>(
                           context: context,
                           builder: (BuildContext context) {
@@ -1847,15 +1847,15 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
 
 class ItemEntryImageWidget extends StatefulWidget {
   const ItemEntryImageWidget({
-    Key key,
-    @required this.index,
-    @required this.images,
-    @required this.cameraImagePath,
-    @required this.selectedImage,
+    Key? key,
+    required this.index,
+    required this.images,
+    required this.cameraImagePath,
+    required this.selectedImage,
     this.onTap,
   }) : super(key: key);
 
-  final Function onTap;
+  final VoidCallback? onTap;
   final int index;
   final Asset images;
   final String cameraImagePath;
@@ -1882,7 +1882,7 @@ class ItemEntryImageWidgetState extends State<ItemEntryImageWidget> {
               photoKey: '',
               // width: 100,
               // height: 100,
-              imagePath: widget.selectedImage.imgPath,
+              imagePath: widget.selectedImage.imgPath!,
             ),
           ),
         ),
@@ -1931,14 +1931,14 @@ class ItemEntryImageWidgetState extends State<ItemEntryImageWidget> {
 
 class PriceDropDownControllerWidget extends StatelessWidget {
   const PriceDropDownControllerWidget(
-      {Key key,
+      {Key? key,
       // @required this.onTap,
       this.currencySymbolController,
       this.userInputPriceController})
       : super(key: key);
 
-  final TextEditingController currencySymbolController;
-  final TextEditingController userInputPriceController;
+  final TextEditingController? currencySymbolController;
+  final TextEditingController? userInputPriceController;
   // final Function onTap;
 
   @override
@@ -1960,7 +1960,7 @@ class PriceDropDownControllerWidget extends StatelessWidget {
               Text(' *',
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText2
+                      .bodyText2!
                       .copyWith(color: PsColors.mainColor))
             ],
           ),
@@ -1980,10 +1980,10 @@ class PriceDropDownControllerWidget extends StatelessWidget {
 
                 if (itemCurrencySymbolResult != null &&
                     itemCurrencySymbolResult is ItemCurrency) {
-                  provider.itemCurrencyId = itemCurrencySymbolResult.id;
+                  provider.itemCurrencyId = itemCurrencySymbolResult.id!;
 
-                  currencySymbolController.text =
-                      itemCurrencySymbolResult.currencySymbol;
+                  currencySymbolController!.text =
+                      itemCurrencySymbolResult.currencySymbol!;
                 }
               },
               child: Container(
@@ -1997,7 +1997,7 @@ class PriceDropDownControllerWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(PsDimens.space4),
                   border: Border.all(
                       color: Utils.isLightMode(context)
-                          ? Colors.grey[200]
+                          ? Colors.grey.shade200
                           : Colors.black87),
                 ),
                 child: Container(
@@ -2010,14 +2010,14 @@ class PriceDropDownControllerWidget extends StatelessWidget {
                           child: Ink(
                             color: PsColors.backgroundColor,
                             child: Text(
-                              currencySymbolController.text == ''
+                              currencySymbolController!.text == ''
                                   ? Utils.getString(
                                       context, 'home_search__not_set')
-                                  : currencySymbolController.text,
-                              style: currencySymbolController.text == ''
+                                  : currencySymbolController!.text,
+                              style: currencySymbolController!.text == ''
                                   ? Theme.of(context)
                                       .textTheme
-                                      .bodyText2
+                                      .bodyText2!
                                       .copyWith(color: Colors.grey[600])
                                   : Theme.of(context).textTheme.bodyText1,
                             ),
@@ -2045,7 +2045,7 @@ class PriceDropDownControllerWidget extends StatelessWidget {
                   borderRadius: BorderRadius.circular(PsDimens.space4),
                   border: Border.all(
                       color: Utils.isLightMode(context)
-                          ? Colors.grey[200]
+                          ? Colors.grey.shade200
                           : Colors.black87),
                 ),
                 child: TextField(
@@ -2071,7 +2071,7 @@ class PriceDropDownControllerWidget extends StatelessWidget {
 
 class BusinessModeCheckbox extends StatefulWidget {
   const BusinessModeCheckbox(
-      {@required this.provider, @required this.onCheckBoxClick});
+      {required this.provider, required this.onCheckBoxClick});
 
   // final String checkOrNot;
   final ItemEntryProvider provider;
@@ -2091,7 +2091,7 @@ class _BusinessModeCheckbox extends State<BusinessModeCheckbox> {
           child: Checkbox(
             activeColor: PsColors.mainColor,
             value: widget.provider.isCheckBoxSelect,
-            onChanged: (bool value) {
+            onChanged: (bool? value) {
               widget.onCheckBoxClick();
             },
           ),
@@ -2124,15 +2124,15 @@ void updateCheckBox(BuildContext context, ItemEntryProvider provider) {
 
 class CurrentLocationWidget extends StatefulWidget {
   const CurrentLocationWidget({
-    Key key,
+    Key? key,
 
     /// If set, enable the FusedLocationProvider on Android
-    @required this.androidFusedLocation,
-    @required this.textEditingController,
-    @required this.latController,
-    @required this.lngController,
-    @required this.valueHolder,
-    @required this.updateLatLng,
+    required this.androidFusedLocation,
+    required this.textEditingController,
+    required this.latController,
+    required this.lngController,
+    required this.valueHolder,
+    required this.updateLatLng,
   }) : super(key: key);
 
   final bool androidFusedLocation;
@@ -2148,7 +2148,7 @@ class CurrentLocationWidget extends StatefulWidget {
 
 class _LocationState extends State<CurrentLocationWidget> {
   String address = '';
-  Position _currentPosition;
+  Position? _currentPosition;
   final MapController mapController = MapController();
 
   @override
@@ -2162,13 +2162,13 @@ class _LocationState extends State<CurrentLocationWidget> {
     if (_currentPosition != null) {
       final List<Address> addresses = await Geocoder.local
           .findAddressesFromCoordinates(Coordinates(
-              _currentPosition.latitude, _currentPosition.longitude));
+              _currentPosition!.latitude, _currentPosition!.longitude));
       final Address first = addresses.first;
       address = '${first.addressLine}, ${first.countryName}';
       setState(() {
         widget.textEditingController.text = address;
-        widget.latController.text = _currentPosition.latitude.toString();
-        widget.lngController.text = _currentPosition.longitude.toString();
+        widget.latController.text = _currentPosition!.latitude.toString();
+        widget.lngController.text = _currentPosition!.longitude.toString();
         widget.updateLatLng(_currentPosition);
       });
     }
@@ -2257,7 +2257,7 @@ class _LocationState extends State<CurrentLocationWidget> {
                     Expanded(
                       child: Text(
                         Utils.getString(context, 'item_entry_pick_location'),
-                        style: Theme.of(context).textTheme.bodyText1.copyWith(
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             letterSpacing: 0.8, fontSize: 16, height: 1.3),
                       ),
                     ),

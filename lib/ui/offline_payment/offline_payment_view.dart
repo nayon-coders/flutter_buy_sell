@@ -26,15 +26,15 @@ import 'package:flutterbuyandsell/ui/common/ps_ui_widget.dart';
 
 class OfflinePaymentView extends StatefulWidget {
   const OfflinePaymentView(
-      {Key key,
-      @required this.product,
-      @required this.amount,
-      @required this.howManyDay,
-      @required this.paymentMethod,
-      @required this.stripePublishableKey,
-      @required this.startDate,
-      @required this.startTimeStamp,
-      @required this.itemPaidHistoryProvider})
+      {Key? key,
+      required this.product,
+      required this.amount,
+      required this.howManyDay,
+      required this.paymentMethod,
+      required this.stripePublishableKey,
+      required this.startDate,
+      required this.startTimeStamp,
+      required this.itemPaidHistoryProvider})
       : super(key: key);
 
   final Product product;
@@ -56,13 +56,13 @@ class _OfflinePaymentViewState extends State<OfflinePaymentView>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  OfflinePaymentMethodProvider _notiProvider;
+  OfflinePaymentMethodProvider? _notiProvider;
 
-  AnimationController animationController;
+  AnimationController? animationController;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -74,13 +74,13 @@ class _OfflinePaymentViewState extends State<OfflinePaymentView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _notiProvider.nextOfflinePaymentList();
+        _notiProvider!.nextOfflinePaymentList();
       }
     });
   }
 
-  OfflinePaymentMethodRepository repo1;
-  PsValueHolder psValueHolder;
+  OfflinePaymentMethodRepository? repo1;
+  PsValueHolder? psValueHolder;
   bool isConnectedToInternet = false;
   bool isSuccessfullyLoaded = true;
 
@@ -141,7 +141,7 @@ class _OfflinePaymentViewState extends State<OfflinePaymentView>
           context: context,
           builder: (BuildContext context) {
             return ErrorDialog(
-              message: padiHistoryDataStatus.message,
+              message: padiHistoryDataStatus.message!,
             );
           });
     }
@@ -164,7 +164,7 @@ class _OfflinePaymentViewState extends State<OfflinePaymentView>
       checkConnection();
     }
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -187,7 +187,7 @@ class _OfflinePaymentViewState extends State<OfflinePaymentView>
               Utils.getString(context, 'item_promote__pay_offline') ?? '',
           initProvider: () {
             
-            return OfflinePaymentMethodProvider(repo: repo1, psValueHolder: psValueHolder);
+            return OfflinePaymentMethodProvider(repo: repo1!, psValueHolder: psValueHolder);
           },
           onProviderReady: (OfflinePaymentMethodProvider provider) {
             provider.getOfflinePaymentList();
@@ -195,7 +195,7 @@ class _OfflinePaymentViewState extends State<OfflinePaymentView>
 
             return provider;
           },
-          builder: (BuildContext context, OfflinePaymentMethodProvider provider, Widget child) {
+          builder: (BuildContext context, OfflinePaymentMethodProvider provider, Widget? child) {
             if(provider != null && provider.offlinePaymentMethod != null && 
             provider.offlinePaymentMethod.data != null){
               return  Stack(children: <Widget>[
@@ -211,7 +211,7 @@ class _OfflinePaymentViewState extends State<OfflinePaymentView>
                                   children: <Widget>[
                                     const SizedBox(width: PsDimens.space16),
                                     Expanded(
-                                      child: Text(provider.offlinePaymentMethod.data.message,
+                                      child: Text(provider.offlinePaymentMethod.data!.message!,
                                         textAlign: TextAlign.start,
                                         style: Theme.of(context).textTheme.bodyText1),
                                     ),
@@ -224,23 +224,23 @@ class _OfflinePaymentViewState extends State<OfflinePaymentView>
                                 (BuildContext context, int index) {
                                   if (provider.offlinePaymentMethod.data != null ||
                                       provider
-                                          .offlinePaymentMethod.data.offlinePayment.isNotEmpty) {
+                                          .offlinePaymentMethod.data!.offlinePayment!.isNotEmpty) {
                                     final int count =
-                                        provider.offlinePaymentMethod.data.offlinePayment.length;
+                                        provider.offlinePaymentMethod.data!.offlinePayment!.length;
                                     return OfflinePaymenItem(
                                       animationController: animationController,
                                       animation:
                                           Tween<double>(begin: 0.0, end: 1.0)
                                               .animate(
                                         CurvedAnimation(
-                                          parent: animationController,
+                                          parent: animationController!,
                                           curve: Interval(
                                               (1 / count) * index, 1.0,
                                               curve: Curves.fastOutSlowIn),
                                         ),
                                       ),
                                       offlinePayment:
-                                          provider.offlinePaymentMethod.data.offlinePayment[index],
+                                          provider.offlinePaymentMethod.data!.offlinePayment![index],
                                       onTap: () {
                                         // Navigator.pushNamed(context,
                                         //     RoutePaths.transactionDetail,
@@ -253,7 +253,7 @@ class _OfflinePaymentViewState extends State<OfflinePaymentView>
                                   }
                                 },
                                 childCount:
-                                    provider.offlinePaymentMethod.data.offlinePayment.length,
+                                    provider.offlinePaymentMethod.data!.offlinePayment!.length,
                               ),
                             ),
                             const SliverToBoxAdapter(child: SizedBox(
@@ -261,7 +261,7 @@ class _OfflinePaymentViewState extends State<OfflinePaymentView>
                             ),),
                                 ]),
                             onRefresh: () async {
-                              return _notiProvider
+                              return _notiProvider!
                                   .resetOfflinePaymentList();
                             },
                       )),

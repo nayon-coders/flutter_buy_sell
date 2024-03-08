@@ -8,7 +8,7 @@ import 'package:flutterbuyandsell/api/common/ps_status.dart';
 import 'package:flutterbuyandsell/provider/common/ps_provider.dart';
 
 class ContactUsProvider extends PsProvider {
-  ContactUsProvider({@required ContactUsRepository repo, int limit = 0}) : super(repo,limit) {
+  ContactUsProvider({required ContactUsRepository repo, int limit = 0}) : super(repo,limit) {
     _repo = repo;
     print('ContactUs Provider: $hashCode');
 

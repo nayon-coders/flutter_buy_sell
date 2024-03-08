@@ -14,9 +14,9 @@ import 'package:flutterbuyandsell/utils/utils.dart';
 
 class LanguageSettingView extends StatefulWidget {
   const LanguageSettingView(
-      {Key key,
-      @required this.animationController,
-      @required this.languageIsChanged})
+      {Key? key,
+      required this.animationController,
+      required this.languageIsChanged})
       : super(key: key);
   final AnimationController animationController;
   final Function languageIsChanged;
@@ -26,7 +26,7 @@ class LanguageSettingView extends StatefulWidget {
 
 class _LanguageSettingViewState extends State<LanguageSettingView> {
   String currentLang = '';
-  LanguageRepository repo1;
+  LanguageRepository? repo1;
 
   bool isConnectedToInternet = false;
   bool isSuccessfullyLoaded = true;
@@ -64,7 +64,7 @@ class _LanguageSettingViewState extends State<LanguageSettingView> {
         return provider;
       },
       child: Consumer<LanguageProvider>(builder:
-          (BuildContext context, LanguageProvider provider, Widget child) {
+          (BuildContext context, LanguageProvider provider, Widget? child) {
         return AnimatedBuilder(
             animation: widget.animationController,
             child: SingleChildScrollView(
@@ -89,7 +89,7 @@ class _LanguageSettingViewState extends State<LanguageSettingView> {
                           // EasyLocalization.of(context).
 
                           await provider.addLanguage(result);
-                          EasyLocalization.of(context).setLocale(
+                          EasyLocalization.of(context)!.setLocale(
                               Locale(result.languageCode, result.countryCode));
                           Locale(result.languageCode, result.countryCode);
                         }
@@ -102,7 +102,7 @@ class _LanguageSettingViewState extends State<LanguageSettingView> {
                 ],
               ),
             )),
-            builder: (BuildContext context, Widget child) {
+            builder: (BuildContext context, Widget? child) {
               return FadeTransition(
                   opacity: animation,
                   child: Transform(

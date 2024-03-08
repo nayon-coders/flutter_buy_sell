@@ -26,13 +26,13 @@ class ItemConditionViewState extends State<ItemConditionView>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  ItemConditionProvider _itemConditionProvider;
-  AnimationController animationController;
-  Animation<double> animation;
+  ItemConditionProvider? _itemConditionProvider;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -42,7 +42,7 @@ class ItemConditionViewState extends State<ItemConditionView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _itemConditionProvider.nextItemConditionList();
+        _itemConditionProvider!.nextItemConditionList();
       }
     });
 
@@ -51,16 +51,16 @@ class ItemConditionViewState extends State<ItemConditionView>
     animation = Tween<double>(
       begin: 0.0,
       end: 10.0,
-    ).animate(animationController);
+    ).animate(animationController!);
     super.initState();
   }
 
-  ItemConditionRepository repo1;
+  ItemConditionRepository? repo1;
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -84,7 +84,7 @@ class ItemConditionViewState extends State<ItemConditionView>
               Utils.getString(context, 'item_entry__item_condition') ?? '',
           initProvider: () {
             return ItemConditionProvider(
-              repo: repo1,
+              repo: repo1!,
             );
           },
           onProviderReady: (ItemConditionProvider provider) {
@@ -92,14 +92,14 @@ class ItemConditionViewState extends State<ItemConditionView>
             _itemConditionProvider = provider;
           },
           builder: (BuildContext context, ItemConditionProvider provider,
-              Widget child) {
+              Widget? child) {
             return Stack(children: <Widget>[
               Container(
                   child: RefreshIndicator(
                 child: ListView.builder(
                   physics: const AlwaysScrollableScrollPhysics(),
                     controller: _scrollController,
-                    itemCount: provider.itemConditionList.data.length,
+                    itemCount: provider.itemConditionList.data!.length,
                     itemBuilder: (BuildContext context, int index) {
                       if (provider.itemConditionList.status ==
                           PsStatus.BLOCK_LOADING) {
@@ -120,18 +120,18 @@ class ItemConditionViewState extends State<ItemConditionView>
                             ]));
                       } else {
                         final int count =
-                            provider.itemConditionList.data.length;
-                        animationController.forward();
+                            provider.itemConditionList.data!.length;
+                        animationController!.forward();
                         return FadeTransition(
-                            opacity: animation,
+                            opacity: animation!,
                             child: ItemConditionListViewItem(
                               itemCondition:
-                                  provider.itemConditionList.data[index],
+                                  provider.itemConditionList.data![index],
                               onTap: () {
                                 Navigator.pop(context,
-                                    provider.itemConditionList.data[index]);
+                                    provider.itemConditionList.data![index]);
                                 print(provider
-                                    .itemConditionList.data[index].name);
+                                    .itemConditionList.data![index].name);
                                 // if (index == 0) {
                                 //   Navigator.pushNamed(
                                 //     context,
@@ -143,7 +143,7 @@ class ItemConditionViewState extends State<ItemConditionView>
                               animation:
                                   Tween<double>(begin: 0.0, end: 1.0).animate(
                                 CurvedAnimation(
-                                  parent: animationController,
+                                  parent: animationController!,
                                   curve: Interval((1 / count) * index, 1.0,
                                       curve: Curves.fastOutSlowIn),
                                 ),

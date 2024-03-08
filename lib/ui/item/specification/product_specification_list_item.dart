@@ -5,13 +5,13 @@ import 'package:flutterbuyandsell/viewobject/ItemSpec.dart';
 
 class ProductSpecificationListItem extends StatelessWidget {
   const ProductSpecificationListItem({
-    Key key,
-    @required this.productSpecification,
+    Key? key,
+    required this.productSpecification,
     this.onTap,
   }) : super(key: key);
 
   final ProductSpecification productSpecification;
-  final Function onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +29,7 @@ class ProductSpecificationListItem extends StatelessWidget {
                     width: PsDimens.space8,
                   ),
                   Text(
-                    productSpecification.name,
+                    productSpecification.name!,
                     style: Theme.of(context).textTheme.bodyText2,
                     textAlign: TextAlign.start,
                   ),
@@ -53,7 +53,7 @@ class ProductSpecificationListItem extends StatelessWidget {
                             top: PsDimens.space12,
                             left: PsDimens.space12,
                             bottom: PsDimens.space12),
-                        child: Text(productSpecification.description,
+                        child: Text(productSpecification.description!,
                             style: Theme.of(context).textTheme.bodyText1,
                             textAlign: TextAlign.start),
                       ),

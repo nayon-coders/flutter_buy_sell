@@ -26,13 +26,13 @@ class ItemPriceTypeTypeViewState extends State<ItemPriceTypeView>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  ItemPriceTypeProvider _itemPriceTypeProvider;
-  AnimationController animationController;
-  Animation<double> animation;
+  ItemPriceTypeProvider? _itemPriceTypeProvider;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -42,7 +42,7 @@ class ItemPriceTypeTypeViewState extends State<ItemPriceTypeView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _itemPriceTypeProvider.nextItemPriceTypeList();
+        _itemPriceTypeProvider!.nextItemPriceTypeList();
       }
     });
 
@@ -51,16 +51,16 @@ class ItemPriceTypeTypeViewState extends State<ItemPriceTypeView>
     animation = Tween<double>(
       begin: 0.0,
       end: 10.0,
-    ).animate(animationController);
+    ).animate(animationController!);
     super.initState();
   }
 
-  ItemPriceTypeRepository repo1;
+  ItemPriceTypeRepository? repo1;
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -83,7 +83,7 @@ class ItemPriceTypeTypeViewState extends State<ItemPriceTypeView>
           appBarTitle: Utils.getString(context, 'item_entry__price_type') ?? '',
           initProvider: () {
             return ItemPriceTypeProvider(
-              repo: repo1,
+              repo: repo1!,
             );
           },
           onProviderReady: (ItemPriceTypeProvider provider) {
@@ -91,14 +91,14 @@ class ItemPriceTypeTypeViewState extends State<ItemPriceTypeView>
             _itemPriceTypeProvider = provider;
           },
           builder: (BuildContext context, ItemPriceTypeProvider provider,
-              Widget child) {
+              Widget? child) {
             return Stack(children: <Widget>[
               Container(
                   child: RefreshIndicator(
                 child: ListView.builder(
                   physics: const AlwaysScrollableScrollPhysics(),
                     controller: _scrollController,
-                    itemCount: provider.itemPriceTypeList.data.length,
+                    itemCount: provider.itemPriceTypeList.data!.length,
                     itemBuilder: (BuildContext context, int index) {
                       if (provider.itemPriceTypeList.status ==
                           PsStatus.BLOCK_LOADING) {
@@ -119,18 +119,18 @@ class ItemPriceTypeTypeViewState extends State<ItemPriceTypeView>
                             ]));
                       } else {
                         final int count =
-                            provider.itemPriceTypeList.data.length;
-                        animationController.forward();
+                            provider.itemPriceTypeList.data!.length;
+                        animationController!.forward();
                         return FadeTransition(
-                            opacity: animation,
+                            opacity: animation!,
                             child: ItemPriceTypeListViewItem(
                               itemPriceType:
-                                  provider.itemPriceTypeList.data[index],
+                                  provider.itemPriceTypeList.data![index],
                               onTap: () {
                                 Navigator.pop(context,
-                                    provider.itemPriceTypeList.data[index]);
+                                    provider.itemPriceTypeList.data![index]);
                                 print(provider
-                                    .itemPriceTypeList.data[index].name);
+                                    .itemPriceTypeList.data![index].name);
                                 // if (index == 0) {
                                 //   Navigator.pushNamed(
                                 //     context,
@@ -142,7 +142,7 @@ class ItemPriceTypeTypeViewState extends State<ItemPriceTypeView>
                               animation:
                                   Tween<double>(begin: 0.0, end: 1.0).animate(
                                 CurvedAnimation(
-                                  parent: animationController,
+                                  parent: animationController!,
                                   curve: Interval((1 / count) * index, 1.0,
                                       curve: Curves.fastOutSlowIn),
                                 ),

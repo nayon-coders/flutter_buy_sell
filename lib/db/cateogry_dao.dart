@@ -16,7 +16,7 @@ class CategoryDao extends PsDao<Category> {
 
   @override
   String getPrimaryKey(Category object) {
-    return object.catId;
+    return object.catId!;
   }
 
   @override

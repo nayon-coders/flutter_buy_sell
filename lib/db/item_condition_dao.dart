@@ -12,7 +12,7 @@ class ItemConditionDao extends PsDao<ConditionOfItem> {
 
   @override
   String getPrimaryKey(ConditionOfItem object) {
-    return object.id;
+    return object.id!;
   }
 
   @override

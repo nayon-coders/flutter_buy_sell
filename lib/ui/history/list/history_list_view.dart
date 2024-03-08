@@ -11,7 +11,7 @@ import 'package:flutterbuyandsell/viewobject/product.dart';
 import 'package:provider/provider.dart';
 
 class HistoryListView extends StatefulWidget {
-  const HistoryListView({Key key, @required this.animationController})
+  const HistoryListView({Key? key, required this.animationController})
       : super(key: key);
   final AnimationController animationController;
   @override
@@ -20,7 +20,7 @@ class HistoryListView extends StatefulWidget {
 
 class _HistoryListViewState extends State<HistoryListView>
     with SingleTickerProviderStateMixin {
-  HistoryRepository historyRepo;
+  HistoryRepository? historyRepo;
   dynamic data;
 
   @override
@@ -60,14 +60,14 @@ class _HistoryListViewState extends State<HistoryListView>
         lazy: false,
         create: (BuildContext context) {
           final HistoryProvider provider = HistoryProvider(
-            repo: historyRepo,
+            repo: historyRepo!,
           );
           provider.loadHistoryList();
           return provider;
         },
         child: Consumer<HistoryProvider>(
           builder:
-              (BuildContext context, HistoryProvider provider, Widget child) {
+              (BuildContext context, HistoryProvider provider, Widget? child) {
             if (provider.historyList != null &&
                 provider.historyList.data != null) {
               return Column(
@@ -84,7 +84,7 @@ class _HistoryListViewState extends State<HistoryListView>
                                 delegate: SliverChildBuilderDelegate(
                                   (BuildContext context, int index) {
                                     final int count =
-                                        provider.historyList.data.length;
+                                        provider.historyList.data!.length;
                                     return HistoryListItem(
                                       animationController:
                                           widget.animationController,
@@ -99,22 +99,22 @@ class _HistoryListViewState extends State<HistoryListView>
                                         ),
                                       ),
                                       history: provider
-                                          .historyList.data.reversed
+                                          .historyList.data!.reversed
                                           .toList()[index],
                                       onTap: () {
                                         final Product product = provider
-                                            .historyList.data.reversed
+                                            .historyList.data!.reversed
                                             .toList()[index];
                                         final ProductDetailIntentHolder holder =
                                             ProductDetailIntentHolder(
                                                 productId: product.id,
                                                 heroTagImage: provider.hashCode
                                                         .toString() +
-                                                    product.id +
+                                                    product.id! +
                                                     PsConst.HERO_TAG__IMAGE,
                                                 heroTagTitle: provider.hashCode
                                                         .toString() +
-                                                    product.id +
+                                                    product.id! +
                                                     PsConst.HERO_TAG__TITLE);
                                         Navigator.pushNamed(
                                             context, RoutePaths.productDetail,
@@ -122,7 +122,7 @@ class _HistoryListViewState extends State<HistoryListView>
                                       },
                                     );
                                   },
-                                  childCount: provider.historyList.data.length,
+                                  childCount: provider.historyList.data!.length,
                                 ),
                               )
                             ]),

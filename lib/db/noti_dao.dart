@@ -22,7 +22,7 @@ class NotiDao extends PsDao<Noti> {
 
   @override
   String getPrimaryKey(Noti object) {
-    return object.id;
+    return object.id!;
   }
 
   @override

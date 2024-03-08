@@ -14,7 +14,7 @@ class FavouriteProductListContainerView extends StatefulWidget {
 class _FavouriteProductListContainerViewState
     extends State<FavouriteProductListContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -24,14 +24,14 @@ class _FavouriteProductListContainerViewState
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -56,14 +56,14 @@ class _FavouriteProductListContainerViewState
           title: Text(
             Utils.getString(context, 'home__menu_drawer_favourite'),
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: PsColors.mainColorWithWhite),
           ),
           elevation: 0,
         ),
         body: FavouriteProductListView(
-          animationController: animationController,
+          animationController: animationController!,
         ),
       ),
     );

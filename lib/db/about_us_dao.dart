@@ -22,7 +22,7 @@ class AboutUsDao extends PsDao<AboutUs> {
 
   @override
   String getPrimaryKey(AboutUs object) {
-    return object.aboutId;
+    return object.aboutId!;
   }
 
   @override

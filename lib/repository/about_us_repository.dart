@@ -68,7 +68,7 @@ class AboutUsRepository extends PsRepository {
           await _psApiService.getAboutUsDataList();
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _aboutUsDao.insertAll(primaryKey, _resource.data);
+        await _aboutUsDao.insertAll(primaryKey, _resource.data!);
       }
       aboutUsListStream.sink.add(await _aboutUsDao.getAll());
     }

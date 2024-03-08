@@ -95,7 +95,7 @@ class _AppInfoViewState extends State<AppInfoView>
           _aboutUsProvider = provider;
         },
         builder:
-            (BuildContext context, AboutUsProvider provider, Widget child) {
+            (BuildContext context, AboutUsProvider provider, Widget? child) {
           if (provider.aboutUsList != null &&
               provider.aboutUsList.data != null &&
               provider.aboutUsList.data!.isNotEmpty) {

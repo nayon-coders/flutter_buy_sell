@@ -35,11 +35,11 @@ class AppLoadingView extends StatelessWidget {
     String realEndDate = '0';
     if (await Utils.checkInternetConnectivity()) {
       if (provider.psValueHolder == null ||
-          provider.psValueHolder.startDate == null) {
+          provider.psValueHolder!.startDate == null) {
         realStartDate =
             DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
       } else {
-        realStartDate = provider.psValueHolder.endDate;
+        realStartDate = provider.psValueHolder!.endDate;
       }
 
       realEndDate = DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
@@ -47,7 +47,7 @@ class AppLoadingView extends StatelessWidget {
           AppInfoParameterHolder(
               startDate: realStartDate,
               endDate: realEndDate,
-              userId: Utils.checkUserLoginId(provider.psValueHolder));
+              userId: Utils.checkUserLoginId(provider.psValueHolder!));
 
       final PsResource<PSAppInfo> _psAppInfo =
           await provider.loadDeleteHistory(appInfoParameterHolder.toMap());
@@ -132,7 +132,7 @@ class AppLoadingView extends StatelessWidget {
           Navigator.pushReplacementNamed(context, RoutePaths.introSlider,
               arguments: 0);
         } else {
-          if (provider.psValueHolder.locationId != null) {
+          if (provider.psValueHolder!.locationId != null) {
             Navigator.pushReplacementNamed(
               context,
               RoutePaths.home,
@@ -153,7 +153,7 @@ class AppLoadingView extends StatelessWidget {
         Navigator.pushReplacementNamed(context, RoutePaths.introSlider,
             arguments: 0);
       } else {
-        if (provider.psValueHolder.locationId != null) {
+        if (provider.psValueHolder!.locationId != null) {
           Navigator.pushReplacementNamed(
             context,
             RoutePaths.home,
@@ -249,7 +249,7 @@ class AppLoadingView extends StatelessWidget {
         Navigator.pushReplacementNamed(context, RoutePaths.introSlider,
             arguments: 0);
       } else {
-        if (appInfoProvider.psValueHolder.locationId != null) {
+        if (appInfoProvider.psValueHolder!.locationId != null) {
           Navigator.pushReplacementNamed(
             context,
             RoutePaths.home,
@@ -295,7 +295,7 @@ class AppLoadingView extends StatelessWidget {
                         context, RoutePaths.introSlider,
                         arguments: 0);
                   } else {
-                    if (appInfoProvider.psValueHolder.locationId != null) {
+                    if (appInfoProvider.psValueHolder!.locationId != null) {
                       Navigator.pushReplacementNamed(
                         context,
                         RoutePaths.home,
@@ -317,7 +317,7 @@ class AppLoadingView extends StatelessWidget {
                         context, RoutePaths.introSlider,
                         arguments: 0);
                   } else {
-                    if (appInfoProvider.psValueHolder.locationId != null) {
+                    if (appInfoProvider.psValueHolder!.locationId != null) {
                       Navigator.pushReplacementNamed(
                         context,
                         RoutePaths.home,

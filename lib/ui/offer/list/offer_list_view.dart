@@ -9,8 +9,8 @@ int _selectedIndex = 0;
 
 class OfferListView extends StatefulWidget {
   const OfferListView({
-    Key key,
-    @required this.animationController,
+    Key? key,
+    required this.animationController,
   }) : super(key: key);
 
   final AnimationController animationController;

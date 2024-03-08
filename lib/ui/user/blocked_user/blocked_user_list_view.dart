@@ -20,7 +20,7 @@ import 'package:provider/single_child_widget.dart';
 import 'blocked_user_vertical_list_item.dart';
 
 class BlockedUserListView extends StatefulWidget {
-  const BlockedUserListView({Key key, @required this.animationController})
+  const BlockedUserListView({Key? key, required this.animationController})
       : super(key: key);
   final AnimationController animationController;
   @override
@@ -33,7 +33,7 @@ class _BlockedUserListViewState extends State<BlockedUserListView>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  BlockedUserProvider _userListProvider;
+  BlockedUserProvider? _userListProvider;
 
 
   @override
@@ -47,16 +47,16 @@ class _BlockedUserListViewState extends State<BlockedUserListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _userListProvider
-            .nextBlockedUserList(_userListProvider.valueHolder.loginUserId);
+        _userListProvider!
+            .nextBlockedUserList(_userListProvider!.valueHolder!.loginUserId);
       }
     });
   }
 
-  BlockedUserRepository repo1;
-  PsValueHolder psValueHolder;
-  UserProvider userProvider;
-  UserRepository userRepo;
+  BlockedUserRepository? repo1;
+  PsValueHolder? psValueHolder;
+  UserProvider? userProvider;
+  UserRepository? userRepo;
   @override
   Widget build(BuildContext context) {
     
@@ -72,21 +72,21 @@ class _BlockedUserListViewState extends State<BlockedUserListView>
             lazy: false,
             create: (BuildContext context) {
               userProvider =
-                  UserProvider(repo: userRepo, psValueHolder: psValueHolder);
-              return userProvider;
+                  UserProvider(repo: userRepo!, psValueHolder: psValueHolder!);
+              return userProvider!;
             },
           ),
           ChangeNotifierProvider<BlockedUserProvider>(
             lazy: false,
             create: (BuildContext context) {
               final BlockedUserProvider provider =
-                  BlockedUserProvider(repo: repo1, valueHolder: psValueHolder);
-              provider.loadBlockedUserList(provider.valueHolder.loginUserId);
+                  BlockedUserProvider(repo: repo1!, valueHolder: psValueHolder);
+              provider.loadBlockedUserList(provider.valueHolder!.loginUserId);
               return provider;
           })],
       child: Consumer<BlockedUserProvider>(
           builder:
-              (BuildContext context, BlockedUserProvider provider, Widget child) {
+              (BuildContext context, BlockedUserProvider provider, Widget? child) {
             return Stack(children: <Widget>[
               Container(
                   margin: const EdgeInsets.only(
@@ -102,9 +102,9 @@ class _BlockedUserListViewState extends State<BlockedUserListView>
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                                 if (provider.blockedUserList.data != null ||
-                                    provider.blockedUserList.data.isNotEmpty) {
+                                    provider.blockedUserList.data!.isNotEmpty) {
                                   final int count =
-                                      provider.blockedUserList.data.length;
+                                      provider.blockedUserList.data!.length;
                                   return BlockedUserVerticalListItem(
                                     animationController: widget.animationController,
                                     animation:
@@ -117,30 +117,30 @@ class _BlockedUserListViewState extends State<BlockedUserListView>
                                             curve: Curves.fastOutSlowIn),
                                       ),
                                     ),
-                                    blockedUser: provider.blockedUserList.data[index],
+                                    blockedUser: provider.blockedUserList.data![index],
                                     onTap: () {
                                       Navigator.pushNamed(
                                           context, RoutePaths.userDetail,
                                           arguments: UserIntentHolder(
                                               userId: provider
-                                                  .blockedUserList.data[index].userId,
+                                                  .blockedUserList.data![index].userId,
                                               userName: provider.blockedUserList
-                                                  .data[index].userName));
+                                                  .data![index].userName));
                                     },
                                     onUnblockTap :() async{
                                       await PsProgressDialog.showDialog(context);
 
                                       final UnblockUserHolder userBlockItemParameterHolder =
                                       UnblockUserHolder(
-                                      fromBlockUserId: userProvider.psValueHolder.loginUserId,
-                                       toBlockUserId: provider.blockedUserList.data[index].userId);
+                                      fromBlockUserId: userProvider!.psValueHolder.loginUserId,
+                                       toBlockUserId: provider.blockedUserList.data![index].userId);
 
-                                      final PsResource<ApiStatus> _apiStatus = await userProvider
+                                      final PsResource<ApiStatus> _apiStatus = await userProvider!
                                       .postUnBlockUser(userBlockItemParameterHolder.toMap());   
 
                                        if(_apiStatus != null &&_apiStatus.status != null){
                                          PsProgressDialog.dismissDialog();
-                                         provider.deleteUserFromDB(provider.blockedUserList.data[index].userId);
+                                         provider.deleteUserFromDB(provider.blockedUserList.data![index].userId!);
                                        }
                                     }
                                   );
@@ -148,13 +148,13 @@ class _BlockedUserListViewState extends State<BlockedUserListView>
                                   return null;
                                 }
                               },
-                              childCount: provider.blockedUserList.data.length,
+                              childCount: provider.blockedUserList.data!.length,
                             ),
                           ),
                         ]),
                     onRefresh: () async {
-                      return _userListProvider
-                          .resetBlockedUserList(provider.valueHolder.loginUserId);
+                      return _userListProvider!
+                          .resetBlockedUserList(provider.valueHolder!.loginUserId);
                     },
                   )),
               PSProgressIndicator(provider.blockedUserList.status)

@@ -18,7 +18,7 @@ import 'package:flutterbuyandsell/viewobject/category.dart';
 
 class SubCategoryListView extends StatefulWidget {
   const SubCategoryListView({this.category});
-  final Category category;
+  final Category? category;
   @override
   _SubCategoryListViewState createState() {
     return _SubCategoryListViewState();
@@ -29,10 +29,10 @@ class _SubCategoryListViewState extends State<SubCategoryListView>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  SubCategoryProvider _subCategoryProvider;
+  SubCategoryProvider? _subCategoryProvider;
 
   // AnimationController animationController;
-  Animation<double> animation;
+  Animation<double>? animation;
 
   @override
   void dispose() {
@@ -47,15 +47,15 @@ class _SubCategoryListViewState extends State<SubCategoryListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        final String categId = widget.category.catId;
+        final String categId = widget.category!.catId!;
         Utils.psPrint('CategoryId number is $categId');
 
-        _subCategoryProvider.nextSubCategoryList(widget.category.catId);
+        _subCategoryProvider!.nextSubCategoryList(widget.category!.catId!);
       }
     });
   }
 
-  SubCategoryRepository repo1;
+  SubCategoryRepository? repo1;
   bool isConnectedToInternet = false;
   bool isSuccessfullyLoaded = true;
 
@@ -95,12 +95,12 @@ class _SubCategoryListViewState extends State<SubCategoryListView>
         body: ChangeNotifierProvider<SubCategoryProvider>(
             lazy: false,
             create: (BuildContext context) {
-              _subCategoryProvider = SubCategoryProvider(repo: repo1);
-              _subCategoryProvider.loadSubCategoryList(widget.category.catId);
-              return _subCategoryProvider;
+              _subCategoryProvider = SubCategoryProvider(repo: repo1!);
+              _subCategoryProvider!.loadSubCategoryList(widget.category!.catId!);
+              return _subCategoryProvider!;
             },
             child: Consumer<SubCategoryProvider>(builder: (BuildContext context,
-                SubCategoryProvider provider, Widget child) {
+                SubCategoryProvider provider, Widget? child) {
               return Column(
                 children: <Widget>[
                   const PsAdMobBannerWidget(),
@@ -109,13 +109,13 @@ class _SubCategoryListViewState extends State<SubCategoryListView>
                       Container(
                           child: RefreshIndicator(
                         onRefresh: () {
-                          return _subCategoryProvider
-                              .resetSubCategoryList(widget.category.catId);
+                          return _subCategoryProvider!
+                              .resetSubCategoryList(widget.category!.catId!);
                         },
                         child: ListView.builder(
                             physics: const AlwaysScrollableScrollPhysics(),
                             controller: _scrollController,
-                            itemCount: provider.subCategoryList.data.length,
+                            itemCount: provider.subCategoryList.data!.length,
                             itemBuilder: (BuildContext context, int index) {
                               if (provider.subCategoryList.status ==
                                   PsStatus.BLOCK_LOADING) {
@@ -133,10 +133,10 @@ class _SubCategoryListViewState extends State<SubCategoryListView>
                               } else {
                                 return SubCategoryVerticalListItem(
                                   subCategory:
-                                      provider.subCategoryList.data[index],
+                                      provider.subCategoryList.data![index],
                                   onTap: () {
-                                    print(provider.subCategoryList.data[index]
-                                        .defaultPhoto.imgPath);
+                                    print(provider.subCategoryList.data![index]
+                                        .defaultPhoto!.imgPath);
                                   },
                                   // )
                                 );
@@ -156,7 +156,7 @@ class _SubCategoryListViewState extends State<SubCategoryListView>
 
 class FrameUIForLoading extends StatelessWidget {
   const FrameUIForLoading({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

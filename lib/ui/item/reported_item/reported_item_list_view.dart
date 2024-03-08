@@ -18,7 +18,7 @@ import 'package:provider/single_child_widget.dart';
 import 'reported_item_vertical_list_item.dart';
 
 class ReportedItemListView extends StatefulWidget {
-  const ReportedItemListView({Key key, @required this.animationController})
+  const ReportedItemListView({Key? key, required this.animationController})
       : super(key: key);
   final AnimationController animationController;
   @override
@@ -31,7 +31,7 @@ class _ReportedItemListViewState extends State<ReportedItemListView>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  ReportedItemProvider _userListProvider;
+  ReportedItemProvider? _userListProvider;
 
 
   @override
@@ -45,16 +45,16 @@ class _ReportedItemListViewState extends State<ReportedItemListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _userListProvider
-            .nextReportedItemList(_userListProvider.valueHolder.loginUserId);
+        _userListProvider!
+            .nextReportedItemList(_userListProvider!.valueHolder!.loginUserId);
       }
     });
   }
 
-  ReportedItemRepository repo1;
-  PsValueHolder psValueHolder;
-  UserProvider userProvider;
-  UserRepository userRepo;
+  ReportedItemRepository? repo1;
+  PsValueHolder? psValueHolder;
+  UserProvider? userProvider;
+  UserRepository? userRepo;
   @override
   Widget build(BuildContext context) {
     
@@ -70,21 +70,21 @@ class _ReportedItemListViewState extends State<ReportedItemListView>
             lazy: false,
             create: (BuildContext context) {
               userProvider =
-                  UserProvider(repo: userRepo, psValueHolder: psValueHolder);
-              return userProvider;
+                  UserProvider(repo: userRepo!, psValueHolder: psValueHolder!);
+              return userProvider!;
             },
           ),
           ChangeNotifierProvider<ReportedItemProvider>(
             lazy: false,
             create: (BuildContext context) {
               final ReportedItemProvider provider =
-                  ReportedItemProvider(repo: repo1, valueHolder: psValueHolder);
-              provider.loadReportedItemList(provider.valueHolder.loginUserId);
+                  ReportedItemProvider(repo: repo1!, valueHolder: psValueHolder);
+              provider.loadReportedItemList(provider.valueHolder!.loginUserId);
               return provider;
           })],
       child: Consumer<ReportedItemProvider>(
           builder:
-              (BuildContext context, ReportedItemProvider provider, Widget child) {
+              (BuildContext context, ReportedItemProvider provider, Widget? child) {
             return Stack(children: <Widget>[
               Container(
                   margin: const EdgeInsets.only(
@@ -100,9 +100,9 @@ class _ReportedItemListViewState extends State<ReportedItemListView>
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                                 if (provider.reportedItem.data != null ||
-                                    provider.reportedItem.data.isNotEmpty) {
+                                    provider.reportedItem.data!.isNotEmpty) {
                                   final int count =
-                                      provider.reportedItem.data.length;
+                                      provider.reportedItem.data!.length;
                                   return ReportedItemVerticalListItem(
                                     animationController: widget.animationController,
                                     animation:
@@ -115,21 +115,21 @@ class _ReportedItemListViewState extends State<ReportedItemListView>
                                             curve: Curves.fastOutSlowIn),
                                       ),
                                     ),
-                                    reportedItem: provider.reportedItem.data[index],
+                                    reportedItem: provider.reportedItem.data![index],
                                     onTap: () {
                                       final ReportedItem product =
-                                      provider.reportedItem.data[index];
+                                      provider.reportedItem.data![index];
                                       final ProductDetailIntentHolder holder =
                                       ProductDetailIntentHolder(
                                           productId:
-                                              provider.reportedItem.data[index].id,
+                                              provider.reportedItem.data![index].id,
                                           heroTagImage:
                                               provider.hashCode.toString() +
-                                                  product.id +
+                                                  product.id! +
                                                   PsConst.HERO_TAG__IMAGE,
                                           heroTagTitle:
                                               provider.hashCode.toString() +
-                                                  product.id +
+                                                  product.id! +
                                                   PsConst.HERO_TAG__TITLE);
                                       Navigator.pushNamed(
                                           context, RoutePaths.productDetail,
@@ -156,13 +156,13 @@ class _ReportedItemListViewState extends State<ReportedItemListView>
                                   return null;
                                 }
                               },
-                              childCount: provider.reportedItem.data.length,
+                              childCount: provider.reportedItem.data!.length,
                             ),
                           ),
                         ]),
                     onRefresh: () async {
-                      return _userListProvider
-                          .resetReportedItemList(provider.valueHolder.loginUserId);
+                      return _userListProvider!
+                          .resetReportedItemList(provider.valueHolder!.loginUserId);
                     },
                   )),
               PSProgressIndicator(provider.reportedItem.status)

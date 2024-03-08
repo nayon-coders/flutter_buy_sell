@@ -15,7 +15,7 @@ import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 
 class SubCategorySearchListView extends StatefulWidget {
-  const SubCategorySearchListView({@required this.categoryId});
+  const SubCategorySearchListView({required this.categoryId});
 
   final String categoryId;
   @override
@@ -28,14 +28,14 @@ class _SubCategorySearchListViewState extends State<SubCategorySearchListView>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  SubCategoryProvider _subCategoryProvider;
+  SubCategoryProvider? _subCategoryProvider;
   // final CategoryParameterHolder categoryIconList = CategoryParameterHolder();
-  AnimationController animationController;
-  Animation<double> animation;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -45,7 +45,7 @@ class _SubCategorySearchListViewState extends State<SubCategorySearchListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _subCategoryProvider.nextSubCategoryList(widget.categoryId);
+        _subCategoryProvider!.nextSubCategoryList(widget.categoryId);
       }
     });
 
@@ -54,16 +54,16 @@ class _SubCategorySearchListViewState extends State<SubCategorySearchListView>
     animation = Tween<double>(
       begin: 0.0,
       end: 10.0,
-    ).animate(animationController);
+    ).animate(animationController!);
     super.initState();
   }
 
-  SubCategoryRepository repo1;
+  SubCategoryRepository? repo1;
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -88,7 +88,7 @@ class _SubCategorySearchListViewState extends State<SubCategorySearchListView>
               '',
           initProvider: () {
             return SubCategoryProvider(
-              repo: repo1,
+              repo: repo1!,
             );
           },
           onProviderReady: (SubCategoryProvider provider) {
@@ -96,14 +96,14 @@ class _SubCategorySearchListViewState extends State<SubCategorySearchListView>
             _subCategoryProvider = provider;
           },
           builder: (BuildContext context, SubCategoryProvider provider,
-              Widget child) {
+              Widget? child) {
             return Stack(children: <Widget>[
               Container(
                   child: RefreshIndicator(
                 child: ListView.builder(
                   physics: const AlwaysScrollableScrollPhysics(),
                     controller: _scrollController,
-                    itemCount: provider.subCategoryList.data.length,
+                    itemCount: provider.subCategoryList.data!.length,
                     itemBuilder: (BuildContext context, int index) {
                       if (provider.subCategoryList.status ==
                           PsStatus.BLOCK_LOADING) {
@@ -123,31 +123,31 @@ class _SubCategorySearchListViewState extends State<SubCategorySearchListView>
                               PsFrameUIForLoading(),
                             ]));
                       } else {
-                        final int count = provider.subCategoryList.data.length;
-                        animationController.forward();
+                        final int count = provider.subCategoryList.data!.length;
+                        animationController!.forward();
                         return FadeTransition(
-                            opacity: animation,
+                            opacity: animation!,
                             child: SubCategorySearchListItem(
-                              animationController: animationController,
+                              animationController: animationController!,
                               animation:
                                   Tween<double>(begin: 0.0, end: 1.0).animate(
                                 CurvedAnimation(
-                                  parent: animationController,
+                                  parent: animationController!,
                                   curve: Interval((1 / count) * index, 1.0,
                                       curve: Curves.fastOutSlowIn),
                                 ),
                               ),
-                              subCategory: provider.subCategoryList.data[index],
+                              subCategory: provider.subCategoryList.data![index],
                               onTap: () {
-                                print(provider.subCategoryList.data[index]
-                                    .defaultPhoto.imgPath);
+                                print(provider.subCategoryList.data![index]
+                                    .defaultPhoto!.imgPath);
                                 //Navigator.pop(context, provider.subCategoryList.data[index]);
 
                                 Navigator.of(context, rootNavigator: true)
-                                    .pop(provider.subCategoryList.data[index]);
+                                    .pop(provider.subCategoryList.data![index]);
 
                                 print(
-                                    provider.subCategoryList.data[index].name);
+                                    provider.subCategoryList.data![index].name);
                                 // if (index == 0) {
                                 //   Navigator.pushNamed(
                                 //     context,

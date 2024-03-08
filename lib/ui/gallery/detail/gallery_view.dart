@@ -16,13 +16,13 @@ import '../../common/base/ps_widget_with_appbar_no_app_bar_title.dart';
 
 class GalleryView extends StatefulWidget {
   const GalleryView({
-    Key key,
-    @required this.selectedDefaultImage,
+    Key? key,
+    required this.selectedDefaultImage,
     this.onImageTap,
   }) : super(key: key);
 
   final DefaultPhoto selectedDefaultImage;
-  final Function onImageTap;
+  final VoidCallback? onImageTap;
 
   @override
   _GalleryViewState createState() => _GalleryViewState();
@@ -41,16 +41,16 @@ class _GalleryViewState extends State<GalleryView> {
       },
       onProviderReady: (GalleryProvider provider) {
         provider.loadImageList(
-            widget.selectedDefaultImage.imgParentId, PsConst.ITEM_TYPE);
+            widget.selectedDefaultImage.imgParentId!, PsConst.ITEM_TYPE);
       },
-      builder: (BuildContext context, GalleryProvider provider, Widget child) {
+      builder: (BuildContext context, GalleryProvider provider, Widget? child) {
         if (provider.galleryList != null &&
             provider.galleryList.data != null &&
-            provider.galleryList.data.isNotEmpty) {
+            provider.galleryList.data!.isNotEmpty) {
           int selectedIndex = 0;
-          for (int i = 0; i < provider.galleryList.data.length; i++) {
+          for (int i = 0; i < provider.galleryList.data!.length; i++) {
             if (widget.selectedDefaultImage.imgId ==
-                provider.galleryList.data[i].imgId) {
+                provider.galleryList.data![i].imgId) {
               selectedIndex = i;
               break;
             }
@@ -63,15 +63,15 @@ class _GalleryViewState extends State<GalleryView> {
               //   child: Icon(Icons.clear,color: PsColors.white))),
 
               PhotoViewGallery.builder(
-                itemCount: provider.galleryList.data.length,
+                itemCount: provider.galleryList.data!.length,
                 builder: (BuildContext context, int index) {
                   return PhotoViewGalleryPageOptions.customChild(
                     child: PsNetworkImageWithUrl(
                       photoKey: '',
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
-                      imagePath: provider.galleryList.data[index].imgPath,
-                      onTap: widget.onImageTap,
+                      imagePath: provider.galleryList.data![index].imgPath!,
+                      onTap: widget!.onImageTap,
                       boxfit: BoxFit.contain,
                     ),
                     childSize: MediaQuery.of(context).size,

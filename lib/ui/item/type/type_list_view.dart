@@ -26,13 +26,13 @@ class TypeListViewState extends State<TypeListView>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  ItemTypeProvider _itemTypeProvider;
-  AnimationController animationController;
-  Animation<double> animation;
+  ItemTypeProvider? _itemTypeProvider;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -42,7 +42,7 @@ class TypeListViewState extends State<TypeListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _itemTypeProvider.nextItemTypeList();
+        _itemTypeProvider!.nextItemTypeList();
       }
     });
 
@@ -51,16 +51,16 @@ class TypeListViewState extends State<TypeListView>
     animation = Tween<double>(
       begin: 0.0,
       end: 10.0,
-    ).animate(animationController);
+    ).animate(animationController!);
     super.initState();
   }
 
-  ItemTypeRepository repo1;
+  ItemTypeRepository? repo1;
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -83,7 +83,7 @@ class TypeListViewState extends State<TypeListView>
           appBarTitle: Utils.getString(context, 'item_entry__type') ?? '',
           initProvider: () {
             return ItemTypeProvider(
-              repo: repo1,
+              repo: repo1!,
             );
           },
           onProviderReady: (ItemTypeProvider provider) {
@@ -91,14 +91,14 @@ class TypeListViewState extends State<TypeListView>
             _itemTypeProvider = provider;
           },
           builder:
-              (BuildContext context, ItemTypeProvider provider, Widget child) {
+              (BuildContext context, ItemTypeProvider provider, Widget? child) {
             return Stack(children: <Widget>[
               Container(
                   child: RefreshIndicator(
                 child: ListView.builder(
                   physics: const AlwaysScrollableScrollPhysics(),
                     controller: _scrollController,
-                    itemCount: provider.itemTypeList.data.length,
+                    itemCount: provider.itemTypeList.data!.length,
                     itemBuilder: (BuildContext context, int index) {
                       if (provider.itemTypeList.status ==
                           PsStatus.BLOCK_LOADING) {
@@ -118,16 +118,16 @@ class TypeListViewState extends State<TypeListView>
                               PsFrameUIForLoading(),
                             ]));
                       } else {
-                        final int count = provider.itemTypeList.data.length;
-                        animationController.forward();
+                        final int count = provider.itemTypeList.data!.length;
+                        animationController!.forward();
                         return FadeTransition(
-                            opacity: animation,
+                            opacity: animation!,
                             child: TypeListViewItem(
-                              itemType: provider.itemTypeList.data[index],
+                              itemType: provider.itemTypeList.data![index],
                               onTap: () {
                                 Navigator.pop(
-                                    context, provider.itemTypeList.data[index]);
-                                print(provider.itemTypeList.data[index].name);
+                                    context, provider.itemTypeList.data![index]);
+                                print(provider.itemTypeList.data![index].name);
                                 // if (index == 0) {
                                 //   Navigator.pushNamed(
                                 //     context,
@@ -135,11 +135,11 @@ class TypeListViewState extends State<TypeListView>
                                 //   );
                                 // }
                               },
-                              animationController: animationController,
+                              animationController: animationController!,
                               animation:
                                   Tween<double>(begin: 0.0, end: 1.0).animate(
                                 CurvedAnimation(
-                                  parent: animationController,
+                                  parent: animationController!,
                                   curve: Interval((1 / count) * index, 1.0,
                                       curve: Curves.fastOutSlowIn),
                                 ),

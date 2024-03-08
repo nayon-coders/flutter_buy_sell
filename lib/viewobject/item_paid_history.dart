@@ -40,7 +40,7 @@ class ItemPaidHistory extends PsObject<ItemPaidHistory> {
   final String? paidStatus;
   final Product? item;
 
-  User user;
+  User? user;
   @override
   bool operator ==(dynamic other) => other is ItemPaidHistory && id == other.id;
 

@@ -56,9 +56,9 @@ import 'package:flutterbuyandsell/ui/common/dialog/choose_payment_type_dialog.da
 
 class ProductDetailView extends StatefulWidget {
   const ProductDetailView(
-      {@required this.productId,
-      @required this.heroTagImage,
-      @required this.heroTagTitle});
+      {required this.productId,
+      required this.heroTagImage,
+      required this.heroTagTitle});
 
   final String productId;
   final String heroTagImage;
@@ -69,21 +69,21 @@ class ProductDetailView extends StatefulWidget {
 
 class _ProductDetailState extends State<ProductDetailView>
     with SingleTickerProviderStateMixin {
-  ProductRepository productRepo;
-  HistoryRepository historyRepo;
-  HistoryProvider historyProvider;
-  ItemDetailProvider itemDetailProvider;
-  TouchCountProvider touchCountProvider;
-  AppInfoProvider appInfoProvider;
-  AppInfoRepository appInfoRepository;
-  PsValueHolder psValueHolder;
-  AnimationController animationController;
-  AboutUsRepository aboutUsRepo;
-  AboutUsProvider aboutUsProvider;
-  MarkSoldOutItemProvider markSoldOutItemProvider;
-  MarkSoldOutItemParameterHolder markSoldOutItemHolder;
-  UserProvider userProvider;
-  UserRepository userRepo;
+  ProductRepository? productRepo;
+  HistoryRepository? historyRepo;
+  HistoryProvider? historyProvider;
+  ItemDetailProvider? itemDetailProvider;
+  TouchCountProvider? touchCountProvider;
+  AppInfoProvider? appInfoProvider;
+  AppInfoRepository? appInfoRepository;
+  PsValueHolder? psValueHolder;
+  AnimationController? animationController;
+  AboutUsRepository? aboutUsRepo;
+  AboutUsProvider? aboutUsProvider;
+  MarkSoldOutItemProvider? markSoldOutItemProvider;
+  MarkSoldOutItemParameterHolder? markSoldOutItemHolder;
+  UserProvider? userProvider;
+  UserRepository? userRepo;
   bool isReadyToShowAppBarIcons = false;
   bool isAddedToHistory = false;
 
@@ -113,8 +113,8 @@ class _ProductDetailState extends State<ProductDetailView>
     userRepo = Provider.of<UserRepository>(context);
     appInfoRepository = Provider.of<AppInfoRepository>(context);
     markSoldOutItemHolder =
-        MarkSoldOutItemParameterHolder().markSoldOutItemHolder();
-    markSoldOutItemHolder.itemId = widget.productId;
+        MarkSoldOutItemParameterHolder("").markSoldOutItemHolder();
+    markSoldOutItemHolder!.itemId = widget.productId;
 
     return PsWidgetWithMultiProvider(
         child: MultiProvider(
@@ -123,76 +123,76 @@ class _ProductDetailState extends State<ProductDetailView>
             lazy: false,
             create: (BuildContext context) {
               itemDetailProvider = ItemDetailProvider(
-                  repo: productRepo, psValueHolder: psValueHolder);
+                  repo: productRepo!, psValueHolder: psValueHolder!);
 
-              final String loginUserId = Utils.checkUserLoginId(psValueHolder);
-              itemDetailProvider.loadProduct(widget.productId, loginUserId);
+              final String loginUserId = Utils.checkUserLoginId(psValueHolder!);
+              itemDetailProvider!.loadProduct(widget.productId, loginUserId);
 
-              return itemDetailProvider;
+              return itemDetailProvider!;
             },
           ),
           ChangeNotifierProvider<HistoryProvider>(
             lazy: false,
             create: (BuildContext context) {
-              historyProvider = HistoryProvider(repo: historyRepo);
-              return historyProvider;
+              historyProvider = HistoryProvider(repo: historyRepo!);
+              return historyProvider!;
             },
           ),
           ChangeNotifierProvider<AboutUsProvider>(
             lazy: false,
             create: (BuildContext context) {
               aboutUsProvider = AboutUsProvider(
-                  repo: aboutUsRepo, psValueHolder: psValueHolder);
-              aboutUsProvider.loadAboutUsList();
-              return aboutUsProvider;
+                  repo: aboutUsRepo!, psValueHolder: psValueHolder!);
+              aboutUsProvider!.loadAboutUsList();
+              return aboutUsProvider!;
             },
           ),
           ChangeNotifierProvider<MarkSoldOutItemProvider>(
             lazy: false,
             create: (BuildContext context) {
               markSoldOutItemProvider =
-                  MarkSoldOutItemProvider(repo: productRepo);
+                  MarkSoldOutItemProvider(repo: productRepo!);
 
-              return markSoldOutItemProvider;
+              return markSoldOutItemProvider!;
             },
           ),
           ChangeNotifierProvider<UserProvider>(
             lazy: false,
             create: (BuildContext context) {
               userProvider =
-                  UserProvider(repo: userRepo, psValueHolder: psValueHolder);
-              return userProvider;
+                  UserProvider(repo: userRepo!, psValueHolder: psValueHolder!);
+              return userProvider!;
             },
           ),
           ChangeNotifierProvider<TouchCountProvider>(
             lazy: false,
             create: (BuildContext context) {
               touchCountProvider = TouchCountProvider(
-                  repo: productRepo, psValueHolder: psValueHolder);
-              final String loginUserId = Utils.checkUserLoginId(psValueHolder);
+                  repo: productRepo!, psValueHolder: psValueHolder!);
+              final String loginUserId = Utils.checkUserLoginId(psValueHolder!);
 
               final TouchCountParameterHolder touchCountParameterHolder =
                   TouchCountParameterHolder(
                       itemId: widget.productId, userId: loginUserId);
-              touchCountProvider
+              touchCountProvider!
                   .postTouchCount(touchCountParameterHolder.toMap());
-              return touchCountProvider;
+              return touchCountProvider!;
             },
           ),
           ChangeNotifierProvider<AppInfoProvider>(
               lazy: false,
               create: (BuildContext context) {
                 appInfoProvider = AppInfoProvider(
-                    repo: appInfoRepository, psValueHolder: psValueHolder);
+                    repo: appInfoRepository!, psValueHolder: psValueHolder!);
 
-                appInfoProvider.loadDeleteHistorywithNotifier();
+                appInfoProvider!.loadDeleteHistorywithNotifier();
 
-                return appInfoProvider;
+                return appInfoProvider!;
               }),
         ],
           child: Consumer<ItemDetailProvider>(
             builder: (BuildContext context, ItemDetailProvider provider,
-                Widget child) {
+                Widget? child) {
               if (provider.itemDetail != null &&
                   provider.itemDetail.data != null &&
                   markSoldOutItemProvider != null &&
@@ -201,13 +201,13 @@ class _ProductDetailState extends State<ProductDetailView>
                   ///
                   /// Add to History
                   ///
-                  historyProvider.addHistoryList(provider.itemDetail.data);
+                  historyProvider!.addHistoryList(provider.itemDetail.data!);
                   isAddedToHistory = true;
                 }
                 return Consumer<MarkSoldOutItemProvider>(builder:
                     (BuildContext context,
                         MarkSoldOutItemProvider markSoldOutItemProvider,
-                        Widget child) {
+                        Widget? child) {
                   return Stack(
                     children: <Widget>[
                       CustomScrollView(slivers: <Widget>[
@@ -229,17 +229,17 @@ class _ProductDetailState extends State<ProductDetailView>
                               child: _PopUpMenuWidget(
                                   context: context,
                                   itemDetailProvider: provider,
-                                  userProvider: userProvider,
-                                  itemId: provider.itemDetail.data.id,
+                                  userProvider: userProvider!,
+                                  itemId: provider.itemDetail.data!.id!,
                                   itemUserId:
-                                      provider.itemDetail.data.user.userId,
+                                      provider.itemDetail.data!.user!.userId!,
                                   addedUserId:
-                                      provider.itemDetail.data.addedUserId,
-                                  reportedUserId: psValueHolder.loginUserId,
-                                  loginUserId: psValueHolder.loginUserId,
-                                  itemTitle: provider.itemDetail.data.title,
+                                      provider.itemDetail.data!.addedUserId!,
+                                  reportedUserId: psValueHolder!.loginUserId!,
+                                  loginUserId: psValueHolder!.loginUserId!,
+                                  itemTitle: provider.itemDetail.data!.title!,
                                   itemImage: provider
-                                      .itemDetail.data.defaultPhoto.imgPath),
+                                      .itemDetail.data!.defaultPhoto!.imgPath!),
                             ),
                           ],
                           backgroundColor: PsColors.mainColorWithBlack,
@@ -252,7 +252,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                   PsNetworkImage(
                                     photoKey: widget.heroTagImage,
                                     defaultPhoto:
-                                        provider.itemDetail.data.defaultPhoto,
+                                        provider.itemDetail.data!.defaultPhoto!,
                                     width: double.infinity,
                                     height: PsDimens.space300,
                                     boxfit: BoxFit.cover,
@@ -263,10 +263,10 @@ class _ProductDetailState extends State<ProductDetailView>
                                               provider.itemDetail.data);
                                     },
                                   ),
-                                  if (provider.itemDetail.data.addedUserId ==
+                                  if (provider.itemDetail.data!.addedUserId ==
                                           provider
                                               .psValueHolder.loginUserId ||
-                                      provider.itemDetail.data.addedUserId !=
+                                      provider.itemDetail.data!.addedUserId !=
                                           provider.psValueHolder.loginUserId)
                                     Container(
                                       margin: const EdgeInsets.only(
@@ -279,10 +279,10 @@ class _ProductDetailState extends State<ProductDetailView>
                                             MainAxisAlignment.end,
                                         mainAxisSize: MainAxisSize.max,
                                         children: <Widget>[
-                                          if (provider.itemDetail.data
+                                          if (provider.itemDetail.data!
                                                   .paidStatus ==
                                               PsConst.ADSPROGRESS  && 
-                                             provider.itemDetail.data
+                                             provider.itemDetail.data!
                                                       .addedUserId ==
                                                   provider.psValueHolder
                                                       .loginUserId)
@@ -300,17 +300,17 @@ class _ProductDetailState extends State<ProductDetailView>
                                                     'paid__ads_in_progress'),
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText2
+                                                    .bodyText2!
                                                     .copyWith(
                                                         color:
                                                             PsColors.white),
                                               ),
                                             )
                                           else if (
-                                            provider.itemDetail.data
+                                            provider.itemDetail.data!
                                                   .paidStatus ==
                                               PsConst.ADS_REJECT && 
-                                             provider.itemDetail.data
+                                             provider.itemDetail.data!
                                                       .addedUserId ==
                                                   provider.psValueHolder
                                                       .loginUserId)
@@ -327,18 +327,18 @@ class _ProductDetailState extends State<ProductDetailView>
                                                     'paid__ads_in_rejected'),
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText2
+                                                    .bodyText2!
                                                     .copyWith(
                                                         color:
                                                             PsColors.white),
                                               ),
                                             )
                                           else if (
-                                            provider.itemDetail.data
+                                            provider.itemDetail.data!
                                                   .paidStatus ==
                                               PsConst
                                                   .ADS_WAITING_FOR_APPROVAL &&
-                                             provider.itemDetail.data
+                                             provider.itemDetail.data!
                                                       .addedUserId ==
                                                   provider.psValueHolder
                                                       .loginUserId)
@@ -355,16 +355,16 @@ class _ProductDetailState extends State<ProductDetailView>
                                                     'paid__ads_waiting'),
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText2
+                                                    .bodyText2!
                                                     .copyWith(
                                                         color:
                                                             PsColors.white),
                                               ),
                                             )
-                                          else if (provider.itemDetail.data
+                                          else if (provider.itemDetail.data!
                                                       .paidStatus ==
                                                   PsConst.ADSFINISHED &&
-                                              provider.itemDetail.data
+                                              provider.itemDetail.data!
                                                       .addedUserId ==
                                                   provider.psValueHolder
                                                       .loginUserId) 
@@ -382,7 +382,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                                     'paid__ads_in_completed'),
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .bodyText2
+                                                    .bodyText2!
                                                     .copyWith(
                                                         color:
                                                             PsColors.white),
@@ -390,10 +390,10 @@ class _ProductDetailState extends State<ProductDetailView>
                                                   ),
                                                 )
                                               ]
-                                            else if (provider.itemDetail.data
+                                            else if (provider.itemDetail.data!
                                                       .paidStatus ==
                                                   PsConst.ADSNOTYETSTART &&
-                                                  provider.itemDetail.data
+                                                  provider.itemDetail.data!
                                                       .addedUserId ==
                                                   provider.psValueHolder
                                                       .loginUserId)
@@ -411,7 +411,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                                         'paid__ads_is_not_yet_start'),
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .bodyText1
+                                                        .bodyText1!
                                                         .copyWith(
                                                             color:
                                                                 PsColors.white),
@@ -431,7 +431,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                                   mainAxisSize:
                                                       MainAxisSize.max,
                                                   children: <Widget>[
-                                                    if (provider.itemDetail.data
+                                                    if (provider.itemDetail.data!
                                                             .isSoldOut ==
                                                         '1')
                                                       // Container(
@@ -460,7 +460,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                                       // Positioned(
                                                       //     bottom: 0,
                                                       //     child:
-                                                      provider.itemDetail.data
+                                                      provider.itemDetail.data!
                                                                   .isSoldOut ==
                                                               '1'
                                                           ? Expanded(
@@ -487,7 +487,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                                                       style: Theme.of(
                                                                               context)
                                                                           .textTheme
-                                                                          .bodyText2
+                                                                          .bodyText2!
                                                                           .copyWith(
                                                                               color: PsColors.white),
                                                                     ),
@@ -507,7 +507,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                                     // ],
                                                     // )
                                                     else if (provider.itemDetail
-                                                            .data.addedUserId ==
+                                                            .data!.addedUserId ==
                                                         provider.psValueHolder
                                                             .loginUserId)
                                                       Expanded(
@@ -534,8 +534,8 @@ class _ProductDetailState extends State<ProductDetailView>
                                                                         await PsProgressDialog.showDialog(
                                                                             context);
                                                                         await await markSoldOutItemProvider.loadmarkSoldOutItem(
-                                                                            psValueHolder.loginUserId,
-                                                                            markSoldOutItemHolder);
+                                                                            psValueHolder!.loginUserId,
+                                                                            markSoldOutItemHolder!);
                                                                         PsProgressDialog
                                                                             .dismissDialog();
                                                                         if (markSoldOutItemProvider.markSoldOutItem !=
@@ -544,8 +544,8 @@ class _ProductDetailState extends State<ProductDetailView>
                                                                                 null) {
                                                                           setState(
                                                                               () {
-                                                                            provider.itemDetail.data.isSoldOut =
-                                                                                markSoldOutItemProvider.markSoldOutItem.data.isSoldOut;
+                                                                            provider.itemDetail.data!.isSoldOut =
+                                                                                markSoldOutItemProvider.markSoldOutItem.data!.isSoldOut;
                                                                           });
                                                                         }
 
@@ -578,7 +578,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
-                                                                  .bodyText2
+                                                                  .bodyText2!
                                                                   .copyWith(
                                                                       color: PsColors
                                                                           .white),
@@ -621,11 +621,11 @@ class _ProductDetailState extends State<ProductDetailView>
                                                                 width: PsDimens
                                                                     .space12),
                                                             Text(
-                                                              '${provider.itemDetail.data.photoCount}  ${Utils.getString(context, 'item_detail__photo')}',
+                                                              '${provider.itemDetail.data!.photoCount}  ${Utils.getString(context, 'item_detail__photo')}',
                                                               style: Theme.of(
                                                                       context)
                                                                   .textTheme
-                                                                  .bodyText2
+                                                                  .bodyText2!
                                                                   .copyWith(
                                                                       color: PsColors
                                                                           .white),
@@ -660,10 +660,10 @@ class _ProductDetailState extends State<ProductDetailView>
                                                 CrossAxisAlignment.end,
                                             mainAxisSize: MainAxisSize.max,
                                             children: <Widget>[
-                                              if (provider.itemDetail.data
+                                              if (provider.itemDetail.data!
                                                       .paidStatus ==
                                                   PsConst.ADSPROGRESS  && 
-                                             provider.itemDetail.data
+                                             provider.itemDetail.data!
                                                       .addedUserId ==
                                                   provider.psValueHolder
                                                       .loginUserId)
@@ -681,16 +681,16 @@ class _ProductDetailState extends State<ProductDetailView>
                                                         'paid__ads_in_progress'),
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .bodyText2
+                                                        .bodyText2!
                                                         .copyWith(
                                                             color:
                                                                 PsColors.white),
                                                   ),
                                                 )
-                                              else if (provider.itemDetail.data
+                                              else if (provider.itemDetail.data!
                                                           .paidStatus ==
                                                       PsConst.ADSFINISHED &&
-                                                  provider.itemDetail.data
+                                                  provider.itemDetail.data!
                                                           .addedUserId ==
                                                       provider.psValueHolder
                                                           .loginUserId)
@@ -707,16 +707,16 @@ class _ProductDetailState extends State<ProductDetailView>
                                                         'paid__ads_in_completed'),
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .bodyText2
+                                                        .bodyText2!
                                                         .copyWith(
                                                             color:
                                                                 PsColors.white),
                                                   ),
                                                 )
-                                              else if (provider.itemDetail.data
+                                              else if (provider.itemDetail.data!
                                                       .paidStatus ==
                                                   PsConst.ADSNOTYETSTART && 
-                                                  provider.itemDetail.data
+                                                  provider.itemDetail.data!
                                                       .addedUserId ==
                                                   provider.psValueHolder
                                                       .loginUserId)
@@ -733,7 +733,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                                         'paid__ads_is_not_yet_start'),
                                                     style: Theme.of(context)
                                                         .textTheme
-                                                        .bodyText2
+                                                        .bodyText2!
                                                         .copyWith(
                                                             color:
                                                                 PsColors.white),
@@ -766,10 +766,10 @@ class _ProductDetailState extends State<ProductDetailView>
                                                           width:
                                                               PsDimens.space12),
                                                       Text(
-                                                        '${provider.itemDetail.data.photoCount}  ${Utils.getString(context, 'item_detail__photo')}',
+                                                        '${provider.itemDetail.data!.photoCount}  ${Utils.getString(context, 'item_detail__photo')}',
                                                         style: Theme.of(context)
                                                             .textTheme
-                                                            .bodyText2
+                                                            .bodyText2!
                                                             .copyWith(
                                                                 color: PsColors
                                                                     .white),
@@ -799,41 +799,41 @@ class _ProductDetailState extends State<ProductDetailView>
                                   child: Column(children: <Widget>[
                                     _HeaderBoxWidget(
                                       itemDetail: provider,
-                                      product: provider.itemDetail.data,
+                                      product: provider.itemDetail.data!,
                                       heroTagTitle: widget.heroTagTitle,
                                     ),
                                     SellerInfoTileView(
                                       itemDetail: provider,
                                     ),
-                                    if (provider.itemDetail.data.isOwner ==
+                                    if (provider.itemDetail.data!.isOwner ==
                                             PsConst.ONE &&
-                                        provider.itemDetail.data.status ==
+                                        provider.itemDetail.data!.status ==
                                             PsConst.ONE &&
-                                        (provider.itemDetail.data.paidStatus ==
+                                        (provider.itemDetail.data!.paidStatus ==
                                                 PsConst.ADSNOTAVAILABLE ||
-                                            provider.itemDetail.data
+                                            provider.itemDetail.data!
                                                     .paidStatus ==
                                                 PsConst.ADSFINISHED) && 
-                                          appInfoProvider.appInfo.data != null &&
-                                          !isAllPaymentDisable(appInfoProvider))
+                                          appInfoProvider!.appInfo.data != null &&
+                                          !isAllPaymentDisable(appInfoProvider!))
                                       PromoteTileView(
                                         animationController:
-                                            animationController,
-                                        product: provider.itemDetail.data,
+                                            animationController!,
+                                        product: provider.itemDetail.data!,
                                         provider: provider,
                                       )
                                     else
                                       Container(),
                                     SafetyTipsTileView(
                                         animationController:
-                                            animationController),
+                                            animationController!),
                                     LocationTileView(
-                                        item: provider.itemDetail.data),
+                                        item: provider.itemDetail.data!),
                                     GettingThisTileView(
                                         detailOption:
-                                            provider.itemDetail.data.dealOption,
+                                            provider.itemDetail.data!.dealOption!,
                                         address:
-                                            provider.itemDetail.data.address),
+                                            provider.itemDetail.data!.address!),
                                     StatisticTileView(
                                       provider,
                                     ),
@@ -845,17 +845,17 @@ class _ProductDetailState extends State<ProductDetailView>
                               ]),
                             )
                           ]),
-                          if (provider.itemDetail.data.addedUserId != null &&
-                              provider.itemDetail.data.addedUserId ==
-                                  psValueHolder.loginUserId)
+                          if (provider.itemDetail.data!.addedUserId != null &&
+                              provider.itemDetail.data!.addedUserId ==
+                                  psValueHolder!.loginUserId)
                             _EditAndDeleteButtonWidget(
                               provider: provider,
                             )
                           else
                             _CallAndChatButtonWidget(
                               provider: provider,
-                              favouriteItemRepo: productRepo,
-                              psValueHolder: psValueHolder,
+                              favouriteItemRepo: productRepo!,
+                              psValueHolder: psValueHolder!,
                             )
                         ],
                       );
@@ -870,12 +870,12 @@ class _ProductDetailState extends State<ProductDetailView>
 }
 
 dynamic isAllPaymentDisable(AppInfoProvider appInfoProvider) {
-  if (appInfoProvider.appInfo.data.inAppPurchasedEnabled == PsConst.ZERO &&
-      appInfoProvider.appInfo.data.stripeEnable == PsConst.ZERO &&
-      appInfoProvider.appInfo.data.paypalEnable == PsConst.ZERO &&
-      appInfoProvider.appInfo.data.payStackEnabled == PsConst.ZERO &&
-      appInfoProvider.appInfo.data.razorEnable == PsConst.ZERO &&
-      appInfoProvider.appInfo.data.offlineEnabled == PsConst.ZERO) {
+  if (appInfoProvider.appInfo.data!.inAppPurchasedEnabled == PsConst.ZERO &&
+      appInfoProvider.appInfo.data!.stripeEnable == PsConst.ZERO &&
+      appInfoProvider.appInfo.data!.paypalEnable == PsConst.ZERO &&
+      appInfoProvider.appInfo.data!.payStackEnabled == PsConst.ZERO &&
+      appInfoProvider.appInfo.data!.razorEnable == PsConst.ZERO &&
+      appInfoProvider.appInfo.data!.offlineEnabled == PsConst.ZERO) {
     return true;
   } else {
     return false;
@@ -884,16 +884,16 @@ dynamic isAllPaymentDisable(AppInfoProvider appInfoProvider) {
 
 class _PopUpMenuWidget extends StatelessWidget {
   const _PopUpMenuWidget(
-      {@required this.userProvider,
-      @required this.itemId,
-      @required this.itemUserId,
-      @required this.addedUserId,
-      @required this.reportedUserId,
-      @required this.loginUserId,
-      @required this.itemTitle,
-      @required this.itemImage,
-      @required this.context,
-      @required this.itemDetailProvider});
+      {required this.userProvider,
+      required this.itemId,
+      required this.itemUserId,
+      required this.addedUserId,
+      required this.reportedUserId,
+      required this.loginUserId,
+      required this.itemTitle,
+      required this.itemImage,
+      required this.context,
+      required this.itemDetailProvider});
   final UserProvider userProvider;
   final String itemId;
   final String addedUserId;
@@ -929,7 +929,7 @@ class _PopUpMenuWidget extends StatelessWidget {
 
                   if (_apiStatus != null &&
                       _apiStatus.data != null &&
-                      _apiStatus.data.status != null) {
+                      _apiStatus.data!.status != null) {
                     await itemDetailProvider.deleteLocalProductCacheById(
                         itemId, reportedUserId);
                   }
@@ -965,7 +965,7 @@ class _PopUpMenuWidget extends StatelessWidget {
 
                   if (_apiStatus != null &&
                       _apiStatus.data != null &&
-                      _apiStatus.data.status != null) {
+                      _apiStatus.data!.status != null) {
                     await itemDetailProvider.deleteLocalProductCacheByUserId(
                         loginUserId, addedUserId);
                   }
@@ -981,9 +981,9 @@ class _PopUpMenuWidget extends StatelessWidget {
 
       case '3':
         final Size size = MediaQuery.of(context).size;
-        if (itemDetailProvider.itemDetail.data.dynamicLink != null) {
+        if (itemDetailProvider.itemDetail.data!.dynamicLink != null) {
           Share.share(
-            'Go to App:\n' + itemDetailProvider.itemDetail.data.dynamicLink,
+            'Go to App:\n' + itemDetailProvider.itemDetail.data!.dynamicLink!,
             // +'Image:\n' + PsConfig.ps_app_image_url + itemImage,
             sharePositionOrigin:
                 Rect.fromLTWH(0, 0, size.width, size.height / 2),
@@ -1024,7 +1024,7 @@ class _PopUpMenuWidget extends StatelessWidget {
             left: PsDimens.space12, right: PsDimens.space12),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: PsColors.black.withAlpha(100),
+          color: PsColors.black!.withAlpha(100),
         ),
         child: Theme(
           data: Theme.of(context).copyWith(
@@ -1078,10 +1078,10 @@ class _PopUpMenuWidget extends StatelessWidget {
 
 class _HeaderBoxWidget extends StatefulWidget {
   const _HeaderBoxWidget(
-      {Key key,
-      @required this.itemDetail,
-      @required this.product,
-      @required this.heroTagTitle})
+      {Key? key,
+      required this.itemDetail,
+      required this.product,
+      required this.heroTagTitle})
       : super(key: key);
 
   final ItemDetailProvider itemDetail;
@@ -1114,56 +1114,56 @@ class __HeaderBoxWidgetState extends State<_HeaderBoxWidget> {
               padding: const EdgeInsets.all(PsDimens.space16),
               child: PsHero(
                 tag: widget.heroTagTitle,
-                child: Text(widget.itemDetail.itemDetail.data.title,
+                child: Text(widget.itemDetail.itemDetail.data!.title!,
                     style: Theme.of(context).textTheme.headline5),
               ),
             ),
             _IconsAndTwoTitleTextWidget(
                 icon: Icons.schedule,
-                title: '${widget.itemDetail.itemDetail.data.addedDateStr}',
-                color: PsColors.grey,
+                title: '${widget.itemDetail.itemDetail.data!.addedDateStr}',
+                color: PsColors.grey!,
                 itemProvider: widget.itemDetail),
-            if (widget.itemDetail.itemDetail.data.itemPriceType.name != '')
+            if (widget.itemDetail.itemDetail.data!.itemPriceType!.name != '')
               _IconsAndTowTitleWithColumnTextWidget(
                   icon: AntDesign.tago,
                   title: widget.itemDetail.itemDetail.data != null &&
-                          widget.itemDetail.itemDetail.data.price != '0' &&
-                          widget.itemDetail.itemDetail.data.price != ''
-                      ? '${widget.itemDetail.itemDetail.data.itemCurrency.currencySymbol} ${Utils.getPriceFormat(widget.itemDetail.itemDetail.data.price)}'
+                          widget.itemDetail.itemDetail.data!.price != '0' &&
+                          widget.itemDetail.itemDetail.data!.price != ''
+                      ? '${widget.itemDetail.itemDetail.data!.itemCurrency!.currencySymbol} ${Utils.getPriceFormat(widget.itemDetail.itemDetail.data!.price!)}'
                       : Utils.getString(context, 'item_price_free'),
                   subTitle:
-                      '(${widget.itemDetail.itemDetail.data.itemPriceType.name})',
-                  color: PsColors.mainColor)
+                      '(${widget.itemDetail.itemDetail.data!.itemPriceType!.name})',
+                  color: PsColors.mainColor!)
             else
               _IconsAndTitleTextWidget(
                   icon: AntDesign.tago,
                   title: widget.itemDetail.itemDetail.data != null &&
-                          widget.itemDetail.itemDetail.data.price != '0' &&
-                          widget.itemDetail.itemDetail.data.price != ''
-                      ? '${widget.itemDetail.itemDetail.data.itemCurrency.currencySymbol} ${Utils.getPriceFormat(widget.itemDetail.itemDetail.data.price)}'
+                          widget.itemDetail.itemDetail.data!.price != '0' &&
+                          widget.itemDetail.itemDetail.data!.price != ''
+                      ? '${widget.itemDetail.itemDetail.data!.itemCurrency!.currencySymbol} ${Utils.getPriceFormat(widget.itemDetail.itemDetail.data!.price!)}'
                       : Utils.getString(context, 'item_price_free'),
-                  color: PsColors.mainColor),
+                  color: PsColors.mainColor!),
             _IconsAndTitleTextWidget(
                 icon: Icons.favorite_border,
                 title:
-                    '${widget.itemDetail.itemDetail.data.favouriteCount} ${Utils.getString(context, 'item_detail__like_count')}',
-                color: PsColors.mainColor),
+                    '${widget.itemDetail.itemDetail.data!.favouriteCount!} ${Utils.getString(context, 'item_detail__like_count')}',
+                color: PsColors.mainColor!),
             _IconsAndTitleTextWidget(
                 icon: SimpleLineIcons.drawer,
-                title: widget.itemDetail.itemDetail.data.conditionOfItem.name,
-                color: null),
+                title: widget.itemDetail.itemDetail.data!.conditionOfItem!.name!,
+            ),
             _IconsAndTitleTextWidget(
                 icon: MaterialCommunityIcons.view_dashboard_outline,
                 title:
-                    '${widget.itemDetail.itemDetail.data.category.catName} / ${widget.itemDetail.itemDetail.data.subCategory.name}',
-                color: null),
+                    '${widget.itemDetail.itemDetail.data!.category!.catName} / ${widget.itemDetail.itemDetail.data!.subCategory!.name!}',
+            ),
             _IconsAndTitleTextWidget(
                 icon: MaterialCommunityIcons.arrow_left_right_bold_outline,
-                title: '${widget.itemDetail.itemDetail.data.itemType.name}',
-                color: null),
+                title: '${widget.itemDetail.itemDetail.data!.itemType!.name}',
+                ),
             _IconsAndTitleTextWidget(
                 icon: Octicons.archive,
-                title: widget.itemDetail.itemDetail.data.businessMode == '0'
+                title: widget.itemDetail.itemDetail.data!.businessMode == '0'
                     ? Utils.getString(context, 'item_detail__item_cannot_order')
                     : Utils.getString(context, 'item_detail__item_can_order'),
                 color: null),
@@ -1171,7 +1171,7 @@ class __HeaderBoxWidgetState extends State<_HeaderBoxWidget> {
             //     icon: Octicons.info,
             //     title: widget.itemDetail.itemDetail.data.description,
             //     color: null),
-            if (widget.itemDetail.itemDetail.data.highlightInformation != '')
+            if (widget.itemDetail.itemDetail.data!.highlightInformation != '')
               Container(
                 margin: const EdgeInsets.only(
                     left: PsDimens.space20,
@@ -1187,8 +1187,8 @@ class __HeaderBoxWidgetState extends State<_HeaderBoxWidget> {
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
-                      widget.itemDetail.itemDetail.data.highlightInformation,
-                      style: Theme.of(context).textTheme.bodyText2.copyWith(
+                      widget.itemDetail.itemDetail.data!.highlightInformation!,
+                      style: Theme.of(context).textTheme.bodyText2!.copyWith(
                           letterSpacing: 0.8, fontSize: 16, height: 1.3),
                     ),
                   ),
@@ -1196,9 +1196,9 @@ class __HeaderBoxWidgetState extends State<_HeaderBoxWidget> {
               )
             else
               Container(),
-            if (widget.itemDetail.itemDetail.data.description != '')
+            if (widget.itemDetail.itemDetail.data!.description != '')
               _DescriptionWedget(
-                description: widget.itemDetail.itemDetail.data.description,
+                description: widget.itemDetail.itemDetail.data!.description!,
               )
             else
               Container(),
@@ -1212,7 +1212,7 @@ class __HeaderBoxWidgetState extends State<_HeaderBoxWidget> {
 }
 
 class _DescriptionWedget extends StatelessWidget {
-  const _DescriptionWedget({Key key, @required this.description})
+  const _DescriptionWedget({Key? key, required this.description})
       : super(key: key);
   final String description;
   @override
@@ -1228,7 +1228,7 @@ class _DescriptionWedget extends StatelessWidget {
             ),
             const SizedBox(height: PsDimens.space12),
             Text(description,
-                style: Theme.of(context).textTheme.bodyText2.copyWith(
+                style: Theme.of(context).textTheme.bodyText2!.copyWith(
                       height: 1.3,
                       letterSpacing: 0.5,
                     ))
@@ -1239,15 +1239,15 @@ class _DescriptionWedget extends StatelessWidget {
 
 class _IconsAndTitleTextWidget extends StatelessWidget {
   const _IconsAndTitleTextWidget({
-    Key key,
-    @required this.icon,
-    @required this.title,
-    @required this.color,
+    Key? key,
+    required this.icon,
+    required this.title,
+     this.color,
   }) : super(key: key);
 
   final IconData icon;
   final String title;
-  final Color color;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -1273,7 +1273,7 @@ class _IconsAndTitleTextWidget extends StatelessWidget {
                   ? Theme.of(context).textTheme.bodyText1
                   : Theme.of(context)
                       .textTheme
-                      .bodyText1
+                      .bodyText1!
                       .copyWith(color: color),
             ),
           ),
@@ -1285,17 +1285,17 @@ class _IconsAndTitleTextWidget extends StatelessWidget {
 
 class _IconsAndTwoTitleTextWidget extends StatelessWidget {
   const _IconsAndTwoTitleTextWidget({
-    Key key,
-    @required this.icon,
-    @required this.title,
-    @required this.itemProvider,
-    @required this.color,
+    Key? key,
+    required this.icon,
+    required this.title,
+    required this.itemProvider,
+     this.color,
   }) : super(key: key);
 
   final IconData icon;
   final String title;
   final ItemDetailProvider itemProvider;
-  final Color color;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
@@ -1318,7 +1318,7 @@ class _IconsAndTwoTitleTextWidget extends StatelessWidget {
             title,
             style: color == null
                 ? Theme.of(context).textTheme.bodyText1
-                : Theme.of(context).textTheme.bodyText1.copyWith(color: color),
+                : Theme.of(context).textTheme.bodyText1!.copyWith(color: color),
           ),
           const SizedBox(
             width: PsDimens.space8,
@@ -1328,16 +1328,16 @@ class _IconsAndTwoTitleTextWidget extends StatelessWidget {
               Navigator.pushNamed(context, RoutePaths.userDetail,
                   // arguments: itemProvider.itemDetail.data.addedUserId
                   arguments: UserIntentHolder(
-                      userId: itemProvider.itemDetail.data.addedUserId,
-                      userName: itemProvider.itemDetail.data.user.userName));
+                      userId: itemProvider.itemDetail.data!.addedUserId,
+                      userName: itemProvider.itemDetail.data!.user!.userName));
             },
             child: Text(
-              itemProvider.itemDetail.data.user.userName == ''
+              itemProvider.itemDetail.data!.user!.userName == ''
                   ? Utils.getString(context, 'default__user_name')
-                  : '${itemProvider.itemDetail.data.user.userName}',
+                  : '${itemProvider.itemDetail.data!.user!.userName}',
               style: Theme.of(context)
                   .textTheme
-                  .bodyText2
+                  .bodyText2!
                   .copyWith(color: PsColors.mainColor),
             ),
           ),
@@ -1349,10 +1349,10 @@ class _IconsAndTwoTitleTextWidget extends StatelessWidget {
 
 class _CallAndChatButtonWidget extends StatefulWidget {
   const _CallAndChatButtonWidget({
-    Key key,
-    @required this.provider,
-    @required this.favouriteItemRepo,
-    @required this.psValueHolder,
+    Key? key,
+    required this.provider,
+    required this.favouriteItemRepo,
+    required this.psValueHolder,
   }) : super(key: key);
 
   final ItemDetailProvider provider;
@@ -1365,8 +1365,8 @@ class _CallAndChatButtonWidget extends StatefulWidget {
 }
 
 class __CallAndChatButtonWidgetState extends State<_CallAndChatButtonWidget> {
-  FavouriteItemProvider favouriteProvider;
-  Widget icon;
+  FavouriteItemProvider? favouriteProvider;
+  Widget? icon;
   @override
   Widget build(BuildContext context) {
     if (widget.provider != null &&
@@ -1379,10 +1379,10 @@ class __CallAndChatButtonWidgetState extends State<_CallAndChatButtonWidget> {
                 repo: widget.favouriteItemRepo,
                 psValueHolder: widget.psValueHolder);
             // provider.loadFavouriteList('prd9a3bfa2b7ab0f0693e84d834e73224bb');
-            return favouriteProvider;
+            return favouriteProvider!;
           },
           child: Consumer<FavouriteItemProvider>(builder: (BuildContext context,
-              FavouriteItemProvider provider, Widget child) {
+              FavouriteItemProvider provider, Widget? child) {
             return Container(
               alignment: Alignment.bottomCenter,
               child: SizedBox(
@@ -1391,13 +1391,13 @@ class __CallAndChatButtonWidgetState extends State<_CallAndChatButtonWidget> {
                 child: Container(
                   decoration: BoxDecoration(
                     color: PsColors.backgroundColor,
-                    border: Border.all(color: PsColors.backgroundColor),
+                    border: Border.all(color: PsColors.backgroundColor!),
                     borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(PsDimens.space12),
                         topRight: Radius.circular(PsDimens.space12)),
                     boxShadow: <BoxShadow>[
                       BoxShadow(
-                        color: PsColors.backgroundColor,
+                        color: PsColors.backgroundColor!,
                         blurRadius:
                             10.0, // has the effect of softening the shadow
                         spreadRadius:
@@ -1416,11 +1416,11 @@ class __CallAndChatButtonWidgetState extends State<_CallAndChatButtonWidget> {
                       children: <Widget>[
                         PSButtonWithIconWidget(
                           hasShadow: false,
-                          colorData: PsColors.black.withOpacity(0.1),
+                          colorData: PsColors.black!.withOpacity(0.1),
                           icon: (widget.provider != null &&
                                   widget.provider.itemDetail != null &&
                                   widget.provider.itemDetail.data != null)
-                              ? widget.provider.itemDetail.data.isFavourited ==
+                              ? widget.provider.itemDetail.data!.isFavourited ==
                                       PsConst.ZERO
                                   ? Icons.favorite_border
                                   : Icons.favorite
@@ -1432,16 +1432,16 @@ class __CallAndChatButtonWidgetState extends State<_CallAndChatButtonWidget> {
                             if (await Utils.checkInternetConnectivity()) {
                               Utils.navigateOnUserVerificationView(
                                   widget.provider, context, () async {
-                                if (widget.provider.itemDetail.data
+                                if (widget.provider.itemDetail.data!
                                         .isFavourited ==
                                     '0') {
                                   setState(() {
-                                    widget.provider.itemDetail.data
+                                    widget.provider.itemDetail.data!
                                         .isFavourited = '1';
                                   });
                                 } else {
                                   setState(() {
-                                    widget.provider.itemDetail.data
+                                    widget.provider.itemDetail.data!
                                         .isFavourited = '0';
                                   });
                                 }
@@ -1450,24 +1450,24 @@ class __CallAndChatButtonWidgetState extends State<_CallAndChatButtonWidget> {
                                     favouriteParameterHolder =
                                     FavouriteParameterHolder(
                                         itemId:
-                                            widget.provider.itemDetail.data.id,
+                                            widget.provider.itemDetail.data!.id!,
                                         userId:
                                             widget.psValueHolder.loginUserId);
 
                                 final PsResource<Product> _apiStatus =
-                                    await favouriteProvider.postFavourite(
+                                    await favouriteProvider!.postFavourite(
                                         favouriteParameterHolder.toMap());
 
                                 if (_apiStatus.data != null) {
                                   if (_apiStatus.status == PsStatus.SUCCESS) {
                                     await widget.provider.loadItemForFav(
-                                        widget.provider.itemDetail.data.id,
+                                        widget.provider.itemDetail.data!.id!,
                                         widget.psValueHolder.loginUserId);
                                   }
                                   if (widget.provider != null &&
                                       widget.provider.itemDetail != null &&
                                       widget.provider.itemDetail.data != null) {
-                                    if (widget.provider.itemDetail.data
+                                    if (widget.provider.itemDetail.data!
                                             .isFavourited ==
                                         PsConst.ONE) {
                                       icon = Icon(Icons.favorite,
@@ -1487,11 +1487,11 @@ class __CallAndChatButtonWidgetState extends State<_CallAndChatButtonWidget> {
                         const SizedBox(
                           width: PsDimens.space10,
                         ),
-                        if (widget.provider.itemDetail.data.user.userPhone !=
+                        if (widget.provider.itemDetail.data!.user!.userPhone !=
                                 null &&
-                            widget.provider.itemDetail.data.user.userPhone !=
+                            widget.provider.itemDetail.data!.user!.userPhone !=
                                 '' &&
-                            widget.provider.itemDetail.data.user.isShowPhone ==
+                            widget.provider.itemDetail.data!.user!.isShowPhone ==
                                 '1')
                           Visibility(
                               visible: true,
@@ -1503,9 +1503,9 @@ class __CallAndChatButtonWidgetState extends State<_CallAndChatButtonWidget> {
                                     context, 'item_detail__call'),
                                 onPressed: () async {
                                   if (await canLaunch(
-                                      'tel://${widget.provider.itemDetail.data.user.userPhone}')) {
+                                      'tel://${widget.provider.itemDetail.data!.user!.userPhone}')) {
                                     await launch(
-                                        'tel://${widget.provider.itemDetail.data.user.userPhone}');
+                                        'tel://${widget.provider.itemDetail.data!.user!.userPhone}');
                                   } else {
                                     throw 'Could not Call Phone';
                                   }
@@ -1548,11 +1548,11 @@ class __CallAndChatButtonWidgetState extends State<_CallAndChatButtonWidget> {
                                       arguments: ChatHistoryIntentHolder(
                                         chatFlag: PsConst.CHAT_FROM_SELLER,
                                         itemId:
-                                            widget.provider.itemDetail.data.id,
+                                            widget.provider.itemDetail.data!.id,
                                         buyerUserId:
                                             widget.psValueHolder.loginUserId,
                                         sellerUserId: widget.provider.itemDetail
-                                            .data.addedUserId,
+                                            .data!.addedUserId,
                                       ));
                                 });
                               }
@@ -1574,8 +1574,8 @@ class __CallAndChatButtonWidgetState extends State<_CallAndChatButtonWidget> {
 
 class _EditAndDeleteButtonWidget extends StatelessWidget {
   const _EditAndDeleteButtonWidget({
-    Key key,
-    @required this.provider,
+    Key? key,
+    required this.provider,
   }) : super(key: key);
 
   final ItemDetailProvider provider;
@@ -1596,13 +1596,13 @@ class _EditAndDeleteButtonWidget extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   color: PsColors.backgroundColor,
-                  border: Border.all(color: PsColors.backgroundColor),
+                  border: Border.all(color: PsColors.backgroundColor!),
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(PsDimens.space12),
                       topRight: Radius.circular(PsDimens.space12)),
                   boxShadow: <BoxShadow>[
                     BoxShadow(
-                      color: PsColors.backgroundColor,
+                      color: PsColors.backgroundColor!,
                       blurRadius:
                           10.0, // has the effect of softening the shadow
                       spreadRadius: 0, // has the effect of extending the shadow
@@ -1656,7 +1656,7 @@ class _EditAndDeleteButtonWidget extends StatelessWidget {
                                         final UserDeleteItemParameterHolder
                                             userDeleteItemParameterHolder =
                                             UserDeleteItemParameterHolder(
-                                          itemId: provider.itemDetail.data.id,
+                                          itemId: provider.itemDetail.data!.id,
                                         );
 
                                         final PsResource<ApiStatus> _apiStatus =
@@ -1664,7 +1664,7 @@ class _EditAndDeleteButtonWidget extends StatelessWidget {
                                                 userDeleteItemParameterHolder
                                                     .toMap());
 
-                                        if (_apiStatus.data.status ==
+                                        if (_apiStatus.data!.status ==
                                             'success') {
                                           Fluttertoast.showToast(
                                               msg: 'Item Deleated',
@@ -1742,11 +1742,11 @@ class _EditAndDeleteButtonWidget extends StatelessWidget {
 
 class _IconsAndTowTitleWithColumnTextWidget extends StatelessWidget {
   const _IconsAndTowTitleWithColumnTextWidget({
-    Key key,
-    @required this.icon,
-    @required this.title,
-    @required this.subTitle,
-    @required this.color,
+    Key? key,
+    required this.icon,
+    required this.title,
+    required this.subTitle,
+    required this.color,
   }) : super(key: key);
 
   final IconData icon;
@@ -1780,7 +1780,7 @@ class _IconsAndTowTitleWithColumnTextWidget extends StatelessWidget {
                     ? Theme.of(context).textTheme.bodyText1
                     : Theme.of(context)
                         .textTheme
-                        .bodyText1
+                        .bodyText1!
                         .copyWith(color: color),
               ),
 
@@ -1790,7 +1790,7 @@ class _IconsAndTowTitleWithColumnTextWidget extends StatelessWidget {
                     ? Theme.of(context).textTheme.bodyText1
                     : Theme.of(context)
                         .textTheme
-                        .bodyText1
+                        .bodyText1!
                         .copyWith(color: color),
               )
               // )
@@ -1804,10 +1804,10 @@ class _IconsAndTowTitleWithColumnTextWidget extends StatelessWidget {
 
 class PromoteTileView extends StatefulWidget {
   const PromoteTileView({
-    Key key,
-    @required this.animationController,
-    @required this.product,
-    @required this.provider,
+    Key? key,
+    required this.animationController,
+    required this.product,
+    required this.provider,
   }) : super(key: key);
 
   final AnimationController animationController;
@@ -1829,7 +1829,7 @@ class _PromoteTileViewState extends State<PromoteTileView> {
         Icon(Ionicons.ios_megaphone, color: PsColors.mainColor);
 
     return Consumer<AppInfoProvider>(builder:
-        (BuildContext context, AppInfoProvider appInfoprovider, Widget child) {
+        (BuildContext context, AppInfoProvider appInfoprovider, Widget? child) {
       if (appInfoprovider.appInfo.data == null) {
         return Container();
       } else {
@@ -1882,20 +1882,20 @@ class _PromoteTileViewState extends State<PromoteTileView> {
                               titleText: Utils.getString(
                                   context, 'item_detail__promte'),
                               onPressed: () async {
-                                if (appInfoprovider.appInfo.data
+                                if (appInfoprovider.appInfo.data!
                                             .inAppPurchasedEnabled ==
                                         PsConst.ONE &&
-                                    appInfoprovider.appInfo.data.stripeEnable ==
+                                    appInfoprovider.appInfo.data!.stripeEnable ==
                                         PsConst.ZERO &&
-                                    appInfoprovider.appInfo.data.paypalEnable ==
-                                        PsConst.ZERO &&
-                                    appInfoprovider
-                                            .appInfo.data.payStackEnabled ==
-                                        PsConst.ZERO &&
-                                    appInfoprovider.appInfo.data.razorEnable ==
+                                    appInfoprovider.appInfo.data!.paypalEnable ==
                                         PsConst.ZERO &&
                                     appInfoprovider
-                                            .appInfo.data.offlineEnabled ==
+                                            .appInfo.data!.payStackEnabled ==
+                                        PsConst.ZERO &&
+                                    appInfoprovider.appInfo.data!.razorEnable ==
+                                        PsConst.ZERO &&
+                                    appInfoprovider
+                                            .appInfo.data!.offlineEnabled ==
                                         PsConst.ZERO) {
                                   // InAppPurchase View
                                   final dynamic returnData =
@@ -1911,10 +1911,10 @@ class _PromoteTileViewState extends State<PromoteTileView> {
                                         Utils.checkUserLoginId(
                                             widget.provider.psValueHolder);
                                     widget.provider.loadProduct(
-                                        widget.product.id, loginUserId);
+                                        widget.product.id!, loginUserId);
                                   }
                                 } else if (appInfoprovider
-                                        .appInfo.data.inAppPurchasedEnabled ==
+                                        .appInfo.data!.inAppPurchasedEnabled ==
                                     PsConst.ZERO) {
                                   //Original Item Promote View
                                   final dynamic returnData =
@@ -1927,7 +1927,7 @@ class _PromoteTileViewState extends State<PromoteTileView> {
                                         Utils.checkUserLoginId(
                                             widget.provider.psValueHolder);
                                     widget.provider.loadProduct(
-                                        widget.product.id, loginUserId);
+                                        widget.product.id!, loginUserId);
                                   }
                                 } else {
                                   //choose payment
@@ -1953,7 +1953,7 @@ class _PromoteTileViewState extends State<PromoteTileView> {
                                                   Utils.checkUserLoginId(widget
                                                       .provider.psValueHolder);
                                               widget.provider.loadProduct(
-                                                  widget.product.id,
+                                                  widget.product.id!,
                                                   loginUserId);
                                             }
                                           },
@@ -1969,7 +1969,7 @@ class _PromoteTileViewState extends State<PromoteTileView> {
                                                   Utils.checkUserLoginId(widget
                                                       .provider.psValueHolder);
                                               widget.provider.loadProduct(
-                                                  widget.product.id,
+                                                  widget.product.id!,
                                                   loginUserId);
                                             }
                                           },

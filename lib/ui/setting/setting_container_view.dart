@@ -11,7 +11,7 @@ class SettingContainerView extends StatefulWidget {
 
 class _SettingContainerViewState extends State<SettingContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -21,7 +21,7 @@ class _SettingContainerViewState extends State<SettingContainerView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -30,7 +30,7 @@ class _SettingContainerViewState extends State<SettingContainerView>
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -57,7 +57,7 @@ class _SettingContainerViewState extends State<SettingContainerView>
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
-                .headline6
+                .headline6!
                 .copyWith(color: PsColors.mainColor, fontWeight: FontWeight.bold),
           ),
           elevation: 0,
@@ -66,7 +66,7 @@ class _SettingContainerViewState extends State<SettingContainerView>
            color: PsColors.coreBackgroundColor,
           height: double.infinity,
           child: SettingView(
-            animationController: animationController,
+            animationController: animationController!,
           ),
         ),
       ),

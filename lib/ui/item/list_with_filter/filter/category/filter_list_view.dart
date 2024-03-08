@@ -28,8 +28,8 @@ class _FilterListViewState extends State<FilterListView> {
   final ScrollController _scrollController = ScrollController();
 
   final CategoryParameterHolder categoryIconList = CategoryParameterHolder();
-  CategoryRepository categoryRepository;
-  PsValueHolder psValueHolder;
+  CategoryRepository? categoryRepository;
+  PsValueHolder? psValueHolder;
 
   @override
   void initState() {
@@ -69,7 +69,7 @@ class _FilterListViewState extends State<FilterListView> {
         appBarTitle: Utils.getString(context, 'search__category') ?? '',
         initProvider: () {
           return CategoryProvider(
-              repo: categoryRepository, psValueHolder: psValueHolder);
+              repo: categoryRepository!, psValueHolder: psValueHolder!);
         },
         onProviderReady: (CategoryProvider provider) {
           provider.loadCategoryList();
@@ -88,7 +88,7 @@ class _FilterListViewState extends State<FilterListView> {
           )
         ],
         builder:
-            (BuildContext context, CategoryProvider provider, Widget child) {
+            (BuildContext context, CategoryProvider provider, Widget? child) {
           return Container(
             child: SingleChildScrollView(
               child: Column(
@@ -98,13 +98,13 @@ class _FilterListViewState extends State<FilterListView> {
                     child: ListView.builder(
                         shrinkWrap: true,
                         controller: _scrollController,
-                        itemCount: provider.categoryList.data.length,
+                        itemCount: provider.categoryList.data!.length,
                         itemBuilder: (BuildContext context, int index) {
                           if (provider.categoryList.data != null ||
-                              provider.categoryList.data.isEmpty) {
+                              provider.categoryList.data!.isEmpty) {
                             return FilterExpantionTileView(
                                 selectedData: widget.selectedData,
-                                category: provider.categoryList.data[index],
+                                category: provider.categoryList.data![index],
                                 onSubCategoryClick: onSubCategoryClick);
                           } else {
                             return null;

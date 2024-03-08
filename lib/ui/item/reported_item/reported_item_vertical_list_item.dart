@@ -8,24 +8,24 @@ import 'package:flutterbuyandsell/viewobject/reported_item.dart';
 
 class ReportedItemVerticalListItem extends StatelessWidget {
   const ReportedItemVerticalListItem(
-      {Key key,
-      @required this.reportedItem,
+      {Key? key,
+      required this.reportedItem,
       this.onTap,
       this.animationController,
       this.animation})
       : super(key: key);
 
   final ReportedItem reportedItem;
-  final Function onTap;
-  final AnimationController animationController;
-  final Animation<double> animation;
+  final VoidCallback? onTap;
+  final AnimationController? animationController;
+  final Animation<double>? animation;
 
   @override
   Widget build(BuildContext context) {
-    animationController.forward();
+    animationController!.forward();
 
     return AnimatedBuilder(
-        animation: animationController,
+        animation: animationController!,
         child: InkWell(
           onTap: onTap,
           child: Container(
@@ -35,17 +35,17 @@ class ReportedItemVerticalListItem extends StatelessWidget {
               color: PsColors.backgroundColor,
               child: Padding(
                   padding: const EdgeInsets.all(PsDimens.space16),
-                  child:  UserWidget(reportedItem: reportedItem, onTap: onTap) 
+                  child:  UserWidget(reportedItem: reportedItem, onTap: onTap!)
                   ),
             ),
           ),
         ),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return FadeTransition(
-              opacity: animation,
+              opacity: animation!,
               child: Transform(
                   transform: Matrix4.translationValues(
-                      0.0, 100 * (1.0 - animation.value), 0.0),
+                      0.0, 100 * (1.0 - animation!.value), 0.0),
                   child: child));
         });
   }
@@ -53,9 +53,9 @@ class ReportedItemVerticalListItem extends StatelessWidget {
 
 class UserWidget extends StatelessWidget {
   const UserWidget({
-    Key key,
-    @required this.reportedItem,
-    @required this.onTap,
+    Key? key,
+    required this.reportedItem,
+    required this.onTap,
   }) : super(key: key);
 
   final ReportedItem reportedItem;
@@ -66,7 +66,7 @@ class UserWidget extends StatelessWidget {
 
     final Widget _imageWidget = PsNetworkCircleImageForUser(
       photoKey: '',
-      imagePath: reportedItem.defaultPhoto.imgPath ?? '',
+      imagePath: reportedItem.defaultPhoto!.imgPath ?? '',
       // width: PsDimens.space44,
       // height: PsDimens.space44,
       boxfit: BoxFit.cover,
@@ -87,7 +87,7 @@ class UserWidget extends StatelessWidget {
             Expanded(
                 child: Text((reportedItem.title == '' || reportedItem.title == null )?
                     Utils.getString(context, 'default__user_name'):
-                    reportedItem.title,
+                    reportedItem.title!,
                       style: Theme.of(context).textTheme.subtitle1),
 
             ),

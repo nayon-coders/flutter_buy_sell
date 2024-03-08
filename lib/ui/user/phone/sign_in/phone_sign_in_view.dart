@@ -17,14 +17,14 @@ import 'package:provider/provider.dart';
 
 class PhoneSignInView extends StatefulWidget {
   const PhoneSignInView(
-      {Key key,
+      {Key? key,
       this.animationController,
       this.goToLoginSelected,
       this.phoneSignInSelected})
       : super(key: key);
-  final AnimationController animationController;
-  final Function goToLoginSelected;
-  final Function phoneSignInSelected;
+  final AnimationController? animationController;
+  final Function? goToLoginSelected;
+  final Function? phoneSignInSelected;
   @override
   _PhoneSignInViewState createState() => _PhoneSignInViewState();
 }
@@ -33,9 +33,9 @@ class _PhoneSignInViewState extends State<PhoneSignInView>
     with SingleTickerProviderStateMixin {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
-  UserRepository repo1;
-  PsValueHolder psValueHolder;
-  AnimationController animationController;
+  UserRepository? repo1;
+  PsValueHolder? psValueHolder;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -45,7 +45,7 @@ class _PhoneSignInViewState extends State<PhoneSignInView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -53,10 +53,10 @@ class _PhoneSignInViewState extends State<PhoneSignInView>
   Widget build(BuildContext context) {
     final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(
-            parent: animationController,
+            parent: animationController!,
             curve: const Interval(0.5 * 1, 1.0, curve: Curves.fastOutSlowIn)));
 
-    animationController.forward();
+    animationController!.forward();
     repo1 = Provider.of<UserRepository>(context);
     psValueHolder = Provider.of<PsValueHolder>(context);
 
@@ -65,16 +65,16 @@ class _PhoneSignInViewState extends State<PhoneSignInView>
         lazy: false,
         create: (BuildContext context) {
           final UserProvider provider =
-              UserProvider(repo: repo1, psValueHolder: psValueHolder);
+              UserProvider(repo: repo1!, psValueHolder: psValueHolder!);
           return provider;
         },
         child: Consumer<UserProvider>(builder:
-            (BuildContext context, UserProvider provider, Widget child) {
+            (BuildContext context, UserProvider provider, Widget? child) {
           return Stack(
             children: <Widget>[
               SingleChildScrollView(
                   child: AnimatedBuilder(
-                      animation: animationController,
+                      animation: animationController!,
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
@@ -90,16 +90,16 @@ class _PhoneSignInViewState extends State<PhoneSignInView>
                             provider: provider,
                             nameController: nameController,
                             phoneController: phoneController,
-                            phoneSignInSelected: widget.phoneSignInSelected,
+                            phoneSignInSelected: widget.phoneSignInSelected!,
                           ),
                           const SizedBox(
                             height: PsDimens.space16,
                           ),
                           _TextWidget(
-                              goToLoginSelected: widget.goToLoginSelected),
+                              goToLoginSelected: widget.goToLoginSelected!),
                         ],
                       ),
-                      builder: (BuildContext context, Widget child) {
+                      builder: (BuildContext context, Widget? child) {
                         return FadeTransition(
                           opacity: animation,
                           child: Transform(
@@ -118,7 +118,7 @@ class _PhoneSignInViewState extends State<PhoneSignInView>
 
 class _TextWidget extends StatefulWidget {
   const _TextWidget({this.goToLoginSelected});
-  final Function goToLoginSelected;
+  final Function? goToLoginSelected;
   @override
   __TextWidgetState createState() => __TextWidgetState();
 }
@@ -134,14 +134,14 @@ class __TextWidgetState extends State<_TextWidget> {
             Utils.getString(context, 'phone_signin__back_login'),
             style: Theme.of(context)
                 .textTheme
-                .bodyText2
+                .bodyText2!
                 .copyWith(color: PsColors.mainColor),
           ),
         ),
       ),
       onTap: () {
         if (widget.goToLoginSelected != null) {
-          widget.goToLoginSelected();
+          widget.goToLoginSelected!();
         } else {
           Navigator.pushReplacementNamed(
             context,
@@ -158,7 +158,7 @@ class _HeaderIconAndTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final Widget _textWidget = Text(
       Utils.getString(context, 'app_name'),
-      style: Theme.of(context).textTheme.subtitle1.copyWith(
+      style: Theme.of(context).textTheme.subtitle1!.copyWith(
             color: PsColors.mainColor,
           ),
     );
@@ -190,7 +190,7 @@ class _HeaderIconAndTextWidget extends StatelessWidget {
 
 class _CardWidget extends StatelessWidget {
   const _CardWidget(
-      {@required this.nameController, @required this.phoneController});
+      {required this.nameController, required this.phoneController});
 
   final TextEditingController nameController;
   final TextEditingController phoneController;
@@ -217,7 +217,7 @@ class _CardWidget extends StatelessWidget {
                   hintText: Utils.getString(context, 'register__user_name'),
                   hintStyle: Theme.of(context)
                       .textTheme
-                      .bodyText2
+                      .bodyText2!
                       .copyWith(color: PsColors.textPrimaryLightColor),
                   icon: Icon(Icons.people,
                       color: Theme.of(context).iconTheme.color)),
@@ -238,14 +238,14 @@ class _CardWidget extends StatelessWidget {
                   textAlign: Directionality.of(context) == TextDirection.ltr
                       ? TextAlign.left
                       : TextAlign.right,
-                  style: Theme.of(context).textTheme.button.copyWith(),
+                  style: Theme.of(context).textTheme.button!.copyWith(),
                   keyboardType: TextInputType.phone,
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: '+959123456789',
                       hintStyle: Theme.of(context)
                           .textTheme
-                          .button
+                          .button!
                           .copyWith(color: PsColors.textPrimaryLightColor),
                       icon: Icon(Icons.phone,
                           color: Theme.of(context).iconTheme.color)),
@@ -260,10 +260,10 @@ class _CardWidget extends StatelessWidget {
 
 class _SendButtonWidget extends StatefulWidget {
   const _SendButtonWidget(
-      {@required this.provider,
-      @required this.nameController,
-      @required this.phoneController,
-      @required this.phoneSignInSelected});
+      {required this.provider,
+      required this.nameController,
+      required this.phoneController,
+      required this.phoneSignInSelected});
   final UserProvider provider;
   final TextEditingController nameController;
   final TextEditingController phoneController;
@@ -286,12 +286,12 @@ dynamic callWarningDialog(BuildContext context, String text) {
 
 class __SendButtonWidgetState extends State<_SendButtonWidget> {
   Future<String> verifyPhone() async {
-    String verificationId;
+    String? verificationId;
     final PhoneCodeAutoRetrievalTimeout autoRetrieve = (String verId) {
       verificationId = verId;
       PsProgressDialog.dismissDialog();
     };
-    final PhoneCodeSent smsCodeSent = (String verId, [int forceCodeResend]) {
+    final PhoneCodeSent smsCodeSent = (String verId, [int? forceCodeResend]) {
       verificationId = verId;
       PsProgressDialog.dismissDialog();
       print('code has been send');
@@ -331,7 +331,7 @@ class __SendButtonWidgetState extends State<_SendButtonWidget> {
         timeout: const Duration(minutes: 2),
         verificationCompleted: verifySuccess,
         verificationFailed: verifyFail);
-    return verificationId;
+    return verificationId!;
   }
 
   @override

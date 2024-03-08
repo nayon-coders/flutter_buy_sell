@@ -9,10 +9,10 @@ import 'package:provider/provider.dart';
 
 class VerifyPhoneContainerView extends StatefulWidget {
   const VerifyPhoneContainerView({
-    Key key,
-    @required this.userName,
-    @required this.phoneNumber,
-    @required this.phoneId,
+    Key? key,
+    required this.userName,
+    required this.phoneNumber,
+    required this.phoneId,
   }) : super(key: key);
   final String userName;
   final String phoneNumber;
@@ -24,7 +24,7 @@ class VerifyPhoneContainerView extends StatefulWidget {
 
 class _CityVerifyPhoneContainerViewState extends State<VerifyPhoneContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -34,18 +34,18 @@ class _CityVerifyPhoneContainerViewState extends State<VerifyPhoneContainerView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  UserProvider userProvider;
-  UserRepository userRepo;
+  UserProvider? userProvider;
+  UserRepository? userRepo;
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -72,7 +72,7 @@ class _CityVerifyPhoneContainerViewState extends State<VerifyPhoneContainerView>
               title: Text(
                 Utils.getString(context, 'home_verify_phone'),
                 textAlign: TextAlign.center,
-                style: Theme.of(context).textTheme.headline6.copyWith(
+                style: Theme.of(context).textTheme.headline6!.copyWith(
                     fontWeight: FontWeight.bold, color: PsColors.white),
               ),
               elevation: 0,
@@ -81,7 +81,7 @@ class _CityVerifyPhoneContainerViewState extends State<VerifyPhoneContainerView>
               userName: widget.userName,
               phoneNumber: widget.phoneNumber,
               phoneId: widget.phoneId,
-              animationController: animationController,
+              animationController: animationController!,
             )));
   }
 }

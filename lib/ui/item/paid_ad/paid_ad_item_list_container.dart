@@ -13,7 +13,7 @@ class PaidItemListContainerView extends StatefulWidget {
 
 class _PaidItemListContainerViewState extends State<PaidItemListContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -23,14 +23,14 @@ class _PaidItemListContainerViewState extends State<PaidItemListContainerView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -55,14 +55,14 @@ class _PaidItemListContainerViewState extends State<PaidItemListContainerView>
           title: Text(
             Utils.getString(context, 'more__paid_ads_title'),
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: PsColors.mainColorWithWhite),
           ),
           elevation: 0,
         ),
         body: PaidAdItemListView(
-          animationController: animationController,
+          animationController: animationController!,
         ),
       ),
     );

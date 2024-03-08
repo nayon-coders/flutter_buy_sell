@@ -21,15 +21,15 @@ import 'package:flutterbuyandsell/ui/common/ps_ui_widget.dart';
 
 class ProductListWithFilterView extends StatefulWidget {
   const ProductListWithFilterView(
-      {Key key,
-      @required this.productParameterHolder,
-      @required this.animationController,
+      {Key? key,
+      required this.productParameterHolder,
+      required this.animationController,
       this.changeAppBarTitle})
       : super(key: key);
 
   final ProductParameterHolder productParameterHolder;
   final AnimationController animationController;
-  final Function changeAppBarTitle;
+  final Function? changeAppBarTitle;
 
   @override
   _ProductListWithFilterViewState createState() =>
@@ -40,7 +40,7 @@ class _ProductListWithFilterViewState extends State<ProductListWithFilterView>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  SearchProductProvider _searchProductProvider;
+  SearchProductProvider? _searchProductProvider;
   bool isVisible = true;
   @override
   void dispose() {
@@ -56,21 +56,21 @@ class _ProductListWithFilterViewState extends State<ProductListWithFilterView>
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
         final String loginUserId =
-                      Utils.checkUserLoginId(valueHolder);
-        _searchProductProvider.nextProductListByKey(
+                      Utils.checkUserLoginId(valueHolder!);
+        _searchProductProvider!.nextProductListByKey(
             loginUserId,
-            _searchProductProvider.productParameterHolder);
+            _searchProductProvider!.productParameterHolder);
       }
       setState(() {
         final double offset = _scrollController.offset;
-        _delta += offset - _oldOffset;
-        if (_delta > _containerMaxHeight)
+        _delta = offset - _oldOffset!;
+        if (_delta! > _containerMaxHeight)
           _delta = _containerMaxHeight;
-        else if (_delta < 0) {
+        else if (_delta! < 0) {
           _delta = 0;
         }
         _oldOffset = offset;
-        _offset = -_delta;
+        _offset = -_delta!;
       });
 
       print(' Offset $_offset');
@@ -78,10 +78,10 @@ class _ProductListWithFilterViewState extends State<ProductListWithFilterView>
   }
 
   final double _containerMaxHeight = 60;
-  double _offset, _delta = 0, _oldOffset = 0;
-  ProductRepository repo1;
+  double? _offset, _delta = 0, _oldOffset = 0;
+  ProductRepository? repo1;
   dynamic data;
-  PsValueHolder valueHolder;
+  PsValueHolder? valueHolder;
   bool isConnectedToInternet = false;
   bool isSuccessfullyLoaded = true;
 
@@ -114,21 +114,21 @@ class _ProductListWithFilterViewState extends State<ProductListWithFilterView>
             lazy: false,
             create: (BuildContext context) {
               final SearchProductProvider provider = SearchProductProvider(
-                  repo: repo1, psValueHolder: valueHolder);
+                  repo: repo1!, psValueHolder: valueHolder);
               widget.productParameterHolder.itemLocationId =
-                  provider.psValueHolder.locationId;
+                  provider.psValueHolder!.locationId;
               final String loginUserId =
-                      Utils.checkUserLoginId(valueHolder);
+                      Utils.checkUserLoginId(valueHolder!);
               provider.loadProductListByKey(loginUserId, widget.productParameterHolder );
               _searchProductProvider = provider;
-              _searchProductProvider.productParameterHolder =
+              _searchProductProvider!.productParameterHolder =
                   widget.productParameterHolder;
 
-              return _searchProductProvider;
+              return _searchProductProvider!;
             },
             child: Consumer<SearchProductProvider>(builder:
                 (BuildContext context, SearchProductProvider provider,
-                    Widget child) {
+                    Widget? child) {
               // print(provider.productList.data.isEmpty);
               // if (provider.productList.data.isNotEmpty) {
               return Column(
@@ -138,7 +138,7 @@ class _ProductListWithFilterViewState extends State<ProductListWithFilterView>
                     child: Container(
                       color: PsColors.coreBackgroundColor,
                       child: Stack(children: <Widget>[
-                        if (provider.productList.data.isNotEmpty &&
+                        if (provider.productList.data!.isNotEmpty &&
                             provider.productList.data != null)
                           Container(
                               color: PsColors.coreBackgroundColor,
@@ -164,15 +164,15 @@ class _ProductListWithFilterViewState extends State<ProductListWithFilterView>
                                           (BuildContext context, int index) {
                                             if (provider.productList.data !=
                                                     null ||
-                                                provider.productList.data
+                                                provider.productList.data!
                                                     .isNotEmpty) {
                                               final int count = provider
-                                                  .productList.data.length;
+                                                  .productList.data!.length;
                                               return ProductVeticalListItem(
                                                 coreTagKey: provider.hashCode
                                                         .toString() +
                                                     provider.productList
-                                                        .data[index].id,
+                                                        .data![index].id!,
                                                 animationController:
                                                     widget.animationController,
                                                 animation: Tween<double>(
@@ -189,10 +189,10 @@ class _ProductListWithFilterViewState extends State<ProductListWithFilterView>
                                                   ),
                                                 ),
                                                 product: provider
-                                                    .productList.data[index],
+                                                    .productList.data![index],
                                                 onTap: () {
                                                   final Product product =
-                                                      provider.productList.data
+                                                      provider.productList.data!
                                                           .reversed
                                                           .toList()[index];
                                                   final ProductDetailIntentHolder
@@ -200,17 +200,17 @@ class _ProductListWithFilterViewState extends State<ProductListWithFilterView>
                                                       ProductDetailIntentHolder(
                                                           productId: provider
                                                               .productList
-                                                              .data[index].id,
+                                                              .data![index].id,
                                                           heroTagImage: provider
                                                                   .hashCode
                                                                   .toString() +
-                                                              product.id +
+                                                              product.id! +
                                                               PsConst
                                                                   .HERO_TAG__IMAGE,
                                                           heroTagTitle: provider
                                                                   .hashCode
                                                                   .toString() +
-                                                              product.id +
+                                                              product.id! +
                                                               PsConst
                                                                   .HERO_TAG__TITLE);
                                                   Navigator.pushNamed(context,
@@ -223,16 +223,16 @@ class _ProductListWithFilterViewState extends State<ProductListWithFilterView>
                                             }
                                           },
                                           childCount:
-                                              provider.productList.data.length,
+                                              provider.productList.data!.length,
                                         ),
                                       ),
                                     ]),
                                 onRefresh: () {
                                   final String loginUserId =
-                                  Utils.checkUserLoginId(valueHolder);
+                                  Utils.checkUserLoginId(valueHolder!);
                                   return provider.resetLatestProductList(
                                       loginUserId,
-                                      _searchProductProvider
+                                      _searchProductProvider!
                                           .productParameterHolder);
                                 },
                               ))
@@ -267,7 +267,7 @@ class _ProductListWithFilterViewState extends State<ProductListWithFilterView>
                                       textAlign: TextAlign.center,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .headline6
+                                          .headline6!
                                           .copyWith(),
                                     ),
                                   ),
@@ -291,9 +291,9 @@ class _ProductListWithFilterViewState extends State<ProductListWithFilterView>
                                 width: double.infinity,
                                 height: _containerMaxHeight,
                                 child: BottomNavigationImageAndText(
-                                    changeAppBarTitle: widget.changeAppBarTitle,
+                                    changeAppBarTitle: widget.changeAppBarTitle!,
                                     searchProductProvider:
-                                        _searchProductProvider)),
+                                        _searchProductProvider!)),
                           ),
                         ),
                         PSProgressIndicator(provider.productList.status),
@@ -309,8 +309,8 @@ class _ProductListWithFilterViewState extends State<ProductListWithFilterView>
 class BottomNavigationImageAndText extends StatefulWidget {
   const BottomNavigationImageAndText(
       {this.searchProductProvider, this.changeAppBarTitle});
-  final SearchProductProvider searchProductProvider;
-  final Function changeAppBarTitle;
+  final SearchProductProvider? searchProductProvider;
+  final Function? changeAppBarTitle;
 
   @override
   _BottomNavigationImageAndTextState createState() =>
@@ -321,29 +321,29 @@ class _BottomNavigationImageAndTextState
     extends State<BottomNavigationImageAndText> {
   bool isClickBaseLineList = false;
   bool isClickBaseLineTune = false;
-  PsValueHolder valueHolder;
+  PsValueHolder? valueHolder;
 
   @override
   Widget build(BuildContext context) {
 
     valueHolder = Provider.of<PsValueHolder>(context);
 
-    if (widget.searchProductProvider.productParameterHolder.isFiltered()) {
+    if (widget.searchProductProvider!.productParameterHolder.isFiltered()) {
       isClickBaseLineTune = true;
     
     }
 
-    if (widget.searchProductProvider.productParameterHolder
+    if (widget.searchProductProvider!.productParameterHolder
         .isCatAndSubCatFiltered()) {
       isClickBaseLineList = true;
     }
 
     return Container(
       decoration: BoxDecoration(
-          border: Border.all(color: PsColors.mainLightShadowColor),
+          border: Border.all(color: PsColors.mainLightShadowColor!),
           boxShadow: <BoxShadow>[
             BoxShadow(
-                color: PsColors.mainShadowColor,
+                color: PsColors.mainShadowColor!,
                 offset: const Offset(1.1, 1.1),
                 blurRadius: 10.0),
           ],
@@ -360,11 +360,11 @@ class _BottomNavigationImageAndTextState
                 PsIconWithCheck(
                   icon: MaterialCommunityIcons.format_list_bulleted_type,
                   color: isClickBaseLineList
-                      ? PsColors.mainColor
-                      : PsColors.iconColor,
+                      ? PsColors.mainColor!
+                      : PsColors.iconColor!,
                 ),
                 Text(Utils.getString(context, 'search__category'),
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         color: isClickBaseLineList
                             ? PsColors.mainColor
                             : PsColors.textPrimaryColor)),
@@ -373,31 +373,31 @@ class _BottomNavigationImageAndTextState
             onTap: () async {
               final Map<String, String> dataHolder = <String, String>{};
               dataHolder[PsConst.CATEGORY_ID] =
-                  widget.searchProductProvider.productParameterHolder.catId;
+                  widget.searchProductProvider!.productParameterHolder.catId;
               dataHolder[PsConst.SUB_CATEGORY_ID] =
-                  widget.searchProductProvider.productParameterHolder.subCatId;
+                  widget.searchProductProvider!.productParameterHolder.subCatId;
               // dataHolder[PsConst.CATEGORY_NAME] = widget.searchProd
               final dynamic result = await Navigator.pushNamed(
                   context, RoutePaths.filterExpantion,
                   arguments: dataHolder);
 
               if (result != null && result is Map<String, String>) {
-                widget.searchProductProvider.productParameterHolder.catId =
-                    result[PsConst.CATEGORY_ID];
+                widget.searchProductProvider!.productParameterHolder.catId =
+                    result[PsConst.CATEGORY_ID]!;
 
-                widget.searchProductProvider.productParameterHolder.subCatId =
-                    result[PsConst.SUB_CATEGORY_ID];
+                widget.searchProductProvider!.productParameterHolder.subCatId =
+                    result[PsConst.SUB_CATEGORY_ID]!;
                 final String loginUserId =
-                      Utils.checkUserLoginId(valueHolder);
-                widget.searchProductProvider.resetLatestProductList(
+                      Utils.checkUserLoginId(valueHolder!);
+                widget.searchProductProvider!.resetLatestProductList(
                     loginUserId,
-                    widget.searchProductProvider.productParameterHolder);
+                    widget.searchProductProvider!.productParameterHolder);
 
                 if (result[PsConst.CATEGORY_ID] == '' &&
                     result[PsConst.SUB_CATEGORY_ID] == '') {
                   isClickBaseLineList = false;
                 } else {
-                  widget.changeAppBarTitle(result[PsConst.CATEGORY_NAME]);
+                  widget.changeAppBarTitle!(result[PsConst.CATEGORY_NAME]);
                   isClickBaseLineList = true;
                 }
               }
@@ -410,11 +410,11 @@ class _BottomNavigationImageAndTextState
                 PsIconWithCheck(
                   icon: Icons.filter_list,
                   color: isClickBaseLineTune
-                      ? PsColors.mainColor
-                      : PsColors.textPrimaryColor,
+                      ? PsColors.mainColor!
+                      : PsColors.textPrimaryColor!,
                 ),
                 Text(Utils.getString(context, 'search__filter'),
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         color: isClickBaseLineTune
                             ? PsColors.mainColor
                             : PsColors.textPrimaryColor))
@@ -424,16 +424,16 @@ class _BottomNavigationImageAndTextState
               final dynamic result = await Navigator.pushNamed(
                   context, RoutePaths.itemSearch,
                   arguments:
-                      widget.searchProductProvider.productParameterHolder);
+                      widget.searchProductProvider!.productParameterHolder);
               if (result != null && result is ProductParameterHolder) {
-                widget.searchProductProvider.productParameterHolder = result;
+                widget.searchProductProvider!.productParameterHolder = result;
                 final String loginUserId =
-                      Utils.checkUserLoginId(valueHolder);
-                widget.searchProductProvider.resetLatestProductList(
+                      Utils.checkUserLoginId(valueHolder!);
+                widget.searchProductProvider!.resetLatestProductList(
                     loginUserId,
-                    widget.searchProductProvider.productParameterHolder);
+                    widget.searchProductProvider!.productParameterHolder);
 
-                if (widget.searchProductProvider.productParameterHolder
+                if (widget.searchProductProvider!.productParameterHolder
                     .isFiltered()) {
                   isClickBaseLineTune = true;
                 } else {
@@ -448,47 +448,47 @@ class _BottomNavigationImageAndTextState
               children: <Widget>[
                 PsIconWithCheck(
                   icon: Icons.sort,
-                  color: PsColors.mainColor,
+                  color: PsColors.mainColor!,
                 ),
                 Text(Utils.getString(context, 'search__map'),
-                    style: Theme.of(context).textTheme.bodyText2.copyWith(
+                    style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         color: isClickBaseLineTune
                             ? PsColors.mainColor
                             : PsColors.textPrimaryColor))
               ],
             ),
             onTap: () async {
-              if (widget.searchProductProvider.productParameterHolder.lat ==
+              if (widget.searchProductProvider!.productParameterHolder.lat ==
                       '' &&
-                  widget.searchProductProvider.productParameterHolder.lng ==
+                  widget.searchProductProvider!.productParameterHolder.lng ==
                       '') {
-                widget.searchProductProvider.productParameterHolder.lat =
-                    widget.searchProductProvider.psValueHolder.locationLat;
-                widget.searchProductProvider.productParameterHolder.lng =
-                    widget.searchProductProvider.psValueHolder.locationLng;
+                widget.searchProductProvider!.productParameterHolder.lat =
+                    widget.searchProductProvider!.psValueHolder!.locationLat;
+                widget.searchProductProvider!.productParameterHolder.lng =
+                    widget.searchProductProvider!.psValueHolder!.locationLng;
               }
               final dynamic result = await Navigator.pushNamed(
                   context, RoutePaths.mapFilter,
                   arguments:
-                      widget.searchProductProvider.productParameterHolder);
+                      widget.searchProductProvider!.productParameterHolder);
               if (result != null && result is ProductParameterHolder) {
-                widget.searchProductProvider.productParameterHolder = result;
-                if (widget.searchProductProvider.productParameterHolder.mile !=
+                widget.searchProductProvider!.productParameterHolder = result;
+                if (widget.searchProductProvider!.productParameterHolder.mile !=
                         null &&
-                    widget.searchProductProvider.productParameterHolder.mile !=
+                    widget.searchProductProvider!.productParameterHolder.mile !=
                         '' &&
-                    double.parse(widget.searchProductProvider
+                    double.parse(widget.searchProductProvider!
                             .productParameterHolder.mile) <
                         1) {
-                  widget.searchProductProvider.productParameterHolder.mile =
+                  widget.searchProductProvider!.productParameterHolder.mile =
                       '1';
                 } 
                 final String loginUserId =
-                      Utils.checkUserLoginId(valueHolder);
+                      Utils.checkUserLoginId(valueHolder!);
                 //for 0.5 km, it is less than 1 miles and error
-                widget.searchProductProvider.resetLatestProductList(
+                widget.searchProductProvider!.resetLatestProductList(
                     loginUserId,
-                    widget.searchProductProvider.productParameterHolder);
+                    widget.searchProductProvider!.productParameterHolder);
               }
             },
           ),
@@ -499,9 +499,9 @@ class _BottomNavigationImageAndTextState
 }
 
 class PsIconWithCheck extends StatelessWidget {
-  const PsIconWithCheck({Key key, this.icon, this.color}) : super(key: key);
-  final IconData icon;
-  final Color color;
+  const PsIconWithCheck({Key? key, this.icon, this.color}) : super(key: key);
+  final IconData? icon;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {

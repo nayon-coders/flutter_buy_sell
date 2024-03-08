@@ -16,7 +16,7 @@ import 'package:flutterbuyandsell/constant/route_paths.dart';
 import 'package:flutterbuyandsell/ui/common/ps_ui_widget.dart';
 
 class ItemLocationView extends StatefulWidget {
-  const ItemLocationView({Key key, @required this.animationController})
+  const ItemLocationView({Key? key, required this.animationController})
       : super(key: key);
 
   final AnimationController animationController;
@@ -28,8 +28,8 @@ class _ItemLocationViewState extends State<ItemLocationView>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  ItemLocationProvider _itemLocationProvider;
-  PsValueHolder valueHolder;
+  ItemLocationProvider? _itemLocationProvider;
+  PsValueHolder? valueHolder;
   // Animation<double> animation;
   int i = 0;
   @override
@@ -43,16 +43,16 @@ class _ItemLocationViewState extends State<ItemLocationView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _itemLocationProvider.nextItemLocationList(
-          _itemLocationProvider.latestLocationParameterHolder.toMap(),
-          Utils.checkUserLoginId(_itemLocationProvider.psValueHolder));
+        _itemLocationProvider!.nextItemLocationList(
+          _itemLocationProvider!.latestLocationParameterHolder.toMap(),
+          Utils.checkUserLoginId(_itemLocationProvider!.psValueHolder));
       }
     });
 
     super.initState();
   }
 
-  ItemLocationRepository repo1;
+  ItemLocationRepository? repo1;
   dynamic data;
 
   @override
@@ -65,14 +65,14 @@ class _ItemLocationViewState extends State<ItemLocationView>
 
     return PsWidgetWithAppBarNoAppBarTitle<ItemLocationProvider>(
         initProvider: () {
-      return ItemLocationProvider(repo: repo1, psValueHolder: valueHolder);
+      return ItemLocationProvider(repo: repo1!, psValueHolder: valueHolder!);
     }, onProviderReady: (ItemLocationProvider provider) {
       provider.latestLocationParameterHolder.keyword = searchNameController.text;
       provider.loadItemLocationList(provider.latestLocationParameterHolder.toMap(),
       Utils.checkUserLoginId(provider.psValueHolder));
       _itemLocationProvider = provider;
     }, builder: (BuildContext context, ItemLocationProvider provider,
-            Widget child) {
+            Widget? child) {
       return ItemLocationListViewWidget(
         scrollController: _scrollController,
         animationController: widget.animationController,
@@ -83,9 +83,9 @@ class _ItemLocationViewState extends State<ItemLocationView>
 
 class ItemLocationListViewWidget extends StatefulWidget {
   const ItemLocationListViewWidget(
-      {Key key,
-      @required this.scrollController,
-      @required this.animationController})
+      {Key? key,
+      required this.scrollController,
+      required this.animationController})
       : super(key: key);
 
   final ScrollController scrollController;
@@ -101,7 +101,7 @@ final TextEditingController searchNameController = TextEditingController();
 
 class _ItemLocationListViewWidgetState
     extends State<ItemLocationListViewWidget> {
-  Widget _widget;
+  Widget? _widget;
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +137,7 @@ class _ItemLocationListViewWidgetState
               decoration: BoxDecoration(
                 color: PsColors.baseDarkColor,
                 borderRadius: BorderRadius.circular(PsDimens.space4),
-                border: Border.all(color: PsColors.mainDividerColor),
+                border: Border.all(color: PsColors.mainDividerColor!),
               ),
               child: InkWell(
                   child: Container(
@@ -168,7 +168,7 @@ class _ItemLocationListViewWidgetState
           ],
         ),
         Consumer<ItemLocationProvider>(builder: (BuildContext context,
-            ItemLocationProvider provider, Widget child) {
+            ItemLocationProvider provider, Widget? child) {
           print('Refresh Progress Indicator');
 
           return PSProgressIndicator(provider.itemLocationList.status,
@@ -185,10 +185,10 @@ class _ItemLocationListViewWidgetState
                       (BuildContext context, ItemLocationProvider provider) {
                     print(
                         'Selector ${provider.itemLocationList.data.hashCode}');
-                    return provider.itemLocationList.data;
+                    return provider.itemLocationList.data!;
                   },
                   builder: (BuildContext context, List<ItemLocation> dataList,
-                      Widget child) {
+                      Widget? child) {
                     print('Builder');
                     return ListView.builder(
                         controller: widget.scrollController,
@@ -210,10 +210,10 @@ class _ItemLocationListViewWidgetState
                               itemLocation: dataList[index],
                               onTap: () async {
                                 await _provider.replaceItemLocationData(
-                                    dataList[index].id,
-                                    dataList[index].name,
-                                    dataList[index].lat,
-                                    dataList[index].lng);
+                                    dataList[index].id!,
+                                    dataList[index].name!,
+                                    dataList[index].lat!,
+                                    dataList[index].lng!);
                                 Navigator.pushReplacementNamed(
                                     context, RoutePaths.home);
                               },
@@ -235,7 +235,7 @@ class _ItemLocationListViewWidgetState
       ],
     );
     print('Widget ${_widget.hashCode}');
-    return _widget;
+    return _widget!;
   }
 }
 
@@ -257,7 +257,7 @@ class ItemLocationHeaderTextWidget extends StatelessWidget {
                   Utils.getString(context, 'item_location__select_city'),
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText2
+                      .bodyText2!
                       .copyWith(color: Colors.white)),
             ),
           ),
@@ -271,7 +271,7 @@ class ItemLocationHeaderTextWidget extends StatelessWidget {
                       context, 'item_location__change_selected_city'),
                   style: Theme.of(context)
                       .textTheme
-                      .bodyText2
+                      .bodyText2!
                       .copyWith(color: Colors.white)),
             ),
           ),

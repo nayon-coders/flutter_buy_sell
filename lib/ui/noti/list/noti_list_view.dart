@@ -25,13 +25,13 @@ class _NotiListViewState extends State<NotiListView>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  NotiProvider _notiProvider;
+  NotiProvider? _notiProvider;
 
-  AnimationController animationController;
+  AnimationController ?animationController;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -43,19 +43,19 @@ class _NotiListViewState extends State<NotiListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        final String loginUserId = Utils.checkUserLoginId(psValueHolder);
+        final String loginUserId = Utils.checkUserLoginId(psValueHolder!);
         final GetNotiParameterHolder getNotiParameterHolder =
             GetNotiParameterHolder(
           userId: loginUserId,
-          deviceToken: _notiProvider.psValueHolder.deviceToken,
+          deviceToken: _notiProvider!.psValueHolder.deviceToken,
         );
-        _notiProvider.nextNotiList(getNotiParameterHolder.toMap());
+        _notiProvider!.nextNotiList(getNotiParameterHolder.toMap());
       }
     });
   }
 
-  NotiRepository repo1;
-  PsValueHolder psValueHolder;
+  NotiRepository? repo1;
+  PsValueHolder? psValueHolder;
   bool isConnectedToInternet = false;
   bool isSuccessfullyLoaded = true;
 
@@ -75,7 +75,7 @@ class _NotiListViewState extends State<NotiListView>
       checkConnection();
     }
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -97,10 +97,10 @@ class _NotiListViewState extends State<NotiListView>
           appBarTitle:
               Utils.getString(context, 'noti_list__toolbar_name') ?? '',
           initProvider: () {
-            return NotiProvider(repo: repo1, psValueHolder: psValueHolder);
+            return NotiProvider(repo: repo1!, psValueHolder: psValueHolder!);
           },
           onProviderReady: (NotiProvider provider) {
-            final String loginUserId = Utils.checkUserLoginId(psValueHolder);
+            final String loginUserId = Utils.checkUserLoginId(psValueHolder!);
 
             final GetNotiParameterHolder getNotiParameterHolder =
                 GetNotiParameterHolder(
@@ -111,7 +111,7 @@ class _NotiListViewState extends State<NotiListView>
 
             _notiProvider = provider;
           },
-          builder: (BuildContext context, NotiProvider provider, Widget child) {
+          builder: (BuildContext context, NotiProvider provider, Widget? child) {
             return 
             Column(
               children: <Widget>[
@@ -125,34 +125,34 @@ class _NotiListViewState extends State<NotiListView>
                           child: ListView.builder(
                             physics: const AlwaysScrollableScrollPhysics(),
                               controller: _scrollController,
-                              itemCount: provider.notiList.data.length,
+                              itemCount: provider.notiList.data!.length,
                               itemBuilder: (BuildContext context, int index) {
-                                final int count = provider.notiList.data.length;
+                                final int count = provider.notiList.data!.length;
                                 return NotiListItem(
                                   animationController: animationController,
                                   animation: Tween<double>(begin: 0.0, end: 1.0)
                                       .animate(
                                     CurvedAnimation(
-                                      parent: animationController,
+                                      parent: animationController!,
                                       curve: Interval((1 / count) * index, 1.0,
                                           curve: Curves.fastOutSlowIn),
                                     ),
                                   ),
-                                  noti: provider.notiList.data[index],
+                                  noti: provider.notiList.data![index],
                                   onTap: () async {
-                                    print(provider.notiList.data[index]
-                                        .defaultPhoto.imgPath);
+                                    print(provider.notiList.data![index]
+                                        .defaultPhoto!.imgPath);
 
                                     final dynamic retrunData =
                                         await Navigator.pushNamed(
                                       context,
                                       RoutePaths.noti,
-                                      arguments: provider.notiList.data[index],
+                                      arguments: provider.notiList.data![index],
                                     );
                                     if (retrunData != null &&
                                         retrunData is PsValueHolder) {
                                       final String loginUserId =
-                                          Utils.checkUserLoginId(psValueHolder);
+                                          Utils.checkUserLoginId(psValueHolder!);
 
                                       final GetNotiParameterHolder
                                           getNotiParameterHolder =

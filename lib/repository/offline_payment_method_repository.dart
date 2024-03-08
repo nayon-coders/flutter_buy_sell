@@ -48,7 +48,7 @@ class OfflinePaymentMethodRepository extends PsRepository {
 
       if (_resource.status == PsStatus.SUCCESS) {
         await _offlinePaymentMethodDao.deleteAll();
-        _resource.data.id = '1';
+        _resource.data!.id = '1';
         await _offlinePaymentMethodDao.insert(_primaryKey, _resource.data!);
       }else{
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {

@@ -10,14 +10,16 @@ import 'package:flutter/cupertino.dart';
 
 class ClearAllDataProvider extends PsProvider {
   ClearAllDataProvider(
-      {@required ClearAllDataRepository repo, this.psValueHolder,int limit = 0 })
+      {
+        required ClearAllDataRepository repo,
+        this.psValueHolder,int limit = 0
+      })
       : super(repo,limit) {
     _repo = repo;
     print('ClearAllData Provider: $hashCode');
     allListStream = StreamController<PsResource<List<Product>>>.broadcast();
-    subscription =
-        allListStream.stream.listen((PsResource<List<Product>> resource) {
-      updateOffset(resource.data.length);
+    subscription = allListStream.stream.listen((PsResource<List<Product>> resource) {
+      updateOffset(resource.data!.length);
 
       _basketList = resource;
 
@@ -34,7 +36,7 @@ class ClearAllDataProvider extends PsProvider {
 
   StreamController<PsResource<List<Product>>> allListStream;
   ClearAllDataRepository _repo;
-  PsValueHolder psValueHolder;
+  PsValueHolder? psValueHolder;
 
   PsResource<List<Product>> _basketList =
       PsResource<List<Product>>(PsStatus.NOACTION, '', <Product>[]);

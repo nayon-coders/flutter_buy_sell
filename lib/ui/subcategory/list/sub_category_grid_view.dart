@@ -19,7 +19,7 @@ import 'package:shimmer/shimmer.dart';
 
 class SubCategoryGridView extends StatefulWidget {
   const SubCategoryGridView({this.category});
-  final Category category;
+  final Category? category;
   @override
   _ModelGridViewState createState() {
     return _ModelGridViewState();
@@ -30,14 +30,14 @@ class _ModelGridViewState extends State<SubCategoryGridView>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  SubCategoryProvider _subCategoryProvider;
+  SubCategoryProvider? _subCategoryProvider;
 
-  AnimationController animationController;
-  Animation<double> animation;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -47,10 +47,10 @@ class _ModelGridViewState extends State<SubCategoryGridView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        final String categId = widget.category.catId;
+        final String categId = widget.category!.catId!;
         Utils.psPrint('CategoryId number is $categId');
 
-        _subCategoryProvider.nextSubCategoryList(widget.category.catId);
+        _subCategoryProvider!.nextSubCategoryList(widget.category!.catId!);
       }
     });
     animationController =
@@ -58,7 +58,7 @@ class _ModelGridViewState extends State<SubCategoryGridView>
     super.initState();
   }
 
-  SubCategoryRepository repo1;
+  SubCategoryRepository? repo1;
   bool isConnectedToInternet = false;
   bool isSuccessfullyLoaded = true;
 
@@ -86,7 +86,7 @@ class _ModelGridViewState extends State<SubCategoryGridView>
           backgroundColor: PsColors.mainColor,
           brightness: Utils.getBrightnessForAppBar(context),
           title: Text(
-            widget.category.catName,
+            widget.category!.catName!,
             // style: TextStyle(color: PsColors.white),
           ),
           iconTheme: IconThemeData(
@@ -97,14 +97,14 @@ class _ModelGridViewState extends State<SubCategoryGridView>
             lazy: false,
             create: (BuildContext context) {
               _subCategoryProvider =
-                  SubCategoryProvider(repo: repo1);
-              _subCategoryProvider.loadAllSubCategoryList(
-                widget.category.catId,
+                  SubCategoryProvider(repo: repo1!);
+              _subCategoryProvider!.loadAllSubCategoryList(
+                widget.category!.catId!,
               );
-              return _subCategoryProvider;
+              return _subCategoryProvider!;
             },
             child: Consumer<SubCategoryProvider>(builder: (BuildContext context,
-                SubCategoryProvider provider, Widget child) {
+                SubCategoryProvider provider, Widget? child) {
               return Column(
                 children: <Widget>[
                   const PsAdMobBannerWidget(),
@@ -113,8 +113,8 @@ class _ModelGridViewState extends State<SubCategoryGridView>
                       Container(
                           child: RefreshIndicator(
                         onRefresh: () {
-                          return _subCategoryProvider
-                              .resetSubCategoryList(widget.category.catId);
+                          return _subCategoryProvider!
+                              .resetSubCategoryList(widget.category!.catId!);
                         },
                         child: CustomScrollView(
                             controller: _scrollController,
@@ -145,25 +145,25 @@ class _ModelGridViewState extends State<SubCategoryGridView>
                                           ]));
                                     } else {
                                       final int count =
-                                          provider.subCategoryList.data.length;
+                                          provider.subCategoryList.data!.length;
                                       return SubCategoryGridItem(
                                         subCategory: provider
-                                            .subCategoryList.data[index],
+                                            .subCategoryList.data![index],
                                         onTap: () {
                                           provider.subCategoryByCatIdParamenterHolder
                                                   .catId =
                                               provider.subCategoryList
-                                                  .data[index].catId;
+                                                  .data![index].catId!;
                                           provider.subCategoryByCatIdParamenterHolder
                                                   .subCatId =
                                               provider.subCategoryList
-                                                  .data[index].id;
+                                                  .data![index].id!;
                                           Navigator.pushNamed(context,
                                               RoutePaths.filterProductList,
                                               arguments: ProductListIntentHolder(
                                                   appBarTitle: provider
                                                       .subCategoryList
-                                                      .data[index]
+                                                      .data![index]
                                                       .name,
                                                   productParameterHolder: provider
                                                       .subCategoryByCatIdParamenterHolder));
@@ -173,7 +173,7 @@ class _ModelGridViewState extends State<SubCategoryGridView>
                                         animation:
                                             Tween<double>(begin: 0.0, end: 1.0)
                                                 .animate(CurvedAnimation(
-                                          parent: animationController,
+                                          parent: animationController!,
                                           curve: Interval(
                                               (1 / count) * index, 1.0,
                                               curve: Curves.fastOutSlowIn),
@@ -182,7 +182,7 @@ class _ModelGridViewState extends State<SubCategoryGridView>
                                     }
                                   },
                                   childCount:
-                                      provider.subCategoryList.data.length,
+                                      provider.subCategoryList.data!.length,
                                 ),
                               ),
                             ]),
@@ -203,7 +203,7 @@ class _ModelGridViewState extends State<SubCategoryGridView>
 
 class FrameUIForLoading extends StatelessWidget {
   const FrameUIForLoading({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override

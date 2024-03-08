@@ -22,7 +22,7 @@ class FavouriteProductDao extends PsDao<FavouriteProduct> {
 
   @override
   String getPrimaryKey(FavouriteProduct object) {
-    return object.id;
+    return object.id!;
   }
 
   @override

@@ -12,8 +12,8 @@ import 'package:flutterbuyandsell/viewobject/category.dart';
 
 class CategoryProvider extends PsProvider {
   CategoryProvider(
-      {@required CategoryRepository repo,
-      @required this.psValueHolder,
+      {required CategoryRepository repo,
+      required this.psValueHolder,
       int limit = 0})
       : super(repo, limit) {
     if (limit != 0) {
@@ -32,7 +32,7 @@ class CategoryProvider extends PsProvider {
         StreamController<PsResource<List<Category>>>.broadcast();
     subscription =
         categoryListStream.stream.listen((PsResource<List<Category>> resource) {
-      updateOffset(resource.data.length);
+      updateOffset(resource.data!.length);
 
       _categoryList = resource;
 

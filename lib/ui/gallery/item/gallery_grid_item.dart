@@ -6,13 +6,13 @@ import 'package:flutter/material.dart';
 
 class GalleryGridItem extends StatelessWidget {
   const GalleryGridItem({
-    Key key,
-    @required this.image,
+    Key? key,
+    required this.image,
     this.onImageTap,
   }) : super(key: key);
 
   final DefaultPhoto image;
-  final Function onImageTap;
+  final VoidCallback? onImageTap;
 
   @override
   Widget build(BuildContext context) {

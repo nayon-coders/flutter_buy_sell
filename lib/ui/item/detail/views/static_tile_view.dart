@@ -23,7 +23,7 @@ class _StatisticTileViewState extends State<StatisticTileView> {
 
 class _StatisticBuildTileswidget extends StatelessWidget {
   const _StatisticBuildTileswidget({this.itemDetail});
-  final ItemDetailProvider itemDetail;
+  final ItemDetailProvider? itemDetail;
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +40,8 @@ class _StatisticBuildTileswidget extends StatelessWidget {
     );
 
     if (itemDetail != null &&
-        itemDetail.itemDetail != null &&
-        itemDetail.itemDetail.data != null) {
+        itemDetail!.itemDetail != null &&
+        itemDetail!.itemDetail.data != null) {
       return Container(
         margin: const EdgeInsets.only(
             left: PsDimens.space12,
@@ -70,12 +70,12 @@ class _StatisticBuildTileswidget extends StatelessWidget {
                     _IconAndTextWidget(
                         icon: SimpleLineIcons.eyeglass,
                         title:
-                            '${itemDetail.itemDetail.data.touchCount} ${Utils.getString(context, 'statistic_tile__views')}',
+                            '${itemDetail!.itemDetail.data!.touchCount} ${Utils.getString(context, 'statistic_tile__views')}',
                         textType: 0),
                     _IconAndTextWidget(
                         icon: Icons.favorite_border,
                         title:
-                            '${itemDetail.itemDetail.data.favouriteCount} ${Utils.getString(context, 'statistic_tile__favourite')}',
+                            '${itemDetail!.itemDetail.data!.favouriteCount} ${Utils.getString(context, 'statistic_tile__favourite')}',
                         textType: 3),
                   ],
                 ),
@@ -93,10 +93,10 @@ class _StatisticBuildTileswidget extends StatelessWidget {
 
 class _IconAndTextWidget extends StatelessWidget {
   const _IconAndTextWidget({
-    Key key,
-    @required this.icon,
-    @required this.title,
-    @required this.textType,
+    Key? key,
+    required this.icon,
+    required this.title,
+    required this.textType,
   }) : super(key: key);
   final IconData icon;
   final String title;
@@ -130,7 +130,7 @@ class _IconAndTextWidget extends StatelessWidget {
           },
           child: Text(
             title,
-            style: Theme.of(context).textTheme.bodyText1.copyWith(
+            style: Theme.of(context).textTheme.bodyText1!.copyWith(
                 color: textType == 0
                     ? Theme.of(context).iconTheme.color
                     : textType == 3

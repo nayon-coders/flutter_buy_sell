@@ -9,13 +9,13 @@ import 'package:provider/provider.dart';
 
 class RatingListItem extends StatelessWidget {
   const RatingListItem({
-    Key key,
-    @required this.rating,
+    Key? key,
+    required this.rating,
     this.onTap,
   }) : super(key: key);
 
   final Rating rating;
-  final Function onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +45,8 @@ class RatingListItem extends StatelessWidget {
 
 class _RatingListDataWidget extends StatefulWidget {
   const _RatingListDataWidget({
-    Key key,
-    @required this.rating,
+    Key? key,
+    required this.rating,
   }) : super(key: key);
 
   final Rating rating;
@@ -55,38 +55,38 @@ class _RatingListDataWidget extends StatefulWidget {
   __RatingListDataWidgetState createState() => __RatingListDataWidgetState();
 }
 
-PsValueHolder psValueHolder;
+PsValueHolder? psValueHolder;
 
 class __RatingListDataWidgetState extends State<_RatingListDataWidget> {
   @override
   Widget build(BuildContext context) {
     psValueHolder = Provider.of<PsValueHolder>(context);
     final Widget _ratingStarsWidget = SmoothStarRating(
-        key: Key(widget.rating.rating),
-        rating: double.parse(widget.rating.rating),
+        key: Key(widget.rating.rating!),
+        rating: double.parse(widget.rating.rating!),
         allowHalfRating: false,
         isReadOnly: true,
         starCount: 5,
         size: PsDimens.space16,
         color: PsColors.ratingColor,
-        borderColor: PsColors.grey.withAlpha(100),
+        borderColor: PsColors.grey!.withAlpha(100),
         spacing: 0.0);
 
     const Widget _spacingWidget = SizedBox(
       height: PsDimens.space8,
     );
     final Widget _titleTextWidget = Text(
-      widget.rating.title,
+      widget.rating.title!,
       style: Theme.of(context)
           .textTheme
-          .subtitle1
+          .subtitle1!
           .copyWith(fontWeight: FontWeight.bold),
     );
     final Widget _descriptionTextWidget = Text(
-      widget.rating.description,
+      widget.rating.description!,
       maxLines: 3,
       overflow: TextOverflow.ellipsis,
-      style: Theme.of(context).textTheme.bodyText1.copyWith(),
+      style: Theme.of(context).textTheme.bodyText1!.copyWith(),
     );
     return Padding(
       padding: const EdgeInsets.all(PsDimens.space12),
@@ -95,7 +95,7 @@ class __RatingListDataWidgetState extends State<_RatingListDataWidget> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          if (psValueHolder.loginUserId == widget.rating.fromUser.userId) 
+          if (psValueHolder!.loginUserId == widget.rating.fromUser!.userId)
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
@@ -109,8 +109,8 @@ class __RatingListDataWidgetState extends State<_RatingListDataWidget> {
                     context: context,
                     builder: (BuildContext context) {
                       return RatingInputDialog(
-                        buyerUserId: widget.rating.fromUser.userId,
-                        sellerUserId: widget.rating.toUser.userId,
+                        buyerUserId: widget.rating.fromUser!.userId!,
+                        sellerUserId: widget.rating.toUser!.userId!,
                         rating: widget.rating
                       );
                 });

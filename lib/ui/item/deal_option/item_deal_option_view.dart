@@ -26,13 +26,13 @@ class ItemDealOptionViewState extends State<ItemDealOptionView>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  ItemDealOptionProvider itemDealOptionProvider;
-  AnimationController animationController;
-  Animation<double> animation;
+  ItemDealOptionProvider? itemDealOptionProvider;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -42,7 +42,7 @@ class ItemDealOptionViewState extends State<ItemDealOptionView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        itemDealOptionProvider.nextItemDealOptionList();
+        itemDealOptionProvider!.nextItemDealOptionList();
       }
     });
 
@@ -51,16 +51,16 @@ class ItemDealOptionViewState extends State<ItemDealOptionView>
     animation = Tween<double>(
       begin: 0.0,
       end: 10.0,
-    ).animate(animationController);
+    ).animate(animationController!);
     super.initState();
   }
 
-  ItemDealOptionRepository repo1;
+  ItemDealOptionRepository? repo1;
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -84,7 +84,7 @@ class ItemDealOptionViewState extends State<ItemDealOptionView>
               Utils.getString(context, 'item_entry__deal_option') ?? '',
           initProvider: () {
             return ItemDealOptionProvider(
-              repo: repo1,
+              repo: repo1!,
             );
           },
           onProviderReady: (ItemDealOptionProvider provider) {
@@ -92,14 +92,14 @@ class ItemDealOptionViewState extends State<ItemDealOptionView>
             itemDealOptionProvider = provider;
           },
           builder: (BuildContext context, ItemDealOptionProvider provider,
-              Widget child) {
+              Widget? child) {
             return Stack(children: <Widget>[
               Container(
                   child: RefreshIndicator(
                 child: ListView.builder(
                   physics: const AlwaysScrollableScrollPhysics(),
                     controller: _scrollController,
-                    itemCount: provider.itemDealOptionList.data.length,
+                    itemCount: provider.itemDealOptionList.data!.length,
                     itemBuilder: (BuildContext context, int index) {
                       if (provider.itemDealOptionList.status ==
                           PsStatus.BLOCK_LOADING) {
@@ -120,18 +120,18 @@ class ItemDealOptionViewState extends State<ItemDealOptionView>
                             ]));
                       } else {
                         final int count =
-                            provider.itemDealOptionList.data.length;
-                        animationController.forward();
+                            provider.itemDealOptionList.data!.length;
+                        animationController!.forward();
                         return FadeTransition(
-                            opacity: animation,
+                            opacity: animation!,
                             child: ItemDealOptionListViewItem(
                               dealOption:
-                                  provider.itemDealOptionList.data[index],
+                                  provider.itemDealOptionList.data![index],
                               onTap: () {
                                 Navigator.pop(context,
-                                    provider.itemDealOptionList.data[index]);
+                                    provider.itemDealOptionList.data![index]);
                                 print(provider
-                                    .itemDealOptionList.data[index].name);
+                                    .itemDealOptionList.data![index].name);
                                 // if (index == 0) {
                                 //   Navigator.pushNamed(
                                 //     context,
@@ -143,7 +143,7 @@ class ItemDealOptionViewState extends State<ItemDealOptionView>
                               animation:
                                   Tween<double>(begin: 0.0, end: 1.0).animate(
                                 CurvedAnimation(
-                                  parent: animationController,
+                                  parent: animationController!,
                                   curve: Interval((1 / count) * index, 1.0,
                                       curve: Curves.fastOutSlowIn),
                                 ),

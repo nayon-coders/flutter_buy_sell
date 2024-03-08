@@ -16,7 +16,7 @@ import 'package:flutterbuyandsell/viewobject/product.dart';
 import 'package:provider/provider.dart';
 
 class FavouriteProductListView extends StatefulWidget {
-  const FavouriteProductListView({Key key, @required this.animationController})
+  const FavouriteProductListView({Key? key, required this.animationController})
       : super(key: key);
   final AnimationController animationController;
   @override
@@ -27,7 +27,7 @@ class _FavouriteProductListView extends State<FavouriteProductListView>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  FavouriteItemProvider _favouriteItemProvider;
+  FavouriteItemProvider? _favouriteItemProvider;
 
   @override
   void dispose() {
@@ -39,15 +39,15 @@ class _FavouriteProductListView extends State<FavouriteProductListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _favouriteItemProvider.nextFavouriteItemList();
+        _favouriteItemProvider!.nextFavouriteItemList();
       }
     });
 
     super.initState();
   }
 
-  ProductRepository repo1;
-  PsValueHolder psValueHolder;
+  ProductRepository? repo1;
+  PsValueHolder? psValueHolder;
   dynamic data;
   bool isConnectedToInternet = false;
   bool isSuccessfullyLoaded = true;
@@ -79,14 +79,14 @@ class _FavouriteProductListView extends State<FavouriteProductListView>
         lazy: false,
         create: (BuildContext context) {
           final FavouriteItemProvider provider =
-              FavouriteItemProvider(repo: repo1, psValueHolder: psValueHolder);
+              FavouriteItemProvider(repo: repo1!, psValueHolder: psValueHolder!);
           provider.loadFavouriteItemList();
           _favouriteItemProvider = provider;
-          return _favouriteItemProvider;
+          return _favouriteItemProvider!;
         },
         child: Consumer<FavouriteItemProvider>(
           builder: (BuildContext context, FavouriteItemProvider provider,
-              Widget child) {
+              Widget? child) {
             return Column(
               children: <Widget>[
                 const PsAdMobBannerWidget(),
@@ -114,15 +114,15 @@ class _FavouriteProductListView extends State<FavouriteProductListView>
                                     (BuildContext context, int index) {
                                       if (provider.favouriteItemList.data !=
                                               null ||
-                                          provider.favouriteItemList.data
+                                          provider.favouriteItemList.data!
                                               .isNotEmpty) {
                                         final int count = provider
-                                            .favouriteItemList.data.length;
+                                            .favouriteItemList.data!.length;
                                         return ProductVeticalListItem(
                                           coreTagKey:
                                               provider.hashCode.toString() +
                                                   provider.favouriteItemList
-                                                      .data[index].id,
+                                                      .data![index].id!,
                                           animationController:
                                               widget.animationController,
                                           animation: Tween<double>(
@@ -137,26 +137,26 @@ class _FavouriteProductListView extends State<FavouriteProductListView>
                                             ),
                                           ),
                                           product: provider
-                                              .favouriteItemList.data[index],
+                                              .favouriteItemList.data![index],
                                           onTap: () async {
                                             final Product product = provider
-                                                .favouriteItemList.data.reversed
+                                                .favouriteItemList.data!.reversed
                                                 .toList()[index];
                                             final ProductDetailIntentHolder
                                                 holder =
                                                 ProductDetailIntentHolder(
                                                     productId: provider
                                                         .favouriteItemList
-                                                        .data[index].id,
+                                                        .data![index].id,
                                                     heroTagImage: provider
                                                             .hashCode
                                                             .toString() +
-                                                        product.id +
+                                                        product.id! +
                                                         PsConst.HERO_TAG__IMAGE,
                                                     heroTagTitle: provider
                                                             .hashCode
                                                             .toString() +
-                                                        product.id +
+                                                        product.id! +
                                                         PsConst
                                                             .HERO_TAG__TITLE);
                                             await Navigator.pushNamed(context,
@@ -172,7 +172,7 @@ class _FavouriteProductListView extends State<FavouriteProductListView>
                                       }
                                     },
                                     childCount:
-                                        provider.favouriteItemList.data.length,
+                                        provider.favouriteItemList.data!.length,
                                   ),
                                 ),
                               ]),

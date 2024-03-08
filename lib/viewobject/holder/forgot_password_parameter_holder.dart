@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 class ForgotPasswordParameterHolder
     extends PsHolder<ForgotPasswordParameterHolder> {
-  ForgotPasswordParameterHolder({@required this.userEmail});
+  ForgotPasswordParameterHolder({required this.userEmail});
 
   final String userEmail;
 

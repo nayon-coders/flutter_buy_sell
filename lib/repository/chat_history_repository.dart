@@ -209,7 +209,7 @@ class ChatHistoryRepository extends PsRepository {
         int i = 0;
         for (ChatHistory data in _resource.data!) {
           chatHistoryMapList.add(ChatHistoryMap(
-              id: data.id + paramKey,
+              id: data.id! + paramKey,
               mapKey: paramKey,
               chatHistoryId: data.id,
               sorting: i++,
@@ -273,7 +273,7 @@ class ChatHistoryRepository extends PsRepository {
         }
         for (ChatHistory data in _resource.data!) {
           chatHistoryMapList.add(ChatHistoryMap(
-              id: data.id + paramKey,
+              id: data.id! + paramKey,
               mapKey: paramKey,
               chatHistoryId: data.id,
               sorting: i++,

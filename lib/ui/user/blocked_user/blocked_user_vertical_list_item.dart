@@ -9,8 +9,8 @@ import 'package:flutterbuyandsell/viewobject/blocked_user.dart';
 
 class BlockedUserVerticalListItem extends StatelessWidget {
   const BlockedUserVerticalListItem(
-      {Key key,
-      @required this.blockedUser,
+      {Key? key,
+      required this.blockedUser,
       this.onTap,
       this.onUnblockTap,
       this.animationController,
@@ -18,17 +18,17 @@ class BlockedUserVerticalListItem extends StatelessWidget {
       : super(key: key);
 
   final BlockedUser blockedUser;
-  final Function onTap;
-  final Function onUnblockTap;
-  final AnimationController animationController;
-  final Animation<double> animation;
+  final VoidCallback? onTap;
+  final Function? onUnblockTap;
+  final AnimationController? animationController;
+  final Animation<double>? animation;
 
   @override
   Widget build(BuildContext context) {
-    animationController.forward();
+    animationController!.forward();
 
     return AnimatedBuilder(
-        animation: animationController,
+        animation: animationController!,
         child: InkWell(
           onTap: onTap,
           child: Container(
@@ -40,17 +40,17 @@ class BlockedUserVerticalListItem extends StatelessWidget {
                   padding: const EdgeInsets.all(PsDimens.space16),
                   child: UserWidget(
                       user: blockedUser,
-                      onTap: onTap,
-                      onUnblockTap: onUnblockTap)),
+                      onTap: onTap!,
+                      onUnblockTap: onUnblockTap!)),
             ),
           ),
         ),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return FadeTransition(
-              opacity: animation,
+              opacity: animation!,
               child: Transform(
                   transform: Matrix4.translationValues(
-                      0.0, 100 * (1.0 - animation.value), 0.0),
+                      0.0, 100 * (1.0 - animation!.value), 0.0),
                   child: child));
         });
   }
@@ -58,10 +58,10 @@ class BlockedUserVerticalListItem extends StatelessWidget {
 
 class UserWidget extends StatelessWidget {
   const UserWidget(
-      {Key key,
-      @required this.user,
-      @required this.onTap,
-      @required this.onUnblockTap})
+      {Key? key,
+      required this.user,
+      required this.onTap,
+      required this.onUnblockTap})
       : super(key: key);
 
   final BlockedUser user;
@@ -107,7 +107,7 @@ class UserWidget extends StatelessWidget {
               child: Text(
                   (user.userName == '' || user.userName == null)
                       ? Utils.getString(context, 'default__user_name')
-                      : user.userName,
+                      : user.userName!,
                   style: Theme.of(context).textTheme.subtitle1),
             ),
             MaterialButton(
@@ -121,7 +121,7 @@ class UserWidget extends StatelessWidget {
                   Utils.getString(context, 'blocked_user__unblock'),
                   style: Theme.of(context)
                       .textTheme
-                      .button
+                      .button!
                       .copyWith(color: Colors.white),
                 ),
                 onPressed: () {

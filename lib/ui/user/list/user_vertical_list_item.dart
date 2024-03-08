@@ -10,24 +10,24 @@ import 'package:flutterbuyandsell/viewobject/user.dart';
 
 class UserVerticalListItem extends StatelessWidget {
   const UserVerticalListItem(
-      {Key key,
-      @required this.user,
+      {Key? key,
+      required this.user,
       this.onTap,
       this.animationController,
       this.animation})
       : super(key: key);
 
   final User user;
-  final Function onTap;
-  final AnimationController animationController;
-  final Animation<double> animation;
+  final VoidCallback? onTap;
+  final AnimationController? animationController;
+  final Animation<double>? animation;
 
   @override
   Widget build(BuildContext context) {
-    animationController.forward();
+    animationController!.forward();
 
     return AnimatedBuilder(
-        animation: animationController,
+        animation: animationController!,
         child: InkWell(
           onTap: onTap,
           child: Container(
@@ -38,7 +38,7 @@ class UserVerticalListItem extends StatelessWidget {
               color: PsColors.backgroundColor,
               child: Padding(
                   padding: const EdgeInsets.all(PsDimens.space16),
-                  child: UserWidget(user: user, onTap: onTap)
+                  child: UserWidget(user: user, onTap: onTap!)
                   //  Card(
                   //   elevation: 0.0,
                   //   child: ClipPath(
@@ -55,12 +55,12 @@ class UserVerticalListItem extends StatelessWidget {
             ),
           ),
         ),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return FadeTransition(
-              opacity: animation,
+              opacity: animation!,
               child: Transform(
                   transform: Matrix4.translationValues(
-                      0.0, 100 * (1.0 - animation.value), 0.0),
+                      0.0, 100 * (1.0 - animation!.value), 0.0),
                   child: child));
         });
   }
@@ -68,9 +68,9 @@ class UserVerticalListItem extends StatelessWidget {
 
 class UserWidget extends StatelessWidget {
   const UserWidget({
-    Key key,
-    @required this.user,
-    @required this.onTap,
+    Key? key,
+    required this.user,
+    required this.onTap,
   }) : super(key: key);
 
   final User user;
@@ -125,7 +125,7 @@ class UserWidget extends StatelessWidget {
                   Text(
                       user.userName == ''
                           ? Utils.getString(context, 'default__user_name')
-                          : user.userName,
+                          : user.userName!,
                       style: Theme.of(context).textTheme.subtitle1),
                   _spacingWidget,
                   _RatingWidget(
@@ -133,7 +133,7 @@ class UserWidget extends StatelessWidget {
                   ),
                   _spacingWidget,
                   Text(
-                    '${Utils.getString(context, 'user_detail__joined')} - ${Utils.getDateFormat(user.addedDate)}',
+                    '${Utils.getString(context, 'user_detail__joined')} - ${Utils.getDateFormat(user.addedDate!)}',
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.caption,
                   ),
@@ -149,17 +149,17 @@ class UserWidget extends StatelessWidget {
 
 class _RatingWidget extends StatelessWidget {
   const _RatingWidget({
-    Key key,
+    Key? key,
     @required this.data,
   }) : super(key: key);
 
-  final User data;
+  final User? data;
   @override
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
         Text(
-          data.overallRating,
+          data!.overallRating!,
           style: Theme.of(context).textTheme.bodyText1,
         ),
         const SizedBox(
@@ -168,11 +168,11 @@ class _RatingWidget extends StatelessWidget {
         InkWell(
           onTap: () {
             Navigator.pushNamed(context, RoutePaths.ratingList,
-                arguments: data.userId);
+                arguments: data!.userId);
           },
           child: SmoothStarRating(
-              key: Key(data.ratingDetail.totalRatingValue),
-              rating: double.parse(data.ratingDetail.totalRatingValue),
+              key: Key(data!.ratingDetail!.totalRatingValue!),
+              rating: double.parse(data!.ratingDetail!.totalRatingValue!),
               allowHalfRating: false,
               isReadOnly: true,
               starCount: 5,
@@ -186,7 +186,7 @@ class _RatingWidget extends StatelessWidget {
           width: PsDimens.space8,
         ),
         Text(
-          '( ${data.ratingCount} )',
+          '( ${data!.ratingCount} )',
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ],

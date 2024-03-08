@@ -6,23 +6,23 @@ import 'package:flutterbuyandsell/viewobject/condition_of_item.dart';
 
 class ItemConditionListViewItem extends StatelessWidget {
   const ItemConditionListViewItem(
-      {Key key,
-      @required this.itemCondition,
+      {Key? key,
+      required this.itemCondition,
       this.onTap,
       this.animationController,
       this.animation})
       : super(key: key);
 
   final ConditionOfItem itemCondition;
-  final Function onTap;
-  final AnimationController animationController;
-  final Animation<double> animation;
+  final VoidCallback? onTap;
+  final AnimationController? animationController;
+  final Animation<double>? animation;
 
   @override
   Widget build(BuildContext context) {
-    animationController.forward();
+    animationController!.forward();
     return AnimatedBuilder(
-      animation: animationController,
+      animation: animationController!,
       child: InkWell(
         onTap: onTap,
         child: Container(
@@ -34,23 +34,23 @@ class ItemConditionListViewItem extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(PsDimens.space16),
               child: Text(
-                itemCondition.name,
+                itemCondition.name!,
                 textAlign: TextAlign.start,
                 style: Theme.of(context)
                     .textTheme
-                    .subtitle2
+                    .subtitle2!
                     .copyWith(fontWeight: FontWeight.bold),
               ),
             ),
           ),
         ),
       ),
-      builder: (BuildContext contenxt, Widget child) {
+      builder: (BuildContext contenxt, Widget? child) {
         return FadeTransition(
-          opacity: animation,
+          opacity: animation!,
           child: Transform(
               transform: Matrix4.translationValues(
-                  0.0, 100 * (1.0 - animation.value), 0.0),
+                  0.0, 100 * (1.0 - animation!.value), 0.0),
               child: child),
         );
       },

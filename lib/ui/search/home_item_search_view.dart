@@ -27,9 +27,9 @@ import 'package:flutterbuyandsell/ui/common/ps_textfield_widget.dart';
 
 class HomeItemSearchView extends StatefulWidget {
   const HomeItemSearchView({
-    @required this.productParameterHolder,
-    @required this.animation,
-    @required this.animationController,
+    required this.productParameterHolder,
+    required this.animation,
+    required this.animationController,
   });
 
   final ProductParameterHolder productParameterHolder;
@@ -41,9 +41,9 @@ class HomeItemSearchView extends StatefulWidget {
 }
 
 class _ItemSearchViewState extends State<HomeItemSearchView> {
-  ProductRepository repo1;
-  PsValueHolder valueHolder;
-  SearchProductProvider _searchProductProvider;
+  ProductRepository? repo1;
+  PsValueHolder? valueHolder;
+  SearchProductProvider? _searchProductProvider;
 
   final TextEditingController userInputItemNameTextEditingController =
       TextEditingController();
@@ -65,51 +65,51 @@ class _ItemSearchViewState extends State<HomeItemSearchView> {
         // _searchProductProvider.productParameterHolder.itemLocationId =
         //     _searchProductProvider.psValueHolder.locationId;
 
-        _searchProductProvider.productParameterHolder.isPaid =
+        _searchProductProvider!.productParameterHolder.isPaid =
             PsConst.PAID_ITEM_FIRST;
         if (userInputItemNameTextEditingController.text != null &&
             userInputItemNameTextEditingController.text != '') {
-          _searchProductProvider.productParameterHolder.searchTerm =
+          _searchProductProvider!.productParameterHolder.searchTerm =
               userInputItemNameTextEditingController.text;
         } else {
-          _searchProductProvider.productParameterHolder.searchTerm = '';
+          _searchProductProvider!.productParameterHolder.searchTerm = '';
         }
         if (userInputMaximunPriceEditingController.text != null) {
-          _searchProductProvider.productParameterHolder.maxPrice =
+          _searchProductProvider!.productParameterHolder.maxPrice =
               userInputMaximunPriceEditingController.text;
         } else {
-          _searchProductProvider.productParameterHolder.maxPrice = '';
+          _searchProductProvider!.productParameterHolder.maxPrice = '';
         }
         if (userInputMinimumPriceEditingController.text != null) {
-          _searchProductProvider.productParameterHolder.minPrice =
+          _searchProductProvider!.productParameterHolder.minPrice =
               userInputMinimumPriceEditingController.text;
         } else {
-          _searchProductProvider.productParameterHolder.minPrice = '';
+          _searchProductProvider!.productParameterHolder.minPrice = '';
         }
 
-        if (_searchProductProvider.categoryId != null) {
-          _searchProductProvider.productParameterHolder.catId =
-              _searchProductProvider.categoryId;
+        if (_searchProductProvider!.categoryId != null) {
+          _searchProductProvider!.productParameterHolder.catId =
+              _searchProductProvider!.categoryId;
         }
-        if (_searchProductProvider.subCategoryId != null) {
-          _searchProductProvider.productParameterHolder.subCatId =
-              _searchProductProvider.subCategoryId;
+        if (_searchProductProvider!.subCategoryId != null) {
+          _searchProductProvider!.productParameterHolder.subCatId =
+              _searchProductProvider!.subCategoryId;
         }
-        if (_searchProductProvider.itemTypeId != null) {
-          _searchProductProvider.productParameterHolder.itemTypeId =
-              _searchProductProvider.itemTypeId;
+        if (_searchProductProvider!.itemTypeId != null) {
+          _searchProductProvider!.productParameterHolder.itemTypeId =
+              _searchProductProvider!.itemTypeId;
         }
-        if (_searchProductProvider.itemConditionId != null) {
-          _searchProductProvider.productParameterHolder.conditionOfItemId =
-              _searchProductProvider.itemConditionId;
+        if (_searchProductProvider!.itemConditionId != null) {
+          _searchProductProvider!.productParameterHolder.conditionOfItemId =
+              _searchProductProvider!.itemConditionId;
         }
-        if (_searchProductProvider.itemPriceTypeId != null) {
-          _searchProductProvider.productParameterHolder.itemPriceTypeId =
-              _searchProductProvider.itemPriceTypeId;
+        if (_searchProductProvider!.itemPriceTypeId != null) {
+          _searchProductProvider!.productParameterHolder.itemPriceTypeId =
+              _searchProductProvider!.itemPriceTypeId;
         }
-        if (_searchProductProvider.itemDealOptionId != null) {
-          _searchProductProvider.productParameterHolder.dealOptionId =
-              _searchProductProvider.itemDealOptionId;
+        if (_searchProductProvider!.itemDealOptionId != null) {
+          _searchProductProvider!.productParameterHolder.dealOptionId =
+              _searchProductProvider!.itemDealOptionId;
         }
         print('userInputText' + userInputItemNameTextEditingController.text);
         final dynamic result =
@@ -118,10 +118,10 @@ class _ItemSearchViewState extends State<HomeItemSearchView> {
                   appBarTitle:
                       Utils.getString(context, 'home_search__app_bar_title'),
                   productParameterHolder:
-                      _searchProductProvider.productParameterHolder,
+                      _searchProductProvider!.productParameterHolder,
                 ));
         if (result != null && result is ProductParameterHolder) {
-          _searchProductProvider.productParameterHolder = result;
+          _searchProductProvider!.productParameterHolder = result;
         }
       },
     );
@@ -134,22 +134,22 @@ class _ItemSearchViewState extends State<HomeItemSearchView> {
             lazy: false,
             create: (BuildContext content) {
               _searchProductProvider = SearchProductProvider(
-                  repo: repo1, psValueHolder: valueHolder);
-              _searchProductProvider.productParameterHolder =
+                  repo: repo1!, psValueHolder: valueHolder);
+              _searchProductProvider!.productParameterHolder =
                   widget.productParameterHolder;
               final String loginUserId =
-                      Utils.checkUserLoginId(valueHolder);
-              _searchProductProvider.loadProductListByKey(
+                      Utils.checkUserLoginId(valueHolder!);
+              _searchProductProvider!.loadProductListByKey(
                   loginUserId,
-                  _searchProductProvider.productParameterHolder);
+                  _searchProductProvider!.productParameterHolder);
 
-              return _searchProductProvider;
+              return _searchProductProvider!;
             },
             child: Consumer<SearchProductProvider>(
               builder: (BuildContext context, SearchProductProvider provider,
-                  Widget child) {
-                if (_searchProductProvider.productList != null &&
-                    _searchProductProvider.productList.data != null) {
+                  Widget? child) {
+                if (_searchProductProvider!.productList != null &&
+                    _searchProductProvider!.productList.data != null) {
                   widget.animationController.forward();
                   return SingleChildScrollView(
                     child: AnimatedBuilder(
@@ -192,12 +192,12 @@ class _ItemSearchViewState extends State<HomeItemSearchView> {
                                     if (categoryResult != null &&
                                         categoryResult is Category) {
                                       provider.categoryId =
-                                          categoryResult.catId;
+                                          categoryResult.catId!;
                                       provider.subCategoryId = '';
 
                                       setState(() {
                                         provider.selectedCategoryName =
-                                            categoryResult.catName;
+                                            categoryResult.catName!;
                                         provider.selectedSubCategoryName = '';
                                       });
                                     }
@@ -225,10 +225,10 @@ class _ItemSearchViewState extends State<HomeItemSearchView> {
                                       if (subCategoryResult != null &&
                                           subCategoryResult is SubCategory) {
                                         provider.subCategoryId =
-                                            subCategoryResult.id;
+                                            subCategoryResult.id!;
 
                                         provider.selectedSubCategoryName =
-                                            subCategoryResult.name;
+                                            subCategoryResult.name!;
                                       }
                                     } else {
                                       showDialog<dynamic>(
@@ -265,11 +265,11 @@ class _ItemSearchViewState extends State<HomeItemSearchView> {
 
                                     if (itemTypeResult != null &&
                                         itemTypeResult is ItemType) {
-                                      provider.itemTypeId = itemTypeResult.id;
+                                      provider.itemTypeId = itemTypeResult.id!;
 
                                       setState(() {
                                         provider.selectedItemTypeName =
-                                            itemTypeResult.name;
+                                            itemTypeResult.name!;
                                       });
                                     }
                                   }),
@@ -297,11 +297,11 @@ class _ItemSearchViewState extends State<HomeItemSearchView> {
                                         itemConditionResult
                                             is ConditionOfItem) {
                                       provider.itemConditionId =
-                                          itemConditionResult.id;
+                                          itemConditionResult.id!;
 
                                       setState(() {
                                         provider.selectedItemConditionName =
-                                            itemConditionResult.name;
+                                            itemConditionResult.name!;
                                       });
                                     }
                                   }),
@@ -328,11 +328,11 @@ class _ItemSearchViewState extends State<HomeItemSearchView> {
                                     if (itemPriceTypeResult != null &&
                                         itemPriceTypeResult is ItemPriceType) {
                                       provider.itemPriceTypeId =
-                                          itemPriceTypeResult.id;
+                                          itemPriceTypeResult.id!;
 
                                       setState(() {
                                         provider.selectedItemPriceTypeName =
-                                            itemPriceTypeResult.name;
+                                            itemPriceTypeResult.name!;
                                       });
                                     }
                                   }),
@@ -359,11 +359,11 @@ class _ItemSearchViewState extends State<HomeItemSearchView> {
                                     if (itemDealOptionResult != null &&
                                         itemDealOptionResult is DealOption) {
                                       provider.itemDealOptionId =
-                                          itemDealOptionResult.id;
+                                          itemDealOptionResult.id!;
 
                                       setState(() {
                                         provider.selectedItemDealOptionName =
-                                            itemDealOptionResult.name;
+                                            itemDealOptionResult.name!;
                                       });
                                     }
                                   }),
@@ -377,7 +377,7 @@ class _ItemSearchViewState extends State<HomeItemSearchView> {
                             ],
                           ),
                         ),
-                        builder: (BuildContext context, Widget child) {
+                        builder: (BuildContext context, Widget? child) {
                           return FadeTransition(
                               opacity: widget.animation,
                               child: Transform(
@@ -399,7 +399,7 @@ class _ItemSearchViewState extends State<HomeItemSearchView> {
 class _ProductNameWidget extends StatefulWidget {
   const _ProductNameWidget({this.userInputItemNameTextEditingController});
 
-  final TextEditingController userInputItemNameTextEditingController;
+  final TextEditingController? userInputItemNameTextEditingController;
 
   @override
   __ProductNameWidgetState createState() => __ProductNameWidgetState();
@@ -408,7 +408,7 @@ class _ProductNameWidget extends StatefulWidget {
 class __ProductNameWidgetState extends State<_ProductNameWidget> {
   @override
   Widget build(BuildContext context) {
-    print('*****' + widget.userInputItemNameTextEditingController.text);
+    print('*****' + widget.userInputItemNameTextEditingController!.text);
     return Column(
       children: <Widget>[
         PsTextFieldWidget(
@@ -425,9 +425,8 @@ class __ProductNameWidgetState extends State<_ProductNameWidget> {
 
 class _ChangeRatingColor extends StatelessWidget {
   const _ChangeRatingColor({
-    Key key,
-    @required this.title,
-    @required this.checkColor,
+    Key? key,
+    required this.title, required this.checkColor,
   }) : super(key: key);
 
   final String title;
@@ -435,7 +434,7 @@ class _ChangeRatingColor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color defaultBackgroundColor = PsColors.backgroundColor;
+    final Color defaultBackgroundColor = PsColors.backgroundColor!;
     return Container(
       width: MediaQuery.of(context).size.width / 5.5,
       height: PsDimens.space104,
@@ -455,7 +454,7 @@ class _ChangeRatingColor extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.caption.copyWith(
+              style: Theme.of(context).textTheme.caption!.copyWith(
                     color: checkColor ? PsColors.iconColor : PsColors.white,
                   ),
             ),
@@ -692,8 +691,8 @@ class _PriceWidget extends StatelessWidget {
   const _PriceWidget(
       {this.userInputMinimumPriceEditingController,
       this.userInputMaximunPriceEditingController});
-  final TextEditingController userInputMinimumPriceEditingController;
-  final TextEditingController userInputMaximunPriceEditingController;
+  final TextEditingController? userInputMinimumPriceEditingController;
+  final TextEditingController? userInputMaximunPriceEditingController;
 
   @override
   Widget build(BuildContext context) {
@@ -720,7 +719,7 @@ class _PriceWidget extends StatelessWidget {
                   hintText: Utils.getString(context, 'home_search__not_set'),
                   hintStyle: Theme.of(context)
                       .textTheme
-                      .bodyText2
+                      .bodyText2!
                       .copyWith(color: PsColors.textPrimaryLightColor),
                 ),
                 keyboardType: TextInputType.number,
@@ -740,7 +739,7 @@ class _PriceWidget extends StatelessWidget {
                   hintText: Utils.getString(context, 'home_search__not_set'),
                   hintStyle: Theme.of(context)
                       .textTheme
-                      .bodyText2
+                      .bodyText2!
                       .copyWith(color: PsColors.textPrimaryLightColor),
                 ),
                 keyboardType: TextInputType.number,
@@ -752,9 +751,9 @@ class _PriceWidget extends StatelessWidget {
 
 class _PriceTextWidget extends StatelessWidget {
   const _PriceTextWidget({
-    Key key,
-    @required this.title,
-    @required this.textField,
+    Key? key,
+    required this.title,
+    required this.textField,
   }) : super(key: key);
 
   final String title;
@@ -776,7 +775,7 @@ class _PriceTextWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: PsColors.backgroundColor,
                   borderRadius: BorderRadius.circular(PsDimens.space4),
-                  border: Border.all(color: PsColors.mainDividerColor),
+                  border: Border.all(color: PsColors.mainDividerColor!),
                 ),
                 width: PsDimens.space120,
                 height: PsDimens.space36,
@@ -830,10 +829,10 @@ class __SpecialCheckWidgetState extends State<_SpecialCheckWidget> {
 
 class _SpecialCheckTextWidget extends StatefulWidget {
   const _SpecialCheckTextWidget({
-    Key key,
-    @required this.title,
-    @required this.icon,
-    @required this.checkTitle,
+    Key? key,
+    required this.title,
+    required this.icon,
+    required this.checkTitle,
   }) : super(key: key);
 
   final String title;
@@ -873,7 +872,7 @@ class __SpecialCheckTextWidgetState extends State<_SpecialCheckTextWidget> {
                     widget.title,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2
+                        .bodyText2!
                         .copyWith(fontWeight: FontWeight.normal),
                   ),
                 ],

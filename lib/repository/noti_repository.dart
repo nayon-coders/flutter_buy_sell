@@ -50,7 +50,7 @@ class NotiRepository extends PsRepository {
 
       if (_resource.status == PsStatus.SUCCESS) {
         await _notiDao.deleteAll();
-        await _notiDao.insertAll(_primaryKey, _resource.data);
+        await _notiDao.insertAll(_primaryKey, _resource.data!);
         
       }else{
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
@@ -78,7 +78,7 @@ class NotiRepository extends PsRepository {
 
       if (_resource.status == PsStatus.SUCCESS) {
         _notiDao
-            .insertAll(_primaryKey, _resource.data)
+            .insertAll(_primaryKey, _resource.data!)
             .then((dynamic data) async {
           notiListStream.sink.add(await _notiDao.getAll());
         });

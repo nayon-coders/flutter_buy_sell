@@ -9,13 +9,13 @@ import 'package:flutterbuyandsell/viewobject/paid_ad_item.dart';
 
 class PaidAdItemHorizontalListItem extends StatelessWidget {
   const PaidAdItemHorizontalListItem({
-    Key key,
-    @required this.paidAdItem,
+    Key? key,
+    required this.paidAdItem,
     this.onTap,
   }) : super(key: key);
 
   final PaidAdItem paidAdItem;
-  final Function onTap;
+  final VoidCallback? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -49,14 +49,14 @@ class PaidAdItemHorizontalListItem extends StatelessWidget {
                               child: PsNetworkCircleImageForUser(
                                 photoKey: '',
                                 imagePath:
-                                    paidAdItem.item.user.userProfilePhoto,
+                                    paidAdItem.item!.user!.userProfilePhoto,
                                 // width: PsDimens.space40,
                                 // height: PsDimens.space40,
                                 boxfit: BoxFit.cover,
                                 onTap: () {
                                   Utils.psPrint(
-                                      paidAdItem.item.defaultPhoto.imgParentId);
-                                  onTap();
+                                      paidAdItem.item!.defaultPhoto!.imgParentId!);
+                                  onTap!();
                                 },
                               ),
                             ),
@@ -70,10 +70,10 @@ class PaidAdItemHorizontalListItem extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Text(
-                                        paidAdItem.item.user.userName == ''
+                                        paidAdItem.item!.user!.userName == ''
                                             ? Utils.getString(
                                                 context, 'default__user_name')
-                                            : '${paidAdItem.item.user.userName}',
+                                            : '${paidAdItem.item!.user!.userName}',
                                         textAlign: TextAlign.start,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
@@ -109,14 +109,14 @@ class PaidAdItemHorizontalListItem extends StatelessWidget {
                           children: <Widget>[
                             PsNetworkImage(
                               photoKey: '',
-                              defaultPhoto: paidAdItem.item.defaultPhoto,
+                              defaultPhoto: paidAdItem.item!.defaultPhoto!,
                               width: PsDimens.space180,
                               height: double.infinity,
                               boxfit: BoxFit.cover,
                               onTap: () {
                                 Utils.psPrint(
-                                    paidAdItem.item.defaultPhoto.imgParentId);
-                                onTap();
+                                    paidAdItem.item!.defaultPhoto!.imgParentId!);
+                                onTap!();
                               },
                             ),
                             Positioned(
@@ -141,7 +141,7 @@ class PaidAdItemHorizontalListItem extends StatelessWidget {
                                           maxLines: 1,
                                           style: Theme.of(context)
                                               .textTheme
-                                              .bodyText2
+                                              .bodyText2!
                                               .copyWith(color: Colors.white),
                                         ),
                                       )
@@ -165,7 +165,7 @@ class PaidAdItemHorizontalListItem extends StatelessWidget {
                                               maxLines: 1,
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .bodyText2
+                                                  .bodyText2!
                                                   .copyWith(
                                                       color: Colors.white),
                                             ),
@@ -196,7 +196,7 @@ class PaidAdItemHorizontalListItem extends StatelessWidget {
                                                   maxLines: 1,
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .bodyText2
+                                                      .bodyText2!
                                                       .copyWith(
                                                           color: Colors.white),
                                                 ),
@@ -213,7 +213,7 @@ class PaidAdItemHorizontalListItem extends StatelessWidget {
                             right: PsDimens.space8,
                             bottom: PsDimens.space4),
                         child: Text(
-                          paidAdItem.item.title,
+                          paidAdItem.item!.title!,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.bodyText2,
                           maxLines: 1,
@@ -228,26 +228,26 @@ class PaidAdItemHorizontalListItem extends StatelessWidget {
                           children: <Widget>[
                             Text(
                                 paidAdItem.item != null &&
-                                        paidAdItem.item.price != '0' &&
-                                        paidAdItem.item.price != ''
-                                    ? '${paidAdItem.item.itemCurrency.currencySymbol}${Utils.getPriceFormat(paidAdItem.item.price)}'
+                                        paidAdItem.item!.price != '0' &&
+                                        paidAdItem.item!.price != ''
+                                    ? '${paidAdItem.item!.itemCurrency!.currencySymbol}${Utils.getPriceFormat(paidAdItem.item!.price!)}'
                                     : Utils.getString(
                                         context, 'item_price_free'),
                                 textAlign: TextAlign.start,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle2
+                                    .subtitle2!
                                     .copyWith(color: PsColors.mainColor)),
                             Padding(
                                 padding: const EdgeInsets.only(
                                     left: PsDimens.space8,
                                     right: PsDimens.space8),
                                 child: Text(
-                                    '(${paidAdItem.item.conditionOfItem.name})',
+                                    '(${paidAdItem.item!.conditionOfItem!.name})',
                                     textAlign: TextAlign.start,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText2
+                                        .bodyText2!
                                         .copyWith(color: Colors.blue)))
                           ],
                         ),
@@ -281,7 +281,7 @@ class PaidAdItemHorizontalListItem extends StatelessWidget {
                                     textAlign: TextAlign.start,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .caption
+                                        .caption!
                                         .copyWith(color: Colors.blue))),
                             Expanded(
                               child: Container(
@@ -292,13 +292,13 @@ class PaidAdItemHorizontalListItem extends StatelessWidget {
                                           ? ''
                                           : Utils
                                               .changeTimeStampToStandardDateTimeFormat(
-                                                  paidAdItem.startTimeStamp),
+                                                  paidAdItem.startTimeStamp!),
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .caption
+                                          .caption!
                                           .copyWith(color: Colors.blue))),
                             )
                           ],
@@ -332,7 +332,7 @@ class PaidAdItemHorizontalListItem extends StatelessWidget {
                                     textAlign: TextAlign.start,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .caption
+                                        .caption!
                                         .copyWith(color: Colors.blue))),
                             Expanded(
                               child: Padding(
@@ -343,13 +343,13 @@ class PaidAdItemHorizontalListItem extends StatelessWidget {
                                           ? ''
                                           : Utils
                                               .changeTimeStampToStandardDateTimeFormat(
-                                                  paidAdItem.endTimeStamp),
+                                                  paidAdItem.endTimeStamp!),
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .caption
+                                          .caption!
                                           .copyWith(color: Colors.blue))),
                             )
                           ],
@@ -387,20 +387,20 @@ class PaidAdItemHorizontalListItem extends StatelessWidget {
                                     textAlign: TextAlign.start,
                                     style: Theme.of(context)
                                         .textTheme
-                                        .caption
+                                        .caption!
                                         .copyWith(color: Colors.blue))),
                             Expanded(
                               child: Padding(
                                   padding: const EdgeInsets.only(
                                       right: PsDimens.space8),
                                   child: Text(
-                                      '${paidAdItem.item.itemCurrency.currencySymbol}${paidAdItem.amount}',
+                                      '${paidAdItem.item!.itemCurrency!.currencySymbol!}${paidAdItem.amount}',
                                       textAlign: TextAlign.start,
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .caption
+                                          .caption!
                                           .copyWith(color: Colors.blue))),
                             ),
                           ],

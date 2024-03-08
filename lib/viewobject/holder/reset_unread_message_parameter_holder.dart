@@ -5,10 +5,10 @@ import 'package:flutter/cupertino.dart';
 class ResetUnreadMessageParameterHolder
     extends PsHolder<ResetUnreadMessageParameterHolder> {
   ResetUnreadMessageParameterHolder({
-    @required this.itemId,
-    @required this.buyerUserId,
-    @required this.sellerUserId,
-    @required this.type,
+    required this.itemId,
+    required this.buyerUserId,
+    required this.sellerUserId,
+    required this.type,
   });
 
   final String itemId;

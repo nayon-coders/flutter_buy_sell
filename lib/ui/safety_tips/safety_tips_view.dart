@@ -5,9 +5,9 @@ import 'package:flutterbuyandsell/utils/utils.dart';
 
 class SafetyTipsView extends StatefulWidget {
   const SafetyTipsView({
-    Key key,
-    @required this.animationController,
-    @required this.safetyTips,
+    Key? key,
+    required this.animationController,
+    required this.safetyTips,
   }) : super(key: key);
 
   final AnimationController animationController;
@@ -35,7 +35,7 @@ class _SafetyTipsViewState extends State<SafetyTipsView> {
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
-                .headline6
+                .headline6!
                 .copyWith(fontWeight: FontWeight.bold),
           ),
           elevation: 0,

@@ -26,13 +26,13 @@ class ItemCurrencyViewState extends State<ItemCurrencyView>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  ItemCurrencyProvider _temCurrencyProvider;
-  AnimationController animationController;
-  Animation<double> animation;
+  ItemCurrencyProvider? _temCurrencyProvider;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -42,7 +42,7 @@ class ItemCurrencyViewState extends State<ItemCurrencyView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _temCurrencyProvider.nextItemCurrencyList();
+        _temCurrencyProvider!.nextItemCurrencyList();
       }
     });
 
@@ -51,16 +51,16 @@ class ItemCurrencyViewState extends State<ItemCurrencyView>
     animation = Tween<double>(
       begin: 0.0,
       end: 10.0,
-    ).animate(animationController);
+    ).animate(animationController!);
     super.initState();
   }
 
-  ItemCurrencyRepository repo1;
+  ItemCurrencyRepository? repo1;
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -83,7 +83,7 @@ class ItemCurrencyViewState extends State<ItemCurrencyView>
           appBarTitle: Utils.getString(context, 'item_entry__currency') ?? '',
           initProvider: () {
             return ItemCurrencyProvider(
-              repo: repo1,
+              repo: repo1!,
             );
           },
           onProviderReady: (ItemCurrencyProvider provider) {
@@ -91,14 +91,14 @@ class ItemCurrencyViewState extends State<ItemCurrencyView>
             _temCurrencyProvider = provider;
           },
           builder: (BuildContext context, ItemCurrencyProvider provider,
-              Widget child) {
+              Widget? child) {
             return Stack(children: <Widget>[
               Container(
                   child: RefreshIndicator(
                 child: ListView.builder(
                   physics: const AlwaysScrollableScrollPhysics(),
                     controller: _scrollController,
-                    itemCount: provider.itemCurrencyList.data.length,
+                    itemCount: provider.itemCurrencyList.data!.length,
                     itemBuilder: (BuildContext context, int index) {
                       if (provider.itemCurrencyList.status ==
                           PsStatus.BLOCK_LOADING) {
@@ -118,17 +118,17 @@ class ItemCurrencyViewState extends State<ItemCurrencyView>
                               PsFrameUIForLoading(),
                             ]));
                       } else {
-                        final int count = provider.itemCurrencyList.data.length;
-                        animationController.forward();
+                        final int count = provider.itemCurrencyList.data!.length;
+                        animationController!.forward();
                         return FadeTransition(
-                            opacity: animation,
+                            opacity: animation!,
                             child: ItemCurrencyListViewItem(
                               itemCurrency:
-                                  provider.itemCurrencyList.data[index],
+                                  provider.itemCurrencyList.data![index],
                               onTap: () {
                                 Navigator.pop(context,
-                                    provider.itemCurrencyList.data[index]);
-                                print(provider.itemCurrencyList.data[index]
+                                    provider.itemCurrencyList.data![index]);
+                                print(provider.itemCurrencyList.data![index]
                                     .currencySymbol);
                                 // if (index == 0) {
                                 //   Navigator.pushNamed(
@@ -141,7 +141,7 @@ class ItemCurrencyViewState extends State<ItemCurrencyView>
                               animation:
                                   Tween<double>(begin: 0.0, end: 1.0).animate(
                                 CurvedAnimation(
-                                  parent: animationController,
+                                  parent: animationController!,
                                   curve: Interval((1 / count) * index, 1.0,
                                       curve: Curves.fastOutSlowIn),
                                 ),

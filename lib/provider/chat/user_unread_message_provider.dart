@@ -10,7 +10,9 @@ import 'package:flutterbuyandsell/viewobject/user_unread_message.dart';
 
 class UserUnreadMessageProvider extends PsProvider {
   UserUnreadMessageProvider(
-      {@required UserUnreadMessageRepository repo, int limit = 0})
+      {
+        required UserUnreadMessageRepository repo,
+        int limit = 0})
       : super(repo, limit) {
     _repo = repo;
     print('UserUnreadMessageProvider : $hashCode');

@@ -16,8 +16,8 @@ import 'package:flutterbuyandsell/constant/route_paths.dart';
 import 'package:flutterbuyandsell/ui/common/ps_ui_widget.dart';
 
 class UserItemListView extends StatefulWidget {
-  const UserItemListView({@required this.addedUserId,
-  @required this.status,@required this.title});
+  const UserItemListView({required this.addedUserId,
+  required this.status,required this.title});
   final String addedUserId;
   final String status;
   final String title;
@@ -32,13 +32,13 @@ class _UserItemListViewState extends State<UserItemListView>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  AddedItemProvider _userAddedItemProvider;
+  AddedItemProvider? _userAddedItemProvider;
 
-  AnimationController animationController;
+  AnimationController? animationController;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -50,19 +50,19 @@ class _UserItemListViewState extends State<UserItemListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        final String loginUserId = Utils.checkUserLoginId(psValueHolder);
-        _userAddedItemProvider.nextItemList(
-            loginUserId, _userAddedItemProvider.addedUserParameterHolder);
+        final String loginUserId = Utils.checkUserLoginId(psValueHolder!);
+        _userAddedItemProvider!.nextItemList(
+            loginUserId, _userAddedItemProvider!.addedUserParameterHolder);
       }
     });
   }
 
-  ProductRepository repo1;
-  PsValueHolder psValueHolder;
+  ProductRepository? repo1;
+  PsValueHolder? psValueHolder;
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -83,10 +83,10 @@ class _UserItemListViewState extends State<UserItemListView>
       child: PsWidgetWithAppBar<AddedItemProvider>(
           appBarTitle: widget.title,
           initProvider: () {
-            return AddedItemProvider(repo: repo1, psValueHolder: psValueHolder);
+            return AddedItemProvider(repo: repo1!, psValueHolder: psValueHolder);
           },
           onProviderReady: (AddedItemProvider provider) {
-            final String loginUserId = Utils.checkUserLoginId(psValueHolder);
+            final String loginUserId = Utils.checkUserLoginId(psValueHolder!);
 
             provider.addedUserParameterHolder.addedUserId = widget.addedUserId;
             provider.addedUserParameterHolder.status = widget.status;
@@ -97,7 +97,7 @@ class _UserItemListViewState extends State<UserItemListView>
             _userAddedItemProvider = provider;
           },
           builder:
-              (BuildContext context, AddedItemProvider provider, Widget child) {
+              (BuildContext context, AddedItemProvider provider, Widget? child) {
             return Stack(children: <Widget>[
               Container(
                   margin: const EdgeInsets.only(
@@ -119,41 +119,41 @@ class _UserItemListViewState extends State<UserItemListView>
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                                 if (provider.itemList.data != null ||
-                                    provider.itemList.data.isNotEmpty) {
+                                    provider.itemList.data!.isNotEmpty) {
                                   final int count =
-                                      provider.itemList.data.length;
+                                      provider.itemList.data!.length;
                                   return ProductVeticalListItem(
                                     coreTagKey: provider.hashCode.toString() +
-                                        provider.itemList.data[index].id,
+                                        provider.itemList.data![index].id!,
                                     animationController: animationController,
                                     animation:
                                         Tween<double>(begin: 0.0, end: 1.0)
                                             .animate(
                                       CurvedAnimation(
-                                        parent: animationController,
+                                        parent: animationController!,
                                         curve: Interval(
                                             (1 / count) * index, 1.0,
                                             curve: Curves.fastOutSlowIn),
                                       ),
                                     ),
-                                    product: provider.itemList.data[index],
+                                    product: provider.itemList.data![index],
                                     onTap: () {
-                                      print(provider.itemList.data[index]
-                                          .defaultPhoto.imgPath);
+                                      print(provider.itemList.data![index]
+                                          .defaultPhoto!.imgPath);
                                       final Product product = provider
-                                          .itemList.data.reversed
+                                          .itemList.data!.reversed
                                           .toList()[index];
                                       final ProductDetailIntentHolder holder =
                                           ProductDetailIntentHolder(
                                               productId:
-                                                  provider.itemList.data[index].id,
+                                                  provider.itemList.data![index].id,
                                               heroTagImage:
                                                   provider.hashCode.toString() +
-                                                      product.id +
+                                                      product.id! +
                                                       PsConst.HERO_TAG__IMAGE,
                                               heroTagTitle:
                                                   provider.hashCode.toString() +
-                                                      product.id +
+                                                      product.id! +
                                                       PsConst.HERO_TAG__TITLE);
                                       Navigator.pushNamed(
                                           context, RoutePaths.productDetail,
@@ -164,16 +164,16 @@ class _UserItemListViewState extends State<UserItemListView>
                                   return null;
                                 }
                               },
-                              childCount: provider.itemList.data.length,
+                              childCount: provider.itemList.data!.length,
                             ),
                           ),
                         ]),
                     onRefresh: () async {
-                      _userAddedItemProvider.addedUserParameterHolder
+                      _userAddedItemProvider!.addedUserParameterHolder
                           .addedUserId = widget.addedUserId;
 
-                      return _userAddedItemProvider.resetItemList(
-                          provider.psValueHolder.loginUserId,
+                      return _userAddedItemProvider!.resetItemList(
+                          provider.psValueHolder!.loginUserId,
                           provider.addedUserParameterHolder);
                     },
                   )),

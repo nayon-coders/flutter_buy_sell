@@ -7,13 +7,13 @@ import 'package:flutterbuyandsell/viewobject/sub_category.dart';
 
 class SubCategoryVerticalListItem extends StatelessWidget {
   const SubCategoryVerticalListItem({
-    Key key,
-    @required this.subCategory,
+    Key? key,
+    required this.subCategory,
     this.onTap,
   }) : super(key: key);
 
   final SubCategory subCategory;
-  final Function onTap;
+  final VoidCallback? onTap;
   @override
   Widget build(BuildContext context) {
     //print("${PsConfig.ps_app_image_thumbs_url}${subCategory.defaultPhoto.imgPath}");
@@ -33,11 +33,11 @@ class SubCategoryVerticalListItem extends StatelessWidget {
                   ),
                   PsNetworkImage(
                     photoKey: '',
-                    defaultPhoto: subCategory.defaultPhoto,
+                    defaultPhoto: subCategory.defaultPhoto!,
                     width: PsDimens.space44,
                     height: PsDimens.space44,
                     onTap: () {
-                      Utils.psPrint(subCategory.defaultPhoto.imgParentId);
+                      Utils.psPrint(subCategory.defaultPhoto!.imgParentId!);
                     },
                   ),
                   const SizedBox(
@@ -50,19 +50,19 @@ class SubCategoryVerticalListItem extends StatelessWidget {
                         height: PsDimens.space4,
                       ),
                       Text(
-                        subCategory.name,
+                        subCategory!.name!,
                         textAlign: TextAlign.start,
                         style: TextStyle(
                             fontWeight: Theme.of(context)
                                 .textTheme
-                                .bodyText2
+                                .bodyText2!
                                 .copyWith(fontWeight: FontWeight.bold)
                                 .fontWeight),
                       ),
                       const SizedBox(
                         height: PsDimens.space4,
                       ),
-                      Text(subCategory.addedDate,
+                      Text(subCategory.addedDate!,
                           maxLines: 2, overflow: TextOverflow.ellipsis),
                       const SizedBox(
                         height: PsDimens.space4,

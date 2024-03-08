@@ -11,7 +11,9 @@ import 'package:flutterbuyandsell/viewobject/holder/get_chat_history_parameter_h
 import 'package:flutterbuyandsell/viewobject/holder/make_mark_as_sold_parameter_holder.dart';
 
 class GetChatHistoryProvider extends PsProvider {
-  GetChatHistoryProvider({@required ChatHistoryRepository repo, int limit = 0})
+  GetChatHistoryProvider({
+    required ChatHistoryRepository repo,
+    int limit = 0})
       : super(repo, limit) {
     _repo = repo;
     print('GetChatHistoryProvider : $hashCode');

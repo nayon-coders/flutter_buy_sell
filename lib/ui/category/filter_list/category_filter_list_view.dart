@@ -96,7 +96,7 @@ class _CategoryFilterListViewState extends State<CategoryFilterListView>
             _categoryProvider = provider;
           },
           builder:
-              (BuildContext context, CategoryProvider provider, Widget child) {
+              (BuildContext context, CategoryProvider provider, Widget? child) {
             return Stack(children: <Widget>[
               // Container(
               //     child:

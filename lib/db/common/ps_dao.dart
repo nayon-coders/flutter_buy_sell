@@ -184,9 +184,9 @@ abstract class PsDao<T extends PsObject<T>> {
       List<SortOrder>? sortOrderList,
       PsStatus status = PsStatus.SUCCESS,
       Function? onDataUpdated}) async {
-    final PsResource<List<PsObject<dynamic>>> dataList = await mapDao.getAll(
+    final PsResource<List<PsObject<dynamic>>> dataList = await mapDao!.getAll(
         finder: Finder(
-            filter: Filter.equals(mapKey?, paramKey),
+            filter: Filter.equals(mapKey! , paramKey),
             sortOrders: <SortOrder>[SortOrder('sorting', true)]));
     final List<String> valueList = mapObj.getIdList(dataList.data);
 
@@ -235,7 +235,7 @@ abstract class PsDao<T extends PsObject<T>> {
       List<SortOrder>? sortOrderList,
       PsStatus status = PsStatus.SUCCESS,
       Function? onDataUpdated}) async {
-   final PsResource<List<PsObject<dynamic>>> dataList = await mapDao.getAll(
+   final PsResource<List<PsObject<dynamic>>> dataList = await mapDao!.getAll(
         finder: Finder(sortOrders: <SortOrder>[SortOrder('sorting', true)]));
 
     final List<String> valueList = mapObj.getIdList(dataList.data);
@@ -304,7 +304,7 @@ abstract class PsDao<T extends PsObject<T>> {
       await db,
       finder: finder,
     );
-    T  result;
+    T?  result;
 
     for (dynamic snapshot in recordSnapshots) {
       final T localObj = obj.fromMap(snapshot.value);

@@ -21,12 +21,12 @@ import 'package:provider/provider.dart';
 
 class ForgotPasswordView extends StatefulWidget {
   const ForgotPasswordView({
-    Key key,
+    Key? key,
     this.animationController,
     this.goToLoginSelected,
   }) : super(key: key);
-  final AnimationController animationController;
-  final Function goToLoginSelected;
+  final AnimationController? animationController;
+  final Function? goToLoginSelected;
   @override
   _ForgotPasswordViewState createState() => _ForgotPasswordViewState();
 }
@@ -34,9 +34,9 @@ class ForgotPasswordView extends StatefulWidget {
 class _ForgotPasswordViewState extends State<ForgotPasswordView>
     with SingleTickerProviderStateMixin {
   final TextEditingController userEmailController = TextEditingController();
-  UserRepository repo1;
-  PsValueHolder psValueHolder;
-  AnimationController animationController;
+  UserRepository? repo1;
+  PsValueHolder? psValueHolder;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -46,7 +46,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -54,10 +54,10 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView>
   Widget build(BuildContext context) {
     final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(
-            parent: animationController,
+            parent: animationController!,
             curve: const Interval(0.5 * 1, 1.0, curve: Curves.fastOutSlowIn)));
 
-    animationController.forward();
+    animationController!.forward();
     repo1 = Provider.of<UserRepository>(context);
     psValueHolder = Provider.of<PsValueHolder>(context);
 
@@ -66,17 +66,17 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView>
         lazy: false,
         create: (BuildContext context) {
           final UserProvider provider =
-              UserProvider(repo: repo1, psValueHolder: psValueHolder);
+              UserProvider(repo: repo1!, psValueHolder: psValueHolder!);
           // provider.postUserRegister(userRegisterParameterHolder.toMap());
           return provider;
         },
         child: Consumer<UserProvider>(builder:
-            (BuildContext context, UserProvider provider, Widget child) {
+            (BuildContext context, UserProvider provider, Widget? child) {
           return Stack(
             children: <Widget>[
               SingleChildScrollView(
                   child: AnimatedBuilder(
-                      animation: animationController,
+                      animation: animationController!,
                       child: Column(
                         mainAxisSize: MainAxisSize.max,
                         children: <Widget>[
@@ -95,10 +95,10 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView>
                             height: PsDimens.space16,
                           ),
                           _TextWidget(
-                              goToLoginSelected: widget.goToLoginSelected),
+                              goToLoginSelected: widget.goToLoginSelected!),
                         ],
                       ),
-                      builder: (BuildContext context, Widget child) {
+                      builder: (BuildContext context, Widget? child) {
                         return FadeTransition(
                           opacity: animation,
                           child: Transform(
@@ -117,7 +117,7 @@ class _ForgotPasswordViewState extends State<ForgotPasswordView>
 
 class _TextWidget extends StatefulWidget {
   const _TextWidget({this.goToLoginSelected});
-  final Function goToLoginSelected;
+  final Function? goToLoginSelected;
   @override
   __TextWidgetState createState() => __TextWidgetState();
 }
@@ -133,14 +133,14 @@ class __TextWidgetState extends State<_TextWidget> {
             Utils.getString(context, 'forgot_psw__login'),
             style: Theme.of(context)
                 .textTheme
-                .bodyText2
+                .bodyText2!
                 .copyWith(color: PsColors.mainColor),
           ),
         ),
       ),
       onTap: () {
         if (widget.goToLoginSelected != null) {
-          widget.goToLoginSelected();
+          widget.goToLoginSelected!();
         } else {
           Navigator.pushReplacementNamed(
             context,
@@ -157,7 +157,7 @@ class _HeaderIconAndTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final Widget _textWidget = Text(
       Utils.getString(context, 'app_name'),
-      style: Theme.of(context).textTheme.headline6.copyWith(
+      style: Theme.of(context).textTheme.headline6!.copyWith(
             fontWeight: FontWeight.bold,
             color: PsColors.mainColor,
           ),
@@ -190,7 +190,7 @@ class _HeaderIconAndTextWidget extends StatelessWidget {
 
 class _CardWidget extends StatelessWidget {
   const _CardWidget({
-    @required this.userEmailController,
+    required this.userEmailController,
   });
 
   final TextEditingController userEmailController;
@@ -211,11 +211,11 @@ class _CardWidget extends StatelessWidget {
             child: TextField(
               controller: userEmailController,
               keyboardType: TextInputType.emailAddress,
-              style: Theme.of(context).textTheme.button.copyWith(),
+              style: Theme.of(context).textTheme.button!.copyWith(),
               decoration: InputDecoration(
                   border: InputBorder.none,
                   hintText: Utils.getString(context, 'forgot_psw__email'),
-                  hintStyle: Theme.of(context).textTheme.button.copyWith(),
+                  hintStyle: Theme.of(context).textTheme.button!.copyWith(),
                   icon: Icon(Icons.email,
                       color: Theme.of(context).iconTheme.color)),
             ),
@@ -228,8 +228,8 @@ class _CardWidget extends StatelessWidget {
 
 class _SendButtonWidget extends StatefulWidget {
   const _SendButtonWidget({
-    @required this.provider,
-    @required this.userEmailController,
+    required this.provider,
+    required this.userEmailController,
   });
   final UserProvider provider;
   final TextEditingController userEmailController;
@@ -282,7 +282,7 @@ class __SendButtonWidgetState extends State<_SendButtonWidget> {
                       context: context,
                       builder: (BuildContext context) {
                         return SuccessDialog(
-                          message: _apiStatus.data.message,
+                          message: _apiStatus.data!.message!,
                           onPressed: () {},
                         );
                       });
@@ -291,7 +291,7 @@ class __SendButtonWidgetState extends State<_SendButtonWidget> {
                       context: context,
                       builder: (BuildContext context) {
                         return ErrorDialog(
-                          message: _apiStatus.message,
+                          message: _apiStatus.message!,
                         );
                       });
                 }

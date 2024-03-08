@@ -11,8 +11,8 @@ import 'package:flutterbuyandsell/viewobject/product.dart';
 
 class LocationTileView extends StatefulWidget {
   const LocationTileView({
-    Key key,
-    @required this.item,
+    Key? key,
+    required this.item,
   }) : super(key: key);
 
   final Product item;
@@ -62,7 +62,7 @@ class _LocationTileViewState extends State<LocationTileView> {
                           .toUpperCase(),
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText2
+                          .bodyText2!
                           .copyWith(color: PsColors.mainColor),
                     ),
                   ),

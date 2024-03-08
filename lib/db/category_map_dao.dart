@@ -22,7 +22,7 @@ class CategoryMapDao extends PsDao<CategoryMap> {
 
   @override
   String getPrimaryKey(CategoryMap object) {
-    return object.id;
+    return object.id!;
   }
 
   @override

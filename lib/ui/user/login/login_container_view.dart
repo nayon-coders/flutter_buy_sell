@@ -17,7 +17,7 @@ class LoginContainerView extends StatefulWidget {
 
 class _CityLoginContainerViewState extends State<LoginContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -27,18 +27,18 @@ class _CityLoginContainerViewState extends State<LoginContainerView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  UserProvider userProvider;
-  UserRepository userRepo;
+  UserProvider? userProvider;
+  UserRepository? userRepo;
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -52,7 +52,7 @@ class _CityLoginContainerViewState extends State<LoginContainerView>
 
     final Animation<double> animation = Tween<double>(begin: 0.0, end: 1.0)
         .animate(CurvedAnimation(
-            parent: animationController,
+            parent: animationController!,
             curve: const Interval(0.5 * 1, 1.0, curve: Curves.fastOutSlowIn)));
 
     print(
@@ -77,7 +77,7 @@ class _CityLoginContainerViewState extends State<LoginContainerView>
                     scaffoldKey: scaffoldKey,
                   ),
                   LoginView(
-                    animationController: animationController,
+                    animationController: animationController!,
                     animation: animation,
                   ),
                 ])
@@ -90,11 +90,11 @@ class _CityLoginContainerViewState extends State<LoginContainerView>
 
 class _SliverAppbar extends StatefulWidget {
   const _SliverAppbar(
-      {Key key, @required this.title, this.scaffoldKey, this.menuDrawer})
+      {Key? key, required this.title, this.scaffoldKey, this.menuDrawer})
       : super(key: key);
   final String title;
-  final GlobalKey<ScaffoldState> scaffoldKey;
-  final Drawer menuDrawer;
+  final GlobalKey<ScaffoldState>? scaffoldKey;
+  final Drawer? menuDrawer;
   @override
   _SliverAppbarState createState() => _SliverAppbarState();
 }
@@ -112,7 +112,7 @@ class _SliverAppbarState extends State<_SliverAppbar> {
         textAlign: TextAlign.center,
         style: Theme.of(context)
             .textTheme
-            .headline6
+            .headline6!
             .copyWith(fontWeight: FontWeight.bold)
             .copyWith(color: PsColors.mainColorWithWhite),
       ),

@@ -550,11 +550,11 @@ class UserProvider extends PsProvider {
 
       if (_apiStatus.data != null) {
         await replaceVerifyUserData('', '', '', '');
-        await replaceLoginUserId(_apiStatus.data.userId);
+        await replaceLoginUserId(_apiStatus.data!.userId!);
       }
       return _apiStatus;
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -745,8 +745,8 @@ class UserProvider extends PsProvider {
 
       final fb_auth.User? user =
           (await _firebaseAuth.signInWithCredential(credential)).user;
-      print('signed in' + user.displayName);
-      return user!;
+      print('signed in' + user!.displayName!);
+      return user;
     } on Exception {
       print('not select google account');
       return null;
@@ -786,7 +786,7 @@ class UserProvider extends PsProvider {
 
       if (_apiStatus.data != null) {
         await replaceVerifyUserData('', '', '', '');
-        await replaceLoginUserId(_apiStatus.data.userId);
+        await replaceLoginUserId(_apiStatus.data!.userId!);
       }
 
       return _apiStatus;
@@ -843,7 +843,7 @@ class UserProvider extends PsProvider {
             /// Success
             ///
             if (onFacebookIdSignInSelected != null) {
-              onFacebookIdSignInSelected(resourceUser.data.userId);
+              onFacebookIdSignInSelected(resourceUser.data!.userId!);
             } else {
               Navigator.pop(context, resourceUser.data);
             }
@@ -901,7 +901,7 @@ class UserProvider extends PsProvider {
         'https://www.facebook.com/connect/login_success.html';
 
     // Get Access Token
-    final String result = await Navigator.push(
+    final String? result = await Navigator.push(
       context,
       MaterialPageRoute<String>(
           builder: (BuildContext context) => const FacebookLoginWebView(
@@ -922,8 +922,8 @@ class UserProvider extends PsProvider {
 
       try {
         final fb_auth.User user =
-            (await _firebaseAuth.signInWithCredential(credential)).user;
-        print('signed in' + user.displayName);
+            (await _firebaseAuth.signInWithCredential(credential)).user!;
+        print('signed in' + user.displayName!);
 
         return FacebookLoginUserHolder(user, profile);
         // return user;
@@ -944,7 +944,7 @@ class UserProvider extends PsProvider {
     final fb_auth.User user = facebookLoginUserHolder.firebaseUser;
     final dynamic facebookUser = facebookLoginUserHolder.facebookUser;
     if (user != null) {
-      String email = user.email;
+      String email = user.email!;
       if (email == null || email == '') {
         // if (user.providerData.isNotEmpty) {
         //   email = user.providerData[0].email;
@@ -952,8 +952,8 @@ class UserProvider extends PsProvider {
         if (user.providerData.isNotEmpty) {
           for (int i = 0; i < user.providerData.length; i++) {
             if (user.providerData[i].email != null &&
-                user.providerData[i].email.trim() != '') {
-              email = user.providerData[i].email;
+                user.providerData[i].email!.trim() != '') {
+              email = user.providerData[i].email!;
             }
           }
 
@@ -976,7 +976,7 @@ class UserProvider extends PsProvider {
 
       if (_apiStatus.data != null) {
         await replaceVerifyUserData('', '', '', '');
-        await replaceLoginUserId(_apiStatus.data.userId);
+        await replaceLoginUserId(_apiStatus.data!.userId!);
       }
 
       return _apiStatus;
@@ -1021,7 +1021,7 @@ class UserProvider extends PsProvider {
         /// Success
         ///
         if (onProfileSelected != null) {
-          onProfileSelected(resourceUser.data.userId);
+          onProfileSelected(resourceUser.data!.userId!);
         } else {
           Navigator.pop(context, resourceUser.data);
         }
@@ -1060,11 +1060,11 @@ class UserProvider extends PsProvider {
   Future<fb_auth.User> signInWithEmailAndPassword(
       BuildContext context, String email, String password) async {
     fb_auth.UserCredential result;
-    fb_auth.User user;
+    fb_auth.User? user;
     try {
       result = await _firebaseAuth.signInWithEmailAndPassword(
           email: email, password: password);
-      user = result.user;
+      user = result.user!;
     } on Exception catch (e1) {
       print(e1);
 
@@ -1077,7 +1077,7 @@ class UserProvider extends PsProvider {
         try {
           result = await _firebaseAuth.signInWithEmailAndPassword(
               email: PsConst.defaultEmail, password: PsConst.defaultPassword);
-          user = result.user;
+          user = result.user!;
         } on PlatformException catch (e) {
           print(e);
           final fb_auth.User _user2 = await createUserWithEmailAndPassword(
@@ -1095,7 +1095,7 @@ class UserProvider extends PsProvider {
 
     print('signInEmail succeeded: $user');
 
-    return user;
+    return user!;
   }
 
   Future<PsResource<User>> _submitLoginWithEmailId(
@@ -1112,7 +1112,7 @@ class UserProvider extends PsProvider {
 
     if (_apiStatus.data != null) {
       await replaceVerifyUserData('', '', '', '');
-      await replaceLoginUserId(_apiStatus.data.userId);
+      await replaceLoginUserId(_apiStatus.data!.userId!);
     }
     return _apiStatus;
   }
@@ -1162,11 +1162,11 @@ class UserProvider extends PsProvider {
             ///
             /// Success
             ///
-            final User user = resourceUser.data;
+            final User user = resourceUser.data!;
             if (user.status == PsConst.ONE) {
               // Approval Off
               await replaceVerifyUserData('', '', '', '');
-              await replaceLoginUserId(resourceUser.data.userId);
+              await replaceLoginUserId(resourceUser.data!.userId!);
 
               if (onRegisterSelected != null) {
                 onRegisterSelected(resourceUser.data);
@@ -1180,19 +1180,19 @@ class UserProvider extends PsProvider {
                 onRegisterSelected(resourceUser.data);
               } else {
                 await replaceVerifyUserData(
-                    resourceUser.data.userId,
-                    resourceUser.data.userName,
-                    resourceUser.data.userEmail,
+                    resourceUser.data!.userId!,
+                    resourceUser.data!.userName!,
+                    resourceUser.data!.userEmail!,
                     password);
 
-                psValueHolder.userIdToVerify = user.userId;
-                psValueHolder.userNameToVerify = user.userName;
-                psValueHolder.userEmailToVerify = user.userEmail;
-                psValueHolder.userPasswordToVerify = user.userPassword;
+                psValueHolder.userIdToVerify = user.userId!;
+                psValueHolder.userNameToVerify = user.userName!;
+                psValueHolder.userEmailToVerify = user.userEmail!;
+                psValueHolder.userPasswordToVerify = user.userPassword!;
 
                 final dynamic returnData = await Navigator.pushNamed(
                     context, RoutePaths.user_verify_email_container,
-                    arguments: resourceUser.data.userId);
+                    arguments: resourceUser.data!.userId!);
 
                 if (returnData != null && returnData is User) {
                   final User user = returnData;
@@ -1200,7 +1200,7 @@ class UserProvider extends PsProvider {
                     psValueHolder =
                         Provider.of<PsValueHolder>(context, listen: false);
                   }
-                  psValueHolder.loginUserId = user.userId;
+                  psValueHolder.loginUserId = user.userId!;
                   psValueHolder.userIdToVerify = '';
                   psValueHolder.userNameToVerify = '';
                   psValueHolder.userEmailToVerify = '';
@@ -1284,7 +1284,7 @@ class UserProvider extends PsProvider {
           }
 
           // Fail to Login to Firebase, must return null;
-          return null;
+          return null!;
         } else {
           return user;
         }
@@ -1292,11 +1292,11 @@ class UserProvider extends PsProvider {
         if (!ignoreHandleFirebaseAuthError) {
           handleFirebaseAuthError(context, email, ignoreEmail: true);
         }
-        return null;
+        return null!;
       }
     }
 
-    final fb_auth.User user = result.user;
+    final fb_auth.User user = result.user!;
 
     return user;
   }
@@ -1321,16 +1321,16 @@ class UserProvider extends PsProvider {
         await postUserRegister(userRegisterParameterHolder.toMap());
 
     if (_apiStatus.data != null) {
-      final User user = _apiStatus.data;
+      final User user = _apiStatus.data!;
 
       //for change email
-      await replaceVerifyUserData(_apiStatus.data.userId,
-          _apiStatus.data.userName, _apiStatus.data.userEmail, password);
+      await replaceVerifyUserData(_apiStatus.data!.userId!,
+          _apiStatus.data!.userName!, _apiStatus.data!.userEmail!, password);
 
-      psValueHolder.userIdToVerify = user.userId;
-      psValueHolder.userNameToVerify = user.userName;
-      psValueHolder.userEmailToVerify = user.userEmail;
-      psValueHolder.userPasswordToVerify = user.userPassword;
+      psValueHolder.userIdToVerify = user.userId!;
+      psValueHolder.userNameToVerify = user.userName!;
+      psValueHolder.userEmailToVerify = user.userEmail!;
+      psValueHolder.userPasswordToVerify = user.userPassword!;
     }
 
     return _apiStatus;

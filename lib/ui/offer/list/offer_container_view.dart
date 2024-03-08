@@ -12,7 +12,7 @@ class OfferContainerView extends StatefulWidget {
 
 class _OfferContainerViewState extends State<OfferContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -22,7 +22,7 @@ class _OfferContainerViewState extends State<OfferContainerView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -31,7 +31,7 @@ class _OfferContainerViewState extends State<OfferContainerView>
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -58,7 +58,7 @@ class _OfferContainerViewState extends State<OfferContainerView>
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
-                .headline6 
+                .headline6!
                 .copyWith(color: PsColors.mainColor, fontWeight: FontWeight.bold),
           ),
           elevation: 0,
@@ -67,7 +67,7 @@ class _OfferContainerViewState extends State<OfferContainerView>
            color: PsColors.coreBackgroundColor,
           height: double.infinity,
           child: OfferListView(
-            animationController: animationController,
+            animationController: animationController!,
           ),
         ),
       ),

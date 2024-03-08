@@ -10,7 +10,7 @@ class ItemLocationContainerView extends StatefulWidget {
 
 class ItemLocationContainerViewState extends State<ItemLocationContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -20,14 +20,14 @@ class ItemLocationContainerViewState extends State<ItemLocationContainerView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -58,7 +58,7 @@ class ItemLocationContainerViewState extends State<ItemLocationContainerView>
         //   elevation: 0,
         // ),
         body: ItemLocationView(
-          animationController: animationController,
+          animationController: animationController!,
         ),
       ),
     );

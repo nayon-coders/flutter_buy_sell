@@ -43,21 +43,21 @@ class _InAppPurchaseViewState extends State<InAppPurchaseView> {
   List<ProductDetails> _products = <ProductDetails>[];
 
   /// Updates to purchases
-  StreamSubscription<List<PurchaseDetails>> _subscription;
+  StreamSubscription<List<PurchaseDetails>>? _subscription;
 
-  ItemPaidHistoryRepository repo1;
-  PsValueHolder psValueHolder;
-  ItemPromotionProvider itemPromotionProvider;
+  ItemPaidHistoryRepository? repo1;
+  PsValueHolder? psValueHolder;
+  ItemPromotionProvider? itemPromotionProvider;
   TextEditingController startDateController = TextEditingController();
-  String amount;
+  String? amount;
   String status = '';
 
   String testId = 'android.test.purchased';
-  String prdIdforIOS;
-  String prdIdforAndroid;
+  String? prdIdforIOS;
+  String? prdIdforAndroid;
   Map<String, String> dayMap = <String, String>{};
   final bool _kAutoConsume = true;
-  String startDate;
+  String? startDate;
 
   Future<void> _listenToPurchaseUpdated(
       List<PurchaseDetails> purchaseDetailsList) async {
@@ -70,8 +70,8 @@ class _InAppPurchaseViewState extends State<InAppPurchaseView> {
         print('NEW PURCHASE');
         print(purchaseDetails.status);
 
-        if (itemPromotionProvider.selectedDate != null) {
-          startDate = itemPromotionProvider.selectedDate;
+        if (itemPromotionProvider!.selectedDate != null) {
+          startDate = itemPromotionProvider!.selectedDate;
         }
         final DateTime dateTime = DateTime.now();
         final int resultStartTimeStamp =
@@ -92,7 +92,7 @@ class _InAppPurchaseViewState extends State<InAppPurchaseView> {
                   isPaystack: PsConst.ZERO);
 
           final PsResource<ItemPaidHistory> padiHistoryDataStatus =
-              await itemPromotionProvider
+              await itemPromotionProvider!
                   .postItemHistoryEntry(itemPaidHistoryParameterHolder.toMap());
 
           if (padiHistoryDataStatus.data != null) {
@@ -114,7 +114,7 @@ class _InAppPurchaseViewState extends State<InAppPurchaseView> {
                 context: context,
                 builder: (BuildContext context) {
                   return ErrorDialog(
-                    message: padiHistoryDataStatus.message,
+                    message: padiHistoryDataStatus.message!,
                   );
                 });
           }
@@ -158,7 +158,7 @@ class _InAppPurchaseViewState extends State<InAppPurchaseView> {
           (List<PurchaseDetails> purchaseDetailsList) {
         _listenToPurchaseUpdated(purchaseDetailsList);
       }, onDone: () {
-        _subscription.cancel();
+        _subscription!.cancel();
       }, onError: (dynamic error) {
         // handle error here.
       });
@@ -195,9 +195,9 @@ class _InAppPurchaseViewState extends State<InAppPurchaseView> {
     ProductDetailsResponse response;
     Map<String, dynamic> idAndDayList;
     if (Platform.isAndroid) {
-      idAndDayList = getIdAndDayList(widget.appInfo.inAppPurchasedPrdIdAndroid);
+      idAndDayList = getIdAndDayList(widget.appInfo.inAppPurchasedPrdIdAndroid!);
     } else {
-      idAndDayList = getIdAndDayList(widget.appInfo.inAppPurchasedPrdIdIOS);
+      idAndDayList = getIdAndDayList(widget.appInfo.inAppPurchasedPrdIdIOS!);
     }
 
     if (idAndDayList != null) {
@@ -268,7 +268,7 @@ class _InAppPurchaseViewState extends State<InAppPurchaseView> {
   @override
   void dispose() {
     if (_subscription != null) {
-      _subscription.cancel();
+      _subscription!.cancel();
     }
     super.dispose();
   }
@@ -289,7 +289,7 @@ class _InAppPurchaseViewState extends State<InAppPurchaseView> {
             Utils.getString(
                 context, 'item_promote__purchase_promotion_packages'),
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: PsColors.mainColorWithWhite),
           )),
@@ -300,9 +300,9 @@ class _InAppPurchaseViewState extends State<InAppPurchaseView> {
               lazy: false,
               create: (BuildContext context) {
                 itemPromotionProvider =
-                    ItemPromotionProvider(itemPaidHistoryRepository: repo1);
+                    ItemPromotionProvider(itemPaidHistoryRepository: repo1!);
 
-                return itemPromotionProvider;
+                return itemPromotionProvider!;
               },
             ),
           ],
@@ -322,22 +322,22 @@ class _InAppPurchaseViewState extends State<InAppPurchaseView> {
                       Utils.psPrint('Today is ' + today.toString());
                       // final DateTime oneDaysAgo =
                       //     today.subtract(const Duration(days: 1));
-                      final DateTime dateTime = await showDatePicker(
+                      final DateTime? dateTime = await showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
                           firstDate: today,
                           lastDate: DateTime(2025));
 
                       if (dateTime != null) {
-                        itemPromotionProvider.selectedDate =
+                        itemPromotionProvider!.selectedDate =
                             DateFormat.yMMMMd('en_US').format(dateTime);
 
                         Utils.psPrint('Today Date format is ' +
-                            itemPromotionProvider.selectedDate);
+                            itemPromotionProvider!.selectedDate);
                       }
                       setState(() {
                         startDateController.text =
-                            itemPromotionProvider.selectedDate;
+                            itemPromotionProvider!.selectedDate;
                       });
                     }),
               ),
@@ -356,7 +356,7 @@ class _InAppPurchaseViewState extends State<InAppPurchaseView> {
                     borderRadius: BorderRadius.circular(PsDimens.space4),
                     border: Border.all(
                         color: Utils.isLightMode(context)
-                            ? Colors.grey[200]
+                            ? Colors.grey.shade200
                             : Colors.black87),
                   ),
                   child: Column(
@@ -408,11 +408,11 @@ class _InAppPurchaseViewState extends State<InAppPurchaseView> {
                                   context, 'item_promote__purchase_buy'),
                               style: Theme.of(context)
                                   .textTheme
-                                  .button
+                                  .button!
                                   .copyWith(color: Colors.white),
                             ),
                             onPressed: () {
-                              if (itemPromotionProvider.selectedDate == null) {
+                              if (itemPromotionProvider!.selectedDate == null) {
                                 showDialog<dynamic>(
                                     context: context,
                                     builder: (BuildContext context) {
@@ -425,9 +425,9 @@ class _InAppPurchaseViewState extends State<InAppPurchaseView> {
                               } else {
                                 amount = prod.price;
                                 return _buyProduct(ProductDetails(
-                                    id: prod.id,
-                                    price: prod.price,
-                                    title: prod.title,
+                                    id: prod.id!,
+                                    price: prod.price!,
+                                    title: prod.title!,
                                     description: prod.description));
                               }
                             },

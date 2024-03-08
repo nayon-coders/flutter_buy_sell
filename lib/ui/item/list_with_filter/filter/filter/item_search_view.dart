@@ -22,7 +22,7 @@ import 'package:provider/provider.dart';
 
 class ItemSearchView extends StatefulWidget {
   const ItemSearchView({
-    @required this.productParameterHolder,
+    required this.productParameterHolder,
   });
 
   final ProductParameterHolder productParameterHolder;
@@ -32,8 +32,8 @@ class ItemSearchView extends StatefulWidget {
 }
 
 class _ItemSearchViewState extends State<ItemSearchView> {
-  ProductRepository repo1;
-  SearchProductProvider _searchProductProvider;
+  ProductRepository? repo1;
+  SearchProductProvider? _searchProductProvider;
 
   final TextEditingController userInputItemNameTextEditingController =
       TextEditingController();
@@ -53,44 +53,44 @@ class _ItemSearchViewState extends State<ItemSearchView> {
         titleText: Utils.getString(context, 'home_search__search'),
         onPressed: () {
           if (userInputItemNameTextEditingController.text != null) {
-            _searchProductProvider.productParameterHolder.searchTerm =
+            _searchProductProvider!.productParameterHolder.searchTerm =
                 userInputItemNameTextEditingController.text;
           } else {
-            _searchProductProvider.productParameterHolder.searchTerm = '';
+            _searchProductProvider!.productParameterHolder.searchTerm = '';
           }
           if (userInputMaximunPriceEditingController.text != null) {
-            _searchProductProvider.productParameterHolder.maxPrice =
+            _searchProductProvider!.productParameterHolder.maxPrice =
                 userInputMaximunPriceEditingController.text;
           } else {
-            _searchProductProvider.productParameterHolder.maxPrice = '';
+            _searchProductProvider!.productParameterHolder.maxPrice = '';
           }
           if (userInputMinimumPriceEditingController.text != null) {
-            _searchProductProvider.productParameterHolder.minPrice =
+            _searchProductProvider!.productParameterHolder.minPrice =
                 userInputMinimumPriceEditingController.text;
           } else {
-            _searchProductProvider.productParameterHolder.minPrice = '';
+            _searchProductProvider!.productParameterHolder.minPrice = '';
           }
 
-          if (_searchProductProvider.itemTypeId != null) {
-            _searchProductProvider.productParameterHolder.itemTypeId =
-                _searchProductProvider.itemTypeId;
+          if (_searchProductProvider!.itemTypeId != null) {
+            _searchProductProvider!.productParameterHolder.itemTypeId =
+                _searchProductProvider!.itemTypeId;
           }
-          if (_searchProductProvider.itemConditionId != null) {
-            _searchProductProvider.productParameterHolder.conditionOfItemId =
-                _searchProductProvider.itemConditionId;
+          if (_searchProductProvider!.itemConditionId != null) {
+            _searchProductProvider!.productParameterHolder.conditionOfItemId =
+                _searchProductProvider!.itemConditionId;
           }
-          if (_searchProductProvider.itemPriceTypeId != null) {
-            _searchProductProvider.productParameterHolder.itemPriceTypeId =
-                _searchProductProvider.itemPriceTypeId;
+          if (_searchProductProvider!.itemPriceTypeId != null) {
+            _searchProductProvider!.productParameterHolder.itemPriceTypeId =
+                _searchProductProvider!.itemPriceTypeId;
           }
-          if (_searchProductProvider.itemDealOptionId != null) {
-            _searchProductProvider.productParameterHolder.dealOptionId =
-                _searchProductProvider.itemDealOptionId;
+          if (_searchProductProvider!.itemDealOptionId != null) {
+            _searchProductProvider!.productParameterHolder.dealOptionId =
+                _searchProductProvider!.itemDealOptionId;
           }
 
           print('userInputText' + userInputItemNameTextEditingController.text);
 
-          Navigator.pop(context, _searchProductProvider.productParameterHolder);
+          Navigator.pop(context, _searchProductProvider!.productParameterHolder);
         });
 
     repo1 = Provider.of<ProductRepository>(context);
@@ -98,11 +98,11 @@ class _ItemSearchViewState extends State<ItemSearchView> {
     return PsWidgetWithAppBar<SearchProductProvider>(
         appBarTitle: Utils.getString(context, 'search__filter') ?? '',
         initProvider: () {
-          return SearchProductProvider(repo: repo1);
+          return SearchProductProvider(repo: repo1!);
         },
         onProviderReady: (SearchProductProvider provider) {
           _searchProductProvider = provider;
-          _searchProductProvider.productParameterHolder =
+          _searchProductProvider!.productParameterHolder =
               widget.productParameterHolder;
 
           userInputItemNameTextEditingController.text =
@@ -121,19 +121,19 @@ class _ItemSearchViewState extends State<ItemSearchView> {
                 userInputItemNameTextEditingController.text = '';
                 userInputMaximunPriceEditingController.text = '';
                 userInputMinimumPriceEditingController.text = '';
-                _searchProductProvider.isfirstRatingClicked = false;
-                _searchProductProvider.isSecondRatingClicked = false;
-                _searchProductProvider.isThirdRatingClicked = false;
-                _searchProductProvider.isfouthRatingClicked = false;
-                _searchProductProvider.isFifthRatingClicked = false;
+                _searchProductProvider!.isfirstRatingClicked = false;
+                _searchProductProvider!.isSecondRatingClicked = false;
+                _searchProductProvider!.isThirdRatingClicked = false;
+                _searchProductProvider!.isfouthRatingClicked = false;
+                _searchProductProvider!.isFifthRatingClicked = false;
 
-                _searchProductProvider.isSwitchedFeaturedProduct = false;
-                _searchProductProvider.isSwitchedDiscountPrice = false;
+                _searchProductProvider!.isSwitchedFeaturedProduct = false;
+                _searchProductProvider!.isSwitchedDiscountPrice = false;
                 setState(() {});
               }),
         ],
         builder: (BuildContext context, SearchProductProvider provider,
-            Widget child) {
+            Widget? child) {
           return CustomScrollView(
             scrollDirection: Axis.vertical,
             slivers: <Widget>[
@@ -170,10 +170,10 @@ class _ItemSearchViewState extends State<ItemSearchView> {
 
                             if (itemTypeResult != null &&
                                 itemTypeResult is ItemType) {
-                              provider.itemTypeId = itemTypeResult.id;
+                              provider.itemTypeId = itemTypeResult.id!;
                               setState(() {
                                 provider.selectedItemTypeName =
-                                    itemTypeResult.name;
+                                    itemTypeResult.name!;
                               });
                             }
                           }),
@@ -196,11 +196,11 @@ class _ItemSearchViewState extends State<ItemSearchView> {
 
                             if (itemConditionResult != null &&
                                 itemConditionResult is ConditionOfItem) {
-                              provider.itemConditionId = itemConditionResult.id;
+                              provider.itemConditionId = itemConditionResult.id!;
 
                               setState(() {
                                 provider.selectedItemConditionName =
-                                    itemConditionResult.name;
+                                    itemConditionResult.name!;
                               });
                             }
                           }),
@@ -223,11 +223,11 @@ class _ItemSearchViewState extends State<ItemSearchView> {
 
                             if (itemPriceTypeResult != null &&
                                 itemPriceTypeResult is ItemPriceType) {
-                              provider.itemPriceTypeId = itemPriceTypeResult.id;
+                              provider.itemPriceTypeId = itemPriceTypeResult.id!;
 
                               setState(() {
                                 provider.selectedItemPriceTypeName =
-                                    itemPriceTypeResult.name;
+                                    itemPriceTypeResult.name!;
                               });
                             }
                           }),
@@ -251,11 +251,11 @@ class _ItemSearchViewState extends State<ItemSearchView> {
                             if (itemDealOptionResult != null &&
                                 itemDealOptionResult is DealOption) {
                               provider.itemDealOptionId =
-                                  itemDealOptionResult.id;
+                                  itemDealOptionResult.id!;
 
                               setState(() {
                                 provider.selectedItemDealOptionName =
-                                    itemDealOptionResult.name;
+                                    itemDealOptionResult.name!;
                               });
                             }
                           }),
@@ -277,7 +277,7 @@ class _ItemSearchViewState extends State<ItemSearchView> {
                                 'assets/images/baesline_access_time_black_24.png',
                             titleText:
                                 Utils.getString(context, 'item_filter__latest'),
-                            checkImage: _searchProductProvider
+                            checkImage: _searchProductProvider!
                                         .productParameterHolder.orderBy ==
                                     PsConst.FILTERING__ADDED_DATE
                                 ? 'assets/images/baseline_check_green_24.png'
@@ -285,13 +285,13 @@ class _ItemSearchViewState extends State<ItemSearchView> {
                         onTap: () {
                           FocusScope.of(context).requestFocus(FocusNode());
                           print('sort by latest product');
-                          _searchProductProvider.productParameterHolder
+                          _searchProductProvider!.productParameterHolder
                               .orderBy = PsConst.FILTERING__ADDED_DATE;
-                          _searchProductProvider.productParameterHolder
+                          _searchProductProvider!.productParameterHolder
                               .orderType = PsConst.FILTERING__DESC;
 
                           Navigator.pop(context,
-                              _searchProductProvider.productParameterHolder);
+                              _searchProductProvider!.productParameterHolder);
                         },
                       ),
                       const Divider(
@@ -302,7 +302,7 @@ class _ItemSearchViewState extends State<ItemSearchView> {
                             image: 'assets/images/baseline_graph_black_24.png',
                             titleText: Utils.getString(
                                 context, 'item_filter__popular'),
-                            checkImage: _searchProductProvider
+                            checkImage: _searchProductProvider!
                                         .productParameterHolder.orderBy ==
                                     PsConst.FILTERING__TRENDING
                                 ? 'assets/images/baseline_check_green_24.png'
@@ -310,13 +310,13 @@ class _ItemSearchViewState extends State<ItemSearchView> {
                         onTap: () {
                           FocusScope.of(context).requestFocus(FocusNode());
                           print('sort by popular product');
-                          _searchProductProvider.productParameterHolder
+                          _searchProductProvider!.productParameterHolder
                               .orderBy = PsConst.FILTERING_TRENDING;
-                          _searchProductProvider.productParameterHolder
+                          _searchProductProvider!.productParameterHolder
                               .orderType = PsConst.FILTERING__DESC;
 
                           Navigator.pop(context,
-                              _searchProductProvider.productParameterHolder);
+                              _searchProductProvider!.productParameterHolder);
                         },
                       ),
                       const Divider(
@@ -328,10 +328,10 @@ class _ItemSearchViewState extends State<ItemSearchView> {
                                 'assets/images/baseline_price_down_black_24.png',
                             titleText: Utils.getString(context,
                                 'item_filter__lowest_to_highest_letter'),
-                            checkImage: _searchProductProvider
+                            checkImage: _searchProductProvider!
                                             .productParameterHolder.orderBy ==
                                         PsConst.FILTERING_NAME &&
-                                    _searchProductProvider
+                                    _searchProductProvider!
                                             .productParameterHolder.orderType ==
                                         PsConst.FILTERING__ASC
                                 ? 'assets/images/baseline_check_green_24.png'
@@ -339,13 +339,13 @@ class _ItemSearchViewState extends State<ItemSearchView> {
                         onTap: () {
                           FocusScope.of(context).requestFocus(FocusNode());
                           print('sort by lowest letter');
-                          _searchProductProvider.productParameterHolder
+                          _searchProductProvider!.productParameterHolder
                               .orderBy = PsConst.FILTERING_NAME;
-                          _searchProductProvider.productParameterHolder
+                          _searchProductProvider!.productParameterHolder
                               .orderType = PsConst.FILTERING__ASC;
 
                           Navigator.pop(context,
-                              _searchProductProvider.productParameterHolder);
+                              _searchProductProvider!.productParameterHolder);
                         },
                       ),
                       const Divider(
@@ -357,10 +357,10 @@ class _ItemSearchViewState extends State<ItemSearchView> {
                                 'assets/images/baseline_price_up_black_24.png',
                             titleText: Utils.getString(context,
                                 'item_filter__highest_to_lowest_letter'),
-                            checkImage: _searchProductProvider
+                            checkImage: _searchProductProvider!
                                             .productParameterHolder.orderBy ==
                                         PsConst.FILTERING_NAME &&
-                                    _searchProductProvider
+                                    _searchProductProvider!
                                             .productParameterHolder.orderType ==
                                         PsConst.FILTERING__DESC
                                 ? 'assets/images/baseline_check_green_24.png'
@@ -368,13 +368,13 @@ class _ItemSearchViewState extends State<ItemSearchView> {
                         onTap: () {
                           FocusScope.of(context).requestFocus(FocusNode());
                           print('sort by highest letter ');
-                          _searchProductProvider.productParameterHolder
+                          _searchProductProvider!.productParameterHolder
                               .orderBy = PsConst.FILTERING_NAME;
-                          _searchProductProvider.productParameterHolder
+                          _searchProductProvider!.productParameterHolder
                               .orderType = PsConst.FILTERING__DESC;
 
                           Navigator.pop(context,
-                              _searchProductProvider.productParameterHolder);
+                              _searchProductProvider!.productParameterHolder);
                         },
                       ),
 
@@ -398,9 +398,9 @@ class _ItemSearchViewState extends State<ItemSearchView> {
 
 class SortingView extends StatefulWidget {
   const SortingView(
-      {@required this.image,
-      @required this.titleText,
-      @required this.checkImage});
+      {required this.image,
+      required this.titleText,
+      required this.checkImage});
 
   final String titleText;
   final String image;
@@ -467,7 +467,7 @@ dynamic setAllRatingFalse(SearchProductProvider provider) {
 
 class _ProductNameWidget extends StatefulWidget {
   const _ProductNameWidget({this.userInputItemNameTextEditingController});
-  final TextEditingController userInputItemNameTextEditingController;
+  final TextEditingController? userInputItemNameTextEditingController;
   @override
   __ProductNameWidgetState createState() => __ProductNameWidgetState();
 }
@@ -490,7 +490,7 @@ class __ProductNameWidgetState extends State<_ProductNameWidget> {
     //       hintText: Utils.getString(context, 'home_search__not_set')),
     // );
 
-    print('*****' + widget.userInputItemNameTextEditingController.text);
+    print('*****' + widget.userInputItemNameTextEditingController!.text);
     return Column(
       children: <Widget>[
         // Container(
@@ -529,9 +529,8 @@ class __ProductNameWidgetState extends State<_ProductNameWidget> {
 
 class _ChangeRatingColor extends StatelessWidget {
   const _ChangeRatingColor({
-    Key key,
-    @required this.title,
-    @required this.checkColor,
+    Key? key,
+    required this.title, required this.checkColor,
   }) : super(key: key);
 
   final String title;
@@ -539,7 +538,7 @@ class _ChangeRatingColor extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color defaultBackgroundColor = PsColors.backgroundColor;
+    final Color defaultBackgroundColor = PsColors.backgroundColor!;
     return Container(
       width: MediaQuery.of(context).size.width / 5.5,
       height: PsDimens.space104,
@@ -562,7 +561,7 @@ class _ChangeRatingColor extends StatelessWidget {
             Text(
               title,
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.caption.copyWith(
+              style: Theme.of(context).textTheme.caption!.copyWith(
                     color: checkColor ? PsColors.iconColor : PsColors.white,
                   ),
             ),
@@ -789,8 +788,8 @@ class _PriceWidget extends StatelessWidget {
   const _PriceWidget(
       {this.userInputMinimumPriceEditingController,
       this.userInputMaximunPriceEditingController});
-  final TextEditingController userInputMinimumPriceEditingController;
-  final TextEditingController userInputMaximunPriceEditingController;
+  final TextEditingController? userInputMinimumPriceEditingController;
+  final TextEditingController? userInputMaximunPriceEditingController;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -813,7 +812,7 @@ class _PriceWidget extends StatelessWidget {
               hintText: Utils.getString(context, 'home_search__not_set'),
               hintStyle: Theme.of(context)
                   .textTheme
-                  .bodyText2
+                  .bodyText2!
                   .copyWith(color: PsColors.textPrimaryLightColor),
             ),
             keyboardType: TextInputType.number,
@@ -835,7 +834,7 @@ class _PriceWidget extends StatelessWidget {
               hintText: Utils.getString(context, 'home_search__not_set'),
               hintStyle: Theme.of(context)
                   .textTheme
-                  .bodyText2
+                  .bodyText2!
                   .copyWith(color: PsColors.textPrimaryLightColor),
             ),
             keyboardType: TextInputType.number,
@@ -849,9 +848,9 @@ class _PriceWidget extends StatelessWidget {
 
 class _PriceTextWidget extends StatelessWidget {
   const _PriceTextWidget({
-    Key key,
-    @required this.title,
-    @required this.textField,
+    Key? key,
+    required this.title,
+    required this.textField,
   }) : super(key: key);
 
   final String title;
@@ -875,7 +874,7 @@ class _PriceTextWidget extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: PsColors.backgroundColor,
                   borderRadius: BorderRadius.circular(PsDimens.space4),
-                  border: Border.all(color: PsColors.mainDividerColor),
+                  border: Border.all(color: PsColors.mainDividerColor!),
                 ),
                 width: PsDimens.space120,
                 height: PsDimens.space36,

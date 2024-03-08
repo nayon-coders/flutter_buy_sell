@@ -17,15 +17,15 @@ import 'package:provider/provider.dart';
 
 class RatingInputDialog extends StatefulWidget {
   const RatingInputDialog(
-      {Key key,
-      @required this.buyerUserId,
-      @required this.sellerUserId,
+      {Key? key,
+      required this.buyerUserId,
+      required this.sellerUserId,
       this.rating})
       : super(key: key);
 
   final String buyerUserId;
   final String sellerUserId;
-  final Rating rating;
+  final Rating? rating;
   @override
   _RatingInputDialogState createState() => _RatingInputDialogState();
 }
@@ -33,9 +33,9 @@ class RatingInputDialog extends StatefulWidget {
 class _RatingInputDialogState extends State<RatingInputDialog> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  PsValueHolder psValueHolder;
-  RatingRepository ratingRepo;
-  double rating;
+  PsValueHolder? psValueHolder;
+  RatingRepository? ratingRepo;
+  double? rating;
   bool isBindData = true;
 
   @override
@@ -56,8 +56,8 @@ class _RatingInputDialogState extends State<RatingInputDialog> {
     psValueHolder = Provider.of<PsValueHolder>(context);
 
     if (isBindData && widget.rating != null) {
-      titleController.text = widget.rating.title;
-      descriptionController.text = widget.rating.description;
+      titleController.text = widget.rating!.title!;
+      descriptionController.text = widget.rating!.description!;
       isBindData = false;
     }
 
@@ -88,11 +88,11 @@ class _RatingInputDialogState extends State<RatingInputDialog> {
     return ChangeNotifierProvider<RatingProvider>(
         lazy: false,
         create: (BuildContext context) {
-          final RatingProvider provider = RatingProvider(repo: ratingRepo);
+          final RatingProvider provider = RatingProvider(repo: ratingRepo!);
           return provider;
         },
         child: Consumer<RatingProvider>(builder:
-            (BuildContext context, RatingProvider provider, Widget child) {
+            (BuildContext context, RatingProvider provider, Widget? child) {
           return Dialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0)), //this right here
@@ -107,7 +107,7 @@ class _RatingInputDialogState extends State<RatingInputDialog> {
                     children: <Widget>[
                       Text(
                         Utils.getString(context, 'rating_entry__your_rating'),
-                        style: Theme.of(context).textTheme.bodyText1.copyWith(),
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(),
                       ),
                       if (widget.rating == null)
                         SmoothStarRating(
@@ -123,14 +123,14 @@ class _RatingInputDialogState extends State<RatingInputDialog> {
                                 rating = rating1;
                               });
                             },
-                            borderColor: PsColors.grey.withAlpha(100),
+                            borderColor: PsColors.grey!.withAlpha(100),
                             spacing: 0.0)
                       else
                         SmoothStarRating(
                             isRTl:
                                 Directionality.of(context) == TextDirection.rtl,
                             allowHalfRating: false,
-                            rating: double.parse(widget.rating.rating),
+                            rating: double.parse(widget.rating!.rating!),
                             starCount: 5,
                             size: PsDimens.space40,
                             color: PsColors.ratingColor,
@@ -139,7 +139,7 @@ class _RatingInputDialogState extends State<RatingInputDialog> {
                                 rating = rating1;
                               });
                             },
-                            borderColor: PsColors.grey.withAlpha(100),
+                            borderColor: PsColors.grey!.withAlpha(100),
                             spacing: 0.0),
                       PsTextFieldWidget(
                           titleText:
@@ -166,8 +166,8 @@ class _RatingInputDialogState extends State<RatingInputDialog> {
                         descriptionController: descriptionController,
                         provider: provider,
                         titleController: titleController,
-                        rating: rating,
-                        psValueHolder: psValueHolder,
+                        rating: rating!,
+                        psValueHolder: psValueHolder!,
                         buyerUserId: widget.buyerUserId,
                         sellerUserId: widget.sellerUserId,
                       ),
@@ -186,14 +186,14 @@ class _RatingInputDialogState extends State<RatingInputDialog> {
 
 class _ButtonWidget extends StatelessWidget {
   const _ButtonWidget(
-      {Key key,
-      @required this.titleController,
-      @required this.descriptionController,
-      @required this.provider,
-      @required this.rating,
-      @required this.psValueHolder,
-      @required this.buyerUserId,
-      @required this.sellerUserId})
+      {Key? key,
+      required this.titleController,
+      required this.descriptionController,
+      required this.provider,
+      required this.rating,
+      required this.psValueHolder,
+      required this.buyerUserId,
+      required this.sellerUserId})
       : super(key: key);
 
   final TextEditingController titleController, descriptionController;
@@ -205,7 +205,7 @@ class _ButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    RatingParameterHolder commentHeaderParameterHolder;
+    RatingParameterHolder? commentHeaderParameterHolder;
     return Padding(
       padding: const EdgeInsets.only(left: 8.0, right: PsDimens.space8),
       child: Row(
@@ -263,7 +263,7 @@ class _ButtonWidget extends StatelessWidget {
 
                     await PsProgressDialog.showDialog(context);
                     await provider
-                        .postRating(commentHeaderParameterHolder.toMap());
+                        .postRating(commentHeaderParameterHolder!.toMap());
                     PsProgressDialog.dismissDialog();
 
                     Navigator.of(context).pop();

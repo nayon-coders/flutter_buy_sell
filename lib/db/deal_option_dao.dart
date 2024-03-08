@@ -12,7 +12,7 @@ class ItemDealOptionDao extends PsDao<DealOption> {
 
   @override
   String getPrimaryKey(DealOption object) {
-    return object.id;
+    return object.id!;
   }
 
   @override

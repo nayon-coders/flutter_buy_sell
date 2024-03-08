@@ -11,8 +11,8 @@ import 'package:provider/provider.dart';
 
 class SafetyTipsTileView extends StatelessWidget {
   const SafetyTipsTileView({
-    Key key,
-    @required this.animationController,
+    Key? key,
+    required this.animationController,
   }) : super(key: key);
 
   final AnimationController animationController;
@@ -28,10 +28,10 @@ class SafetyTipsTileView extends StatelessWidget {
     );
 
     return Consumer<AboutUsProvider>(builder:
-        (BuildContext context, AboutUsProvider aboutUsProvider, Widget gchild) {
+        (BuildContext context, AboutUsProvider aboutUsProvider, Widget? gchild) {
       if (aboutUsProvider != null &&
           aboutUsProvider.aboutUsList != null &&
-          aboutUsProvider.aboutUsList.data.isNotEmpty) {
+          aboutUsProvider.aboutUsList.data!.isNotEmpty) {
         return Container(
           margin: const EdgeInsets.only(
               left: PsDimens.space12,
@@ -54,7 +54,7 @@ class SafetyTipsTileView extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.all(PsDimens.space12),
-                    child: Text(aboutUsProvider.aboutUsList.data[0].safetyTips,
+                    child: Text(aboutUsProvider.aboutUsList.data![0].safetyTips!,
                         maxLines: 3,
                         style: Theme.of(context).textTheme.bodyText1),
                   ),
@@ -66,7 +66,7 @@ class SafetyTipsTileView extends StatelessWidget {
                             arguments: SafetyTipsIntentHolder(
                                 animationController: animationController,
                                 safetyTips: aboutUsProvider
-                                    .aboutUsList.data[0].safetyTips));
+                                    .aboutUsList.data![0].safetyTips));
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -77,7 +77,7 @@ class SafetyTipsTileView extends StatelessWidget {
                                 context, 'safety_tips_tile__read_more_button'),
                             style: Theme.of(context)
                                 .textTheme
-                                .bodyText2
+                                .bodyText2!
                                 .copyWith(color: PsColors.mainColor),
                           ),
                         ],

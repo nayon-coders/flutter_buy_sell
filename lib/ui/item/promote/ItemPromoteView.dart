@@ -40,7 +40,7 @@ import 'package:provider/single_child_widget.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 class ItemPromoteView extends StatefulWidget {
-  const ItemPromoteView({Key key, @required this.product}) : super(key: key);
+  const ItemPromoteView({Key? key, required this.product}) : super(key: key);
 
   final Product product;
   @override
@@ -49,18 +49,18 @@ class ItemPromoteView extends StatefulWidget {
 
 class _ItemPromoteViewState extends State<ItemPromoteView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  Animation<double> animation;
-  ItemPaidHistoryRepository itemPaidHistoryRepository;
-  ItemPromotionProvider itemPaidHistoryProvider;
-  PsValueHolder psValueHolder;
-  AppInfoRepository appInfoRepository;
-  AppInfoProvider appInfoProvider;
-  TokenProvider tokenProvider;
-  PsApiService psApiService;
-  TokenRepository tokenRepository;
-  UserProvider userProvider;
-  UserRepository userRepository;
+  AnimationController? animationController;
+  Animation<double>? animation;
+  ItemPaidHistoryRepository? itemPaidHistoryRepository;
+  ItemPromotionProvider? itemPaidHistoryProvider;
+  PsValueHolder? psValueHolder;
+  AppInfoRepository? appInfoRepository;
+  AppInfoProvider? appInfoProvider;
+  TokenProvider? tokenProvider;
+  PsApiService? psApiService;
+  TokenRepository? tokenRepository;
+  UserProvider? userProvider;
+  UserRepository? userRepository;
 
   final TextEditingController priceTypeController = TextEditingController();
   @override
@@ -72,7 +72,7 @@ class _ItemPromoteViewState extends State<ItemPromoteView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -93,36 +93,36 @@ class _ItemPromoteViewState extends State<ItemPromoteView>
             lazy: false,
             create: (BuildContext context) {
               itemPaidHistoryProvider = ItemPromotionProvider(
-                  itemPaidHistoryRepository: itemPaidHistoryRepository);
+                  itemPaidHistoryRepository: itemPaidHistoryRepository!);
 
-              return itemPaidHistoryProvider;
+              return itemPaidHistoryProvider!;
             },
           ),
           ChangeNotifierProvider<UserProvider>(
             lazy: false,
             create: (BuildContext context) {
               userProvider = UserProvider(
-                  repo: userRepository, psValueHolder: psValueHolder);
-              userProvider.getUser(psValueHolder.loginUserId);
-              return userProvider;
+                  repo: userRepository!, psValueHolder: psValueHolder!);
+              userProvider!.getUser(psValueHolder!.loginUserId);
+              return userProvider!;
             },
           ),
           ChangeNotifierProvider<AppInfoProvider>(
               lazy: false,
               create: (BuildContext context) {
                 appInfoProvider = AppInfoProvider(
-                    repo: appInfoRepository, psValueHolder: psValueHolder);
+                    repo: appInfoRepository!, psValueHolder: psValueHolder!);
 
-                appInfoProvider.loadDeleteHistorywithNotifier();
+                appInfoProvider!.loadDeleteHistorywithNotifier();
 
-                return appInfoProvider;
+                return appInfoProvider!;
               }),
           ChangeNotifierProvider<TokenProvider>(
               lazy: false,
               create: (BuildContext context) {
-                tokenProvider = TokenProvider(repo: tokenRepository);
+                tokenProvider = TokenProvider(repo: tokenRepository!);
                 // tokenProvider.loadToken();
-                return tokenProvider;
+                return tokenProvider!;
                 // return TokenProvider(repo: tokenRepository);
               }),
         ],
@@ -133,26 +133,26 @@ class _ItemPromoteViewState extends State<ItemPromoteView>
             title: Text(
               Utils.getString(context, 'item_promote__entry'),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline6.copyWith(
+              style: Theme.of(context).textTheme.headline6!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: PsColors.mainColorWithWhite),
             ),
           ),
           body: SingleChildScrollView(
             child: AnimatedBuilder(
-                animation: animationController,
+                animation: animationController!,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     AdsStartDateDropDownWidget(),
                     AdsHowManyDayWidget(
                       product: widget.product,
-                      tokenProvider: tokenProvider,
+                      tokenProvider: tokenProvider!,
                     ),
                   ],
                 ),
-                builder: (BuildContext context, Widget child) {
-                  return child;
+                builder: (BuildContext context, Widget? child) {
+                  return child!;
                 }),
           ),
         ),
@@ -176,7 +176,7 @@ class AdsStartDateDropDownWidgetState
   Widget build(BuildContext context) {
     return Consumer<ItemPromotionProvider>(
       builder: (BuildContext context,
-          ItemPromotionProvider itemPaidHistoryProvider, Widget child) {
+          ItemPromotionProvider itemPaidHistoryProvider, Widget? child) {
         if (itemPaidHistoryProvider == null) {
           return Container();
         } else {
@@ -195,11 +195,11 @@ class AdsStartDateDropDownWidgetState
                       // final DateTime oneDaysAgo =
                       //     today.subtract(const Duration(days: 1));
                       itemPaidHistoryProvider.selectedDateTime =
-                          await showDatePicker(
+                          (await showDatePicker(
                               context: context,
                               initialDate: DateTime.now(),
                               firstDate: today,
-                              lastDate: DateTime(2025));
+                              lastDate: DateTime(2025)))!;
 
                       if (itemPaidHistoryProvider.selectedDateTime != null) {
                         itemPaidHistoryProvider.selectedDate =
@@ -225,7 +225,7 @@ class AdsStartDateDropDownWidgetState
 
 class AdsHowManyDayWidget extends StatefulWidget {
   const AdsHowManyDayWidget(
-      {Key key, @required this.product, @required this.tokenProvider})
+      {Key? key, required this.product, required this.tokenProvider})
       : super(key: key);
 
   final Product product;
@@ -244,11 +244,11 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
   bool getThirdChoiceDate = false;
   bool getFourthChoiceDate = false;
   bool getFifthChoiceDate = false;
-  String amount;
-  String howManyDay;
-  String startDate;
-  String stripePublishableKey;
-  String payStackKey;
+  String? amount;
+  String? howManyDay;
+  String? startDate;
+  String? stripePublishableKey;
+  String? payStackKey;
   // static String text = getEnterDateCountController.text;
   @override
   Widget build(BuildContext context) {
@@ -266,7 +266,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
           titleText: Utils.getString(context, 'item_promote__pay_stack'),
           colorData: PsColors.stripeColor,
           onPressed: () async {
-            if (double.parse(amount) <= 0) {
+            if (double.parse(amount!) <= 0) {
               return;
             }
             final ItemPromotionProvider provider =
@@ -287,7 +287,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
                   Provider.of<AppInfoProvider>(context, listen: false);
               final UserProvider userProvider =
                   Provider.of<UserProvider>(context, listen: false);
-              payStackKey = appProvider.appInfo.data.payStackKey;
+              payStackKey = appProvider.appInfo.data!.payStackKey;
 
               if (provider.selectedDate != null) {
                 startDate = provider.selectedDate;
@@ -297,10 +297,10 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
 
                 final AppInfoProvider provider =
                     Provider.of<AppInfoProvider>(context, listen: false);
-                final double amountByEnterDay = double.parse(howManyDay) *
-                    double.parse(provider.appInfo.data.oneDay);
+                final double amountByEnterDay = double.parse(howManyDay!) *
+                    double.parse(provider.appInfo.data!.oneDay!);
                 amount = amountByEnterDay.toString();
-                payStackKey = provider.appInfo.data.payStackKey;
+                payStackKey = provider.appInfo.data!.payStackKey;
               }
 
               final int resultStartTimeStamp =
@@ -343,7 +343,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
           titleText: Utils.getString(context, 'item_promote__pay_offline'),
           colorData: PsColors.stripeColor,
           onPressed: () async {
-            if (double.parse(amount) <= 0) {
+            if (double.parse(amount!) <= 0) {
               return;
             }
             final ItemPromotionProvider provider =
@@ -363,7 +363,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
               final AppInfoProvider appProvider =
                   Provider.of<AppInfoProvider>(context, listen: false);
               stripePublishableKey =
-                  appProvider.appInfo.data.stripePublishableKey;
+                  appProvider.appInfo.data!.stripePublishableKey;
 
               if (provider.selectedDate != null) {
                 startDate = provider.selectedDate;
@@ -373,11 +373,11 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
 
                 final AppInfoProvider provider =
                     Provider.of<AppInfoProvider>(context, listen: false);
-                final double amountByEnterDay = double.parse(howManyDay) *
-                    double.parse(provider.appInfo.data.oneDay);
+                final double amountByEnterDay = double.parse(howManyDay!) *
+                    double.parse(provider.appInfo.data!.oneDay!);
                 amount = amountByEnterDay.toString();
                 stripePublishableKey =
-                    provider.appInfo.data.stripePublishableKey;
+                    provider.appInfo.data!.stripePublishableKey;
               }
 
               final int resultStartTimeStamp =
@@ -424,7 +424,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
             final TokenProvider tokenProvider =
                 Provider.of<TokenProvider>(context, listen: false);
 
-            if (double.parse(amount) <= 0) {
+            if (double.parse(amount!) <= 0) {
               return;
             }
 
@@ -446,7 +446,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
             } else {
               final String message =
                   // widget.tokenProvider.
-                  tokenResource.data.message;
+                  tokenResource.data!.message!;
               final BraintreePayment braintreePayment = BraintreePayment();
               final dynamic data = await braintreePayment.showDropIn(
                   nonce: message, amount: amount, enableGooglePay: true);
@@ -464,8 +464,8 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
                 howManyDay = getEnterDateCountController.text;
                 final AppInfoProvider provider =
                     Provider.of<AppInfoProvider>(context, listen: false);
-                final double amountByEnterDay = double.parse(howManyDay) *
-                    double.parse(provider.appInfo.data.oneDay);
+                final double amountByEnterDay = double.parse(howManyDay!) *
+                    double.parse(provider.appInfo.data!.oneDay!);
                 amount = amountByEnterDay.toString();
               }
 
@@ -514,7 +514,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
                       context: context,
                       builder: (BuildContext context) {
                         return ErrorDialog(
-                          message: paidHistoryData.message,
+                          message: paidHistoryData.message!,
                         );
                       });
                 }
@@ -539,7 +539,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
           titleText: Utils.getString(context, 'item_promote__stripe'),
           colorData: PsColors.stripeColor,
           onPressed: () async {
-            if (double.parse(amount) <= 0) {
+            if (double.parse(amount!) <= 0) {
               return;
             }
             final ItemPromotionProvider provider =
@@ -559,7 +559,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
               final AppInfoProvider appProvider =
                   Provider.of<AppInfoProvider>(context, listen: false);
               stripePublishableKey =
-                  appProvider.appInfo.data.stripePublishableKey;
+                  appProvider.appInfo.data!.stripePublishableKey;
 
               if (provider.selectedDate != null) {
                 startDate = provider.selectedDate;
@@ -569,11 +569,11 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
 
                 final AppInfoProvider provider =
                     Provider.of<AppInfoProvider>(context, listen: false);
-                final double amountByEnterDay = double.parse(howManyDay) *
-                    double.parse(provider.appInfo.data.oneDay);
+                final double amountByEnterDay = double.parse(howManyDay!) *
+                    double.parse(provider.appInfo.data!.oneDay!);
                 amount = amountByEnterDay.toString();
                 stripePublishableKey =
-                    provider.appInfo.data.stripePublishableKey;
+                    provider.appInfo.data!.stripePublishableKey;
               }
 
               final int resultStartTimeStamp =
@@ -618,7 +618,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
           onPressed: () async {
             // if(widget.tokenProvider != null)
 
-            if (double.parse(amount) <= 0) {
+            if (double.parse(amount!) <= 0) {
               return;
             }
 
@@ -648,8 +648,8 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
               if (getEnterDateCountController.text != '') {
                 howManyDay = getEnterDateCountController.text;
 
-                final double amountByEnterDay = double.parse(howManyDay) *
-                    double.parse(appInfoProvider.appInfo.data.oneDay);
+                final double amountByEnterDay = double.parse(howManyDay!) *
+                    double.parse(appInfoProvider.appInfo.data!.oneDay!);
                 amount = amountByEnterDay.toString();
               }
 
@@ -667,7 +667,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
                     itemPaidHistoryParameterHolder =
                     ItemPaidHistoryParameterHolder(
                         itemId: widget.product.id,
-                        amount: Utils.getPriceFormat(amount),
+                        amount: Utils.getPriceFormat(amount!),
                         howManyDay: howManyDay,
                         paymentMethod: PsConst.PAYMENT_RAZOR_METHOD,
                         paymentMethodNounce: '',
@@ -702,7 +702,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
                       context: context,
                       builder: (BuildContext context) {
                         return ErrorDialog(
-                          message: paidHistoryData.message,
+                          message: paidHistoryData.message!,
                         );
                       });
                 }
@@ -744,18 +744,18 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
                     Razorpay.EVENT_EXTERNAL_WALLET, _handleExternalWallet);
 
                 final Map<String, Object> options = <String, Object>{
-                  'key': appInfoProvider.appInfo.data.razorKey,
+                  'key': appInfoProvider.appInfo.data!.razorKey!,
                   'amount':
-                      (double.parse(Utils.getPriceTwoDecimal(amount)) * 100)
+                      (double.parse(Utils.getPriceTwoDecimal(amount!)) * 100)
                           .round(),
-                  'name': userProvider.user.data.userName,
+                  'name': userProvider.user.data!.userName!,
                   'currency': PsConfig.isRazorSupportMultiCurrency
-                      ? appInfoProvider.appInfo.data.currencyShortForm
+                      ? appInfoProvider.appInfo.data!.currencyShortForm!
                       : PsConfig.defaultRazorCurrency,
                   'description': '',
                   'prefill': <String, String>{
-                    'contact': userProvider.user.data.userPhone,
-                    'email': userProvider.user.data.userEmail
+                    'contact': userProvider.user.data!.userPhone!,
+                    'email': userProvider.user.data!.userEmail!
                   }
                 };
 
@@ -780,15 +780,15 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
     );
 
     return Consumer<AppInfoProvider>(builder:
-        (BuildContext context, AppInfoProvider appInfoprovider, Widget child) {
+        (BuildContext context, AppInfoProvider appInfoprovider, Widget? child) {
       return Consumer<UserProvider>(builder:
-          (BuildContext context, UserProvider userProvider, Widget child) {
+          (BuildContext context, UserProvider userProvider, Widget? child) {
         if (appInfoprovider.appInfo.data == null) {
           return Container();
         } else {
-          final String oneDay = appInfoprovider.appInfo.data.oneDay;
+          final String oneDay = appInfoprovider.appInfo.data!.oneDay!;
           final String currencySymbol =
-              appInfoprovider.appInfo.data.currencySymbol;
+              appInfoprovider.appInfo.data!.currencySymbol!;
 
           final double amountByFirstChoice = double.parse(oneDay) *
               double.parse(PsConfig.PROMOTE_FIRST_CHOICE_DAY_OR_DEFAULT_DAY);
@@ -835,7 +835,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
                     borderRadius: BorderRadius.circular(PsDimens.space4),
                     border: Border.all(
                         color: Utils.isLightMode(context)
-                            ? Colors.grey[200]
+                            ? Colors.grey.shade200
                             : Colors.black87),
                   ),
                   child: Row(
@@ -914,7 +914,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
                     borderRadius: BorderRadius.circular(PsDimens.space4),
                     border: Border.all(
                         color: Utils.isLightMode(context)
-                            ? Colors.grey[200]
+                            ? Colors.grey.shade200
                             : Colors.black87),
                   ),
                   child: Ink(
@@ -995,7 +995,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
                     borderRadius: BorderRadius.circular(PsDimens.space4),
                     border: Border.all(
                         color: Utils.isLightMode(context)
-                            ? Colors.grey[200]
+                            ? Colors.grey.shade200
                             : Colors.black87),
                   ),
                   child: Row(
@@ -1072,7 +1072,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
                     borderRadius: BorderRadius.circular(PsDimens.space4),
                     border: Border.all(
                         color: Utils.isLightMode(context)
-                            ? Colors.grey[200]
+                            ? Colors.grey.shade200
                             : Colors.black87),
                   ),
                   child: Ink(
@@ -1150,7 +1150,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
                     borderRadius: BorderRadius.circular(PsDimens.space4),
                     border: Border.all(
                         color: Utils.isLightMode(context)
-                            ? Colors.grey[200]
+                            ? Colors.grey.shade200
                             : Colors.black87),
                   ),
                   child: Row(
@@ -1182,7 +1182,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
                                                     getEnterDateCountController
                                                         .text) *
                                                 double.parse(appInfoprovider
-                                                    .appInfo.data.oneDay))
+                                                    .appInfo.data!.oneDay!))
                                             .toString()))
                                   else
                                     Text(Utils.getString(context, currencySymbol) +
@@ -1207,7 +1207,7 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
                                             border: Border.all(
                                                 color:
                                                     Utils.isLightMode(context)
-                                                        ? Colors.grey[200]
+                                                        ? Colors.grey.shade200
                                                         : Colors.black87),
                                           ),
                                           child: TextField(
@@ -1260,23 +1260,23 @@ class AdsHowManyDayWidgetState extends State<AdsHowManyDayWidget> {
 
               const SizedBox(height: PsDimens.space16),
 
-              if (appInfoprovider.appInfo.data.paypalEnable ==
+              if (appInfoprovider.appInfo.data!.paypalEnable ==
                   PsConst.PAYPAL_ENABLE)
                 paypalButtonWidget,
 
-              if (appInfoprovider.appInfo.data.stripeEnable ==
+              if (appInfoprovider.appInfo.data!.stripeEnable ==
                   PsConst.STRIPE_ENABLE)
                 stripeButtonWidget,
 
-              if (appInfoprovider.appInfo.data.razorEnable ==
+              if (appInfoprovider.appInfo.data!.razorEnable ==
                   PsConst.RAZOR_ENABLE)
                 razorButtonWidget,
 
-              if (appInfoprovider.appInfo.data.offlineEnabled ==
+              if (appInfoprovider.appInfo.data!.offlineEnabled ==
                   PsConst.OFFLINE_PAYMENT_ENABLE)
                 offlinePaymentButtonWidget,
 
-              if (appInfoprovider.appInfo.data.payStackEnabled == PsConst.ONE)
+              if (appInfoprovider.appInfo.data!.payStackEnabled == PsConst.ONE)
                 payStackButtonWidget,
 
               const SizedBox(height: PsDimens.space32),

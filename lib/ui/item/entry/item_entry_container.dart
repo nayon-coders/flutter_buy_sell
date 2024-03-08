@@ -8,8 +8,8 @@ import 'item_entry_view.dart';
 
 class ItemEntryContainerView extends StatefulWidget {
   const ItemEntryContainerView({
-    @required this.flag,
-    @required this.item,
+    required this.flag,
+    required this.item,
   });
   final String flag;
   final Product item;
@@ -19,7 +19,7 @@ class ItemEntryContainerView extends StatefulWidget {
 
 class ItemEntryContainerViewState extends State<ItemEntryContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -29,14 +29,14 @@ class ItemEntryContainerViewState extends State<ItemEntryContainerView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -62,14 +62,14 @@ class ItemEntryContainerViewState extends State<ItemEntryContainerView>
           title: Text(
             Utils.getString(context, 'item_entry__listing_entry'),
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: PsColors.mainColorWithWhite),
           ),
           elevation: 0,
         ),
         body: ItemEntryView(
-          animationController: animationController,
+          animationController: animationController!,
           flag: widget.flag,
           item: widget.item,
         ),

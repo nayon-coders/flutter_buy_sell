@@ -7,23 +7,23 @@ import 'package:flutter/material.dart';
 
 class HistoryListItem extends StatelessWidget {
   const HistoryListItem(
-      {Key key,
-      @required this.history,
+      {Key? key,
+      required this.history,
       this.onTap,
       this.animationController,
       this.animation})
       : super(key: key);
 
   final Product history;
-  final Function onTap;
-  final AnimationController animationController;
-  final Animation<double> animation;
+  final VoidCallback? onTap;
+  final AnimationController? animationController;
+  final Animation<double>? animation;
 
   @override
   Widget build(BuildContext context) {
-    animationController.forward();
+    animationController!.forward();
     return AnimatedBuilder(
-        animation: animationController,
+        animation: animationController!,
         child: history != null
             ? InkWell(
                 onTap: onTap,
@@ -40,12 +40,12 @@ class HistoryListItem extends StatelessWidget {
                 ),
               )
             : Container(),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return FadeTransition(
-              opacity: animation,
+              opacity: animation!,
               child: Transform(
                   transform: Matrix4.translationValues(
-                      0.0, 100 * (1.0 - animation.value), 0.0),
+                      0.0, 100 * (1.0 - animation!.value), 0.0),
                   child: child));
         });
   }
@@ -53,8 +53,8 @@ class HistoryListItem extends StatelessWidget {
 
 class _ImageAndTextWidget extends StatelessWidget {
   const _ImageAndTextWidget({
-    Key key,
-    @required this.history,
+    Key? key,
+    required this.history,
   }) : super(key: key);
 
   final Product history;
@@ -71,7 +71,7 @@ class _ImageAndTextWidget extends StatelessWidget {
               photoKey: '',
               // width: PsDimens.space60,
               // height: PsDimens.space60,
-              defaultPhoto: history.defaultPhoto,
+              defaultPhoto: history.defaultPhoto!,
             ),
           ),
           const SizedBox(
@@ -86,7 +86,7 @@ class _ImageAndTextWidget extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: PsDimens.space8),
                   child: Text(
-                    history.title,
+                    history.title!,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.subtitle2,
                   ),
@@ -97,10 +97,10 @@ class _ImageAndTextWidget extends StatelessWidget {
                 Text(
                   history.addedDate == ''
                       ? ''
-                      : Utils.getDateFormat(history.addedDate),
+                      : Utils.getDateFormat(history.addedDate!),
                   style: Theme.of(context)
                       .textTheme
-                      .caption
+                      .caption!
                       .copyWith(color: PsColors.textPrimaryLightColor),
                 ),
               ],

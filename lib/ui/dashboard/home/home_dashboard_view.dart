@@ -69,20 +69,20 @@ class HomeDashboardViewWidget extends StatefulWidget {
 
 class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
   PsValueHolder? valueHolder;
-  CategoryRepository repo1;
-  ProductRepository repo2;
-  BlogRepository repo3;
-  ItemLocationRepository repo4;
-  NotificationRepository notificationRepository;
-  CategoryProvider _categoryProvider;
-  RecentProductProvider _recentProductProvider;
-  PopularProductProvider _popularProductProvider;
-  PaidAdProductProvider _paidAdItemProvider;
-  BlogProvider _blogProvider;
-  UserUnreadMessageProvider _userUnreadMessageProvider;
-  ItemListFromFollowersProvider _itemListFromFollowersProvider;
-  UserUnreadMessageRepository userUnreadMessageRepository;
-  PaidAdItemRepository paidAdItemRepository;
+  CategoryRepository? repo1;
+  ProductRepository? repo2;
+  BlogRepository? repo3;
+  ItemLocationRepository? repo4;
+  NotificationRepository? notificationRepository;
+  CategoryProvider? _categoryProvider;
+  RecentProductProvider? _recentProductProvider;
+  PopularProductProvider? _popularProductProvider;
+  PaidAdProductProvider? _paidAdItemProvider;
+  BlogProvider? _blogProvider;
+  UserUnreadMessageProvider? _userUnreadMessageProvider;
+  ItemListFromFollowersProvider? _itemListFromFollowersProvider;
+  UserUnreadMessageRepository? userUnreadMessageRepository;
+  PaidAdItemRepository? paidAdItemRepository;
 
   final int count = 8;
   final CategoryParameterHolder trendingCategory = CategoryParameterHolder();
@@ -169,7 +169,7 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
           },
           onDismissed: () =>
               _rateMyApp.callEvent(RateMyAppEventType.laterButtonPressed),
-          dialogStyle: const DialogStyle(
+          dialogStyle:  DialogStyle(
             titleAlign: TextAlign.center,
             messageAlign: TextAlign.center,
             messagePadding: EdgeInsets.only(bottom: 16.0),
@@ -222,10 +222,10 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
               lazy: false,
               create: (BuildContext context) {
                 _categoryProvider ??= CategoryProvider(
-                    repo: repo1,
-                    psValueHolder: valueHolder,
+                    repo: repo1!,
+                    psValueHolder: valueHolder!,
                     limit: PsConfig.CATEGORY_LOADING_LIMIT);
-                _categoryProvider.loadCategoryList().then((dynamic value) {
+                _categoryProvider!.loadCategoryList().then((dynamic value) {
                   // Utils.psPrint("Is Has Internet " + value);
                   final bool isConnectedToIntenet = value ?? bool;
                   if (!isConnectedToIntenet) {
@@ -238,80 +238,80 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                         textColor: Colors.white);
                   }
                 });
-                return _categoryProvider;
+                return _categoryProvider!;
               }),
           ChangeNotifierProvider<RecentProductProvider>(
               lazy: false,
               create: (BuildContext context) {
                 _recentProductProvider = RecentProductProvider(
-                    repo: repo2, limit: PsConfig.RECENT_ITEM_LOADING_LIMIT);
-                _recentProductProvider.productRecentParameterHolder
-                    .itemLocationId = valueHolder.locationId;
-                final String loginUserId = Utils.checkUserLoginId(valueHolder);
-                _recentProductProvider.loadProductList(loginUserId,
-                    _recentProductProvider.productRecentParameterHolder);
-                return _recentProductProvider;
+                    repo: repo2!, limit: PsConfig.RECENT_ITEM_LOADING_LIMIT);
+                _recentProductProvider!.productRecentParameterHolder
+                    .itemLocationId = valueHolder!.locationId;
+                final String loginUserId = Utils.checkUserLoginId(valueHolder!);
+                _recentProductProvider!.loadProductList(loginUserId,
+                    _recentProductProvider!.productRecentParameterHolder);
+                return _recentProductProvider!;
               }),
           ChangeNotifierProvider<PopularProductProvider>(
               lazy: false,
               create: (BuildContext context) {
                 _popularProductProvider = PopularProductProvider(
-                    repo: repo2, limit: PsConfig.POPULAR_ITEM_LOADING_LIMIT);
-                _popularProductProvider.productPopularParameterHolder
-                    .itemLocationId = valueHolder.locationId;
-                final String loginUserId = Utils.checkUserLoginId(valueHolder);
-                _popularProductProvider.loadProductList(loginUserId,
-                    _popularProductProvider.productPopularParameterHolder);
-                return _popularProductProvider;
+                    repo: repo2!, limit: PsConfig.POPULAR_ITEM_LOADING_LIMIT);
+                _popularProductProvider!.productPopularParameterHolder
+                    .itemLocationId = valueHolder!.locationId;
+                final String loginUserId = Utils.checkUserLoginId(valueHolder!);
+                _popularProductProvider!.loadProductList(loginUserId,
+                    _popularProductProvider!.productPopularParameterHolder);
+                return _popularProductProvider!;
               }),
           ChangeNotifierProvider<PaidAdProductProvider>(
               lazy: false,
               create: (BuildContext context) {
                 _paidAdItemProvider = PaidAdProductProvider(
-                    repo: repo2, limit: PsConfig.FEATURE_ITEM_LOADING_LIMIT);
-                _paidAdItemProvider.productPaidAdParameterHolder
-                    .itemLocationId = valueHolder.locationId;
-                final String loginUserId = Utils.checkUserLoginId(valueHolder);
-                _paidAdItemProvider.loadProductList(loginUserId,
-                    _paidAdItemProvider.productPaidAdParameterHolder);
-                return _paidAdItemProvider;
+                    repo: repo2!, limit: PsConfig.FEATURE_ITEM_LOADING_LIMIT);
+                _paidAdItemProvider!.productPaidAdParameterHolder
+                    .itemLocationId = valueHolder!.locationId;
+                final String loginUserId = Utils.checkUserLoginId(valueHolder!);
+                _paidAdItemProvider!.loadProductList(loginUserId,
+                    _paidAdItemProvider!.productPaidAdParameterHolder);
+                return _paidAdItemProvider!;
               }),
           ChangeNotifierProvider<BlogProvider>(
               lazy: false,
               create: (BuildContext context) {
                 _blogProvider = BlogProvider(
-                    repo: repo3, limit: PsConfig.BLOCK_SLIDER_LOADING_LIMIT);
-                _blogProvider.loadBlogList();
-                return _blogProvider;
+                    repo: repo3!, limit: PsConfig.BLOCK_SLIDER_LOADING_LIMIT);
+                _blogProvider!.loadBlogList();
+                return _blogProvider!;
               }),
           ChangeNotifierProvider<UserUnreadMessageProvider>(
               lazy: false,
               create: (BuildContext context) {
                 _userUnreadMessageProvider = UserUnreadMessageProvider(
-                    repo: userUnreadMessageRepository);
+                    repo: userUnreadMessageRepository!);
 
-                if (valueHolder.loginUserId != null &&
-                    valueHolder.loginUserId != '') {
-                  _userUnreadMessageProvider.userUnreadMessageHolder =
+                if (valueHolder!.loginUserId != null &&
+                    valueHolder!.loginUserId != '') {
+                  _userUnreadMessageProvider!.userUnreadMessageHolder =
                       UserUnreadMessageParameterHolder(
-                          userId: valueHolder.loginUserId,
-                          deviceToken: valueHolder.deviceToken);
-                  _userUnreadMessageProvider.userUnreadMessageCount(
-                      _userUnreadMessageProvider.userUnreadMessageHolder);
+                          userId: valueHolder!.loginUserId,
+                          deviceToken: valueHolder!.deviceToken);
+                  _userUnreadMessageProvider!.userUnreadMessageCount(
+                      _userUnreadMessageProvider!.userUnreadMessageHolder);
                 }
-                return _userUnreadMessageProvider;
+                return _userUnreadMessageProvider!;
               }),
           ChangeNotifierProvider<ItemListFromFollowersProvider>(
               lazy: false,
               create: (BuildContext context) {
                 _itemListFromFollowersProvider = ItemListFromFollowersProvider(
-                    repo: repo2,
-                    psValueHolder: valueHolder,
+                    repo: repo2!,
+                    psValueHolder: valueHolder!,
                     limit: PsConfig.FOLLOWER_ITEM_LOADING_LIMIT);
-                _itemListFromFollowersProvider.loadItemListFromFollowersList(
+                _itemListFromFollowersProvider!.loadItemListFromFollowersList(
                     Utils.checkUserLoginId(
-                        _itemListFromFollowersProvider.psValueHolder));
-                return _itemListFromFollowersProvider;
+                        _itemListFromFollowersProvider!.psValueHolder));
+                return _itemListFromFollowersProvider!;
               }),
         ],
         child: Scaffold(
@@ -329,9 +329,9 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                           arguments: ItemEntryIntentHolder(
                               flag: PsConst.ADD_NEW_ITEM, item: Product()));
                       if (returnData == true) {
-                        _recentProductProvider.resetProductList(
-                            valueHolder.loginUserId,
-                            _recentProductProvider
+                        _recentProductProvider!.resetProductList(
+                            valueHolder!.loginUserId,
+                            _recentProductProvider!
                                 .productRecentParameterHolder);
                       }
                     });
@@ -351,7 +351,7 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                 label: Text(Utils.getString(context, 'dashboard__submit_ad'),
                     style: Theme.of(context)
                         .textTheme
-                        .caption
+                        .caption!
                         .copyWith(color: PsColors.white)),
               ),
             ),
@@ -399,29 +399,29 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
             child: RefreshIndicator(
                 onRefresh: () {
                   final String loginUserId =
-                      Utils.checkUserLoginId(valueHolder);
-                  _recentProductProvider.resetProductList(loginUserId,
-                      _recentProductProvider.productRecentParameterHolder);
+                      Utils.checkUserLoginId(valueHolder!);
+                  _recentProductProvider!.resetProductList(loginUserId,
+                      _recentProductProvider!.productRecentParameterHolder);
 
-                  _popularProductProvider.resetProductList(loginUserId,
-                      _popularProductProvider.productPopularParameterHolder);
+                  _popularProductProvider!.resetProductList(loginUserId,
+                      _popularProductProvider!.productPopularParameterHolder);
 
-                  _paidAdItemProvider.resetProductList(loginUserId,
-                      _paidAdItemProvider.productPaidAdParameterHolder);
+                  _paidAdItemProvider!.resetProductList(loginUserId,
+                      _paidAdItemProvider!.productPaidAdParameterHolder);
 
-                  _blogProvider.resetBlogList();
+                  _blogProvider!.resetBlogList();
 
-                  if (valueHolder.loginUserId != null &&
-                      valueHolder.loginUserId != '') {
-                    _userUnreadMessageProvider.userUnreadMessageCount(
-                        _userUnreadMessageProvider.userUnreadMessageHolder);
+                  if (valueHolder!.loginUserId != null &&
+                      valueHolder!.loginUserId != '') {
+                    _userUnreadMessageProvider!.userUnreadMessageCount(
+                        _userUnreadMessageProvider!.userUnreadMessageHolder);
                   }
 
-                  _itemListFromFollowersProvider.resetItemListFromFollowersList(
+                  _itemListFromFollowersProvider!.resetItemListFromFollowersList(
                       Utils.checkUserLoginId(
-                          _itemListFromFollowersProvider.psValueHolder));
+                          _itemListFromFollowersProvider!.psValueHolder));
 
-                  return _categoryProvider
+                  return _categoryProvider!
                       .resetCategoryList()
                       .then((dynamic value) {
                     // Utils.psPrint("Is Has Internet " + value);
@@ -450,12 +450,12 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                               parent: widget.animationController,
                               curve: Interval((1 / count) * 1, 1.0,
                                   curve: Curves.fastOutSlowIn))),
-                      psValueHolder: valueHolder,
+                      psValueHolder: valueHolder!,
                       itemNameTextEditingController:
                           userInputItemNameTextEditingController,
                     ),
                     _HomeCategoryHorizontalListWidget(
-                      psValueHolder: valueHolder,
+                      psValueHolder: valueHolder!,
                       animationController:
                           widget.animationController, //animationController,
                       animation: Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -465,7 +465,7 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                                   curve: Curves.fastOutSlowIn))), //animation
                     ),
                     _RecentProductHorizontalListWidget(
-                      psValueHolder: valueHolder,
+                      psValueHolder: valueHolder!,
                       animationController:
                           widget.animationController, //animationController,
                       animation: Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -475,7 +475,7 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                                   curve: Curves.fastOutSlowIn))), //animation
                     ),
                     _HomePopularProductHorizontalListWidget(
-                      psValueHolder: valueHolder,
+                      psValueHolder: valueHolder!,
                       animationController:
                           widget.animationController, //animationController,
                       animation: Tween<double>(begin: 0.0, end: 1.0).animate(
@@ -485,7 +485,7 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                                   curve: Curves.fastOutSlowIn))), //animation
                     ),
                     _HomePaidAdProductHorizontalListWidget(
-                      psValueHolder: valueHolder,
+                      psValueHolder: valueHolder!,
                       animationController: widget.animationController,
                       animation: Tween<double>(begin: 0.0, end: 1.0).animate(
                           CurvedAnimation(
@@ -536,11 +536,11 @@ class _HomePopularProductHorizontalListWidget extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Consumer<PopularProductProvider>(
         builder: (BuildContext context, PopularProductProvider productProvider,
-            Widget child) {
+            Widget? child) {
           return AnimatedBuilder(
             animation: animationController,
             child: (productProvider.productList.data != null &&
-                    productProvider.productList.data.isNotEmpty)
+                    productProvider.productList.data!.isNotEmpty)
                 ? Column(
                     children: <Widget>[
                       _MyHeaderWidget(
@@ -565,7 +565,7 @@ class _HomePopularProductHorizontalListWidget extends StatelessWidget {
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount:
-                                  productProvider.productList.data.length,
+                                  productProvider.productList.data!.length,
                               itemBuilder: (BuildContext context, int index) {
                                 if (productProvider.productList.status ==
                                     PsStatus.BLOCK_LOADING) {
@@ -577,29 +577,29 @@ class _HomePopularProductHorizontalListWidget extends StatelessWidget {
                                       ]));
                                 } else {
                                   final Product product =
-                                      productProvider.productList.data[index];
+                                      productProvider.productList.data![index];
                                   return ProductHorizontalListItem(
                                     coreTagKey:
                                         productProvider.hashCode.toString() +
-                                            product.id,
+                                            product.id!,
                                     product:
-                                        productProvider.productList.data[index],
+                                        productProvider.productList.data![index],
                                     onTap: () {
                                       print(productProvider.productList
-                                          .data[index].defaultPhoto.imgPath);
+                                          .data![index].defaultPhoto!.imgPath);
                                       final ProductDetailIntentHolder holder =
                                           ProductDetailIntentHolder(
                                               productId: productProvider
-                                                  .productList.data[index].id,
+                                                  .productList.data![index].id,
                                               heroTagImage: productProvider
                                                       .hashCode
                                                       .toString() +
-                                                  product.id +
+                                                  product.id! +
                                                   PsConst.HERO_TAG__IMAGE,
                                               heroTagTitle: productProvider
                                                       .hashCode
                                                       .toString() +
-                                                  product.id +
+                                                  product.id! +
                                                   PsConst.HERO_TAG__TITLE);
                                       Navigator.pushNamed(
                                           context, RoutePaths.productDetail,
@@ -611,7 +611,7 @@ class _HomePopularProductHorizontalListWidget extends StatelessWidget {
                     ],
                   )
                 : Container(),
-            builder: (BuildContext context, Widget child) {
+            builder: (BuildContext context, Widget? child) {
               return FadeTransition(
                 opacity: animation,
                 child: Transform(
@@ -629,10 +629,10 @@ class _HomePopularProductHorizontalListWidget extends StatelessWidget {
 
 class _HomePaidAdProductHorizontalListWidget extends StatelessWidget {
   const _HomePaidAdProductHorizontalListWidget({
-    Key key,
-    @required this.animationController,
-    @required this.animation,
-    @required this.psValueHolder,
+    Key? key,
+    required this.animationController,
+    required this.animation,
+    required this.psValueHolder,
   }) : super(key: key);
 
   final AnimationController animationController;
@@ -644,11 +644,11 @@ class _HomePaidAdProductHorizontalListWidget extends StatelessWidget {
     return SliverToBoxAdapter(
       child: Consumer<PaidAdProductProvider>(
         builder: (BuildContext context,
-            PaidAdProductProvider paidAdItemProvider, Widget child) {
+            PaidAdProductProvider paidAdItemProvider, Widget? child) {
           return AnimatedBuilder(
             animation: animationController,
             child: (paidAdItemProvider.productList.data != null &&
-                    paidAdItemProvider.productList.data.isNotEmpty)
+                    paidAdItemProvider.productList.data!.isNotEmpty)
                 ? Column(
                     children: <Widget>[
                       _MyHeaderWidget(
@@ -667,7 +667,7 @@ class _HomePaidAdProductHorizontalListWidget extends StatelessWidget {
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount:
-                                  paidAdItemProvider.productList.data.length,
+                                  paidAdItemProvider.productList.data!.length,
                               itemBuilder: (BuildContext context, int index) {
                                 if (paidAdItemProvider.productList.status ==
                                     PsStatus.BLOCK_LOADING) {
@@ -679,29 +679,29 @@ class _HomePaidAdProductHorizontalListWidget extends StatelessWidget {
                                       ]));
                                 } else {
                                   final Product product = paidAdItemProvider
-                                      .productList.data[index];
+                                      .productList.data![index];
                                   return ProductHorizontalListItem(
                                     coreTagKey:
                                         paidAdItemProvider.hashCode.toString() +
-                                            product.id,
+                                            product.id!,
                                     product: paidAdItemProvider
-                                        .productList.data[index],
+                                        .productList.data![index],
                                     onTap: () {
                                       print(paidAdItemProvider.productList
-                                          .data[index].defaultPhoto.imgPath);
+                                          .data![index].defaultPhoto!.imgPath);
                                       final ProductDetailIntentHolder holder =
                                           ProductDetailIntentHolder(
                                               productId: paidAdItemProvider
-                                                  .productList.data[index].id,
+                                                  .productList.data![index].id,
                                               heroTagImage: paidAdItemProvider
                                                       .hashCode
                                                       .toString() +
-                                                  product.id +
+                                                  product.id! +
                                                   PsConst.HERO_TAG__IMAGE,
                                               heroTagTitle: paidAdItemProvider
                                                       .hashCode
                                                       .toString() +
-                                                  product.id +
+                                                  product.id! +
                                                   PsConst.HERO_TAG__TITLE);
                                       Navigator.pushNamed(
                                           context, RoutePaths.productDetail,
@@ -713,7 +713,7 @@ class _HomePaidAdProductHorizontalListWidget extends StatelessWidget {
                     ],
                   )
                 : Container(),
-            builder: (BuildContext context, Widget child) {
+            builder: (BuildContext context, Widget? child) {
               return FadeTransition(
                 opacity: animation,
                 child: Transform(
@@ -731,10 +731,10 @@ class _HomePaidAdProductHorizontalListWidget extends StatelessWidget {
 
 class _RecentProductHorizontalListWidget extends StatefulWidget {
   const _RecentProductHorizontalListWidget(
-      {Key key,
-      @required this.animationController,
-      @required this.animation,
-      @required this.psValueHolder})
+      {Key? key,
+      required this.animationController,
+      required this.animation,
+      required this.psValueHolder})
       : super(key: key);
 
   final AnimationController animationController;
@@ -770,11 +770,11 @@ class __RecentProductHorizontalListWidgetState
     return SliverToBoxAdapter(
         // fdfdf
         child: Consumer<RecentProductProvider>(builder: (BuildContext context,
-            RecentProductProvider productProvider, Widget child) {
+            RecentProductProvider productProvider, Widget? child) {
       return AnimatedBuilder(
           animation: widget.animationController,
           child: (productProvider.productList.data != null &&
-                  productProvider.productList.data.isNotEmpty)
+                  productProvider.productList.data!.isNotEmpty)
               ? Column(children: <Widget>[
                   _MyHeaderWidget(
                     headerName:
@@ -795,7 +795,7 @@ class __RecentProductHorizontalListWidgetState
                       width: MediaQuery.of(context).size.width,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: productProvider.productList.data.length,
+                          itemCount: productProvider.productList.data!.length,
                           itemBuilder: (BuildContext context, int index) {
                             if (productProvider.productList.status ==
                                 PsStatus.BLOCK_LOADING) {
@@ -807,28 +807,28 @@ class __RecentProductHorizontalListWidgetState
                                   ]));
                             } else {
                               final Product product =
-                                  productProvider.productList.data[index];
+                                  productProvider.productList.data![index];
                               return ProductHorizontalListItem(
                                 coreTagKey:
                                     productProvider.hashCode.toString() +
-                                        product.id,
+                                        product.id!,
                                 product:
-                                    productProvider.productList.data[index],
+                                    productProvider.productList.data![index],
                                 onTap: () {
-                                  print(productProvider.productList.data[index]
-                                      .defaultPhoto.imgPath);
+                                  print(productProvider.productList.data![index]
+                                      .defaultPhoto!.imgPath);
 
                                   final ProductDetailIntentHolder holder =
                                       ProductDetailIntentHolder(
                                           productId: productProvider
-                                              .productList.data[index].id,
+                                              .productList.data![index].id,
                                           heroTagImage: productProvider.hashCode
                                                   .toString() +
-                                              product.id +
+                                              product.id! +
                                               PsConst.HERO_TAG__IMAGE,
                                           heroTagTitle: productProvider.hashCode
                                                   .toString() +
-                                              product.id +
+                                              product.id! +
                                               PsConst.HERO_TAG__TITLE);
                                   Navigator.pushNamed(
                                       context, RoutePaths.productDetail,
@@ -843,7 +843,7 @@ class __RecentProductHorizontalListWidgetState
                   ),
                 ])
               : Container(),
-          builder: (BuildContext context, Widget child) {
+          builder: (BuildContext context, Widget? child) {
             return FadeTransition(
                 opacity: widget.animation,
                 child: Transform(
@@ -857,9 +857,9 @@ class __RecentProductHorizontalListWidgetState
 
 class _HomeBlogProductSliderListWidget extends StatelessWidget {
   const _HomeBlogProductSliderListWidget({
-    Key key,
-    @required this.animationController,
-    @required this.animation,
+    Key? key,
+    required this.animationController,
+    required this.animation,
   }) : super(key: key);
 
   final AnimationController animationController;
@@ -876,11 +876,11 @@ class _HomeBlogProductSliderListWidget extends StatelessWidget {
 
     return SliverToBoxAdapter(
       child: Consumer<BlogProvider>(builder:
-          (BuildContext context, BlogProvider blogProvider, Widget child) {
+          (BuildContext context, BlogProvider blogProvider, Widget? child) {
         return AnimatedBuilder(
             animation: animationController,
             child: (blogProvider.blogList != null &&
-                    blogProvider.blogList.data.isNotEmpty)
+                    blogProvider.blogList.data!.isNotEmpty)
                 ? Column(
                     mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
@@ -899,7 +899,7 @@ class _HomeBlogProductSliderListWidget extends StatelessWidget {
                         decoration: BoxDecoration(
                           boxShadow: <BoxShadow>[
                             BoxShadow(
-                                color: PsColors.mainLightShadowColor,
+                                color: PsColors.mainLightShadowColor!,
                                 offset: const Offset(1.1, 1.1),
                                 blurRadius: 20.0),
                           ],
@@ -908,9 +908,9 @@ class _HomeBlogProductSliderListWidget extends StatelessWidget {
                             top: PsDimens.space8, bottom: PsDimens.space20),
                         width: double.infinity,
                         child: BlogSliderView(
-                          blogList: blogProvider.blogList.data,
+                          blogList: blogProvider.blogList.data!,
                           onTap: (Blog blog) {
-                            Navigator.pushNamed(context, RoutePaths.blogDetail,
+                            Navigator.pushNamed!(context, RoutePaths.blogDetail,
                                 arguments: blog);
                           },
                         ),
@@ -918,7 +918,7 @@ class _HomeBlogProductSliderListWidget extends StatelessWidget {
                     ],
                   )
                 : Container(),
-            builder: (BuildContext context, Widget child) {
+            builder: (BuildContext context, Widget? child) {
               return FadeTransition(
                   opacity: animation,
                   child: Transform(
@@ -933,10 +933,10 @@ class _HomeBlogProductSliderListWidget extends StatelessWidget {
 
 class _HomeCategoryHorizontalListWidget extends StatefulWidget {
   const _HomeCategoryHorizontalListWidget(
-      {Key key,
-      @required this.animationController,
-      @required this.animation,
-      @required this.psValueHolder})
+      {Key? key,
+      required this.animationController,
+      required this.animation,
+      required this.psValueHolder})
       : super(key: key);
 
   final AnimationController animationController;
@@ -954,11 +954,11 @@ class __HomeCategoryHorizontalListWidgetState
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(child: Consumer<CategoryProvider>(
       builder: (BuildContext context, CategoryProvider categoryProvider,
-          Widget child) {
+          Widget? child) {
         return AnimatedBuilder(
             animation: widget.animationController,
             child: (categoryProvider.categoryList.data != null &&
-                    categoryProvider.categoryList.data.isNotEmpty)
+                    categoryProvider.categoryList.data!.isNotEmpty)
                 ? Column(children: <Widget>[
                     _MyHeaderWidget(
                       headerName:
@@ -978,7 +978,7 @@ class __HomeCategoryHorizontalListWidgetState
                           padding:
                               const EdgeInsets.only(left: PsDimens.space16),
                           scrollDirection: Axis.horizontal,
-                          itemCount: categoryProvider.categoryList.data.length,
+                          itemCount: categoryProvider.categoryList.data!.length,
                           itemBuilder: (BuildContext context, int index) {
                             if (categoryProvider.categoryList.status ==
                                 PsStatus.BLOCK_LOADING) {
@@ -991,30 +991,30 @@ class __HomeCategoryHorizontalListWidgetState
                             } else {
                               return CategoryHorizontalListItem(
                                 category:
-                                    categoryProvider.categoryList.data[index],
+                                    categoryProvider.categoryList.data![index],
                                 onTap: () {
                                   if (PsConfig.isShowSubCategory) {
                                     Navigator.pushNamed(
                                         context, RoutePaths.subCategoryGrid,
                                         arguments: categoryProvider
-                                            .categoryList.data[index]);
+                                            .categoryList.data![index]);
                                   } else {
                                     FocusScope.of(context)
                                         .requestFocus(FocusNode());
                                     print(categoryProvider.categoryList
-                                        .data[index].defaultPhoto.imgPath);
+                                        .data![index].defaultPhoto!.imgPath!);
                                     final ProductParameterHolder
                                         productParameterHolder =
                                         ProductParameterHolder()
                                             .getLatestParameterHolder();
                                     productParameterHolder.catId =
                                         categoryProvider
-                                            .categoryList.data[index].catId;
+                                            .categoryList.data![index].catId!;
                                     Navigator.pushNamed(
                                         context, RoutePaths.filterProductList,
                                         arguments: ProductListIntentHolder(
                                           appBarTitle: categoryProvider
-                                              .categoryList.data[index].catName,
+                                              .categoryList.data![index].catName,
                                           productParameterHolder:
                                               productParameterHolder,
                                         ));
@@ -1027,7 +1027,7 @@ class __HomeCategoryHorizontalListWidgetState
                     )
                   ])
                 : Container(),
-            builder: (BuildContext context, Widget child) {
+            builder: (BuildContext context, Widget? child) {
               return FadeTransition(
                   opacity: widget.animation,
                   child: Transform(
@@ -1042,9 +1042,9 @@ class __HomeCategoryHorizontalListWidgetState
 
 class _HomeItemListFromFollowersHorizontalListWidget extends StatelessWidget {
   const _HomeItemListFromFollowersHorizontalListWidget({
-    Key key,
-    @required this.animationController,
-    @required this.animation,
+    Key? key,
+    required this.animationController,
+    required this.animation,
   }) : super(key: key);
 
   final AnimationController animationController;
@@ -1056,7 +1056,7 @@ class _HomeItemListFromFollowersHorizontalListWidget extends StatelessWidget {
       child: Consumer<ItemListFromFollowersProvider>(
         builder: (BuildContext context,
             ItemListFromFollowersProvider itemListFromFollowersProvider,
-            Widget child) {
+            Widget? child) {
           return AnimatedBuilder(
             animation: animationController,
             child: (itemListFromFollowersProvider.psValueHolder.loginUserId !=
@@ -1065,7 +1065,7 @@ class _HomeItemListFromFollowersHorizontalListWidget extends StatelessWidget {
                             .itemListFromFollowersList.data !=
                         null &&
                     itemListFromFollowersProvider
-                        .itemListFromFollowersList.data.isNotEmpty)
+                        .itemListFromFollowersList.data!.isNotEmpty)
                 ? Column(
                     children: <Widget>[
                       _MyHeaderWidget(
@@ -1086,7 +1086,7 @@ class _HomeItemListFromFollowersHorizontalListWidget extends StatelessWidget {
                           child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: itemListFromFollowersProvider
-                                  .itemListFromFollowersList.data.length,
+                                  .itemListFromFollowersList.data!.length,
                               itemBuilder: (BuildContext context, int index) {
                                 if (itemListFromFollowersProvider
                                         .itemListFromFollowersList.status ==
@@ -1104,20 +1104,20 @@ class _HomeItemListFromFollowersHorizontalListWidget extends StatelessWidget {
                                             .toString() +
                                         itemListFromFollowersProvider
                                             .itemListFromFollowersList
-                                            .data[index]
-                                            .id,
+                                            .data![index]
+                                            .id!,
                                     product: itemListFromFollowersProvider
-                                        .itemListFromFollowersList.data[index],
+                                        .itemListFromFollowersList.data![index],
                                     onTap: () {
                                       print(itemListFromFollowersProvider
                                           .itemListFromFollowersList
-                                          .data[index]
-                                          .defaultPhoto
+                                          .data![index]
+                                          .defaultPhoto!
                                           .imgPath);
                                       final Product product =
                                           itemListFromFollowersProvider
                                               .itemListFromFollowersList
-                                              .data
+                                              .data!
                                               .reversed
                                               .toList()[index];
                                       final ProductDetailIntentHolder holder =
@@ -1125,19 +1125,19 @@ class _HomeItemListFromFollowersHorizontalListWidget extends StatelessWidget {
                                               productId:
                                                   itemListFromFollowersProvider
                                                       .itemListFromFollowersList
-                                                      .data[index]
+                                                      .data![index]
                                                       .id,
                                               heroTagImage:
                                                   itemListFromFollowersProvider
                                                           .hashCode
                                                           .toString() +
-                                                      product.id +
+                                                      product.id! +
                                                       PsConst.HERO_TAG__IMAGE,
                                               heroTagTitle:
                                                   itemListFromFollowersProvider
                                                           .hashCode
                                                           .toString() +
-                                                      product.id +
+                                                      product.id! +
                                                       PsConst.HERO_TAG__TITLE);
                                       Navigator.pushNamed(
                                           context, RoutePaths.productDetail,
@@ -1149,7 +1149,7 @@ class _HomeItemListFromFollowersHorizontalListWidget extends StatelessWidget {
                     ],
                   )
                 : Container(),
-            builder: (BuildContext context, Widget child) {
+            builder: (BuildContext context, Widget? child) {
               return FadeTransition(
                 opacity: animation,
                 child: Transform(
@@ -1167,14 +1167,14 @@ class _HomeItemListFromFollowersHorizontalListWidget extends StatelessWidget {
 
 class _MyHeaderWidget extends StatefulWidget {
   const _MyHeaderWidget({
-    Key key,
-    @required this.headerName,
+    Key? key,
+    required this.headerName,
     this.headerDescription,
-    @required this.viewAllClicked,
+    required this.viewAllClicked,
   }) : super(key: key);
 
   final String headerName;
-  final String headerDescription;
+  final String? headerDescription;
   final Function viewAllClicked;
 
   @override
@@ -1185,7 +1185,7 @@ class __MyHeaderWidgetState extends State<_MyHeaderWidget> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: widget.viewAllClicked,
+      onTap: widget.viewAllClicked!,
       child: Padding(
         padding: const EdgeInsets.only(
             top: PsDimens.space20,
@@ -1202,7 +1202,7 @@ class __MyHeaderWidgetState extends State<_MyHeaderWidget> {
                 Expanded(
                   //   fit: FlexFit.loose,
                   child: Text(widget.headerName,
-                      style: Theme.of(context).textTheme.headline6.copyWith(
+                      style: Theme.of(context).textTheme.headline6!.copyWith(
                           fontWeight: FontWeight.bold,
                           color: PsColors.textPrimaryDarkColor)),
                 ),
@@ -1211,7 +1211,7 @@ class __MyHeaderWidgetState extends State<_MyHeaderWidget> {
                   textAlign: TextAlign.start,
                   style: Theme.of(context)
                       .textTheme
-                      .caption
+                      .caption!
                       .copyWith(color: PsColors.mainColor),
                 ),
               ],
@@ -1227,10 +1227,10 @@ class __MyHeaderWidgetState extends State<_MyHeaderWidget> {
                     child: Padding(
                       padding: const EdgeInsets.only(top: PsDimens.space10),
                       child: Text(
-                        widget.headerDescription,
+                        widget.headerDescription!,
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText1
+                            .bodyText1!
                             .copyWith(color: PsColors.textPrimaryLightColor),
                       ),
                     ),
@@ -1246,11 +1246,11 @@ class __MyHeaderWidgetState extends State<_MyHeaderWidget> {
 
 class _HomeHeaderWidget extends StatefulWidget {
   const _HomeHeaderWidget(
-      {Key key,
-      @required this.animationController,
-      @required this.animation,
-      @required this.psValueHolder,
-      @required this.itemNameTextEditingController})
+      {Key? key,
+      required this.animationController,
+      required this.animation,
+      required this.psValueHolder,
+      required this.itemNameTextEditingController})
       : super(key: key);
 
   final AnimationController animationController;
@@ -1282,7 +1282,7 @@ class __HomeHeaderWidgetState extends State<_HomeHeaderWidget> {
                 )
               ],
             ),
-            builder: (BuildContext context, Widget child) {
+            builder: (BuildContext context, Widget? child) {
               return FadeTransition(
                   opacity: widget.animation,
                   child: Transform(
@@ -1295,11 +1295,11 @@ class __HomeHeaderWidgetState extends State<_HomeHeaderWidget> {
 
 class _MyHomeHeaderWidget extends StatefulWidget {
   const _MyHomeHeaderWidget(
-      {Key key,
-      @required this.userInputItemNameTextEditingController,
-      @required this.selectedLocation,
-      @required this.locationName,
-      @required this.psValueHolder})
+      {Key? key,
+      required this.userInputItemNameTextEditingController,
+      required this.selectedLocation,
+      required this.locationName,
+      required this.psValueHolder})
       : super(key: key);
 
   final Function selectedLocation;
@@ -1336,7 +1336,7 @@ class __MyHomeHeaderWidgetState extends State<_MyHomeHeaderWidget> {
                   overflow: TextOverflow.ellipsis,
                   style: Theme.of(context)
                       .textTheme
-                      .headline5
+                      .headline5!
                       .copyWith(color: PsColors.textPrimaryDarkColor),
                 ),
               ),
@@ -1367,17 +1367,17 @@ class __MyHomeHeaderWidgetState extends State<_MyHomeHeaderWidget> {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: <Widget>[
                   InkWell(
-                    onTap: widget.selectedLocation,
+                    onTap:widget.selectedLocation!,
                     child: Text(
                       widget.locationName,
                       textAlign: TextAlign.right,
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle1
+                          .subtitle1!
                           .copyWith(color: PsColors.mainColor),
                     ),
                   ),
-                  MySeparator(color: PsColors.grey),
+                  MySeparator(color: PsColors.grey!),
                 ],
               ),
             ],
@@ -1418,7 +1418,7 @@ class __MyHomeHeaderWidgetState extends State<_MyHomeHeaderWidget> {
 class MySeparator extends StatelessWidget {
   const MySeparator({this.height = 1, this.color});
   final double height;
-  final Color color;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(

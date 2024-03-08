@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SettingPrivacyPolicyView extends StatefulWidget {
-  const SettingPrivacyPolicyView({@required this.checkPolicyType});
+  const SettingPrivacyPolicyView({required this.checkPolicyType});
   final int checkPolicyType;
   @override
   _SettingPrivacyPolicyViewState createState() {
@@ -21,14 +21,14 @@ class _SettingPrivacyPolicyViewState extends State<SettingPrivacyPolicyView>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  AboutUsProvider _aboutUsProvider;
+  AboutUsProvider? _aboutUsProvider;
 
-  AnimationController animationController;
-  Animation<double> animation;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -39,7 +39,7 @@ class _SettingPrivacyPolicyViewState extends State<SettingPrivacyPolicyView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _aboutUsProvider.nextAboutUsList();
+        _aboutUsProvider!.nextAboutUsList();
       }
     });
 
@@ -51,11 +51,11 @@ class _SettingPrivacyPolicyViewState extends State<SettingPrivacyPolicyView>
     animation = Tween<double>(
       begin: 0.0,
       end: 10.0,
-    ).animate(animationController);
+    ).animate(animationController!);
   }
 
-  AboutUsRepository repo1;
-  PsValueHolder valueHolder;
+  AboutUsRepository? repo1;
+  PsValueHolder? valueHolder;
   @override
   Widget build(BuildContext context) {
     repo1 = Provider.of<AboutUsRepository>(context);
@@ -70,8 +70,8 @@ class _SettingPrivacyPolicyViewState extends State<SettingPrivacyPolicyView>
                     : '',
         initProvider: () {
           return AboutUsProvider(
-            repo: repo1,
-            psValueHolder: valueHolder,
+            repo: repo1!,
+            psValueHolder: valueHolder!,
           );
         },
         onProviderReady: (AboutUsProvider provider) {
@@ -79,15 +79,15 @@ class _SettingPrivacyPolicyViewState extends State<SettingPrivacyPolicyView>
           _aboutUsProvider = provider;
         },
         builder:
-            (BuildContext context, AboutUsProvider provider, Widget child) {
+            (BuildContext context, AboutUsProvider provider, Widget? child) {
           if (provider.aboutUsList != null &&
               provider.aboutUsList.data != null &&
-              provider.aboutUsList.data.isNotEmpty) {
+              provider.aboutUsList.data!.isNotEmpty) {
             return Padding(
               padding: const EdgeInsets.all(PsDimens.space10),
               child: SingleChildScrollView(
                 child: HtmlWidget(
-                  provider.aboutUsList.data[0].privacypolicy
+                  provider.aboutUsList.data![0].privacypolicy!
                 ),
               ),
             );

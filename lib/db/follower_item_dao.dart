@@ -22,7 +22,7 @@ class FollowerItemDao extends PsDao<FollowerItem> {
 
   @override
   String getPrimaryKey(FollowerItem object) {
-    return object.id;
+    return object.id!;
   }
 
   @override

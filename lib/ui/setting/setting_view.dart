@@ -9,7 +9,7 @@ import 'package:dynamic_theme/dynamic_theme.dart';
 import 'package:flutter/material.dart';
 
 class SettingView extends StatefulWidget {
-  const SettingView({Key key, @required this.animationController})
+  const SettingView({Key? key, required this.animationController})
       : super(key: key);
   final AnimationController animationController;
   @override
@@ -67,7 +67,7 @@ class _SettingViewState extends State<SettingView> {
           ],
         ),
       ),
-      builder: (BuildContext context, Widget child) {
+      builder: (BuildContext context, Widget? child) {
         return FadeTransition(
           opacity: animation,
           child: Transform(
@@ -302,9 +302,9 @@ class _SettingNotificationWidget extends StatelessWidget {
 }
 
 class _SettingDarkAndWhiteModeWidget extends StatefulWidget {
-  const _SettingDarkAndWhiteModeWidget({Key key, this.animationController})
+  const _SettingDarkAndWhiteModeWidget({Key? key, this.animationController})
       : super(key: key);
-  final AnimationController animationController;
+  final AnimationController? animationController;
   @override
   __SettingDarkAndWhiteModeWidgetState createState() =>
       __SettingDarkAndWhiteModeWidgetState();

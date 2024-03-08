@@ -9,7 +9,7 @@ import 'package:flutter/cupertino.dart';
 
 class NotificationProvider extends PsProvider {
   NotificationProvider(
-      {@required NotificationRepository repo, @required this.psValueHolder,int limit = 0})
+      {required NotificationRepository repo, required this.psValueHolder,int limit = 0})
       : super(repo, limit) {
     _repo = repo;
     //isDispose = false;

@@ -41,7 +41,7 @@ class CategoryParameterHolder extends PsHolder<dynamic> {
     String result = '';
 
     if (orderBy != '') {
-      result += orderBy + ':';
+      result += orderBy !+ ':';
     }
 
     return result;

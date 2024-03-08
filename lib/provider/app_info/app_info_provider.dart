@@ -10,7 +10,7 @@ import 'package:flutterbuyandsell/viewobject/holder/app_info_parameter_holder.da
 import 'package:flutterbuyandsell/viewobject/ps_app_info.dart';
 
 class AppInfoProvider extends PsProvider {
-  AppInfoProvider({@required AppInfoRepository repo, this.psValueHolder,int limit = 0 })
+  AppInfoProvider({required AppInfoRepository repo, this.psValueHolder,int limit = 0 })
       : super(repo,limit) {
     _repo = repo;
     print('App Info Provider: $hashCode');
@@ -18,7 +18,7 @@ class AppInfoProvider extends PsProvider {
   }
 
   AppInfoRepository _repo;
-  PsValueHolder psValueHolder;
+  PsValueHolder? psValueHolder;
 
   PsResource<PSAppInfo> _psAppInfo =
       PsResource<PSAppInfo>(PsStatus.NOACTION, '', null);
@@ -46,10 +46,10 @@ class AppInfoProvider extends PsProvider {
   Future<void> loadDeleteHistorywithNotifier() async {
     isLoading = true;
 
-    if (psValueHolder == null || psValueHolder.startDate == null) {
+    if (psValueHolder == null || psValueHolder!.startDate == null) {
       realStartDate = DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
     } else {
-      realStartDate = psValueHolder.endDate;
+      realStartDate = psValueHolder!.endDate;
     
     realEndDate =
         DateFormat('yyyy-MM-dd hh:mm:ss').format(DateTime.now());
@@ -58,7 +58,7 @@ class AppInfoProvider extends PsProvider {
           startDate: realStartDate,
           endDate: realEndDate,
           userId: Utils.checkUserLoginId(
-                psValueHolder));
+                psValueHolder!));
 
     final PsResource<PSAppInfo> psAppInfo =
         await _repo.postDeleteHistory(appInfoParameterHolder.toMap());

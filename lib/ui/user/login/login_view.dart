@@ -17,7 +17,7 @@ import 'package:provider/provider.dart';
 
 class LoginView extends StatefulWidget {
   const LoginView({
-    Key key,
+    Key? key,
     this.animationController,
     this.animation,
     this.onProfileSelected,
@@ -28,9 +28,9 @@ class LoginView extends StatefulWidget {
     this.onGoogleSignInSelected,
   }) : super(key: key);
 
-  final AnimationController animationController;
-  final Animation<double> animation;
-  final Function onProfileSelected,
+  final AnimationController? animationController;
+  final Animation<double>? animation;
+  final Function? onProfileSelected,
       onForgotPasswordSelected,
       onSignInSelected,
       onPhoneSignInSelected,
@@ -41,12 +41,12 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  UserRepository repo1;
-  PsValueHolder psValueHolder;
+  UserRepository? repo1;
+  PsValueHolder? psValueHolder;
 
   @override
   Widget build(BuildContext context) {
-    widget.animationController.forward();
+    widget.animationController!.forward();
     const Widget _spacingWidget = SizedBox(
       height: PsDimens.space28,
     );
@@ -59,21 +59,21 @@ class _LoginViewState extends State<LoginView> {
       lazy: false,
       create: (BuildContext context) {
         final UserProvider provider =
-            UserProvider(repo: repo1, psValueHolder: psValueHolder);
+            UserProvider(repo: repo1!, psValueHolder: psValueHolder!);
         print(provider.getCurrentFirebaseUser());
         return provider;
       },
       child: Consumer<UserProvider>(
-          builder: (BuildContext context, UserProvider provider, Widget child) {
+          builder: (BuildContext context, UserProvider provider, Widget? child) {
         return AnimatedBuilder(
-          animation: widget.animationController,
+          animation: widget.animationController!,
           child: Column(
             children: <Widget>[
               _HeaderIconAndTextWidget(),
               _TextFieldAndSignInButtonWidget(
                 provider: provider,
                 text: Utils.getString(context, 'login__submit'),
-                onProfileSelected: widget.onProfileSelected,
+                onProfileSelected: widget.onProfileSelected!,
               ),
               _spacingWidget,
               _DividerORWidget(),
@@ -93,36 +93,36 @@ class _LoginViewState extends State<LoginView> {
               ),
               if (PsConfig.showPhoneLogin)
                 _LoginWithPhoneWidget(
-                  onPhoneSignInSelected: widget.onPhoneSignInSelected,
+                  onPhoneSignInSelected: widget.onPhoneSignInSelected!,
                   provider: provider,
                 ),
               if (PsConfig.showFacebookLogin)
                 _LoginWithFbWidget(
                     userProvider: provider,
-                    onFbSignInSelected: widget.onFbSignInSelected),
+                    onFbSignInSelected: widget.onFbSignInSelected!),
               if (PsConfig.showGoogleLogin)
                 _LoginWithGoogleWidget(
                     userProvider: provider,
-                    onGoogleSignInSelected: widget.onGoogleSignInSelected),
+                    onGoogleSignInSelected: widget.onGoogleSignInSelected!),
               if (Utils.isAppleSignInAvailable == 1 && Platform.isIOS)
                 _LoginWithAppleIdWidget(
-                    onAppleIdSignInSelected: widget.onGoogleSignInSelected),
+                    onAppleIdSignInSelected: widget.onGoogleSignInSelected!),
               _spacingWidget,
               _ForgotPasswordAndRegisterWidget(
                 provider: provider,
-                animationController: widget.animationController,
-                onForgotPasswordSelected: widget.onForgotPasswordSelected,
-                onSignInSelected: widget.onSignInSelected,
+                animationController: widget.animationController!,
+                onForgotPasswordSelected: widget.onForgotPasswordSelected!,
+                onSignInSelected: widget.onSignInSelected!,
               ),
               _spacingWidget,
             ],
           ),
-          builder: (BuildContext context, Widget child) {
+          builder: (BuildContext context, Widget? child) {
             return FadeTransition(
-                opacity: widget.animation,
+                opacity: widget.animation!,
                 child: Transform(
                     transform: Matrix4.translationValues(
-                        0.0, 100 * (1.0 - widget.animation.value), 0.0),
+                        0.0, 100 * (1.0 - widget.animation!.value), 0.0),
                     child: SingleChildScrollView(child: child)));
           },
         );
@@ -133,7 +133,7 @@ class _LoginViewState extends State<LoginView> {
 
 class _TermsAndConCheckbox extends StatefulWidget {
   const _TermsAndConCheckbox(
-      {@required this.provider, @required this.onCheckBoxClick});
+      {required this.provider, required this.onCheckBoxClick});
 
   final UserProvider provider;
   final Function onCheckBoxClick;
@@ -153,7 +153,7 @@ class __TermsAndConCheckboxState extends State<_TermsAndConCheckbox> {
         Checkbox(
           activeColor: PsColors.mainColor,
           value: widget.provider.isCheckBoxSelect,
-          onChanged: (bool value) {
+          onChanged: (bool? value) {
             widget.onCheckBoxClick();
           },
         ),
@@ -190,7 +190,7 @@ class _HeaderIconAndTextWidget extends StatelessWidget {
       Utils.getString(context, 'app_name'),
       style: Theme.of(context)
           .textTheme
-          .subtitle1
+          .subtitle1!
           .copyWith(fontWeight: FontWeight.bold, color: PsColors.mainColor),
     );
 
@@ -221,14 +221,14 @@ class _HeaderIconAndTextWidget extends StatelessWidget {
 
 class _TextFieldAndSignInButtonWidget extends StatefulWidget {
   const _TextFieldAndSignInButtonWidget({
-    @required this.provider,
-    @required this.text,
+    required this.provider,
+    required this.text,
     this.onProfileSelected,
   });
 
   final UserProvider provider;
   final String text;
-  final Function onProfileSelected;
+  final Function? onProfileSelected;
 
   @override
   __CardWidgetState createState() => __CardWidgetState();
@@ -257,14 +257,14 @@ class __CardWidgetState extends State<_TextFieldAndSignInButtonWidget> {
                 margin: _marginEdgeInsetsforCard,
                 child: TextField(
                   controller: emailController,
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(),
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(),
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: Utils.getString(context, 'login__email'),
                       hintStyle: Theme.of(context)
                           .textTheme
-                          .bodyText2
+                          .bodyText2!
                           .copyWith(color: PsColors.textPrimaryLightColor),
                       icon: Icon(Icons.email,
                           color: Theme.of(context).iconTheme.color)),
@@ -278,13 +278,13 @@ class __CardWidgetState extends State<_TextFieldAndSignInButtonWidget> {
                 child: TextField(
                   controller: passwordController,
                   obscureText: true,
-                  style: Theme.of(context).textTheme.button.copyWith(),
+                  style: Theme.of(context).textTheme.button!.copyWith(),
                   decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: Utils.getString(context, 'login__password'),
                       hintStyle: Theme.of(context)
                           .textTheme
-                          .button
+                          .button!
                           .copyWith(color: PsColors.textPrimaryLightColor),
                       icon: Icon(Icons.lock,
                           color: Theme.of(context).iconTheme.color)),
@@ -317,7 +317,7 @@ class __CardWidgetState extends State<_TextFieldAndSignInButtonWidget> {
                     context,
                     emailController.text.trim(),
                     passwordController.text,
-                    widget.onProfileSelected);
+                    widget.onProfileSelected!);
                 }else{
                   callWarningDialog(context,
                   Utils.getString(context, 'warning_dialog__email_format'));
@@ -358,7 +358,7 @@ class _DividerORWidget extends StatelessWidget {
 
     final Widget _textWidget = Text(
       'OR',
-      style: Theme.of(context).textTheme.subtitle1.copyWith(
+      style: Theme.of(context).textTheme.subtitle1!.copyWith(
             color: PsColors.white,
           ),
     );
@@ -377,7 +377,7 @@ class _DividerORWidget extends StatelessWidget {
 
 class _LoginWithPhoneWidget extends StatefulWidget {
   const _LoginWithPhoneWidget(
-      {@required this.onPhoneSignInSelected, @required this.provider});
+      {required this.onPhoneSignInSelected, required this.provider});
   final Function onPhoneSignInSelected;
   final UserProvider provider;
 
@@ -426,7 +426,7 @@ class __LoginWithPhoneWidgetState extends State<_LoginWithPhoneWidget> {
 
 class _LoginWithFbWidget extends StatefulWidget {
   const _LoginWithFbWidget(
-      {@required this.userProvider, @required this.onFbSignInSelected});
+      {required this.userProvider, required this.onFbSignInSelected});
   final UserProvider userProvider;
   final Function onFbSignInSelected;
 
@@ -458,7 +458,7 @@ class __LoginWithFbWidgetState extends State<_LoginWithFbWidget> {
 
 class _LoginWithGoogleWidget extends StatefulWidget {
   const _LoginWithGoogleWidget(
-      {@required this.userProvider, @required this.onGoogleSignInSelected});
+      {required this.userProvider, required this.onGoogleSignInSelected});
   final UserProvider userProvider;
   final Function onGoogleSignInSelected;
 
@@ -490,7 +490,7 @@ class __LoginWithGoogleWidgetState extends State<_LoginWithGoogleWidget> {
 }
 
 class _LoginWithAppleIdWidget extends StatelessWidget {
-  const _LoginWithAppleIdWidget({@required this.onAppleIdSignInSelected});
+  const _LoginWithAppleIdWidget({required this.onAppleIdSignInSelected});
 
   final Function onAppleIdSignInSelected;
 
@@ -522,17 +522,17 @@ class _LoginWithAppleIdWidget extends StatelessWidget {
 
 class _ForgotPasswordAndRegisterWidget extends StatefulWidget {
   const _ForgotPasswordAndRegisterWidget(
-      {Key key,
+      {Key? key,
       this.provider,
       this.animationController,
       this.onForgotPasswordSelected,
       this.onSignInSelected})
       : super(key: key);
 
-  final AnimationController animationController;
-  final Function onForgotPasswordSelected;
-  final Function onSignInSelected;
-  final UserProvider provider;
+  final AnimationController? animationController;
+  final Function? onForgotPasswordSelected;
+  final Function? onSignInSelected;
+  final UserProvider? provider;
 
   @override
   __ForgotPasswordAndRegisterWidgetState createState() =>
@@ -556,14 +556,14 @@ class __ForgotPasswordAndRegisterWidgetState
                 child: Text(
                   Utils.getString(context, 'login__forgot_password'),
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.button.copyWith(
+                  style: Theme.of(context).textTheme.button!.copyWith(
                         color: PsColors.mainColor,
                       ),
                 ),
               ),
               onTap: () {
                 if (widget.onForgotPasswordSelected != null) {
-                  widget.onForgotPasswordSelected();
+                  widget.onForgotPasswordSelected!();
                 } else {
                   Navigator.pushReplacementNamed(
                     context,
@@ -581,7 +581,7 @@ class __ForgotPasswordAndRegisterWidgetState
                   child: Text(
                     Utils.getString(context, 'login__sign_up'),
                     textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.button.copyWith(
+                    style: Theme.of(context).textTheme.button!.copyWith(
                           color: PsColors.mainColor,
                         ),
                   ),
@@ -589,7 +589,7 @@ class __ForgotPasswordAndRegisterWidgetState
               ),
               onTap: () async {
                 if (widget.onSignInSelected != null) {
-                  widget.onSignInSelected();
+                  widget.onSignInSelected!();
                 } else {
                   final dynamic returnData =
                       await Navigator.pushReplacementNamed(
@@ -598,13 +598,13 @@ class __ForgotPasswordAndRegisterWidgetState
                   );
                   if (returnData != null && returnData is User) {
                     final User user = returnData;
-                    widget.provider.psValueHolder =
+                    widget.provider!.psValueHolder =
                         Provider.of<PsValueHolder>(context, listen: false);
-                    widget.provider.psValueHolder.loginUserId = user.userId;
-                    widget.provider.psValueHolder.userIdToVerify = '';
-                    widget.provider.psValueHolder.userNameToVerify = '';
-                    widget.provider.psValueHolder.userEmailToVerify = '';
-                    widget.provider.psValueHolder.userPasswordToVerify = '';
+                    widget.provider!.psValueHolder.loginUserId = user.userId!;
+                    widget.provider!.psValueHolder.userIdToVerify = '';
+                    widget.provider!.psValueHolder.userNameToVerify = '';
+                    widget.provider!.psValueHolder.userEmailToVerify = '';
+                    widget.provider!.psValueHolder.userPasswordToVerify = '';
                     Navigator.pop(context, user);
                   }
                 }

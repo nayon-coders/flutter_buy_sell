@@ -7,23 +7,23 @@ import 'package:flutterbuyandsell/viewobject/offline_payment.dart';
 
 class OfflinePaymenItem extends StatelessWidget {
   const OfflinePaymenItem({
-    Key key,
-    @required this.offlinePayment,
+    Key? key,
+    required this.offlinePayment,
     this.animationController,
     this.animation,
     this.onTap,
   }) : super(key: key);
 
   final OfflinePayment offlinePayment;
-  final Function onTap;
-  final AnimationController animationController;
-  final Animation<double> animation;
+  final VoidCallback? onTap;
+  final AnimationController? animationController;
+  final Animation<double>? animation;
 
   @override
   Widget build(BuildContext context) {
-    animationController.forward();
+    animationController!.forward();
     return AnimatedBuilder(
-        animation: animationController,
+        animation: animationController!,
         child: InkWell(
           onTap: onTap,
           child: Container(
@@ -42,7 +42,7 @@ class OfflinePaymenItem extends StatelessWidget {
                           children: <Widget>[
                             PsNetworkImageWithUrl(
                               photoKey: '',
-                              imagePath: offlinePayment.defaultIcon.imgPath,
+                              imagePath: offlinePayment.defaultIcon!.imgPath!,
                               width: PsDimens.space64,
                               height: PsDimens.space64,
                               onTap: onTap,
@@ -55,13 +55,13 @@ class OfflinePaymenItem extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                Text(offlinePayment.title,
+                                Text(offlinePayment.title!,
                                     textAlign: TextAlign.start,
                                     style: Theme.of(context).textTheme.bodyText2),
                                 const SizedBox(
                                   height: PsDimens.space8,
                                 ),
-                                Text(offlinePayment.description,
+                                Text(offlinePayment.description!,
                                     textAlign: TextAlign.start,
                                     style: Theme.of(context).textTheme.bodyText1,
                               ),
@@ -73,12 +73,12 @@ class OfflinePaymenItem extends StatelessWidget {
                     ),
                   ))),
         ),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return FadeTransition(
-            opacity: animation,
+            opacity: animation!,
             child: Transform(
                 transform: Matrix4.translationValues(
-                    0.0, 100 * (1.0 - animation.value), 0.0),
+                    0.0, 100 * (1.0 - animation!.value), 0.0),
                 child: child),
           );
         });

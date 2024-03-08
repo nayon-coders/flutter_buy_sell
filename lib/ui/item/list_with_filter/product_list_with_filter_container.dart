@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 
 class ProductListWithFilterContainerView extends StatefulWidget {
   const ProductListWithFilterContainerView(
-      {@required this.productParameterHolder, @required this.appBarTitle});
+      {required this.productParameterHolder, required this.appBarTitle});
   final ProductParameterHolder productParameterHolder;
   final String appBarTitle;
   @override
@@ -18,8 +18,8 @@ class ProductListWithFilterContainerView extends StatefulWidget {
 class _ProductListWithFilterContainerViewState
     extends State<ProductListWithFilterContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  String appBarTitleName;
+  AnimationController? animationController;
+  String? appBarTitleName;
   @override
   void initState() {
     animationController =
@@ -29,7 +29,7 @@ class _ProductListWithFilterContainerViewState
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -42,7 +42,7 @@ class _ProductListWithFilterContainerViewState
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -69,14 +69,14 @@ class _ProductListWithFilterContainerViewState
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
-                .headline6
+                .headline6!
                 .copyWith(fontWeight: FontWeight.bold)
                 .copyWith(color: PsColors.mainColorWithWhite),
           ),
           elevation: 1,
         ),
         body: ProductListWithFilterView(
-          animationController: animationController,
+          animationController: animationController!,
           productParameterHolder: widget.productParameterHolder,
           changeAppBarTitle: changeAppBarTitle,
         ),

@@ -13,16 +13,16 @@ import 'package:provider/provider.dart';
 
 class FilterLocationView extends StatefulWidget {
   const FilterLocationView({this.locationParameterHolder});
-  final LocationParameterHolder locationParameterHolder;
+  final LocationParameterHolder? locationParameterHolder;
 
   @override
   _FilterLocationViewState createState() => _FilterLocationViewState();
 }
 
 // ignore: unused_element
-PsValueHolder _psValueHolder;
-AnimationController animationController;
-TextEditingController userNameController;
+PsValueHolder? _psValueHolder;
+AnimationController? animationController;
+TextEditingController? userNameController;
 
 class _FilterLocationViewState extends State<FilterLocationView>
     with SingleTickerProviderStateMixin {
@@ -35,7 +35,7 @@ class _FilterLocationViewState extends State<FilterLocationView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -44,10 +44,10 @@ class _FilterLocationViewState extends State<FilterLocationView>
     _psValueHolder = Provider.of<PsValueHolder>(context);
     userNameController = TextEditingController();
 
-    userNameController.text = widget.locationParameterHolder.keyword;
+    userNameController!.text = widget.locationParameterHolder!.keyword;
 
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -61,13 +61,13 @@ class _FilterLocationViewState extends State<FilterLocationView>
 
     dynamic updateOrderByData(String filterName){
       setState(() {
-        widget.locationParameterHolder.orderBy = filterName;
+        widget.locationParameterHolder!.orderBy = filterName;
       });
     }
 
     dynamic updateOrderTypeData(String filterName){
       setState(() {
-        widget.locationParameterHolder.orderType = filterName;
+        widget.locationParameterHolder!.orderType = filterName;
       });
     }
 
@@ -104,9 +104,9 @@ class _FilterLocationViewState extends State<FilterLocationView>
                 child: Row(
                   children: <Widget>[
                     Radio<String>(
-                      value: widget.locationParameterHolder.orderBy,
+                      value: widget.locationParameterHolder!.orderBy,
                       groupValue: PsConst.FILTERING__ORDERING,
-                      onChanged: (String name) {
+                      onChanged: (String? name) {
                         updateOrderByData(PsConst.FILTERING__ORDERING);
                       },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -116,7 +116,7 @@ class _FilterLocationViewState extends State<FilterLocationView>
                           child: Text(
                             Utils.getString(context, 'filter_location__default'),
                             style:
-                                Theme.of(context).textTheme.bodyText2.copyWith(),
+                                Theme.of(context).textTheme.bodyText2!.copyWith(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -128,9 +128,9 @@ class _FilterLocationViewState extends State<FilterLocationView>
                 child: Row(
                   children: <Widget>[
                     Radio<String>(
-                      value: widget.locationParameterHolder.orderBy,
+                      value: widget.locationParameterHolder!.orderBy,
                       groupValue: PsConst.FILTERING__ADDED_DATE,
-                      onChanged: (String name) {
+                      onChanged: (String? name) {
                         updateOrderByData(PsConst.FILTERING__ADDED_DATE);
                       },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -140,7 +140,7 @@ class _FilterLocationViewState extends State<FilterLocationView>
                           child: Text(
                             Utils.getString(context, 'filter_location__latest'),
                             style:
-                                Theme.of(context).textTheme.bodyText2.copyWith(),
+                                Theme.of(context).textTheme.bodyText2!.copyWith(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -158,9 +158,9 @@ class _FilterLocationViewState extends State<FilterLocationView>
                 child: Row(
                   children: <Widget>[
                     Radio<String>(
-                      value: widget.locationParameterHolder.orderType,
+                      value: widget.locationParameterHolder!.orderType,
                       groupValue: PsConst.FILTERING__ASC,
-                      onChanged: (String name) {
+                      onChanged: (String? name) {
                         updateOrderTypeData(PsConst.FILTERING__ASC);
                       },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -170,7 +170,7 @@ class _FilterLocationViewState extends State<FilterLocationView>
                           child: Text(
                             Utils.getString(context, 'filter_location__asc'),
                             style:
-                                Theme.of(context).textTheme.bodyText2.copyWith(),
+                                Theme.of(context).textTheme.bodyText2!.copyWith(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -182,9 +182,9 @@ class _FilterLocationViewState extends State<FilterLocationView>
                 child: Row(
                   children: <Widget>[
                     Radio<String>(
-                      value: widget.locationParameterHolder.orderType,
+                      value: widget.locationParameterHolder!.orderType,
                       groupValue: PsConst.FILTERING__DESC,
-                      onChanged: (String name) {
+                      onChanged: (String? name) {
                         updateOrderTypeData(PsConst.FILTERING__DESC);
                       },
                       materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
@@ -194,7 +194,7 @@ class _FilterLocationViewState extends State<FilterLocationView>
                           child: Text(
                             Utils.getString(context, 'filter_location__desc'),
                             style:
-                                Theme.of(context).textTheme.bodyText2.copyWith(),
+                                Theme.of(context).textTheme.bodyText2!.copyWith(),
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
@@ -211,7 +211,7 @@ class _FilterLocationViewState extends State<FilterLocationView>
               width: double.infinity,
               titleText: Utils.getString(context, 'filter_location__filter_button'),
               onPressed: () async {
-                widget.locationParameterHolder.keyword = userNameController.text;
+                widget.locationParameterHolder!.keyword = userNameController!.text;
                 Navigator.pop(context,widget.locationParameterHolder);
               }),
             ),

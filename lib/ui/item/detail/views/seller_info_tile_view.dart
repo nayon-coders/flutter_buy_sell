@@ -14,8 +14,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class SellerInfoTileView extends StatelessWidget {
   const SellerInfoTileView({
-    Key key,
-    @required this.itemDetail,
+    Key? key,
+    required this.itemDetail,
   }) : super(key: key);
 
   final ItemDetailProvider itemDetail;
@@ -38,8 +38,8 @@ class SellerInfoTileView extends StatelessWidget {
           Navigator.pushNamed(context, RoutePaths.userDetail,
               // arguments: itemDetail.itemDetail.data.addedUserId
               arguments: UserIntentHolder(
-                  userId: itemDetail.itemDetail.data.addedUserId,
-                  userName: itemDetail.itemDetail.data.user.userName));
+                  userId: itemDetail.itemDetail.data!.addedUserId,
+                  userName: itemDetail.itemDetail.data!.user!.userName));
         },
         child: Container(
           margin: const EdgeInsets.only(
@@ -68,7 +68,7 @@ class SellerInfoTileView extends StatelessWidget {
                           left: PsDimens.space16,
                           right: PsDimens.space16),
                       child: ImageAndTextWidget(
-                        data: itemDetail.itemDetail.data,
+                        data: itemDetail.itemDetail.data!,
                         itemDetail: itemDetail,
                       )),
                 ],
@@ -85,9 +85,9 @@ class SellerInfoTileView extends StatelessWidget {
 
 class ImageAndTextWidget extends StatelessWidget {
   const ImageAndTextWidget({
-    Key key,
-    @required this.data,
-    @required this.itemDetail,
+    Key? key,
+    required this.data,
+    required this.itemDetail,
   }) : super(key: key);
 
   final Product data;
@@ -122,7 +122,7 @@ class ImageAndTextWidget extends StatelessWidget {
           height: 50,
           child: PsNetworkCircleImageForUser(
             photoKey: '',
-            imagePath: data.user.userProfilePhoto,
+            imagePath: data.user!.userProfilePhoto,
             // width: 50,
             // height: 50,
             boxfit: BoxFit.cover,
@@ -130,7 +130,7 @@ class ImageAndTextWidget extends StatelessWidget {
               Navigator.pushNamed(context, RoutePaths.userDetail,
                   // arguments: data.addedUserId
                   arguments: UserIntentHolder(
-                      userId: data.addedUserId, userName: data.user.userName));
+                      userId: data.addedUserId, userName: data.user!.userName));
             },
           ),
         ),
@@ -142,12 +142,12 @@ class ImageAndTextWidget extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(
-                  data.user.userName == ''
+                  data.user!.userName == ''
                       ? Utils.getString(context, 'default__user_name')
-                      : data.user.userName,
+                      : data.user!.userName!,
                   style: Theme.of(context).textTheme.subtitle2),
               _spacingWidget,
-              if (itemDetail.itemDetail.data.user.isShowPhone == '1')
+              if (itemDetail.itemDetail.data!.user!.isShowPhone == '1')
                 Visibility(
                   child: Row(
                     children: <Widget>[
@@ -159,15 +159,15 @@ class ImageAndTextWidget extends StatelessWidget {
                       ),
                       InkWell(
                         child: Text(
-                          data.user.userPhone,
+                          data.user!.userPhone!,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                         onTap: () async {
-                          if (data.user.userPhone != null &&
-                              data.user.userPhone != '') {
+                          if (data.user!.userPhone != null &&
+                              data.user!.userPhone != '') {
                             if (await canLaunch(
-                                'tel://${data.user.userPhone}')) {
-                              await launch('tel://${data.user.userPhone}');
+                                'tel://${data.user!.userPhone}')) {
+                              await launch('tel://${data.user!.userPhone}');
                             } else {
                               throw 'Could not Call Phone Number 1';
                             }
@@ -177,7 +177,7 @@ class ImageAndTextWidget extends StatelessWidget {
                     ],
                   ),
                 ),
-                 if (itemDetail.itemDetail.data.user.isShowEmail == '1')
+                 if (itemDetail.itemDetail.data!.user!.isShowEmail == '1')
                 Visibility(
                   child: Row(
                     children: <Widget>[
@@ -189,7 +189,7 @@ class ImageAndTextWidget extends StatelessWidget {
                       ),
                     
                         Text(
-                          data.user.userEmail,
+                          data.user!.userEmail!,
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                        
@@ -204,10 +204,10 @@ class ImageAndTextWidget extends StatelessWidget {
               _spacingWidget,
               InkWell(
                 child: Text(
-                  data.user.addedDate == ''
+                  data.user!.addedDate == ''
                       ? ''
-                      : Utils.getDateFormat(data.user.addedDate),
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(),
+                      : Utils.getDateFormat(data.user!.addedDate!),
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(),
                 ),
                 onTap: () async {},
               ),
@@ -225,8 +225,8 @@ class ImageAndTextWidget extends StatelessWidget {
 
 class _RatingWidget extends StatelessWidget {
   const _RatingWidget({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
   }) : super(key: key);
 
   final Product data;
@@ -235,7 +235,7 @@ class _RatingWidget extends StatelessWidget {
     return Row(
       children: <Widget>[
         Text(
-          data.user.overallRating,
+          data.user!.overallRating!,
           style: Theme.of(context).textTheme.bodyText1,
         ),
         const SizedBox(
@@ -244,11 +244,11 @@ class _RatingWidget extends StatelessWidget {
         InkWell(
           onTap: () {
             Navigator.pushNamed(context, RoutePaths.ratingList,
-                arguments: data.user.userId);
+                arguments: data.user!.userId);
           },
           child: SmoothStarRating(
-              key: Key(data.user.ratingDetail.totalRatingValue),
-              rating: double.parse(data.user.ratingDetail.totalRatingValue),
+              key: Key(data.user!.ratingDetail!.totalRatingValue!),
+              rating: double.parse(data.user!.ratingDetail!.totalRatingValue!),
               allowHalfRating: false,
               isReadOnly: true,
               starCount: 5,
@@ -262,7 +262,7 @@ class _RatingWidget extends StatelessWidget {
           width: PsDimens.space8,
         ),
         Text(
-          '( ${data.user.ratingCount} )',
+          '( ${data.user!.ratingCount} )',
           style: Theme.of(context).textTheme.bodyText1,
         ),
       ],
@@ -272,8 +272,8 @@ class _RatingWidget extends StatelessWidget {
 
 class _VerifiedWidget extends StatelessWidget {
   const _VerifiedWidget({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
   }) : super(key: key);
 
   final Product data;
@@ -285,7 +285,7 @@ class _VerifiedWidget extends StatelessWidget {
           Utils.getString(context, 'seller_info_tile__verified'),
           style: Theme.of(context).textTheme.bodyText1,
         ),
-        if (data.user.facebookVerify == '1')
+        if (data.user!.facebookVerify == '1')
           const Padding(
             padding:
                 EdgeInsets.only(left: PsDimens.space4, right: PsDimens.space4),
@@ -295,7 +295,7 @@ class _VerifiedWidget extends StatelessWidget {
           )
         else
           Container(),
-        if (data.user.googleVerify == '1')
+        if (data.user!.googleVerify == '1')
           const Padding(
             padding:
                 EdgeInsets.only(left: PsDimens.space4, right: PsDimens.space4),
@@ -305,7 +305,7 @@ class _VerifiedWidget extends StatelessWidget {
           )
         else
           Container(),
-        if (data.user.phoneVerify == '1')
+        if (data.user!.phoneVerify == '1')
           const Padding(
             padding:
                 EdgeInsets.only(left: PsDimens.space4, right: PsDimens.space4),
@@ -315,7 +315,7 @@ class _VerifiedWidget extends StatelessWidget {
           )
         else
           Container(),
-        if (data.user.emailVerify == '1')
+        if (data.user!.emailVerify == '1')
           const Padding(
             padding:
                 EdgeInsets.only(left: PsDimens.space4, right: PsDimens.space4),

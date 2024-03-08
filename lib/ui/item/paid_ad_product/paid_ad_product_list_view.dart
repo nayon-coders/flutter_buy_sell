@@ -16,7 +16,7 @@ import 'package:flutterbuyandsell/viewobject/product.dart';
 import 'package:provider/provider.dart';
 
 class PaidAdProductListView extends StatefulWidget {
-  const PaidAdProductListView({Key key, @required this.animationController})
+  const PaidAdProductListView({Key? key, required this.animationController})
       : super(key: key);
   final AnimationController animationController;
   @override
@@ -27,7 +27,7 @@ class _PaidAdProductListView extends State<PaidAdProductListView>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  PaidAdProductProvider paidAdItemProvider;
+  PaidAdProductProvider? paidAdItemProvider;
 
   @override
   void dispose() {
@@ -46,8 +46,8 @@ class _PaidAdProductListView extends State<PaidAdProductListView>
     super.initState();
   }
 
-  ProductRepository repo1;
-  PsValueHolder psValueHolder;
+  ProductRepository? repo1;
+  PsValueHolder? psValueHolder;
   dynamic data;
   bool isConnectedToInternet = false;
   bool isSuccessfullyLoaded = true;
@@ -77,17 +77,17 @@ class _PaidAdProductListView extends State<PaidAdProductListView>
         lazy: false,
         create: (BuildContext context) {
           paidAdItemProvider = PaidAdProductProvider(
-              repo: repo1, limit: PsConfig.POPULAR_ITEM_LOADING_LIMIT);
-          paidAdItemProvider.productPaidAdParameterHolder.itemLocationId =
-              psValueHolder.locationId;
-          final String loginUserId = Utils.checkUserLoginId(psValueHolder);
-          paidAdItemProvider.loadProductList(
-              loginUserId, paidAdItemProvider.productPaidAdParameterHolder);
-          return paidAdItemProvider;
+              repo: repo1!, limit: PsConfig.POPULAR_ITEM_LOADING_LIMIT);
+          paidAdItemProvider!.productPaidAdParameterHolder.itemLocationId =
+              psValueHolder!.locationId;
+          final String loginUserId = Utils.checkUserLoginId(psValueHolder!);
+          paidAdItemProvider!.loadProductList(
+              loginUserId, paidAdItemProvider!.productPaidAdParameterHolder);
+          return paidAdItemProvider!;
         },
         child: Consumer<PaidAdProductProvider>(
           builder: (BuildContext context,
-              PaidAdProductProvider paidAdItemProvider, Widget child) {
+              PaidAdProductProvider paidAdItemProvider, Widget? child) {
             return Column(
               children: <Widget>[
                 const PsAdMobBannerWidget(),
@@ -116,15 +116,15 @@ class _PaidAdProductListView extends State<PaidAdProductListView>
                                       if (paidAdItemProvider.productList.data !=
                                               null ||
                                           paidAdItemProvider
-                                              .productList.data.isNotEmpty) {
+                                              .productList.data!.isNotEmpty) {
                                         final int count = paidAdItemProvider
-                                            .productList.data.length;
+                                            .productList.data!.length;
                                         return ProductVeticalListItem(
                                           coreTagKey: paidAdItemProvider
                                                   .hashCode
                                                   .toString() +
                                               paidAdItemProvider
-                                                  .productList.data[index].id,
+                                                  .productList.data![index].id!,
                                           animationController:
                                               widget.animationController,
                                           animation: Tween<double>(
@@ -139,11 +139,11 @@ class _PaidAdProductListView extends State<PaidAdProductListView>
                                             ),
                                           ),
                                           product: paidAdItemProvider
-                                              .productList.data[index],
+                                              .productList.data![index],
                                           onTap: () async {
                                             final Product product =
                                                 paidAdItemProvider
-                                                    .productList.data.reversed
+                                                    .productList.data!.reversed
                                                     .toList()[index];
                                             final ProductDetailIntentHolder
                                                 holder =
@@ -151,20 +151,20 @@ class _PaidAdProductListView extends State<PaidAdProductListView>
                                                     productId:
                                                         paidAdItemProvider
                                                             .productList
-                                                            .data[index]
+                                                            .data![index]
                                                             .id,
                                                     heroTagImage:
                                                         paidAdItemProvider
                                                                 .hashCode
                                                                 .toString() +
-                                                            product.id +
+                                                            product.id! +
                                                             PsConst
                                                                 .HERO_TAG__IMAGE,
                                                     heroTagTitle:
                                                         paidAdItemProvider
                                                                 .hashCode
                                                                 .toString() +
-                                                            product.id +
+                                                            product.id! +
                                                             PsConst
                                                                 .HERO_TAG__TITLE);
                                             await Navigator.pushNamed(context,
@@ -172,7 +172,7 @@ class _PaidAdProductListView extends State<PaidAdProductListView>
                                                 arguments: holder);
                                             final String loginUserId =
                                                 Utils.checkUserLoginId(
-                                                    psValueHolder);
+                                                    psValueHolder!);
                                             await paidAdItemProvider
                                                 .resetProductList(
                                                     loginUserId,
@@ -185,13 +185,13 @@ class _PaidAdProductListView extends State<PaidAdProductListView>
                                       }
                                     },
                                     childCount: paidAdItemProvider
-                                        .productList.data.length,
+                                        .productList.data!.length,
                                   ),
                                 ),
                               ]),
                           onRefresh: () {
                             final String loginUserId =
-                                Utils.checkUserLoginId(psValueHolder);
+                                Utils.checkUserLoginId(psValueHolder!);
                             return paidAdItemProvider.resetProductList(
                                 loginUserId,
                                 paidAdItemProvider

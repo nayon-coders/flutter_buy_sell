@@ -7,23 +7,23 @@ import 'package:flutterbuyandsell/viewobject/noti.dart';
 
 class NotiListItem extends StatelessWidget {
   const NotiListItem({
-    Key key,
-    @required this.noti,
+    Key? key,
+    required this.noti,
     this.animationController,
     this.animation,
     this.onTap,
   }) : super(key: key);
 
   final Noti noti;
-  final Function onTap;
-  final AnimationController animationController;
-  final Animation<double> animation;
+  final VoidCallback? onTap;
+  final AnimationController? animationController;
+  final Animation<double>? animation;
 
   @override
   Widget build(BuildContext context) {
-    animationController.forward();
+    animationController!.forward();
     return AnimatedBuilder(
-        animation: animationController,
+        animation: animationController!,
         child: GestureDetector(
           onTap: onTap,
           child: Container(
@@ -45,7 +45,7 @@ class NotiListItem extends StatelessWidget {
                           children: <Widget>[
                             PsNetworkImage(
                               photoKey: '',
-                              defaultPhoto: noti.defaultPhoto,
+                              defaultPhoto: noti.defaultPhoto!,
                               width: PsDimens.space64,
                               height: PsDimens.space64,
                               onTap: onTap,
@@ -54,7 +54,7 @@ class NotiListItem extends StatelessWidget {
                               width: PsDimens.space8,
                             ),
                             Expanded(
-                              child: Text(noti.message,
+                              child: Text(noti.message!,
                                   textAlign: TextAlign.start,
                                   style: Theme.of(context).textTheme.bodyText1),
                             ),
@@ -64,7 +64,7 @@ class NotiListItem extends StatelessWidget {
                           height: PsDimens.space8,
                         ),
                         Text(
-                          noti.addedDateStr,
+                          noti.addedDateStr!,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           textAlign: TextAlign.right,
@@ -74,12 +74,12 @@ class NotiListItem extends StatelessWidget {
                     ),
                   ))),
         ),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return FadeTransition(
-            opacity: animation,
+            opacity: animation!,
             child: Transform(
                 transform: Matrix4.translationValues(
-                    0.0, 100 * (1.0 - animation.value), 0.0),
+                    0.0, 100 * (1.0 - animation!.value), 0.0),
                 child: child),
           );
         });

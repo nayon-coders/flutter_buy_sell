@@ -40,19 +40,19 @@ import 'package:flutterbuyandsell/ui/common/smooth_star_rating_widget.dart';
 
 class ProfileView extends StatefulWidget {
   const ProfileView({
-    Key key,
+    Key? key,
     this.animationController,
-    @required this.flag,
+    required this.flag,
     this.userId,
-    @required this.scaffoldKey,
-    @required this.callLogoutCallBack,
+    required this.scaffoldKey,
+    required this.callLogoutCallBack,
     // @required this.scrollController,
     // @required this.animationControllerForFab
   }) : super(key: key);
-  final AnimationController animationController;
+  final AnimationController? animationController;
   final GlobalKey<ScaffoldState> scaffoldKey;
   final int flag;
-  final String userId;
+  final String? userId;
   final Function callLogoutCallBack;
   // final ScrollController scrollController;
   // final AnimationController animationControllerForFab;
@@ -61,16 +61,16 @@ class ProfileView extends StatefulWidget {
 }
 
 ScrollController scrollController = ScrollController();
-AnimationController animationControllerForFab;
+AnimationController? animationControllerForFab;
 
 class _ProfilePageState extends State<ProfileView>
     with SingleTickerProviderStateMixin {
-  UserRepository userRepository;
-  PsValueHolder psValueHolder;
-  UserProvider provider;
-  AddedItemProvider productProvider;
-  PendingProductProvider pendingProductProvider;
-  ProductRepository productRepository;
+  UserRepository? userRepository;
+  PsValueHolder? psValueHolder;
+  UserProvider? provider;
+  AddedItemProvider? productProvider;
+  PendingProductProvider? pendingProductProvider;
+  ProductRepository? productRepository;
 
   @override
   void initState() {
@@ -81,13 +81,13 @@ class _ProfilePageState extends State<ProfileView>
       if (scrollController.position.userScrollDirection ==
           ScrollDirection.reverse) {
         if (animationControllerForFab != null) {
-          animationControllerForFab.reverse();
+          animationControllerForFab!.reverse();
         }
       }
       if (scrollController.position.userScrollDirection ==
           ScrollDirection.forward) {
         if (animationControllerForFab != null) {
-          animationControllerForFab.forward();
+          animationControllerForFab!.forward();
         }
       }
     });
@@ -96,66 +96,66 @@ class _ProfilePageState extends State<ProfileView>
 
   @override
   Widget build(BuildContext context) {
-    widget.animationController.forward();
+    widget.animationController!.forward();
 
     userRepository = Provider.of<UserRepository>(context);
     psValueHolder = Provider.of<PsValueHolder>(context);
     productRepository = Provider.of<ProductRepository>(context);
-    provider = UserProvider(repo: userRepository, psValueHolder: psValueHolder);
+    provider = UserProvider(repo: userRepository!, psValueHolder: psValueHolder!);
     return MultiProvider(
         providers: <SingleChildWidget>[
           ChangeNotifierProvider<AddedItemProvider>(
               lazy: false,
               create: (BuildContext context) {
                 productProvider = AddedItemProvider(
-                    repo: productRepository, psValueHolder: psValueHolder);
-                if (productProvider.psValueHolder.loginUserId == null ||
-                    productProvider.psValueHolder.loginUserId == '') {
-                  productProvider.addedUserParameterHolder.addedUserId =
-                      widget.userId;
-                  productProvider.addedUserParameterHolder.status = '1';
-                  productProvider.loadItemList(
-                      widget.userId, productProvider.addedUserParameterHolder);
+                    repo: productRepository!, psValueHolder: psValueHolder);
+                if (productProvider!.psValueHolder!.loginUserId == null ||
+                    productProvider!.psValueHolder!.loginUserId == '') {
+                  productProvider!.addedUserParameterHolder.addedUserId =
+                      widget!.userId!;
+                  productProvider!.addedUserParameterHolder.status = '1';
+                  productProvider!.loadItemList(
+                      widget.userId!, productProvider!.addedUserParameterHolder);
                 } else {
-                  productProvider.addedUserParameterHolder.addedUserId =
-                      productProvider.psValueHolder.loginUserId;
-                  productProvider.addedUserParameterHolder.status = '1';
-                  productProvider.loadItemList(
-                      productProvider.psValueHolder.loginUserId,
-                      productProvider.addedUserParameterHolder);
+                  productProvider!.addedUserParameterHolder.addedUserId =
+                      productProvider!.psValueHolder!.loginUserId;
+                  productProvider!.addedUserParameterHolder.status = '1';
+                  productProvider!.loadItemList(
+                      productProvider!.psValueHolder!.loginUserId!,
+                      productProvider!.addedUserParameterHolder);
                 }
 
-                return productProvider;
+                return productProvider!;
               }),
           ChangeNotifierProvider<PendingProductProvider>(
               lazy: false,
               create: (BuildContext context) {
                 pendingProductProvider = PendingProductProvider(
-                    repo: productRepository, psValueHolder: psValueHolder);
-                if (pendingProductProvider.psValueHolder.loginUserId == null ||
-                    pendingProductProvider.psValueHolder.loginUserId == '') {
-                  pendingProductProvider.addedUserParameterHolder.addedUserId =
-                      widget.userId;
-                  pendingProductProvider.addedUserParameterHolder.status = '0';
-                  pendingProductProvider.loadProductList(widget.userId,
-                      pendingProductProvider.addedUserParameterHolder);
+                    repo: productRepository!, psValueHolder: psValueHolder);
+                if (pendingProductProvider!.psValueHolder!.loginUserId == null ||
+                    pendingProductProvider!.psValueHolder!.loginUserId == '') {
+                  pendingProductProvider!.addedUserParameterHolder.addedUserId =
+                      widget.userId!;
+                  pendingProductProvider!.addedUserParameterHolder.status = '0';
+                  pendingProductProvider!.loadProductList(widget.userId!,
+                      pendingProductProvider!.addedUserParameterHolder);
                 } else {
-                  pendingProductProvider.addedUserParameterHolder.addedUserId =
-                      pendingProductProvider.psValueHolder.loginUserId;
-                  pendingProductProvider.addedUserParameterHolder.status = '0';
-                  pendingProductProvider.loadProductList(
-                      provider.psValueHolder.loginUserId,
-                      pendingProductProvider.addedUserParameterHolder);
+                  pendingProductProvider!.addedUserParameterHolder.addedUserId =
+                      pendingProductProvider!.psValueHolder!.loginUserId!;
+                  pendingProductProvider!.addedUserParameterHolder.status = '0';
+                  pendingProductProvider!.loadProductList(
+                      provider!.psValueHolder.loginUserId,
+                      pendingProductProvider!.addedUserParameterHolder);
                 }
 
-                return pendingProductProvider;
+                return pendingProductProvider!;
               }),
         ],
         child: Scaffold(
           floatingActionButton: FadeTransition(
-            opacity: animationControllerForFab,
+            opacity: animationControllerForFab!,
             child: ScaleTransition(
-              scale: animationControllerForFab,
+              scale: animationControllerForFab!,
               child: FloatingActionButton.extended(
                 onPressed: () async {
                   if (await Utils.checkInternetConnectivity()) {
@@ -166,16 +166,16 @@ class _ProfilePageState extends State<ProfileView>
                           arguments: ItemEntryIntentHolder(
                               flag: PsConst.ADD_NEW_ITEM, item: Product()));
                       if (returnData == true) {
-                        productProvider.addedUserParameterHolder.addedUserId =
-                            productProvider.psValueHolder.loginUserId;
+                        productProvider!.addedUserParameterHolder.addedUserId =
+                            productProvider!.psValueHolder!.loginUserId;
 
-                        productProvider.resetItemList(
-                            productProvider.psValueHolder.loginUserId,
-                            productProvider.addedUserParameterHolder);
+                        productProvider!.resetItemList(
+                            productProvider!.psValueHolder!.loginUserId,
+                            productProvider!.addedUserParameterHolder);
 
-                        pendingProductProvider.resetProductList(
-                            productProvider.psValueHolder.loginUserId,
-                            pendingProductProvider.addedUserParameterHolder);
+                        pendingProductProvider!.resetProductList(
+                            productProvider!.psValueHolder!.loginUserId,
+                            pendingProductProvider!.addedUserParameterHolder);
                       }
                     });
                   } else {
@@ -194,7 +194,7 @@ class _ProfilePageState extends State<ProfileView>
                 label: Text(Utils.getString(context, 'dashboard__submit_ad'),
                     style: Theme.of(context)
                         .textTheme
-                        .caption
+                        .caption!
                         .copyWith(color: PsColors.white)),
               ),
             ),
@@ -214,34 +214,34 @@ class _ProfilePageState extends State<ProfileView>
                   scrollDirection: Axis.vertical,
                   slivers: <Widget>[
                 _ProfileDetailWidget(
-                    animationController: widget.animationController,
+                    animationController: widget.animationController!,
                     animation: Tween<double>(begin: 0.0, end: 1.0).animate(
                       CurvedAnimation(
-                        parent: widget.animationController,
+                        parent: widget.animationController!,
                         curve: const Interval((1 / 4) * 2, 1.0,
                             curve: Curves.fastOutSlowIn),
                       ),
                     ),
-                    userId: widget.userId,
-                    provider: provider,
+                    userId: widget.userId!,
+                    provider: provider!,
                     callLogoutCallBack: widget.callLogoutCallBack),
                 _PaidAdWidget(
-                  animationController: widget.animationController,
+                  animationController: widget.animationController!,
                   animation: Tween<double>(begin: 0.0, end: 1.0).animate(
                     CurvedAnimation(
-                      parent: widget.animationController,
+                      parent: widget.animationController!,
                       curve: const Interval((1 / 4) * 2, 1.0,
                           curve: Curves.fastOutSlowIn),
                     ),
                   ),
-                  userId: widget.userId, //animationController,
+                  userId: widget.userId!, //animationController,
                 ),
                 ListingDataWidget(
-                  animationController: widget.animationController,
-                  userId: widget.userId,
+                  animationController: widget.animationController!,
+                  userId: widget.userId!,
                   animation: Tween<double>(begin: 0.0, end: 1.0).animate(
                     CurvedAnimation(
-                      parent: widget.animationController,
+                      parent: widget.animationController!,
                       curve: const Interval((1 / 4) * 2, 1.0,
                           curve: Curves.fastOutSlowIn),
                     ),
@@ -250,11 +250,11 @@ class _ProfilePageState extends State<ProfileView>
                   status: '1', //animationController,
                 ),
                 _PendingListingDataWidget(
-                  animationController: widget.animationController,
-                  userId: widget.userId,
+                  animationController: widget.animationController!,
+                  userId: widget.userId!,
                   animation: Tween<double>(begin: 0.0, end: 1.0).animate(
                     CurvedAnimation(
-                      parent: widget.animationController,
+                      parent: widget.animationController!,
                       curve: const Interval((1 / 4) * 2, 1.0,
                           curve: Curves.fastOutSlowIn),
                     ),
@@ -264,11 +264,11 @@ class _ProfilePageState extends State<ProfileView>
                   status: '0', //animationController,
                 ),
                 _RejectedListingDataWidget(
-                  animationController: widget.animationController,
-                  userId: widget.userId,
+                  animationController: widget.animationController!,
+                  userId: widget.userId!,
                   animation: Tween<double>(begin: 0.0, end: 1.0).animate(
                     CurvedAnimation(
-                      parent: widget.animationController,
+                      parent: widget.animationController!,
                       curve: const Interval((1 / 4) * 2, 1.0,
                           curve: Curves.fastOutSlowIn),
                     ),
@@ -278,11 +278,11 @@ class _ProfilePageState extends State<ProfileView>
                   status: '3', //animationController,
                 ),
                 _DisabledListingDataWidget(
-                  animationController: widget.animationController,
-                  userId: widget.userId,
+                  animationController: widget.animationController!,
+                  userId: widget.userId!,
                   animation: Tween<double>(begin: 0.0, end: 1.0).animate(
                     CurvedAnimation(
-                      parent: widget.animationController,
+                      parent: widget.animationController!,
                       curve: const Interval((1 / 4) * 2, 1.0,
                           curve: Curves.fastOutSlowIn),
                     ),
@@ -305,24 +305,24 @@ class _ProfilePageState extends State<ProfileView>
 
 class _PaidAdWidget extends StatefulWidget {
   const _PaidAdWidget(
-      {Key key,
-      @required this.animationController,
+      {Key? key,
+      required this.animationController,
       this.userId,
       this.animation})
       : super(key: key);
 
   final AnimationController animationController;
-  final String userId;
-  final Animation<double> animation;
+  final String? userId;
+  final Animation<double>? animation;
 
   @override
   __PaidAdWidgetState createState() => __PaidAdWidgetState();
 }
 
 class __PaidAdWidgetState extends State<_PaidAdWidget> {
-  PaidAdItemRepository paidAdItemRepository;
-  PsValueHolder psValueHolder;
-  ProductParameterHolder parameterHolder;
+  PaidAdItemRepository? paidAdItemRepository;
+  PsValueHolder? psValueHolder;
+  ProductParameterHolder? parameterHolder;
 
   @override
   Widget build(BuildContext context) {
@@ -334,10 +334,10 @@ class __PaidAdWidgetState extends State<_PaidAdWidget> {
             lazy: false,
             create: (BuildContext context) {
               final PaidAdItemProvider provider = PaidAdItemProvider(
-                  repo: paidAdItemRepository, psValueHolder: psValueHolder);
+                  repo: paidAdItemRepository!, psValueHolder: psValueHolder!);
               if (provider.psValueHolder.loginUserId == null ||
                   provider.psValueHolder.loginUserId == '') {
-                provider.loadPaidAdItemList(widget.userId);
+                provider.loadPaidAdItemList(widget.userId!);
               } else {
                 provider.loadPaidAdItemList(provider.psValueHolder.loginUserId);
               }
@@ -345,11 +345,11 @@ class __PaidAdWidgetState extends State<_PaidAdWidget> {
               return provider;
             },
             child: Consumer<PaidAdItemProvider>(builder: (BuildContext context,
-                PaidAdItemProvider productProvider, Widget child) {
+                PaidAdItemProvider productProvider, Widget? child) {
               return AnimatedBuilder(
                   animation: widget.animationController,
                   child: (productProvider.paidAdItemList.data != null &&
-                          productProvider.paidAdItemList.data.isNotEmpty)
+                          productProvider.paidAdItemList.data!.isNotEmpty)
                       ? Column(children: <Widget>[
                           _HeaderWidget(
                             headerName:
@@ -367,7 +367,7 @@ class __PaidAdWidgetState extends State<_PaidAdWidget> {
                               child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
                                   itemCount: productProvider
-                                      .paidAdItemList.data.length,
+                                      .paidAdItemList.data!.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     if (productProvider.paidAdItemList.status ==
@@ -381,7 +381,7 @@ class __PaidAdWidgetState extends State<_PaidAdWidget> {
                                     } else {
                                       return PaidAdItemHorizontalListItem(
                                         paidAdItem: productProvider
-                                            .paidAdItemList.data[index],
+                                            .paidAdItemList.data![index],
                                         onTap: () {
                                           // final Product product = provider.historyList.data.reversed.toList()[index];
                                           final ProductDetailIntentHolder
@@ -389,26 +389,26 @@ class __PaidAdWidgetState extends State<_PaidAdWidget> {
                                               ProductDetailIntentHolder(
                                                   productId: productProvider
                                                       .paidAdItemList
-                                                      .data[index]
-                                                      .item
+                                                      .data![index]
+                                                      .item!
                                                       .id,
                                                   heroTagImage: productProvider
                                                           .hashCode
                                                           .toString() +
                                                       productProvider
                                                           .paidAdItemList
-                                                          .data[index]
-                                                          .item
-                                                          .id +
+                                                          .data![index]
+                                                          .item!
+                                                          .id! +
                                                       PsConst.HERO_TAG__IMAGE,
                                                   heroTagTitle: productProvider
                                                           .hashCode
                                                           .toString() +
                                                       productProvider
                                                           .paidAdItemList
-                                                          .data[index]
-                                                          .item
-                                                          .id +
+                                                          .data![index]
+                                                          .item!
+                                                          .id! +
                                                       PsConst.HERO_TAG__TITLE);
                                           Navigator.pushNamed(
                                               context, RoutePaths.productDetail,
@@ -422,12 +422,12 @@ class __PaidAdWidgetState extends State<_PaidAdWidget> {
                                   }))
                         ])
                       : Container(),
-                  builder: (BuildContext context, Widget child) {
+                  builder: (BuildContext context, Widget? child) {
                     return FadeTransition(
-                        opacity: widget.animation,
+                        opacity: widget.animation!,
                         child: Transform(
                             transform: Matrix4.translationValues(
-                                0.0, 100 * (1.0 - widget.animation.value), 0.0),
+                                0.0, 100 * (1.0 - widget.animation!.value), 0.0),
                             child: child));
                   });
             })));
@@ -436,10 +436,10 @@ class __PaidAdWidgetState extends State<_PaidAdWidget> {
 
 class ListingDataWidget extends StatefulWidget {
   const ListingDataWidget(
-      {Key key,
-      @required this.animationController,
-      @required this.status,
-      @required this.headerTitle,
+      {Key? key,
+      required this.animationController,
+      required this.status,
+      required this.headerTitle,
       this.userId,
       this.animation})
       : super(key: key);
@@ -447,17 +447,17 @@ class ListingDataWidget extends StatefulWidget {
   final AnimationController animationController;
   final String status;
   final String headerTitle;
-  final String userId;
-  final Animation<double> animation;
+  final String? userId;
+  final Animation<double>? animation;
 
   @override
   _ListingDataWidgetState createState() => _ListingDataWidgetState();
 }
 
 class _ListingDataWidgetState extends State<ListingDataWidget> {
-  ProductRepository productRepository;
+  ProductRepository? productRepository;
 
-  PsValueHolder psValueHolder;
+  PsValueHolder? psValueHolder;
 
   @override
   Widget build(BuildContext context) {
@@ -466,11 +466,11 @@ class _ListingDataWidgetState extends State<ListingDataWidget> {
 
     return SliverToBoxAdapter(child: Consumer<AddedItemProvider>(builder:
         (BuildContext context, AddedItemProvider productProvider,
-            Widget child) {
+            Widget? child) {
       return AnimatedBuilder(
           animation: widget.animationController,
           child: (productProvider.itemList.data != null &&
-                  productProvider.itemList.data.isNotEmpty)
+                  productProvider.itemList.data!.isNotEmpty)
               ? Column(children: <Widget>[
                   _HeaderWidget(
                     headerName: widget.headerTitle,
@@ -478,7 +478,7 @@ class _ListingDataWidgetState extends State<ListingDataWidget> {
                       Navigator.pushNamed(
                           context, RoutePaths.userItemListForProfile,
                           arguments: ItemListIntentHolder(
-                              userId: productProvider.psValueHolder.loginUserId,
+                              userId: productProvider.psValueHolder!.loginUserId,
                               status: widget.status,
                               title: widget.headerTitle));
                     },
@@ -488,7 +488,7 @@ class _ListingDataWidgetState extends State<ListingDataWidget> {
                       width: MediaQuery.of(context).size.width,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: productProvider.itemList.data.length,
+                          itemCount: productProvider.itemList.data!.length,
                           itemBuilder: (BuildContext context, int index) {
                             if (productProvider.itemList.status ==
                                 PsStatus.BLOCK_LOADING) {
@@ -500,27 +500,27 @@ class _ListingDataWidgetState extends State<ListingDataWidget> {
                                   ]));
                             } else {
                               return ProductHorizontalListItemForProfile(
-                                product: productProvider.itemList.data[index],
+                                product: productProvider.itemList.data![index],
                                 coreTagKey:
                                     productProvider.hashCode.toString() +
-                                        productProvider.itemList.data[index].id,
+                                        productProvider.itemList.data![index].id!,
                                 onTap: () {
-                                  print(productProvider.itemList.data[index]
-                                      .defaultPhoto.imgPath);
+                                  print(productProvider.itemList.data![index]
+                                      .defaultPhoto!.imgPath);
                                   final Product product = productProvider
-                                      .itemList.data.reversed
+                                      .itemList.data!.reversed
                                       .toList()[index];
                                   final ProductDetailIntentHolder holder =
                                       ProductDetailIntentHolder(
                                           productId: productProvider
-                                              .itemList.data[index].id,
+                                              .itemList.data![index].id,
                                           heroTagImage: productProvider.hashCode
                                                   .toString() +
-                                              product.id +
+                                              product.id! +
                                               PsConst.HERO_TAG__IMAGE,
                                           heroTagTitle: productProvider.hashCode
                                                   .toString() +
-                                              product.id +
+                                              product.id! +
                                               PsConst.HERO_TAG__TITLE);
                                   Navigator.pushNamed(
                                       context, RoutePaths.productDetail,
@@ -531,12 +531,12 @@ class _ListingDataWidgetState extends State<ListingDataWidget> {
                           }))
                 ])
               : Container(),
-          builder: (BuildContext context, Widget child) {
+          builder: (BuildContext context, Widget? child) {
             return FadeTransition(
-                opacity: widget.animation,
+                opacity: widget.animation!,
                 child: Transform(
                     transform: Matrix4.translationValues(
-                        0.0, 100 * (1.0 - widget.animation.value), 0.0),
+                        0.0, 100 * (1.0 - widget.animation!.value), 0.0),
                     child: child));
           });
     }));
@@ -545,19 +545,19 @@ class _ListingDataWidgetState extends State<ListingDataWidget> {
 
 class _PendingListingDataWidget extends StatefulWidget {
   const _PendingListingDataWidget(
-      {Key key,
-      @required this.animationController,
+      {Key? key,
+      required this.animationController,
       this.userId,
-      @required this.headerTitle,
-      @required this.status,
+      required this.headerTitle,
+      required this.status,
       this.animation})
       : super(key: key);
 
   final AnimationController animationController;
-  final String userId;
+  final String? userId;
   final String headerTitle;
   final String status;
-  final Animation<double> animation;
+  final Animation<double>? animation;
 
   @override
   ___PendingListingDataWidgetState createState() =>
@@ -566,9 +566,9 @@ class _PendingListingDataWidget extends StatefulWidget {
 
 class ___PendingListingDataWidgetState
     extends State<_PendingListingDataWidget> {
-  ProductRepository itemRepository;
+  ProductRepository? itemRepository;
 
-  PsValueHolder psValueHolder;
+  PsValueHolder? psValueHolder;
 
   @override
   Widget build(BuildContext context) {
@@ -577,11 +577,11 @@ class ___PendingListingDataWidgetState
 
     return SliverToBoxAdapter(child: Consumer<PendingProductProvider>(builder:
         (BuildContext context, PendingProductProvider itemProvider,
-            Widget child) {
+            Widget? child) {
       return AnimatedBuilder(
           animation: widget.animationController,
           child: (itemProvider.itemList.data != null &&
-                  itemProvider.itemList.data.isNotEmpty)
+                  itemProvider.itemList.data!.isNotEmpty)
               ? Column(children: <Widget>[
                   _HeaderWidget(
                     headerName: widget.headerTitle,
@@ -589,7 +589,7 @@ class ___PendingListingDataWidgetState
                       Navigator.pushNamed(
                           context, RoutePaths.userItemListForProfile,
                           arguments: ItemListIntentHolder(
-                              userId: itemProvider.psValueHolder.loginUserId,
+                              userId: itemProvider.psValueHolder!.loginUserId,
                               status: widget.status,
                               title: widget.headerTitle));
                     },
@@ -599,7 +599,7 @@ class ___PendingListingDataWidgetState
                       width: MediaQuery.of(context).size.width,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: itemProvider.itemList.data.length,
+                          itemCount: itemProvider.itemList.data!.length,
                           itemBuilder: (BuildContext context, int index) {
                             if (itemProvider.itemList.status ==
                                 PsStatus.BLOCK_LOADING) {
@@ -611,26 +611,26 @@ class ___PendingListingDataWidgetState
                                   ]));
                             } else {
                               return ProductHorizontalListItemForProfile(
-                                product: itemProvider.itemList.data[index],
+                                product: itemProvider.itemList.data![index],
                                 coreTagKey: itemProvider.hashCode.toString() +
-                                    itemProvider.itemList.data[index].id,
+                                    itemProvider.itemList.data![index].id!,
                                 onTap: () {
-                                  print(itemProvider.itemList.data[index]
-                                      .defaultPhoto.imgPath);
+                                  print(itemProvider.itemList.data![index]
+                                      .defaultPhoto!.imgPath);
                                   final Product product = itemProvider
-                                      .itemList.data.reversed
+                                      .itemList.data!.reversed
                                       .toList()[index];
                                   final ProductDetailIntentHolder holder =
                                       ProductDetailIntentHolder(
                                           productId: itemProvider
-                                              .itemList.data[index].id,
+                                              .itemList.data![index].id,
                                           heroTagImage:
                                               itemProvider.hashCode.toString() +
-                                                  product.id +
+                                                  product.id! +
                                                   PsConst.HERO_TAG__IMAGE,
                                           heroTagTitle:
                                               itemProvider.hashCode.toString() +
-                                                  product.id +
+                                                  product.id! +
                                                   PsConst.HERO_TAG__TITLE);
                                   Navigator.pushNamed(
                                       context, RoutePaths.productDetail,
@@ -641,12 +641,12 @@ class ___PendingListingDataWidgetState
                           }))
                 ])
               : Container(),
-          builder: (BuildContext context, Widget child) {
+          builder: (BuildContext context, Widget? child) {
             return FadeTransition(
-                opacity: widget.animation,
+                opacity: widget.animation!,
                 child: Transform(
                     transform: Matrix4.translationValues(
-                        0.0, 100 * (1.0 - widget.animation.value), 0.0),
+                        0.0, 100 * (1.0 - widget.animation!.value), 0.0),
                     child: child));
           });
     }));
@@ -655,19 +655,19 @@ class ___PendingListingDataWidgetState
 
 class _DisabledListingDataWidget extends StatefulWidget {
   const _DisabledListingDataWidget(
-      {Key key,
-      @required this.animationController,
+      {Key? key,
+      required this.animationController,
       this.userId,
-      @required this.headerTitle,
-      @required this.status,
+      required this.headerTitle,
+      required this.status,
       this.animation})
       : super(key: key);
 
   final AnimationController animationController;
-  final String userId;
+  final String? userId;
   final String headerTitle;
   final String status;
-  final Animation<double> animation;
+  final Animation<double>? animation;
 
   @override
   __DisabledListingDataWidgetState createState() =>
@@ -676,9 +676,9 @@ class _DisabledListingDataWidget extends StatefulWidget {
 
 class __DisabledListingDataWidgetState
     extends State<_DisabledListingDataWidget> {
-  ProductRepository itemRepository;
+  ProductRepository? itemRepository;
 
-  PsValueHolder psValueHolder;
+  PsValueHolder? psValueHolder;
 
   @override
   Widget build(BuildContext context) {
@@ -690,18 +690,18 @@ class __DisabledListingDataWidgetState
             lazy: false,
             create: (BuildContext context) {
               final DisabledProductProvider provider = DisabledProductProvider(
-                  repo: itemRepository, psValueHolder: psValueHolder);
-              if (provider.psValueHolder.loginUserId == null ||
-                  provider.psValueHolder.loginUserId == '') {
-                provider.addedUserParameterHolder.addedUserId = widget.userId;
+                  repo: itemRepository!, psValueHolder: psValueHolder);
+              if (provider.psValueHolder!.loginUserId == null ||
+                  provider.psValueHolder!.loginUserId == '') {
+                provider.addedUserParameterHolder.addedUserId = widget.userId!;
                 provider.addedUserParameterHolder.status = widget.status;
                 provider.loadProductList(
-                    widget.userId, provider.addedUserParameterHolder);
+                    widget.userId!, provider.addedUserParameterHolder);
               } else {
                 provider.addedUserParameterHolder.addedUserId =
-                    provider.psValueHolder.loginUserId;
+                    provider.psValueHolder!.loginUserId;
                 provider.addedUserParameterHolder.status = widget.status;
-                provider.loadProductList(provider.psValueHolder.loginUserId,
+                provider.loadProductList(provider.psValueHolder!.loginUserId,
                     provider.addedUserParameterHolder);
               }
 
@@ -709,11 +709,11 @@ class __DisabledListingDataWidgetState
             },
             child: Consumer<DisabledProductProvider>(builder:
                 (BuildContext context, DisabledProductProvider itemProvider,
-                    Widget child) {
+                    Widget? child) {
               return AnimatedBuilder(
                   animation: widget.animationController,
                   child: (itemProvider.itemList.data != null &&
-                          itemProvider.itemList.data.isNotEmpty)
+                          itemProvider.itemList.data!.isNotEmpty)
                       ? Column(children: <Widget>[
                           _HeaderWidget(
                             headerName: widget.headerTitle,
@@ -722,7 +722,7 @@ class __DisabledListingDataWidgetState
                                   context, RoutePaths.userItemListForProfile,
                                   arguments: ItemListIntentHolder(
                                       userId: itemProvider
-                                          .psValueHolder.loginUserId,
+                                          .psValueHolder!.loginUserId,
                                       status: widget.status,
                                       title: widget.headerTitle));
                             },
@@ -732,7 +732,7 @@ class __DisabledListingDataWidgetState
                               width: MediaQuery.of(context).size.width,
                               child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: itemProvider.itemList.data.length,
+                                  itemCount: itemProvider.itemList.data!.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     if (itemProvider.itemList.status ==
@@ -746,34 +746,34 @@ class __DisabledListingDataWidgetState
                                     } else {
                                       return ProductHorizontalListItemForProfile(
                                         product:
-                                            itemProvider.itemList.data[index],
+                                            itemProvider.itemList.data![index],
                                         coreTagKey:
                                             itemProvider.hashCode.toString() +
                                                 itemProvider
-                                                    .itemList.data[index].id,
+                                                    .itemList.data![index].id!,
                                         onTap: () {
                                           print(itemProvider
                                               .itemList
-                                              .data[index]
-                                              .defaultPhoto
+                                              .data![index]
+                                              .defaultPhoto!
                                               .imgPath);
                                           final Product product = itemProvider
-                                              .itemList.data.reversed
+                                              .itemList.data!.reversed
                                               .toList()[index];
                                           final ProductDetailIntentHolder
                                               holder =
                                               ProductDetailIntentHolder(
                                                   productId: itemProvider
-                                                      .itemList.data[index].id,
+                                                      .itemList.data![index].id,
                                                   heroTagImage: itemProvider
                                                           .hashCode
                                                           .toString() +
-                                                      product.id +
+                                                      product.id! +
                                                       PsConst.HERO_TAG__IMAGE,
                                                   heroTagTitle: itemProvider
                                                           .hashCode
                                                           .toString() +
-                                                      product.id +
+                                                      product.id! +
                                                       PsConst.HERO_TAG__TITLE);
                                           Navigator.pushNamed(
                                               context, RoutePaths.productDetail,
@@ -784,12 +784,12 @@ class __DisabledListingDataWidgetState
                                   }))
                         ])
                       : Container(),
-                  builder: (BuildContext context, Widget child) {
+                  builder: (BuildContext context, Widget? child) {
                     return FadeTransition(
-                        opacity: widget.animation,
+                        opacity: widget.animation!,
                         child: Transform(
                             transform: Matrix4.translationValues(
-                                0.0, 100 * (1.0 - widget.animation.value), 0.0),
+                                0.0, 100 * (1.0 - widget.animation!.value), 0.0),
                             child: child));
                   });
             })));
@@ -798,19 +798,19 @@ class __DisabledListingDataWidgetState
 
 class _RejectedListingDataWidget extends StatefulWidget {
   const _RejectedListingDataWidget(
-      {Key key,
-      @required this.animationController,
+      {Key? key,
+      required this.animationController,
       this.userId,
-      @required this.headerTitle,
-      @required this.status,
+      required this.headerTitle,
+      required this.status,
       this.animation})
       : super(key: key);
 
   final AnimationController animationController;
-  final String userId;
+  final String? userId;
   final String headerTitle;
   final String status;
-  final Animation<double> animation;
+  final Animation<double>? animation;
 
   @override
   ___RejectedListingDataWidgetState createState() =>
@@ -819,9 +819,9 @@ class _RejectedListingDataWidget extends StatefulWidget {
 
 class ___RejectedListingDataWidgetState
     extends State<_RejectedListingDataWidget> {
-  ProductRepository itemRepository;
+  ProductRepository? itemRepository;
 
-  PsValueHolder psValueHolder;
+  PsValueHolder? psValueHolder;
 
   @override
   Widget build(BuildContext context) {
@@ -833,18 +833,18 @@ class ___RejectedListingDataWidgetState
             lazy: false,
             create: (BuildContext context) {
               final RejectedProductProvider provider = RejectedProductProvider(
-                  repo: itemRepository, psValueHolder: psValueHolder);
-              if (provider.psValueHolder.loginUserId == null ||
-                  provider.psValueHolder.loginUserId == '') {
-                provider.addedUserParameterHolder.addedUserId = widget.userId;
+                  repo: itemRepository!, psValueHolder: psValueHolder);
+              if (provider.psValueHolder!.loginUserId == null ||
+                  provider.psValueHolder!.loginUserId == '') {
+                provider.addedUserParameterHolder.addedUserId = widget.userId!;
                 provider.addedUserParameterHolder.status = widget.status;
                 provider.loadProductList(
-                    widget.userId, provider.addedUserParameterHolder);
+                    widget.userId!, provider.addedUserParameterHolder);
               } else {
                 provider.addedUserParameterHolder.addedUserId =
-                    provider.psValueHolder.loginUserId;
+                    provider.psValueHolder!.loginUserId;
                 provider.addedUserParameterHolder.status = widget.status;
-                provider.loadProductList(provider.psValueHolder.loginUserId,
+                provider.loadProductList(provider.psValueHolder!.loginUserId,
                     provider.addedUserParameterHolder);
               }
 
@@ -852,11 +852,11 @@ class ___RejectedListingDataWidgetState
             },
             child: Consumer<RejectedProductProvider>(builder:
                 (BuildContext context, RejectedProductProvider itemProvider,
-                    Widget child) {
+                    Widget? child) {
               return AnimatedBuilder(
                   animation: widget.animationController,
                   child: (itemProvider.itemList.data != null &&
-                          itemProvider.itemList.data.isNotEmpty)
+                          itemProvider.itemList.data!.isNotEmpty)
                       ? Column(children: <Widget>[
                           _HeaderWidget(
                             headerName: widget.headerTitle,
@@ -865,7 +865,7 @@ class ___RejectedListingDataWidgetState
                                   context, RoutePaths.userItemListForProfile,
                                   arguments: ItemListIntentHolder(
                                       userId: itemProvider
-                                          .psValueHolder.loginUserId,
+                                          .psValueHolder!.loginUserId,
                                       status: widget.status,
                                       title: widget.headerTitle));
                             },
@@ -875,7 +875,7 @@ class ___RejectedListingDataWidgetState
                               width: MediaQuery.of(context).size.width,
                               child: ListView.builder(
                                   scrollDirection: Axis.horizontal,
-                                  itemCount: itemProvider.itemList.data.length,
+                                  itemCount: itemProvider.itemList.data!.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
                                     if (itemProvider.itemList.status ==
@@ -889,34 +889,34 @@ class ___RejectedListingDataWidgetState
                                     } else {
                                       return ProductHorizontalListItemForProfile(
                                         product:
-                                            itemProvider.itemList.data[index],
+                                            itemProvider.itemList.data![index],
                                         coreTagKey:
                                             itemProvider.hashCode.toString() +
                                                 itemProvider
-                                                    .itemList.data[index].id,
+                                                    .itemList.data![index].id!,
                                         onTap: () {
                                           print(itemProvider
                                               .itemList
-                                              .data[index]
-                                              .defaultPhoto
+                                              .data![index]
+                                              .defaultPhoto!
                                               .imgPath);
                                           final Product product = itemProvider
-                                              .itemList.data.reversed
+                                              .itemList.data!.reversed
                                               .toList()[index];
                                           final ProductDetailIntentHolder
                                               holder =
                                               ProductDetailIntentHolder(
                                                   productId: itemProvider
-                                                      .itemList.data[index].id,
+                                                      .itemList.data![index].id,
                                                   heroTagImage: itemProvider
                                                           .hashCode
                                                           .toString() +
-                                                      product.id +
+                                                      product.id! +
                                                       PsConst.HERO_TAG__IMAGE,
                                                   heroTagTitle: itemProvider
                                                           .hashCode
                                                           .toString() +
-                                                      product.id +
+                                                      product.id! +
                                                       PsConst.HERO_TAG__TITLE);
                                           Navigator.pushNamed(
                                               context, RoutePaths.productDetail,
@@ -927,12 +927,12 @@ class ___RejectedListingDataWidgetState
                                   }))
                         ])
                       : Container(),
-                  builder: (BuildContext context, Widget child) {
+                  builder: (BuildContext context, Widget? child) {
                     return FadeTransition(
-                        opacity: widget.animation,
+                        opacity: widget.animation!,
                         child: Transform(
                             transform: Matrix4.translationValues(
-                                0.0, 100 * (1.0 - widget.animation.value), 0.0),
+                                0.0, 100 * (1.0 - widget.animation!.value), 0.0),
                             child: child));
                   });
             })));
@@ -941,16 +941,16 @@ class ___RejectedListingDataWidgetState
 
 class _ProfileDetailWidget extends StatefulWidget {
   const _ProfileDetailWidget(
-      {Key key,
+      {Key? key,
       this.animationController,
       this.animation,
-      @required this.userId,
-      @required this.provider,
-      @required this.callLogoutCallBack})
+      required this.userId,
+      required this.provider,
+      required this.callLogoutCallBack})
       : super(key: key);
 
-  final AnimationController animationController;
-  final Animation<double> animation;
+  final AnimationController? animationController;
+  final Animation<double>? animation;
   final String userId;
   final Function callLogoutCallBack;
   final UserProvider provider;
@@ -987,12 +987,12 @@ class __ProfileDetailWidgetState extends State<_ProfileDetailWidget> {
             return widget.provider;
           },
           child: Consumer<UserProvider>(builder:
-              (BuildContext context, UserProvider provider, Widget child) {
+              (BuildContext context, UserProvider provider, Widget? child) {
             if (provider.user != null &&
                 provider.user.data != null &&
                 provider.user.data != null) {
               return AnimatedBuilder(
-                  animation: widget.animationController,
+                  animation: widget.animationController!,
                   child: Container(
                     color: PsColors.backgroundColor,
                     child: Column(
@@ -1007,7 +1007,7 @@ class __ProfileDetailWidgetState extends State<_ProfileDetailWidget> {
                         _dividerWidget,
                         _JoinDateWidget(userProvider: provider),
                         _VerifiedWidget(
-                          data: provider.user.data,
+                          data: provider.user.data!,
                         ),
                         _DeactivateAccWidget(
                           userProvider: provider,
@@ -1017,12 +1017,12 @@ class __ProfileDetailWidgetState extends State<_ProfileDetailWidget> {
                       ],
                     ),
                   ),
-                  builder: (BuildContext context, Widget child) {
+                  builder: (BuildContext context, Widget? child) {
                     return FadeTransition(
-                        opacity: widget.animation,
+                        opacity: widget.animation!,
                         child: Transform(
                             transform: Matrix4.translationValues(
-                                0.0, 100 * (1.0 - widget.animation.value), 0.0),
+                                0.0, 100 * (1.0 - widget.animation!.value), 0.0),
                             child: child));
                   });
             } else {
@@ -1035,8 +1035,8 @@ class __ProfileDetailWidgetState extends State<_ProfileDetailWidget> {
 
 class _VerifiedWidget extends StatelessWidget {
   const _VerifiedWidget({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
   }) : super(key: key);
 
   final User data;
@@ -1101,7 +1101,7 @@ class _VerifiedWidget extends StatelessWidget {
 
 class _JoinDateWidget extends StatelessWidget {
   const _JoinDateWidget({this.userProvider});
-  final UserProvider userProvider;
+  final UserProvider? userProvider;
 
   @override
   Widget build(BuildContext context) {
@@ -1122,10 +1122,10 @@ class _JoinDateWidget extends StatelessWidget {
                   width: PsDimens.space2,
                 ),
                 Text(
-                  userProvider.user.data.addedDateTimeStamp != null && 
-                  userProvider.user.data.addedDateTimeStamp != ''
-                      ? Utils.changeTimeStampToStandardDateTimeFormat(userProvider.user.data.addedDateTimeStamp)
-                      : Utils.getDateFormat(userProvider.user.data.addedDate),
+                  userProvider!.user.data!.addedDateTimeStamp != null &&
+                  userProvider!.user.data!.addedDateTimeStamp != ''
+                      ? Utils.changeTimeStampToStandardDateTimeFormat(userProvider!.user.data!.addedDateTimeStamp!)
+                      : Utils.getDateFormat(userProvider!.user.data!.addedDate!),
                   textAlign: TextAlign.start,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
@@ -1136,7 +1136,7 @@ class _JoinDateWidget extends StatelessWidget {
 
 class _DeactivateAccWidget extends StatelessWidget {
   const _DeactivateAccWidget(
-      {@required this.userProvider, @required this.callLogoutCallBack});
+      {required this.userProvider, required this.callLogoutCallBack});
   final UserProvider userProvider;
   final Function callLogoutCallBack;
   @override
@@ -1156,7 +1156,7 @@ class _DeactivateAccWidget extends StatelessWidget {
                 child: Text(
                   Utils.getString(context, 'profile__deactivate_acc'),
                   textAlign: TextAlign.start,
-                  style: Theme.of(context).textTheme.subtitle2.copyWith(
+                  style: Theme.of(context).textTheme.subtitle2!.copyWith(
                       fontWeight: FontWeight.normal, color: PsColors.mainColor),
                 ),
               ),
@@ -1198,8 +1198,8 @@ class _DeactivateAccWidget extends StatelessWidget {
 class _FavAndSettingWidget extends StatelessWidget {
   const _FavAndSettingWidget({this.userProvider, this.callLogoutCallBack});
 
-  final UserProvider userProvider;
-  final Function callLogoutCallBack;
+  final UserProvider? userProvider;
+  final Function? callLogoutCallBack;
   @override
   Widget build(BuildContext context) {
     const Widget _sizedBoxWidget = SizedBox(
@@ -1234,7 +1234,7 @@ class _FavAndSettingWidget extends StatelessWidget {
                     softWrap: false,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2
+                        .bodyText2!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -1253,10 +1253,10 @@ class _FavAndSettingWidget extends StatelessWidget {
               onPressed: () async {
                 final dynamic returnData = await Navigator.pushNamed(
                     context, RoutePaths.more,
-                    arguments: userProvider.user.data.userName);
+                    arguments: userProvider!.user.data!.userName);
                 if (returnData) {
                   if (callLogoutCallBack != null) {
-                    callLogoutCallBack(userProvider.psValueHolder.loginUserId);
+                    callLogoutCallBack!(userProvider!.psValueHolder.loginUserId);
                   }
                 }
               },
@@ -1273,7 +1273,7 @@ class _FavAndSettingWidget extends StatelessWidget {
                     textAlign: TextAlign.start,
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2
+                        .bodyText2!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
                 ],
@@ -1285,7 +1285,7 @@ class _FavAndSettingWidget extends StatelessWidget {
 }
 
 class _EditAndHistoryRowWidget extends StatelessWidget {
-  const _EditAndHistoryRowWidget({@required this.userProvider});
+  const _EditAndHistoryRowWidget({required this.userProvider});
   final UserProvider userProvider;
   @override
   Widget build(BuildContext context) {
@@ -1318,9 +1318,9 @@ class _EditAndHistoryRowWidget extends StatelessWidget {
 
 class _EditAndHistoryTextWidget extends StatelessWidget {
   const _EditAndHistoryTextWidget({
-    Key key,
-    @required this.userProvider,
-    @required this.checkText,
+    Key? key,
+    required this.userProvider,
+    required this.checkText,
   }) : super(key: key);
 
   final UserProvider userProvider;
@@ -1335,7 +1335,7 @@ class _EditAndHistoryTextWidget extends StatelessWidget {
           softWrap: false,
           style: Theme.of(context)
               .textTheme
-              .bodyText2
+              .bodyText2!
               .copyWith(fontWeight: FontWeight.bold),
         ),
         height: 50,
@@ -1371,18 +1371,18 @@ class _EditAndHistoryTextWidget extends StatelessWidget {
               child: checkText == 1
                   ? Text(
                       Utils.getString(context, 'profile__follower') +
-                          '( ${userProvider.user.data.followerCount} )',
+                          '( ${userProvider.user.data!.followerCount} )',
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText2
+                          .bodyText2!
                           .copyWith(fontWeight: FontWeight.bold),
                     )
                   : Text(
                       Utils.getString(context, 'profile__following') +
-                          '( ${userProvider.user.data.followingCount} )',
+                          '( ${userProvider.user.data!.followingCount} )',
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText2
+                          .bodyText2!
                           .copyWith(fontWeight: FontWeight.bold),
                     )));
     }
@@ -1391,17 +1391,17 @@ class _EditAndHistoryTextWidget extends StatelessWidget {
 
 class _HeaderWidget extends StatelessWidget {
   const _HeaderWidget({
-    Key key,
-    @required this.headerName,
-    @required this.viewAllClicked,
+    Key? key,
+    required this.headerName,
+    required this.viewAllClicked,
   }) : super(key: key);
 
   final String headerName;
-  final Function viewAllClicked;
+  final VoidCallback? viewAllClicked;
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: viewAllClicked,
+      onTap: viewAllClicked!,
       child: Padding(
         padding: const EdgeInsets.only(
             top: PsDimens.space20,
@@ -1421,7 +1421,7 @@ class _HeaderWidget extends StatelessWidget {
                 textAlign: TextAlign.start,
                 style: Theme.of(context)
                     .textTheme
-                    .caption
+                    .caption!
                     .copyWith(color: PsColors.mainColor),
               ),
             ),
@@ -1434,8 +1434,8 @@ class _HeaderWidget extends StatelessWidget {
 
 class _RatingWidget extends StatelessWidget {
   const _RatingWidget({
-    Key key,
-    @required this.data,
+    Key? key,
+    required this.data,
   }) : super(key: key);
 
   final User data;
@@ -1444,7 +1444,7 @@ class _RatingWidget extends StatelessWidget {
     return Row(
       children: <Widget>[
         Text(
-          data.overallRating,
+          data.overallRating!,
           style: Theme.of(context).textTheme.bodyText1,
         ),
         const SizedBox(
@@ -1456,8 +1456,8 @@ class _RatingWidget extends StatelessWidget {
                 arguments: data.userId);
           },
           child: SmoothStarRating(
-              key: Key(data.ratingDetail.totalRatingValue),
-              rating: double.parse(data.ratingDetail.totalRatingValue),
+              key: Key(data.ratingDetail!.totalRatingValue!),
+              rating: double.parse(data.ratingDetail!.totalRatingValue!),
               allowHalfRating: false,
               starCount: 5,
               isReadOnly: true,
@@ -1481,7 +1481,7 @@ class _RatingWidget extends StatelessWidget {
 
 class _ImageAndTextWidget extends StatelessWidget {
   const _ImageAndTextWidget({this.userProvider});
-  final UserProvider userProvider;
+  final UserProvider? userProvider;
   @override
   Widget build(BuildContext context) {
     // final Widget _imageWidget = PsNetworkCircleImageForUser(
@@ -1512,7 +1512,7 @@ class _ImageAndTextWidget extends StatelessWidget {
                 height: PsDimens.space80,
                 child: PsNetworkCircleImageForUser(
                   photoKey: '',
-                  imagePath: userProvider.user.data.userProfilePhoto,
+                  imagePath: userProvider!.user.data!.userProfilePhoto,
                   // width: PsDimens.space80,
                   // height: PsDimens.space80,
                   boxfit: BoxFit.cover,
@@ -1532,7 +1532,7 @@ class _ImageAndTextWidget extends StatelessWidget {
                 mainAxisSize: MainAxisSize.max,
                 children: <Widget>[
                   Text(
-                    userProvider.user.data.userName,
+                    userProvider!.user.data!.userName!,
                     textAlign: TextAlign.start,
                     style: Theme.of(context).textTheme.headline6,
                     maxLines: 1,
@@ -1540,28 +1540,28 @@ class _ImageAndTextWidget extends StatelessWidget {
                   _spacingWidget,
                   _spacingWidget,
                   _RatingWidget(
-                    data: userProvider.user.data,
+                    data: userProvider!.user.data!,
                   ),
                   _spacingWidget,
                   _spacingWidget,
                   Text(
-                    userProvider.user.data.userPhone != ''
-                        ? userProvider.user.data.userPhone
+                    userProvider!.user.data!.userPhone != ''
+                        ? userProvider!.user.data!.userPhone!
                         : Utils.getString(context, 'profile__phone_no'),
                     style: Theme.of(context)
                         .textTheme
-                        .bodyText2
+                        .bodyText2!
                         .copyWith(color: PsColors.textPrimaryLightColor),
                     maxLines: 1,
                   ),
                   _spacingWidget,
                   Text(
-                    userProvider.user.data.userAboutMe != ''
-                        ? userProvider.user.data.userAboutMe
+                    userProvider!.user.data!.userAboutMe != ''
+                        ? userProvider!.user.data!.userAboutMe!
                         : Utils.getString(context, 'profile__about_me'),
                     style: Theme.of(context)
                         .textTheme
-                        .caption
+                        .caption!
                         .copyWith(color: PsColors.textPrimaryLightColor),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

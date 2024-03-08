@@ -105,12 +105,12 @@ class _HomeViewState extends State<DashboardView>
       initDynamicLinks(context);
     } else if (state == AppLifecycleState.paused ||
         state == AppLifecycleState.inactive) {
-      if (valueHolder.loginUserId != null && valueHolder.loginUserId != '') {
+      if (valueHolder!.loginUserId != null && valueHolder!.loginUserId != '') {
         userUnreadMessageHolder = UserUnreadMessageParameterHolder(
-            userId: valueHolder.loginUserId,
-            deviceToken: valueHolder.deviceToken);
-        userUnreadMessageProvider
-            .userUnreadMessageCount(userUnreadMessageHolder);
+            userId: valueHolder!.loginUserId,
+            deviceToken: valueHolder!.deviceToken);
+        userUnreadMessageProvider!
+            .userUnreadMessageCount(userUnreadMessageHolder!);
       }
     } else {
       //
@@ -245,21 +245,21 @@ class _HomeViewState extends State<DashboardView>
         index = 2;
         break;
       case PsConst.REQUEST_CODE__DASHBOARD_REGISTER_FRAGMENT:
-        if (valueHolder.loginUserId != null && valueHolder.loginUserId != '') {
+        if (valueHolder!.loginUserId != null && valueHolder!.loginUserId != '') {
           index = 2;
         } else {
           index = 3;
         }
         break;
       case PsConst.REQUEST_CODE__DASHBOARD_FORGOT_PASSWORD_FRAGMENT:
-        if (valueHolder.loginUserId != null && valueHolder.loginUserId != '') {
+        if (valueHolder!.loginUserId != null && valueHolder!.loginUserId != '') {
           index = 2;
         } else {
           index = 3;
         }
         break;
       case PsConst.REQUEST_CODE__DASHBOARD_LOGIN_FRAGMENT:
-        if (valueHolder.loginUserId != null && valueHolder.loginUserId != '') {
+        if (valueHolder!.loginUserId != null && valueHolder!.loginUserId != '') {
           index = 2;
         } else {
           index = 3;
@@ -663,7 +663,7 @@ class _HomeViewState extends State<DashboardView>
                                         } else {
                                           callLogout(
                                               provider,
-                                              deleteTaskProvider,
+                                              deleteTaskProvider!,
                                               PsConst
                                                   .REQUEST_CODE__MENU_HOME_FRAGMENT);
                                         }
@@ -773,7 +773,7 @@ class _HomeViewState extends State<DashboardView>
               : PsColors.baseColor,
           title: Text(
             appBarTitleName == '' ? appBarTitle : appBarTitleName,
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: (appBarTitle ==
                               Utils.getString(context, 'home__verify_email') ||
@@ -899,25 +899,25 @@ class _HomeViewState extends State<DashboardView>
                                 create: (BuildContext context) {
                               userUnreadMessageProvider =
                                   UserUnreadMessageProvider(
-                                      repo: userUnreadMessageRepository);
+                                      repo: userUnreadMessageRepository!);
 
-                              if (valueHolder.loginUserId != null &&
-                                  valueHolder.loginUserId != '') {
+                              if (valueHolder!.loginUserId != null &&
+                                  valueHolder!.loginUserId != '') {
                                 userUnreadMessageHolder =
                                     UserUnreadMessageParameterHolder(
-                                        userId: valueHolder.loginUserId,
-                                        deviceToken: valueHolder.deviceToken);
-                                userUnreadMessageProvider
+                                        userId: valueHolder!.loginUserId,
+                                        deviceToken: valueHolder!.deviceToken);
+                                userUnreadMessageProvider!
                                     .userUnreadMessageCount(
-                                        userUnreadMessageHolder);
+                                        userUnreadMessageHolder!);
                               }
-                              return userUnreadMessageProvider;
+                              return userUnreadMessageProvider!;
                             }, child: Consumer<UserUnreadMessageProvider>(
                                     builder:
                                         (BuildContext context,
                                             UserUnreadMessageProvider
                                                 userUnreadMessageProvider,
-                                            Widget child) {
+                                            Widget? child) {
                               if (userUnreadMessageProvider != null &&
                                   userUnreadMessageProvider.userUnreadMessage !=
                                       null &&
@@ -926,10 +926,10 @@ class _HomeViewState extends State<DashboardView>
                                       null) {
                                 final int sellerCount = int.parse(
                                     userUnreadMessageProvider.userUnreadMessage
-                                        .data.sellerUnreadCount);
+                                        .data!.sellerUnreadCount!);
                                 final int buyerCount = int.parse(
                                     userUnreadMessageProvider.userUnreadMessage
-                                        .data.buyerUnreadCount);
+                                        .data!.buyerUnreadCount!);
                                 userUnreadMessageProvider.totalUnreadCount =
                                     sellerCount + buyerCount;
                                 if (userUnreadMessageProvider
@@ -963,7 +963,7 @@ class _HomeViewState extends State<DashboardView>
                                         textAlign: TextAlign.left,
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText2
+                                            .bodyText2!
                                             .copyWith(color: PsColors.white),
                                         maxLines: 1,
                                       ),
@@ -1025,7 +1025,7 @@ class _HomeViewState extends State<DashboardView>
                         borderRadius: BorderRadius.circular(8.0),
                         boxShadow: <BoxShadow>[
                           BoxShadow(
-                              color: PsColors.mainColor.withOpacity(0.3),
+                              color: PsColors.mainColor!.withOpacity(0.3),
                               offset: const Offset(1.1, 1.1),
                               blurRadius: 10.0),
                         ],
@@ -1038,7 +1038,7 @@ class _HomeViewState extends State<DashboardView>
           lazy: false,
           create: (BuildContext context) {
             final NotificationProvider provider = NotificationProvider(
-                repo: notificationRepository, psValueHolder: valueHolder);
+                repo: notificationRepository!, psValueHolder: valueHolder!);
             if (provider.psValueHolder.deviceToken == null ||
                 provider.psValueHolder.deviceToken == '') {
               final FirebaseMessaging _fcm = FirebaseMessaging.instance;
@@ -1060,13 +1060,13 @@ class _HomeViewState extends State<DashboardView>
                     lazy: false,
                     create: (BuildContext context) {
                       provider = UserProvider(
-                          repo: userRepository, psValueHolder: valueHolder);
+                          repo: userRepository!, psValueHolder: valueHolder!);
 
-                      return provider;
+                      return provider!;
                     },
                     child: Consumer<UserProvider>(builder:
                         (BuildContext context, UserProvider provider,
-                            Widget child) {
+                            Widget? child) {
                       if (provider == null ||
                           provider.psValueHolder.userIdToVerify == null ||
                           provider.psValueHolder.userIdToVerify == '') {
@@ -1076,7 +1076,7 @@ class _HomeViewState extends State<DashboardView>
                             provider.psValueHolder.loginUserId == '') {
                           return _CallLoginWidget(
                               currentIndex: _currentIndex,
-                              animationController: animationController,
+                              animationController: animationController!,
                               animation: animation,
                               updateCurrentIndex: (String title, int index) {
                                 if (index != null) {
@@ -1098,17 +1098,17 @@ class _HomeViewState extends State<DashboardView>
                         } else {
                           return ProfileView(
                             scaffoldKey: scaffoldKey,
-                            animationController: animationController,
+                            animationController: animationController!,
                             flag: _currentIndex,
                             callLogoutCallBack: (String userId) {
-                              callLogout(provider, deleteTaskProvider,
+                              callLogout(provider, deleteTaskProvider!,
                                   PsConst.REQUEST_CODE__MENU_HOME_FRAGMENT);
                             },
                           );
                         }
                       } else {
                         return _CallVerifyEmailWidget(
-                            animationController: animationController,
+                            animationController: animationController!,
                             animation: animation,
                             currentIndex: _currentIndex,
                             userId: _userId,
@@ -1137,7 +1137,7 @@ class _HomeViewState extends State<DashboardView>
                   scrollDirection: Axis.vertical,
                   slivers: <Widget>[
                     HomeItemSearchView(
-                        animationController: animationController,
+                        animationController: animationController!,
                         animation: animation,
                         productParameterHolder:
                             ProductParameterHolder().getLatestParameterHolder())
@@ -1156,9 +1156,9 @@ class _HomeViewState extends State<DashboardView>
                   CustomScrollView(scrollDirection: Axis.vertical, slivers: <
                       Widget>[
                     PhoneSignInView(
-                        animationController: animationController,
+                        animationController: animationController!,
                         goToLoginSelected: () {
-                          animationController
+                          animationController!
                               .reverse()
                               .then<dynamic>((void data) {
                             if (!mounted) {
@@ -1213,7 +1213,7 @@ class _HomeViewState extends State<DashboardView>
                     userName: phoneUserName,
                     phoneNumber: phoneNumber,
                     phoneId: phoneId,
-                    animationController: animationController,
+                    animationController: animationController!,
                     animation: animation,
                     currentIndex: _currentIndex,
                     updateCurrentIndex: (String title, int index) {
@@ -1235,11 +1235,11 @@ class _HomeViewState extends State<DashboardView>
                       PsConst.REQUEST_CODE__MENU_USER_PROFILE_FRAGMENT) {
                 return ProfileView(
                   scaffoldKey: scaffoldKey,
-                  animationController: animationController,
+                  animationController: animationController!,
                   flag: _currentIndex,
                   userId: _userId,
                   callLogoutCallBack: (String userId) {
-                    callLogout(provider, deleteTaskProvider,
+                    callLogout(provider!, deleteTaskProvider!,
                         PsConst.REQUEST_CODE__MENU_HOME_FRAGMENT);
                   },
                 );
@@ -1251,7 +1251,7 @@ class _HomeViewState extends State<DashboardView>
                 return ProductListWithFilterView(
                   key: const Key('1'),
                   changeAppBarTitle: changeAppBarTitle,
-                  animationController: animationController,
+                  animationController: animationController!,
                   productParameterHolder:
                       ProductParameterHolder().getLatestParameterHolder(),
                 );
@@ -1260,7 +1260,7 @@ class _HomeViewState extends State<DashboardView>
                 return ProductListWithFilterView(
                   key: const Key('2'),
                   changeAppBarTitle: changeAppBarTitle,
-                  animationController: animationController,
+                  animationController: animationController!,
                   productParameterHolder:
                       ProductParameterHolder().getRecentParameterHolder(),
                 );
@@ -1269,7 +1269,7 @@ class _HomeViewState extends State<DashboardView>
                 return ProductListWithFilterView(
                   key: const Key('3'),
                   changeAppBarTitle: changeAppBarTitle,
-                  animationController: animationController,
+                  animationController: animationController!,
                   productParameterHolder:
                       ProductParameterHolder().getPopularParameterHolder(),
                 );
@@ -1277,7 +1277,7 @@ class _HomeViewState extends State<DashboardView>
                   PsConst.REQUEST_CODE__MENU_FEATURED_PRODUCT_FRAGMENT) {
                 return PaidAdProductListView(
                   key: const Key('4'),
-                  animationController: animationController,
+                  animationController: animationController!,
                 );
               } else if (_currentIndex ==
                       PsConst
@@ -1294,9 +1294,9 @@ class _HomeViewState extends State<DashboardView>
                       scrollDirection: Axis.vertical,
                       slivers: <Widget>[
                         ForgotPasswordView(
-                          animationController: animationController,
+                          animationController: animationController!,
                           goToLoginSelected: () {
-                            animationController
+                            animationController!
                                 .reverse()
                                 .then<dynamic>((void data) {
                               if (!mounted) {
@@ -1337,7 +1337,7 @@ class _HomeViewState extends State<DashboardView>
                     RegisterView(
                         animationController: animationController,
                         onRegisterSelected: (User user) {
-                          _userId = user.userId;
+                          _userId = user.userId!;
                           // widget.provider.psValueHolder.loginUserId = userId;
                           if (user.status == PsConst.ONE) {
                             updateSelectedIndexWithAnimationUserId(
@@ -1345,7 +1345,7 @@ class _HomeViewState extends State<DashboardView>
                                     context, 'home__menu_drawer_profile'),
                                 PsConst
                                     .REQUEST_CODE__DASHBOARD_USER_PROFILE_FRAGMENT,
-                                user.userId);
+                                user.userId!);
                           } else {
                             if (_currentIndex ==
                                 PsConst.REQUEST_CODE__MENU_REGISTER_FRAGMENT) {
@@ -1368,12 +1368,12 @@ class _HomeViewState extends State<DashboardView>
                                       context, 'home__menu_drawer_profile'),
                                   PsConst
                                       .REQUEST_CODE__DASHBOARD_USER_PROFILE_FRAGMENT,
-                                  user.userId);
+                                  user.userId!);
                             }
                           }
                         },
                         goToLoginSelected: () {
-                          animationController
+                          animationController!
                               .reverse()
                               .then<dynamic>((void data) {
                             if (!mounted) {
@@ -1402,7 +1402,7 @@ class _HomeViewState extends State<DashboardView>
                   _currentIndex ==
                       PsConst.REQUEST_CODE__MENU_VERIFY_EMAIL_FRAGMENT) {
                 return _CallVerifyEmailWidget(
-                    animationController: animationController,
+                    animationController: animationController!,
                     animation: animation,
                     currentIndex: _currentIndex,
                     userId: _userId,
@@ -1424,7 +1424,7 @@ class _HomeViewState extends State<DashboardView>
                   _currentIndex == PsConst.REQUEST_CODE__MENU_LOGIN_FRAGMENT) {
                 return _CallLoginWidget(
                     currentIndex: _currentIndex,
-                    animationController: animationController,
+                    animationController: animationController!,
                     animation: animation,
                     updateCurrentIndex: (String title, int index) {
                       updateSelectedIndexWithAnimation(title, index);
@@ -1447,13 +1447,13 @@ class _HomeViewState extends State<DashboardView>
                     lazy: false,
                     create: (BuildContext context) {
                       final UserProvider provider = UserProvider(
-                          repo: userRepository, psValueHolder: valueHolder);
+                          repo: userRepository!, psValueHolder: valueHolder!);
 
                       return provider;
                     },
                     child: Consumer<UserProvider>(builder:
                         (BuildContext context, UserProvider provider,
-                            Widget child) {
+                            Widget? child) {
                       if (provider == null ||
                           provider.psValueHolder.userIdToVerify == null ||
                           provider.psValueHolder.userIdToVerify == '') {
@@ -1472,7 +1472,7 @@ class _HomeViewState extends State<DashboardView>
                                   scrollDirection: Axis.vertical,
                                   slivers: <Widget>[
                                     LoginView(
-                                      animationController: animationController,
+                                      animationController: animationController!,
                                       animation: animation,
                                       onGoogleSignInSelected: (String userId) {
                                         setState(() {
@@ -1564,17 +1564,17 @@ class _HomeViewState extends State<DashboardView>
                         } else {
                           return ProfileView(
                             scaffoldKey: scaffoldKey,
-                            animationController: animationController,
+                            animationController: animationController!,
                             flag: _currentIndex,
                             callLogoutCallBack: (String userId) {
-                              callLogout(provider, deleteTaskProvider,
+                              callLogout(provider, deleteTaskProvider!,
                                   PsConst.REQUEST_CODE__MENU_HOME_FRAGMENT);
                             },
                           );
                         }
                       } else {
                         return _CallVerifyEmailWidget(
-                            animationController: animationController,
+                            animationController: animationController!,
                             animation: animation,
                             currentIndex: _currentIndex,
                             userId: _userId,
@@ -1597,30 +1597,30 @@ class _HomeViewState extends State<DashboardView>
               } else if (_currentIndex ==
                   PsConst.REQUEST_CODE__MENU_FAVOURITE_FRAGMENT) {
                 return FavouriteProductListView(
-                    animationController: animationController);
+                    animationController: animationController!);
               } else if (_currentIndex ==
                   PsConst.REQUEST_CODE__MENU_TRANSACTION_FRAGMENT) {
                 return PaidAdItemListView(
-                    animationController: animationController);
+                    animationController: animationController!);
               } else if (_currentIndex ==
                   PsConst.REQUEST_CODE__MENU_USER_HISTORY_FRAGMENT) {
                 return HistoryListView(
-                    animationController: animationController);
+                    animationController: animationController!);
               } else if (_currentIndex ==
                   PsConst.REQUEST_CODE__MENU_OFFER_FRAGMENT) {
-                return OfferListView(animationController: animationController);
+                return OfferListView(animationController: animationController!);
               } else if (_currentIndex ==
                   PsConst.REQUEST_CODE__MENU_BLOCKED_USER_FRAGMENT) {
                 return BlockedUserListView(
-                    animationController: animationController);
+                    animationController: animationController!);
               } else if (_currentIndex ==
                   PsConst.REQUEST_CODE__MENU_REPORTED_ITEM_FRAGMENT) {
                 return ReportedItemListView(
-                    animationController: animationController);
+                    animationController: animationController!);
               } else if (_currentIndex ==
                   PsConst.REQUEST_CODE__MENU_LANGUAGE_FRAGMENT) {
                 return LanguageSettingView(
-                    animationController: animationController,
+                    animationController: animationController!,
                     languageIsChanged: () {
                       // _currentIndex = PsConst.REQUEST_CODE__MENU_LANGUAGE_FRAGMENT;
                       // appBarTitle = Utils.getString(
@@ -1632,31 +1632,31 @@ class _HomeViewState extends State<DashboardView>
                     });
               } else if (_currentIndex ==
                   PsConst.REQUEST_CODE__MENU_CONTACT_US_FRAGMENT) {
-                return ContactUsView(animationController: animationController);
+                return ContactUsView(animationController: animationController!);
               } else if (_currentIndex ==
                   PsConst.REQUEST_CODE__MENU_SETTING_FRAGMENT) {
                 return Container(
                   color: PsColors.coreBackgroundColor,
                   height: double.infinity,
                   child: SettingView(
-                    animationController: animationController,
+                    animationController: animationController!,
                   ),
                 );
               } else if (_currentIndex ==
                   PsConst.REQUEST_CODE__MENU_TERMS_AND_CONDITION_FRAGMENT) {
                 return TermsAndConditionsView(
-                    animationController: animationController);
+                    animationController: animationController!);
               } else if (_currentIndex ==
                   PsConst.REQUEST_CODE__DASHBOARD_MESSAGE_FRAGMENT) {
-                if (valueHolder.loginUserId != null &&
-                    valueHolder.loginUserId != '') {
+                if (valueHolder!.loginUserId != null &&
+                    valueHolder!.loginUserId != '') {
                   return ChatListView(
-                    animationController: animationController,
+                    animationController: animationController!,
                   );
                 } else {
                   return _CallLoginWidget(
                       currentIndex: _currentIndex,
-                      animationController: animationController,
+                      animationController: animationController!,
                       animation: animation,
                       updateCurrentIndex: (String title, int index) {
                         updateSelectedIndexWithAnimation(title, index);
@@ -1675,11 +1675,11 @@ class _HomeViewState extends State<DashboardView>
                       });
                 }
               } else {
-                animationController.forward();
+                animationController!.forward();
                 return HomeDashboardViewWidget(
                   _scrollController,
-                  animationController,
-                  animationControllerForFab,
+                  animationController!,
+                  animationControllerForFab!,
                   context,
                   //      (String payload) {
                   //   return showDialog<dynamic>(
@@ -1723,11 +1723,11 @@ class _HomeViewState extends State<DashboardView>
 
 class _CallLoginWidget extends StatelessWidget {
   const _CallLoginWidget(
-      {@required this.animationController,
-      @required this.animation,
-      @required this.updateCurrentIndex,
-      @required this.updateUserCurrentIndex,
-      @required this.currentIndex});
+      {required this.animationController,
+      required this.animation,
+      required this.updateCurrentIndex,
+      required this.updateUserCurrentIndex,
+      required this.currentIndex});
   final Function updateCurrentIndex;
   final Function updateUserCurrentIndex;
   final AnimationController animationController;
@@ -1843,15 +1843,15 @@ class _CallVerifyPhoneWidget extends StatelessWidget {
       {this.userName,
       this.phoneNumber,
       this.phoneId,
-      @required this.updateCurrentIndex,
-      @required this.updateUserCurrentIndex,
-      @required this.animationController,
-      @required this.animation,
-      @required this.currentIndex});
+      required this.updateCurrentIndex,
+      required this.updateUserCurrentIndex,
+      required this.animationController,
+      required this.animation,
+      required this.currentIndex});
 
-  final String userName;
-  final String phoneNumber;
-  final String phoneId;
+  final String? userName;
+  final String? phoneNumber;
+  final String? phoneId;
   final Function updateCurrentIndex;
   final Function updateUserCurrentIndex;
   final int currentIndex;
@@ -1864,9 +1864,9 @@ class _CallVerifyPhoneWidget extends StatelessWidget {
     return SingleChildScrollView(
         scrollDirection: Axis.vertical,
         child: VerifyPhoneView(
-          userName: userName,
-          phoneNumber: phoneNumber,
-          phoneId: phoneId,
+          userName: userName!,
+          phoneNumber: phoneNumber!,
+          phoneId: phoneId!,
           animationController: animationController,
           onProfileSelected: (String userId) {
             if (currentIndex ==
@@ -1900,12 +1900,12 @@ class _CallVerifyPhoneWidget extends StatelessWidget {
 
 class _CallVerifyEmailWidget extends StatelessWidget {
   const _CallVerifyEmailWidget(
-      {@required this.updateCurrentIndex,
-      @required this.updateUserCurrentIndex,
-      @required this.animationController,
-      @required this.animation,
-      @required this.currentIndex,
-      @required this.userId});
+      {required this.updateCurrentIndex,
+      required this.updateUserCurrentIndex,
+      required this.animationController,
+      required this.animation,
+      required this.currentIndex,
+      required this.userId});
   final Function updateCurrentIndex;
   final Function updateUserCurrentIndex;
   final int currentIndex;
@@ -1961,11 +1961,11 @@ class _CallVerifyEmailWidget extends StatelessWidget {
 
 class _DrawerMenuWidget extends StatefulWidget {
   const _DrawerMenuWidget({
-    Key key,
-    @required this.icon,
-    @required this.title,
-    @required this.onTap,
-    @required this.index,
+    Key? key,
+    required this.icon,
+    required this.title,
+    required this.onTap,
+    required this.index,
   }) : super(key: key);
 
   final IconData icon;
@@ -2010,7 +2010,7 @@ class _DrawerHeaderWidget extends StatelessWidget {
             Utils.getString(context, 'app_name'),
             style: Theme.of(context)
                 .textTheme
-                .subtitle1
+                .subtitle1!
                 .copyWith(color: PsColors.white),
           ),
         ],

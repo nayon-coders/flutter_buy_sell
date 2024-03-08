@@ -18,14 +18,14 @@ class LanguageListView extends StatefulWidget {
 
 class _LanguageListViewState extends State<LanguageListView>
     with SingleTickerProviderStateMixin {
-  LanguageRepository repo1;
+  LanguageRepository? repo1;
 
-  AnimationController animationController;
-  Animation<double> animation;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -43,7 +43,7 @@ class _LanguageListViewState extends State<LanguageListView>
     repo1 = Provider.of<LanguageRepository>(context);
     timeDilation = 1.0;
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -61,13 +61,13 @@ class _LanguageListViewState extends State<LanguageListView>
         appBarTitle:
             Utils.getString(context, 'language_selection__title') ?? '',
         initProvider: () {
-          return LanguageProvider(repo: repo1);
+          return LanguageProvider(repo: repo1!);
         },
         onProviderReady: (LanguageProvider provider) {
           provider.getLanguageList();
         },
         builder:
-            (BuildContext context, LanguageProvider provider, Widget child) {
+            (BuildContext context, LanguageProvider provider, Widget? child) {
           return Padding(
             padding: const EdgeInsets.only(
                 top: PsDimens.space8, bottom: PsDimens.space8),
@@ -78,10 +78,10 @@ class _LanguageListViewState extends State<LanguageListView>
                 final int count = provider.languageList.length;
                 return LanguageListItem(
                     language: provider.languageList[index],
-                    animationController: animationController,
+                    animationController: animationController!,
                     animation: Tween<double>(begin: 0.0, end: 1.0)
                         .animate(CurvedAnimation(
-                      parent: animationController,
+                      parent: animationController!,
                       curve: Interval((1 / count) * index, 1.0,
                           curve: Curves.fastOutSlowIn),
                     )),

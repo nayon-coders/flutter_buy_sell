@@ -7,7 +7,7 @@ import 'package:flutterbuyandsell/viewobject/common/ps_value_holder.dart';
 import 'package:provider/provider.dart';
 
 class TermsAndConditionsView extends StatefulWidget {
-  const TermsAndConditionsView({Key key, @required this.animationController})
+  const TermsAndConditionsView({Key? key, required this.animationController})
       : super(key: key);
   final AnimationController animationController;
   @override
@@ -15,9 +15,9 @@ class TermsAndConditionsView extends StatefulWidget {
 }
 
 class _TermsAndConditionsViewState extends State<TermsAndConditionsView> {
-  AboutUsRepository repo1;
-  PsValueHolder psValueHolder;
-  AboutUsProvider provider;
+  AboutUsRepository? repo1;
+  PsValueHolder? psValueHolder;
+  AboutUsProvider? provider;
   @override
   Widget build(BuildContext context) {
     repo1 = Provider.of<AboutUsRepository>(context);
@@ -30,14 +30,14 @@ class _TermsAndConditionsViewState extends State<TermsAndConditionsView> {
     return ChangeNotifierProvider<AboutUsProvider>(
         lazy: false,
         create: (BuildContext context) {
-          provider = AboutUsProvider(repo: repo1, psValueHolder: psValueHolder);
-          provider.loadAboutUsList();
-          return provider;
+          provider = AboutUsProvider(repo: repo1!, psValueHolder: psValueHolder!);
+          provider!.loadAboutUsList();
+          return provider!;
         },
         child: Consumer<AboutUsProvider>(builder: (BuildContext context,
-            AboutUsProvider basketProvider, Widget child) {
-          if (provider.aboutUsList.data == null ||
-              provider.aboutUsList.data.isEmpty) {
+            AboutUsProvider basketProvider, Widget? child) {
+          if (provider!.aboutUsList.data == null ||
+              provider!.aboutUsList.data!.isEmpty) {
             return Container();
           } else {
             return AnimatedBuilder(
@@ -46,11 +46,11 @@ class _TermsAndConditionsViewState extends State<TermsAndConditionsView> {
                 padding: const EdgeInsets.all(PsDimens.space10),
                 child: SingleChildScrollView(
                   child: HtmlWidget(
-                    provider.aboutUsList.data[0].privacypolicy
+                    provider!.aboutUsList.data![0].privacypolicy!
                   ),
                 ),
               ),
-              builder: (BuildContext context, Widget child) {
+              builder: (BuildContext context, Widget? child) {
                 return FadeTransition(
                   opacity: animation,
                   child: Transform(

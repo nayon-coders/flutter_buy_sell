@@ -11,7 +11,7 @@ class ReportItemContainerView extends StatefulWidget {
 
 class _ReportItemContainerViewState extends State<ReportItemContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -21,7 +21,7 @@ class _ReportItemContainerViewState extends State<ReportItemContainerView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -30,7 +30,7 @@ class _ReportItemContainerViewState extends State<ReportItemContainerView>
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -57,7 +57,7 @@ class _ReportItemContainerViewState extends State<ReportItemContainerView>
             textAlign: TextAlign.center,
             style: Theme.of(context)
                 .textTheme
-                .headline6 
+                .headline6!
                 .copyWith(color: PsColors.mainColor, fontWeight: FontWeight.bold),
           ),
           elevation: 0,
@@ -66,7 +66,7 @@ class _ReportItemContainerViewState extends State<ReportItemContainerView>
            color: PsColors.coreBackgroundColor,
           height: double.infinity,
           child: ReportedItemListView(
-            animationController: animationController,
+            animationController: animationController!,
           ),
         ),
       ),

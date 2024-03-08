@@ -24,17 +24,17 @@ import 'package:flutterbuyandsell/viewobject/product.dart';
 
 class PayStackView extends StatefulWidget {
   const PayStackView(
-      {Key key,
-      @required this.product,
-      @required this.amount,
-      @required this.howManyDay,
-      @required this.paymentMethod,
-      @required this.stripePublishableKey,
-      @required this.startDate,
-      @required this.startTimeStamp,
-      @required this.itemPaidHistoryProvider,
-      @required this.userProvider,
-      @required this.payStackKey})
+      {Key? key,
+      required this.product,
+      required this.amount,
+      required this.howManyDay,
+      required this.paymentMethod,
+      required this.stripePublishableKey,
+      required this.startDate,
+      required this.startTimeStamp,
+      required this.itemPaidHistoryProvider,
+      required this.userProvider,
+      required this.payStackKey})
       : super(key: key);
 
   final Product product;
@@ -104,7 +104,7 @@ dynamic callPaidAdSubmitApi(
           context: context,
           builder: (BuildContext context) {
             return ErrorDialog(
-              message: padiHistoryDataStatus.message,
+              message: padiHistoryDataStatus.message!,
             );
           });
     }
@@ -246,7 +246,7 @@ class PayStackViewState extends State<PayStackView> {
                                       Utils.getPriceTwoDecimal(widget.amount)) *
                                   100)
                               .round()
-                          ..email = widget.userProvider.user.data.userEmail
+                          ..email = widget.userProvider.user.data!.userEmail
                           ..reference = _getReference()
                           ..card = callCard(
                               cardNumber, expiryDate, cardHolderName, cvvCode);
@@ -265,7 +265,7 @@ class PayStackViewState extends State<PayStackView> {
                             isLight = true;
                           }
                           if (response.status) {
-                            payStackNow(response.reference);
+                            payStackNow(response.reference!);
                           }
                         } catch (e) {
                           print('Check console for error');

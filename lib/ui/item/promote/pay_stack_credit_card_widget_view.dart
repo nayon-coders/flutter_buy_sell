@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 class PayStackCreditCardWidget extends StatefulWidget {
   const PayStackCreditCardWidget({
-    @required this.cardNumber,
-    @required this.expiryDate,
-    @required this.cardHolderName,
-    @required this.cvvCode,
+    required this.cardNumber,
+    required this.expiryDate,
+    required this.cardHolderName,
+    required this.cvvCode,
   });
 
   final String cardNumber;
@@ -49,7 +49,7 @@ class _PayStackCreditCardWidgetState extends State<PayStackCreditCardWidget> {
 
 class _CardNumberWidget extends StatefulWidget {
   const _CardNumberWidget({this.userCardNumberString});
-  final String userCardNumberString;
+  final String? userCardNumberString;
   @override
   _CardNumberWidgetState createState() => _CardNumberWidgetState();
 }
@@ -57,10 +57,10 @@ class _CardNumberWidget extends StatefulWidget {
 class _CardNumberWidgetState extends State<_CardNumberWidget> {
   @override
   Widget build(BuildContext context) {
-    print('*****' + widget.userCardNumberString);
+    print('*****' + widget.userCardNumberString!);
     return Column(
       children: <Widget>[
-        Text(widget.userCardNumberString
+        Text(widget.userCardNumberString!
             // titleText: 'Card Number',
             // hintText: 'XXXX XXXX XXXX XXXX XX',
             // textEditingController: widget.userCardNumberString
@@ -72,7 +72,7 @@ class _CardNumberWidgetState extends State<_CardNumberWidget> {
 
 class _ExperiedDateWidget extends StatefulWidget {
   const _ExperiedDateWidget({this.userExperiedDateString});
-  final String userExperiedDateString;
+  final String? userExperiedDateString;
   @override
   _ExperiedDateWidgetState createState() => _ExperiedDateWidgetState();
 }
@@ -80,14 +80,14 @@ class _ExperiedDateWidget extends StatefulWidget {
 class _ExperiedDateWidgetState extends State<_ExperiedDateWidget> {
   @override
   Widget build(BuildContext context) {
-    print('*****' + widget.userExperiedDateString);
+    print('*****' + widget.userExperiedDateString!);
     return Column(
       children: <Widget>[
         // PsTextFieldWidget(
         //     titleText: 'Experied Date',
         //     hintText: 'MM/YY',
         //     textEditingController: widget.userExperiedDateString),
-        Text(widget.userExperiedDateString),
+        Text(widget.userExperiedDateString!),
       ],
     );
   }
@@ -95,7 +95,7 @@ class _ExperiedDateWidgetState extends State<_ExperiedDateWidget> {
 
 class _CCVWidget extends StatefulWidget {
   const _CCVWidget({this.userCCVString});
-  final String userCCVString;
+  final String? userCCVString;
   @override
   _CCVWidgetState createState() => _CCVWidgetState();
 }
@@ -103,14 +103,14 @@ class _CCVWidget extends StatefulWidget {
 class _CCVWidgetState extends State<_CCVWidget> {
   @override
   Widget build(BuildContext context) {
-    print('*****' + widget.userCCVString);
+    print('*****' + widget.userCCVString!);
     return Column(
       children: <Widget>[
         // PsTextFieldWidget(
         //     titleText: 'CCV',
         //     hintText: 'XXX',
         //     textEditingController: widget.userCCVString),
-        Text(widget.userCCVString),
+        Text(widget.userCCVString!),
       ],
     );
   }
@@ -118,7 +118,7 @@ class _CCVWidgetState extends State<_CCVWidget> {
 
 class _CardHolderNameWidget extends StatefulWidget {
   const _CardHolderNameWidget({this.userHolderNameString});
-  final String userHolderNameString;
+  final String? userHolderNameString;
   @override
   _CardHolderNameWidgetState createState() => _CardHolderNameWidgetState();
 }
@@ -126,14 +126,14 @@ class _CardHolderNameWidget extends StatefulWidget {
 class _CardHolderNameWidgetState extends State<_CardHolderNameWidget> {
   @override
   Widget build(BuildContext context) {
-    print('*****' + widget.userHolderNameString);
+    print('*****' + widget.userHolderNameString!);
     return Column(
       children: <Widget>[
         // PsTextFieldWidget(
         //     titleText: 'Card Holder Name',
         //     hintText: 'Card Holder Name',
         //     textEditingController: widget.userHolderNameString),
-        Text(widget.userHolderNameString),
+        Text(widget.userHolderNameString!),
       ],
     );
   }

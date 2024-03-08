@@ -48,18 +48,18 @@ class _IntroSliderViewState extends State<IntroSliderView>
         lazy: false,
         create: (BuildContext context) {
           userProvider =
-              UserProvider(repo: userRepo, psValueHolder: psValueHolder);
-          return userProvider;
+              UserProvider(repo: userRepo!, psValueHolder: psValueHolder!);
+          return userProvider!;
         },
         child: Consumer<UserProvider>(builder:
-            (BuildContext context, UserProvider provider, Widget child) {
+            (BuildContext context, UserProvider provider, Widget? child) {
           return DefaultTabController(
             length: 3,
             child: Scaffold(
               body: TabBarView(controller: _controller, children: <Widget>[
-                IntroSliderWidget(controller: _controller),
+                IntroSliderWidget(controller: _controller!),
                 //IntroSliderWidget(),
-                IntroSliderSecondWidget(controller: _controller),
+                IntroSliderSecondWidget(controller: _controller!),
                 IntroSliderDonotshowagainWidget(
                     provider: provider, settingSlider: widget.settingSlider)
               ]),
@@ -71,7 +71,7 @@ class _IntroSliderViewState extends State<IntroSliderView>
 
 class IntroSliderWidget extends StatelessWidget {
   const IntroSliderWidget({this.controller});
-  final TabController controller;
+  final TabController? controller;
   @override
   Widget build(BuildContext context) {
     final PsValueHolder psValueHolder =
@@ -105,7 +105,7 @@ class IntroSliderWidget extends StatelessWidget {
                       right: PsDimens.space12),
                   child: Text(
                     Utils.getString(context, 'intro_slider1_title'),
-                    style: Theme.of(context).textTheme.headline5.copyWith(
+                    style: Theme.of(context).textTheme.headline5!.copyWith(
                           color: PsColors.white,
                         ),
                   ),
@@ -117,7 +117,7 @@ class IntroSliderWidget extends StatelessWidget {
                       right: PsDimens.space48),
                   child: Text(
                     Utils.getString(context, 'intro_slider1_description'),
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           color: PsColors.white,
                         ),
                     textAlign: TextAlign.center,
@@ -151,7 +151,7 @@ class IntroSliderWidget extends StatelessWidget {
                       child: Container(
                         child: Text(
                           Utils.getString(context, 'intro_slider_skip'),
-                          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                          style: Theme.of(context).textTheme.subtitle1!.copyWith(
                                 color: PsColors.white,
                               ),
                         ),
@@ -186,12 +186,12 @@ class IntroSliderWidget extends StatelessWidget {
                   ),
                   InkWell(
                       onTap: () {
-                        controller.animateTo(1);
+                        controller!.animateTo(1);
                       },
                       child: Container(
                         child: Text(
                           Utils.getString(context, 'intro_slider_next'),
-                          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                          style: Theme.of(context).textTheme.subtitle1!.copyWith(
                                 color: PsColors.white,
                               ),
                         ),
@@ -206,7 +206,7 @@ class IntroSliderWidget extends StatelessWidget {
 
 class IntroSliderSecondWidget extends StatelessWidget {
   const IntroSliderSecondWidget({this.controller});
-  final TabController controller;
+  final TabController? controller;
   @override
   Widget build(BuildContext context) {
     final PsValueHolder psValueHolder =
@@ -240,7 +240,7 @@ class IntroSliderSecondWidget extends StatelessWidget {
                       right: PsDimens.space12),
                   child: Text(
                     Utils.getString(context, 'intro_slider2_title'),
-                    style: Theme.of(context).textTheme.headline5.copyWith(
+                    style: Theme.of(context).textTheme.headline5!.copyWith(
                           color: PsColors.white,
                         ),
                   ),
@@ -252,7 +252,7 @@ class IntroSliderSecondWidget extends StatelessWidget {
                       right: PsDimens.space48),
                   child: Text(
                     Utils.getString(context, 'intro_slider2_description'),
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           color: PsColors.white,
                         ),
                     textAlign: TextAlign.center,
@@ -286,7 +286,7 @@ class IntroSliderSecondWidget extends StatelessWidget {
                       child: Container(
                         child: Text(
                           Utils.getString(context, 'intro_slider_skip'),
-                          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                          style: Theme.of(context).textTheme.subtitle1!.copyWith(
                                 color: PsColors.white,
                               ),
                         ),
@@ -321,12 +321,12 @@ class IntroSliderSecondWidget extends StatelessWidget {
                   ),
                   InkWell(
                       onTap: () {
-                        controller.animateTo(2);
+                        controller!.animateTo(2);
                       },
                       child: Container(
                         child: Text(
                           Utils.getString(context, 'intro_slider_next'),
-                          style: Theme.of(context).textTheme.subtitle1.copyWith(
+                          style: Theme.of(context).textTheme.subtitle1!.copyWith(
                                 color: PsColors.white,
                               ),
                         ),
@@ -341,7 +341,7 @@ class IntroSliderSecondWidget extends StatelessWidget {
 
 class IntroSliderDonotshowagainWidget extends StatefulWidget {
   const IntroSliderDonotshowagainWidget(
-      {@required this.provider, @required this.settingSlider});
+      {required this.provider, required this.settingSlider});
 
   final UserProvider provider;
   final int settingSlider;
@@ -394,7 +394,7 @@ class _IntroSliderDonotshowagainWidgetState
                       right: PsDimens.space12),
                   child: Text(
                     Utils.getString(context, 'intro_slider3_title'),
-                    style: Theme.of(context).textTheme.headline5.copyWith(
+                    style: Theme.of(context).textTheme.headline5!.copyWith(
                           color: PsColors.white,
                         ),
                   ),
@@ -406,7 +406,7 @@ class _IntroSliderDonotshowagainWidgetState
                       right: PsDimens.space48),
                   child: Text(
                     Utils.getString(context, 'intro_slider3_description'),
-                    style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
                           color: PsColors.white,
                         ),
                     textAlign: TextAlign.center,
@@ -425,7 +425,7 @@ class _IntroSliderDonotshowagainWidgetState
                       Checkbox(
                           activeColor: PsColors.mainColor,
                           value: widget.provider.isCheckBoxSelect,
-                          onChanged: (bool value) {
+                          onChanged: (bool? value) {
                             setState(() {
                               updateCheckBox(context, widget.provider,
                                   widget.provider.isCheckBoxSelect);

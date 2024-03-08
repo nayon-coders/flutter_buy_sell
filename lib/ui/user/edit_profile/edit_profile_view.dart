@@ -31,10 +31,10 @@ class EditProfileView extends StatefulWidget {
 
 class _EditProfileViewState extends State<EditProfileView>
     with SingleTickerProviderStateMixin {
-  UserRepository userRepository;
-  UserProvider userProvider;
-  PsValueHolder psValueHolder;
-  AnimationController animationController;
+  UserRepository? userRepository;
+  UserProvider? userProvider;
+  PsValueHolder? psValueHolder;
+  AnimationController? animationController;
   final TextEditingController userNameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
@@ -53,7 +53,7 @@ class _EditProfileViewState extends State<EditProfileView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -63,7 +63,7 @@ class _EditProfileViewState extends State<EditProfileView>
     psValueHolder = Provider.of<PsValueHolder>(context);
 
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -81,24 +81,24 @@ class _EditProfileViewState extends State<EditProfileView>
             appBarTitle: Utils.getString(context, 'edit_profile__title') ?? '',
             initProvider: () {
               return UserProvider(
-                  repo: userRepository, psValueHolder: psValueHolder);
+                  repo: userRepository!, psValueHolder: psValueHolder!);
             },
             onProviderReady: (UserProvider provider) async {
               await provider.getUser(provider.psValueHolder.loginUserId);
               userProvider = provider;
             },
             builder:
-                (BuildContext context, UserProvider provider, Widget child) {
+                (BuildContext context, UserProvider provider, Widget? child) {
               if (userProvider != null &&
-                  userProvider.user != null &&
-                  userProvider.user.data != null) {
+                  userProvider!.user != null &&
+                  userProvider!.user.data != null) {
                 if (bindDataFirstTime) {
-                  userNameController.text = userProvider.user.data.userName;
-                  emailController.text = userProvider.user.data.userEmail;
-                  cityController.text = userProvider.user.data.city;
-                  addressController.text = userProvider.user.data.userAddress;
-                  phoneController.text = userProvider.user.data.userPhone;
-                  aboutMeController.text = userProvider.user.data.userAboutMe;
+                  userNameController.text = userProvider!.user.data!.userName!;
+                  emailController.text = userProvider!.user.data!.userEmail!;
+                  cityController.text = userProvider!.user.data!.city!;
+                  addressController.text = userProvider!.user.data!.userAddress!;
+                  phoneController.text = userProvider!.user.data!.userPhone!;
+                  aboutMeController.text = userProvider!.user.data!.userAboutMe!;
 
                   bindDataFirstTime = false;
                 }
@@ -106,7 +106,7 @@ class _EditProfileViewState extends State<EditProfileView>
                 return SingleChildScrollView(
                   child: Column(
                     children: <Widget>[
-                      _ImageWidget(userProvider: userProvider),
+                      _ImageWidget(userProvider: userProvider!),
                       _UserFirstCardWidget(
                         userNameController: userNameController,
                         emailController: emailController,
@@ -124,7 +124,7 @@ class _EditProfileViewState extends State<EditProfileView>
                         height: PsDimens.space16,
                       ),
                       _TwoButtonWidget(
-                        userProvider: userProvider,
+                        userProvider: userProvider!,
                         userNameController: userNameController,
                         emailController: emailController,
                         phoneController: phoneController,
@@ -152,13 +152,13 @@ class _EditProfileViewState extends State<EditProfileView>
 
 class _TwoButtonWidget extends StatelessWidget {
   const _TwoButtonWidget({
-    @required this.userProvider,
-    @required this.userNameController,
-    @required this.emailController,
-    @required this.phoneController,
-    @required this.aboutMeController,
-    @required this.addressController,
-    @required this.cityController,
+    required this.userProvider,
+    required this.userNameController,
+    required this.emailController,
+    required this.phoneController,
+    required this.aboutMeController,
+    required this.addressController,
+    required this.cityController,
   });
 
   final TextEditingController userNameController;
@@ -205,13 +205,13 @@ class _TwoButtonWidget extends StatelessWidget {
                   final ProfileUpdateParameterHolder
                       profileUpdateParameterHolder =
                       ProfileUpdateParameterHolder(
-                          userId: userProvider.user.data.userId,
+                          userId: userProvider.user.data!.userId,
                           userName: userNameController.text,
                           userEmail: emailController.text.trim(),
                           userPhone: phoneController.text,
                           userAboutMe: aboutMeController.text,
-                          isShowEmail: userProvider.user.data.isShowEmail,
-                          isShowPhone: userProvider.user.data.isShowPhone,
+                          isShowEmail: userProvider.user.data!.isShowEmail,
+                          isShowPhone: userProvider.user.data!.isShowPhone,
                           userAddress: addressController.text,
                           city: cityController.text,
                           deviceToken: userProvider.psValueHolder.deviceToken);
@@ -240,7 +240,7 @@ class _TwoButtonWidget extends StatelessWidget {
                         context: context,
                         builder: (BuildContext context) {
                           return ErrorDialog(
-                            message: _apiStatus.message,
+                            message: _apiStatus.message!,
                           );
                         });
                   }
@@ -293,9 +293,9 @@ class EmailCheckboxWidget extends StatefulWidget {
 class _EmailCheckboxState extends State<EmailCheckboxWidget> {
   void toggleCheckbox(UserProvider userProvider, bool value) {
     if (value) {
-      userProvider.user.data.isShowEmail = '1';
+      userProvider.user.data!.isShowEmail = '1';
     } else {
-      userProvider.user.data.isShowEmail = '0';
+      userProvider.user.data!.isShowEmail = '0';
     }
     setState(() {});
   }
@@ -310,7 +310,7 @@ class _EmailCheckboxState extends State<EmailCheckboxWidget> {
     if (userProvider != null &&
         userProvider.user != null &&
         userProvider.user.data != null) {
-      isChecked = userProvider.user.data.isShowEmail == '1';
+      isChecked = userProvider.user.data!.isShowEmail == '1';
     }
     return Column(
       children: <Widget>[
@@ -323,8 +323,8 @@ class _EmailCheckboxState extends State<EmailCheckboxWidget> {
                 scale: 1.5,
                 child: Checkbox(
                   value: isChecked,
-                  onChanged: (bool value) {
-                    toggleCheckbox(userProvider, value);
+                  onChanged: (bool? value) {
+                    toggleCheckbox(userProvider, value!);
                   },
                   activeColor: PsColors.mainColor,
                   checkColor: Colors.white,
@@ -354,9 +354,9 @@ class _PhoneNoCheckboxState extends State<PhoneNoCheckboxWidget> {
 
   void toggleCheckbox(UserProvider userProvider, bool value) {
     if (value) {
-      userProvider.user.data.isShowPhone = '1';
+      userProvider.user.data!.isShowPhone = '1';
     } else {
-      userProvider.user.data.isShowPhone = '0';
+      userProvider.user.data!.isShowPhone = '0';
     }
     setState(() {});
   }
@@ -371,7 +371,7 @@ class _PhoneNoCheckboxState extends State<PhoneNoCheckboxWidget> {
     if (userProvider != null &&
         userProvider.user != null &&
         userProvider.user.data != null) {
-      isChecked = userProvider.user.data.isShowPhone == '1';
+      isChecked = userProvider.user.data!.isShowPhone == '1';
     }
     return Column(
       children: <Widget>[
@@ -384,8 +384,8 @@ class _PhoneNoCheckboxState extends State<PhoneNoCheckboxWidget> {
                 scale: 1.5,
                 child: Checkbox(
                   value: isChecked,
-                  onChanged: (bool value) {
-                    toggleCheckbox(userProvider, value);
+                  onChanged: (bool? value) {
+                    toggleCheckbox(userProvider, value!);
                   },
                   activeColor: PsColors.mainColor,
                   checkColor: Colors.white,
@@ -407,15 +407,15 @@ class _PhoneNoCheckboxState extends State<PhoneNoCheckboxWidget> {
 
 class _ImageWidget extends StatefulWidget {
   const _ImageWidget({this.userProvider});
-  final UserProvider userProvider;
+  final UserProvider? userProvider;
 
   @override
   __ImageWidgetState createState() => __ImageWidgetState();
 }
 
-File pickedImage;
+File? pickedImage;
 List<Asset> images = <Asset>[];
-Asset defaultAssetImage;
+Asset? defaultAssetImage;
 
 class __ImageWidgetState extends State<_ImageWidget> {
   Future<bool> requestGalleryPermission() async {
@@ -448,18 +448,18 @@ class __ImageWidgetState extends State<_ImageWidget> {
           cupertinoOptions: CupertinoOptions(
             takePhotoIcon: 'chat',
             backgroundColor:
-                '' + Utils.convertColorToString(PsColors.whiteColorWithBlack),
+                '' + Utils.convertColorToString(PsColors.whiteColorWithBlack!),
           ),
           materialOptions: MaterialOptions(
-            actionBarColor: Utils.convertColorToString(PsColors.black),
-            actionBarTitleColor: Utils.convertColorToString(PsColors.white),
-            statusBarColor: Utils.convertColorToString(PsColors.black),
+            actionBarColor: Utils.convertColorToString(PsColors.black!),
+            actionBarTitleColor: Utils.convertColorToString(PsColors.white!),
+            statusBarColor: Utils.convertColorToString(PsColors.black!),
             lightStatusBar: false,
             actionBarTitle: '',
             allViewTitle: 'All Photos',
             useDetailsView: false,
             selectCircleStrokeColor:
-                Utils.convertColorToString(PsColors.mainColor),
+                Utils.convertColorToString(PsColors.mainColor!),
           ),
         );
       } on Exception catch (e) {
@@ -486,15 +486,15 @@ class __ImageWidgetState extends State<_ImageWidget> {
               });
         } else {
           PsProgressDialog.dismissDialog();
-          final PsResource<User> _apiStatus = await widget.userProvider
+          final PsResource<User> _apiStatus = await widget.userProvider!
               .postImageUpload(
-                  widget.userProvider.psValueHolder.loginUserId,
+                  widget.userProvider!.psValueHolder.loginUserId,
                   PsConst.PLATFORM,
                   await Utils.getImageFileFromAssets(
                       images[0], PsConfig.profileImageSize));
           if (_apiStatus.data != null) {
             setState(() {
-              widget.userProvider.user.data = _apiStatus.data;
+              widget.userProvider!.user.data = _apiStatus.data;
             });
           }
           PsProgressDialog.dismissDialog();
@@ -503,10 +503,10 @@ class __ImageWidgetState extends State<_ImageWidget> {
     }
 
     final Widget _imageWidget =
-        widget.userProvider.user.data.userProfilePhoto != null
+        widget.userProvider!.user.data!.userProfilePhoto != null
             ? PsNetworkImageWithUrlForUser(
                 photoKey: '',
-                imagePath: widget.userProvider.user.data.userProfilePhoto,
+                imagePath: widget.userProvider!.user.data!.userProfilePhoto!,
                 width: double.infinity,
                 height: PsDimens.space200,
                 boxfit: BoxFit.cover,
@@ -550,7 +550,7 @@ class __ImageWidgetState extends State<_ImageWidget> {
       width: PsDimens.space32,
       height: PsDimens.space32,
       decoration: BoxDecoration(
-        border: Border.all(width: 1.0, color: PsColors.mainColor),
+        border: Border.all(width: 1.0, color: PsColors.mainColor!),
         color: PsColors.backgroundColor,
         borderRadius: BorderRadius.circular(PsDimens.space28),
       ),
@@ -566,7 +566,7 @@ class __ImageWidgetState extends State<_ImageWidget> {
                 child: CircleAvatar(
                   child: PsNetworkCircleImageForUser(
                     photoKey: '',
-                    imagePath: widget.userProvider.user.data.userProfilePhoto,
+                    imagePath: widget.userProvider!.user.data!.userProfilePhoto,
                     width: double.infinity,
                     height: PsDimens.space200,
                     boxfit: BoxFit.cover,
@@ -606,7 +606,7 @@ class __ImageWidgetState extends State<_ImageWidget> {
             height: PsDimens.space160,
             child: _imageWidget),
         Container(
-          color: PsColors.white.withAlpha(100),
+          color: PsColors.white!.withAlpha(100),
           width: double.infinity,
           height: PsDimens.space160,
         ),
@@ -623,13 +623,13 @@ class __ImageWidgetState extends State<_ImageWidget> {
 
 class ProfileImageWidget extends StatefulWidget {
   const ProfileImageWidget({
-    Key key,
-    @required this.images,
-    @required this.selectedImage,
+    Key? key,
+    required this.images,
+    required this.selectedImage,
     this.onTap,
   }) : super(key: key);
 
-  final Function onTap;
+  final VoidCallback? onTap;
 
   final Asset images;
   final String selectedImage;
@@ -685,12 +685,12 @@ class ProfileImageWidgetState extends State<ProfileImageWidget> {
 
 class _UserFirstCardWidget extends StatelessWidget {
   const _UserFirstCardWidget(
-      {@required this.userNameController,
-      @required this.emailController,
-      @required this.phoneController,
-      @required this.aboutMeController,
-      @required this.addressController,
-      @required this.cityController});
+      {required this.userNameController,
+      required this.emailController,
+      required this.phoneController,
+      required this.aboutMeController,
+      required this.addressController,
+      required this.cityController});
   final TextEditingController userNameController;
   final TextEditingController emailController;
   final TextEditingController phoneController;

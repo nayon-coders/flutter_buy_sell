@@ -118,7 +118,7 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
                 },
                 onHover: (PointerHoverEvent event) {
                   final RenderObject? box = context?.findRenderObject();
-                  final Offset _pos = box!.globalToLocal(event.position);
+                  final Offset _pos = box.globalToLocal(event.position);
                   final double i = _pos.dx / widget.size;
                   double newRating =
                       widget.allowHalfRating ? i : i.round().toDouble();
@@ -140,9 +140,9 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
                   onTapDown: (TapDownDetails detail) {
                     isWidgetTapped = true;
 
-                    final RenderBox box = context.findRenderObject();
+                    final RenderObject? box = context?.findRenderObject();
                     final Offset _pos =
-                        box.globalToLocal(detail.globalPosition);
+                        box?.globalToLocal(detail.globalPosition);
                     final double i = (_pos.dx - widget.spacing) / widget.size;
                     double newRating =
                         widget.allowHalfRating ? i : i.round().toDouble();
@@ -166,9 +166,9 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
                   onHorizontalDragUpdate: (DragUpdateDetails dragDetails) {
                     isWidgetTapped = true;
 
-                    final RenderObject box = context.findRenderObject();
+                    final RenderObject? box = context?.findRenderObject();
                     final Offset _pos =
-                        box.globalToLocal(dragDetails.globalPosition);
+                        box?.globalToLocal(dragDetails.globalPosition);
                     final double i = _pos.dx / widget.size;
                     double newRating =
                         widget.allowHalfRating ? i : i.round().toDouble();
@@ -198,7 +198,7 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
               )
             : GestureDetector(
                 onTapDown: (TapDownDetails detail) {
-                  final RenderObject? box = context.findRenderObject();
+                  final RenderObject? box = context?.findRenderObject();
                   final Offset _pos = box!.globalToLocal!(detail.globalPosition)!;
                   final double i = (_pos.dx - widget.spacing) / widget.size;
                   double newRating =
@@ -226,7 +226,7 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
                   }
                 },
                 onHorizontalDragUpdate: (DragUpdateDetails dragDetails) {
-                  final RenderObject? box = context.findRenderObject();
+                  final RenderObject? box = context!.findRenderObject();
                   final Offset _pos =
                       box?.globalToLocal(dragDetails.globalPosition);
                   final double i = _pos.dx / widget.size;

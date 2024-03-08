@@ -8,9 +8,9 @@ import 'package:flutterbuyandsell/viewobject/deal_option.dart';
 
 class GettingThisTileView extends StatelessWidget {
   const GettingThisTileView({
-    Key key,
-    @required this.detailOption,
-    @required this.address,
+    Key? key,
+    required this.detailOption,
+    required this.address,
   }) : super(key: key);
 
   final DealOption detailOption;
@@ -64,7 +64,7 @@ class GettingThisTileView extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: <Widget>[
                             Text(Utils.getString(
-                                      context, detailOption.name),
+                                      context, detailOption.name!),
                               style: Theme.of(context).textTheme.subtitle1,
                             ),
                             const SizedBox(

@@ -13,7 +13,7 @@ import 'package:flutterbuyandsell/viewobject/holder/intent_holder/product_detail
 import 'package:provider/provider.dart';
 
 class PaidAdItemListView extends StatefulWidget {
-  const PaidAdItemListView({Key key, @required this.animationController})
+  const PaidAdItemListView({Key? key, required this.animationController})
       : super(key: key);
   final AnimationController animationController;
   @override
@@ -24,7 +24,7 @@ class _PaidAdItemListView extends State<PaidAdItemListView>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  PaidAdItemProvider _paidAdItemProvider;
+  PaidAdItemProvider? _paidAdItemProvider;
 
   @override
   void dispose() {
@@ -36,15 +36,15 @@ class _PaidAdItemListView extends State<PaidAdItemListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _paidAdItemProvider.nextPaidAdItemList(psValueHolder.loginUserId);
+        _paidAdItemProvider!.nextPaidAdItemList(psValueHolder!.loginUserId);
       }
     });
 
     super.initState();
   }
 
-  PaidAdItemRepository repo1;
-  PsValueHolder psValueHolder;
+  PaidAdItemRepository? repo1;
+  PsValueHolder? psValueHolder;
   dynamic data;
   @override
   Widget build(BuildContext context) {
@@ -60,14 +60,14 @@ class _PaidAdItemListView extends State<PaidAdItemListView>
         lazy: false,
         create: (BuildContext context) {
           final PaidAdItemProvider provider =
-              PaidAdItemProvider(repo: repo1, psValueHolder: psValueHolder);
-          provider.loadPaidAdItemList(psValueHolder.loginUserId);
+              PaidAdItemProvider(repo: repo1!, psValueHolder: psValueHolder!);
+          provider.loadPaidAdItemList(psValueHolder!.loginUserId);
           _paidAdItemProvider = provider;
-          return _paidAdItemProvider;
+          return _paidAdItemProvider!;
         },
         child: Consumer<PaidAdItemProvider>(
           builder: (BuildContext context, PaidAdItemProvider provider,
-              Widget child) {
+              Widget? child) {
             // return Stack(children: <Widget>[
             //   Container(
             //       margin: const EdgeInsets.only(
@@ -167,9 +167,9 @@ class _PaidAdItemListView extends State<PaidAdItemListView>
                             delegate: SliverChildBuilderDelegate(
                               (BuildContext context, int index) {
                                 if (provider.paidAdItemList.data != null ||
-                                    provider.paidAdItemList.data.isNotEmpty) {
+                                    provider.paidAdItemList.data!.isNotEmpty) {
                                   final int count =
-                                      provider.paidAdItemList.data.length;
+                                      provider.paidAdItemList.data!.length;
                                   return PaidAdItemVerticalListItem(
                                     animationController:
                                         widget.animationController,
@@ -184,21 +184,21 @@ class _PaidAdItemListView extends State<PaidAdItemListView>
                                       ),
                                     ),
                                     paidAdItem:
-                                        provider.paidAdItemList.data[index],
+                                        provider.paidAdItemList.data![index],
                                     onTap: () {
                                       final ProductDetailIntentHolder holder =
                                           ProductDetailIntentHolder(
                                               productId: provider.paidAdItemList
-                                                  .data[index].item.id,
+                                                  .data![index].item!.id!,
                                               heroTagImage:
                                                   provider.hashCode.toString() +
                                                       provider.paidAdItemList
-                                                          .data[index].item.id +
+                                                          .data![index].item!.id! +
                                                       PsConst.HERO_TAG__IMAGE,
                                               heroTagTitle:
                                                   provider.hashCode.toString() +
                                                       provider.paidAdItemList
-                                                          .data[index].item.id +
+                                                          .data![index].item!.id! +
                                                       PsConst.HERO_TAG__TITLE);
                                       Navigator.pushNamed(
                                           context, RoutePaths.productDetail,
@@ -209,12 +209,12 @@ class _PaidAdItemListView extends State<PaidAdItemListView>
                                   return null;
                                 }
                               },
-                              childCount: provider.paidAdItemList.data.length,
+                              childCount: provider.paidAdItemList.data!.length,
                             ),
                           ),
                         ]),
                     onRefresh: () async {
-                      return _paidAdItemProvider.resetPaidAdItemList(
+                      return _paidAdItemProvider!.resetPaidAdItemList(
                           provider.psValueHolder.loginUserId);
                     },
                   )),

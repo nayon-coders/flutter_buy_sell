@@ -8,7 +8,7 @@ import 'package:flutterbuyandsell/api/common/ps_status.dart';
 import 'package:flutterbuyandsell/provider/common/ps_provider.dart';
 
 class BlogProvider extends PsProvider {
-  BlogProvider({@required BlogRepository repo, int limit = 0}) : super(repo,limit) {
+  BlogProvider({required BlogRepository repo, int limit = 0}) : super(repo,limit) {
     if (limit != 0) {
       super.limit = limit;
     }

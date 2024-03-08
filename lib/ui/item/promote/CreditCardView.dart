@@ -22,15 +22,15 @@ import 'package:stripe_payment/stripe_payment.dart';
 
 class CreditCardView extends StatefulWidget {
   const CreditCardView(
-      {Key key,
-      @required this.product,
-      @required this.amount,
-      @required this.howManyDay,
-      @required this.paymentMethod,
-      @required this.stripePublishableKey,
-      @required this.startDate,
-      @required this.startTimeStamp,
-      @required this.itemPaidHistoryProvider})
+      {Key? key,
+      required this.product,
+      required this.amount,
+      required this.howManyDay,
+      required this.paymentMethod,
+      required this.stripePublishableKey,
+      required this.startDate,
+      required this.startTimeStamp,
+      required this.itemPaidHistoryProvider})
       : super(key: key);
 
   final Product product;
@@ -98,7 +98,7 @@ dynamic callPaidAdSubmitApi(
           context: context,
           builder: (BuildContext context) {
             return ErrorDialog(
-              message: padiHistoryDataStatus.message,
+              message: padiHistoryDataStatus.message!,
             );
           });
     }

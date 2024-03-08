@@ -8,7 +8,7 @@ import 'package:flutterbuyandsell/viewobject/blog.dart';
 class BlogSliderView extends StatefulWidget {
   const BlogSliderView({
     Key? key,
-    required this.blogList,
+     required this.blogList,
     this.onTap,
   }) : super(key: key);
 

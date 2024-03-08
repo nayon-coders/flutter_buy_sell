@@ -127,7 +127,7 @@ Route<dynamic> generateRoute(RouteSettings settings) {
     case '${RoutePaths.force_update}':
       return MaterialPageRoute<dynamic>(builder: (BuildContext context) {
         final Object? args = settings.arguments;
-        final PSAppVersion psAppVersion = args ?? PSAppVersion;
+        final Object psAppVersion = args ?? PSAppVersion;
         return ForceUpdateView(psAppVersion: psAppVersion);
       });
 

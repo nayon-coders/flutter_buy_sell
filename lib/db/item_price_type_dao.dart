@@ -12,7 +12,7 @@ class ItemPriceTypeDao extends PsDao<ItemPriceType> {
 
   @override
   String getPrimaryKey(ItemPriceType object) {
-    return object.id;
+    return object.id!;
   }
 
   @override

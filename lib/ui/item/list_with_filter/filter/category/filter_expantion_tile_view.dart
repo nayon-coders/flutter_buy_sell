@@ -12,17 +12,17 @@ import 'package:flutterbuyandsell/ui/common/expansion_tile.dart' as custom;
 
 class FilterExpantionTileView extends StatefulWidget {
   const FilterExpantionTileView(
-      {Key key, this.selectedData, this.category, this.onSubCategoryClick})
+      {Key? key, this.selectedData, this.category, this.onSubCategoryClick})
       : super(key: key);
   final dynamic selectedData;
-  final Category category;
-  final Function onSubCategoryClick;
+  final Category? category;
+  final Function? onSubCategoryClick;
   @override
   State<StatefulWidget> createState() => _FilterExpantionTileView();
 }
 
 class _FilterExpantionTileView extends State<FilterExpantionTileView> {
-  SubCategoryRepository subCategoryRepository;
+  SubCategoryRepository? subCategoryRepository;
   bool isExpanded = false;
 
   @override
@@ -43,12 +43,12 @@ class _FilterExpantionTileView extends State<FilterExpantionTileView> {
         lazy: false,
         create: (BuildContext context) {
           final SubCategoryProvider provider =
-              SubCategoryProvider(repo: subCategoryRepository);
-          provider.loadAllSubCategoryList(widget.category.catId);
+              SubCategoryProvider(repo: subCategoryRepository!);
+          provider.loadAllSubCategoryList(widget.category!.catId!);
           return provider;
         },
         child: Consumer<SubCategoryProvider>(builder:
-            (BuildContext context, SubCategoryProvider provider, Widget child) {
+            (BuildContext context, SubCategoryProvider provider, Widget? child) {
           return Container(
               child: custom.ExpansionTile(
             initiallyExpanded: false,
@@ -59,11 +59,11 @@ class _FilterExpantionTileView extends State<FilterExpantionTileView> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      widget.category.catName,
+                      widget.category!.catName!,
                       style: Theme.of(context).textTheme.subtitle2,
                     ),
                     Container(
-                        child: widget.category.catId ==
+                        child: widget.category!.catId ==
                                 widget.selectedData[PsConst.CATEGORY_ID]
                             ? IconButton(
                                 icon: Icon(Icons.playlist_add_check,
@@ -79,7 +79,7 @@ class _FilterExpantionTileView extends State<FilterExpantionTileView> {
               ListView.builder(
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
-                  itemCount: provider.subCategoryList.data.length + 1,
+                  itemCount: provider.subCategoryList.data!.length + 1,
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
                       title: Row(
@@ -100,7 +100,7 @@ class _FilterExpantionTileView extends State<FilterExpantionTileView> {
                                     )
                                   : Text(
                                       provider
-                                          .subCategoryList.data[index - 1].name,
+                                          .subCategoryList.data![index - 1].name!,
                                       style: Theme.of(context)
                                           .textTheme
                                           .bodyText1),
@@ -108,7 +108,7 @@ class _FilterExpantionTileView extends State<FilterExpantionTileView> {
                           ),
                           Container(
                               child: index == 0 &&
-                                      widget.category.catId ==
+                                      widget.category!.catId ==
                                           widget.selectedData[
                                               PsConst.CATEGORY_ID] &&
                                       widget.selectedData[PsConst.SUB_CATEGORY_ID] ==
@@ -124,7 +124,7 @@ class _FilterExpantionTileView extends State<FilterExpantionTileView> {
                                   : index != 0 &&
                                           widget.selectedData[PsConst.SUB_CATEGORY_ID] ==
                                               provider.subCategoryList
-                                                  .data[index - 1].id
+                                                  .data![index - 1].id
                                       ? IconButton(
                                           icon: Icon(Icons.check_circle,
                                               color:
@@ -139,21 +139,21 @@ class _FilterExpantionTileView extends State<FilterExpantionTileView> {
                         if (index == 0) {
                           // widget.onSubCategoryClick(dataHolder);
                           dataHolder[PsConst.CATEGORY_ID] =
-                              widget.category.catId;
+                              widget.category!.catId!;
                           dataHolder[PsConst.SUB_CATEGORY_ID] = '';
                           dataHolder[PsConst.CATEGORY_NAME] =
-                              widget.category.catName;
-                          widget.onSubCategoryClick(dataHolder);
+                              widget.category!.catName!;
+                          widget.onSubCategoryClick!(dataHolder);
                         } else {
                           // widget.onSubCategoryClick(
                           //     provider.subCategoryList.data[index - 1]);
                           dataHolder[PsConst.CATEGORY_ID] =
-                              widget.category.catId;
+                              widget.category!.catId!;
                           dataHolder[PsConst.SUB_CATEGORY_ID] =
-                              provider.subCategoryList.data[index - 1].id;
+                              provider.subCategoryList.data![index - 1].id!;
                           dataHolder[PsConst.CATEGORY_NAME] =
-                              provider.subCategoryList.data[index - 1].name;
-                          widget.onSubCategoryClick(dataHolder);
+                              provider.subCategoryList.data![index - 1].name!;
+                          widget.onSubCategoryClick!(dataHolder);
                         }
                       },
                     );

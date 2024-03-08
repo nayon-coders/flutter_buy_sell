@@ -8,7 +8,7 @@ import 'package:flutterbuyandsell/viewobject/ps_app_version.dart';
 import 'package:flutter/material.dart';
 
 class ForceUpdateView extends StatelessWidget {
-  ForceUpdateView({@required this.psAppVersion});
+  ForceUpdateView({required this.psAppVersion});
   final PSAppVersion psAppVersion;
   final Widget _imageWidget = Container(
     width: 90,
@@ -53,7 +53,7 @@ class ForceUpdateView extends StatelessWidget {
                     const SizedBox(
                       height: PsDimens.space32,
                     ),
-                    Text(psAppVersion.versionTitle,
+                    Text(psAppVersion.versionTitle!,
                         style: Theme.of(context).textTheme.subtitle1),
                     const SizedBox(
                       height: PsDimens.space8,
@@ -62,7 +62,7 @@ class ForceUpdateView extends StatelessWidget {
                         height: PsDimens.space100,
                         child: SingleChildScrollView(
                           scrollDirection: Axis.vertical,
-                          child: Text(psAppVersion.versionMessage,
+                          child: Text(psAppVersion.versionMessage!,
                               maxLines: 9,
                               style: Theme.of(context).textTheme.bodyText1),
                         )),
@@ -83,7 +83,7 @@ class ForceUpdateView extends StatelessWidget {
                           Utils.getString(context, 'force_update__update'),
                           style: Theme.of(context)
                               .textTheme
-                              .button
+                              .button!
                               .copyWith(color: PsColors.white),
                         ),
                         onPressed: () async {

@@ -18,7 +18,7 @@ class AppInfoRepository extends PsRepository {
   Future<PsResource<PSAppInfo>> postDeleteHistory(Map<dynamic, dynamic> jsonMap,
       {bool isLoadFromServer = true}) async {
     final PsResource<PSAppInfo> _resource =
-        await _psApiService.postPsAppInfo(jsonMap);
+        await _psApiService!.postPsAppInfo(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       if (_resource.data!.deleteObject!.isNotEmpty) {}
       return _resource;

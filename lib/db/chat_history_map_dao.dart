@@ -22,7 +22,7 @@ class ChatHistoryMapDao extends PsDao<ChatHistoryMap> {
 
   @override
   String getPrimaryKey(ChatHistoryMap object) {
-    return object.id;
+    return object.id!;
   }
 
   @override

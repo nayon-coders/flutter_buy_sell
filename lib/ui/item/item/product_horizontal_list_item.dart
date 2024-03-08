@@ -10,14 +10,14 @@ import 'package:flutterbuyandsell/viewobject/product.dart';
 
 class ProductHorizontalListItem extends StatelessWidget {
   const ProductHorizontalListItem({
-    Key key,
-    @required this.product,
-    @required this.coreTagKey,
+    Key? key,
+    required this.product,
+    required this.coreTagKey,
     this.onTap,
   }) : super(key: key);
 
   final Product product;
-  final Function onTap;
+  final VoidCallback? onTap;
   final String coreTagKey;
 
   @override
@@ -64,13 +64,13 @@ class ProductHorizontalListItem extends StatelessWidget {
                             height: PsDimens.space40,
                           child: PsNetworkCircleImageForUser(
                             photoKey: '',
-                            imagePath: product.user.userProfilePhoto,
+                            imagePath: product.user!.userProfilePhoto,
                             // width: PsDimens.space40,
                             // height: PsDimens.space40,
                             boxfit: BoxFit.cover,
                             onTap: () {
-                              Utils.psPrint(product.defaultPhoto.imgParentId);
-                              onTap();
+                              Utils.psPrint(product.defaultPhoto!.imgParentId!);
+                              onTap!();
                             },
                           ),
                         ),
@@ -83,9 +83,9 @@ class ProductHorizontalListItem extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
-                                Text(product.user.userName == ''?
+                                Text(product.user!.userName == ''?
                                   Utils.getString(context, 'default__user_name'):
-                                  '${product.user.userName}',
+                                  '${product.user!.userName}',
                                     textAlign: TextAlign.start,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
@@ -99,7 +99,7 @@ class ProductHorizontalListItem extends StatelessWidget {
                                       textAlign: TextAlign.start,
                                       style: Theme.of(context)
                                           .textTheme
-                                          .caption
+                                          .caption!
                                           .copyWith(color: PsColors.mainColor))
                                 else
                                   Text('${product.addedDateStr}',
@@ -120,13 +120,13 @@ class ProductHorizontalListItem extends StatelessWidget {
                       children: <Widget>[
                         PsNetworkImage(
                           photoKey: '$coreTagKey${PsConst.HERO_TAG__IMAGE}',
-                          defaultPhoto: product.defaultPhoto,
+                          defaultPhoto: product.defaultPhoto!,
                           width: PsDimens.space180,
                           height: double.infinity,
                           boxfit: BoxFit.cover,
                           onTap: () {
-                            Utils.psPrint(product.defaultPhoto.imgParentId);
-                            onTap();
+                            Utils.psPrint(product.defaultPhoto!.imgParentId!);
+                            onTap!();
                           },
                         ),
                         Positioned(
@@ -143,7 +143,7 @@ class ProductHorizontalListItem extends StatelessWidget {
                                                 context, 'dashboard__sold_out'),
                                             style: Theme.of(context)
                                                 .textTheme
-                                                .bodyText2
+                                                .bodyText2!
                                                 .copyWith(
                                                     color: PsColors.white)),
                                       ),
@@ -170,7 +170,7 @@ class ProductHorizontalListItem extends StatelessWidget {
                     child: PsHero(
                       tag: '$coreTagKey$PsConst.HERO_TAG__TITLE',
                       child: Text(
-                        product.title,
+                        product.title!,
                         overflow: TextOverflow.ellipsis,
                         style: Theme.of(context).textTheme.bodyText2,
                         maxLines: 1,
@@ -191,13 +191,13 @@ class ProductHorizontalListItem extends StatelessWidget {
                             type: MaterialType.transparency,
                             child: Text(
                                  product  != null  &&  product.price != '0' &&  product.price != ''
-                                    ? '${product.itemCurrency.currencySymbol}${Utils.getPriceFormat(product.price)}'
+                                    ? '${product.itemCurrency!.currencySymbol}${Utils.getPriceFormat(product.price!)}'
                                     : Utils.getString(
                                         context, 'item_price_free'),
                                 textAlign: TextAlign.start,
                                 style: Theme.of(context)
                                     .textTheme
-                                    .subtitle2
+                                    .subtitle2!
                                     .copyWith(color: PsColors.mainColor)),
                           ),
                         ),
@@ -206,12 +206,12 @@ class ProductHorizontalListItem extends StatelessWidget {
                               padding: const EdgeInsets.only(
                                   left: PsDimens.space8,
                                   right: PsDimens.space8),
-                              child: Text('(${product.conditionOfItem.name})',
+                              child: Text('(${product.conditionOfItem!.name})',
                                   textAlign: TextAlign.start,
                                   overflow: TextOverflow.ellipsis,
                                   style: Theme.of(context)
                                       .textTheme
-                                      .bodyText2
+                                      .bodyText2!
                                       .copyWith(color: PsColors.mainColor))),
                         )
                       ],
@@ -236,7 +236,7 @@ class ProductHorizontalListItem extends StatelessWidget {
                         Padding(
                             padding: const EdgeInsets.only(
                                 left: PsDimens.space8, right: PsDimens.space8),
-                            child: Text('${product.itemLocation.name}',
+                            child: Text('${product.itemLocation!.name}',
                                 textAlign: TextAlign.start,
                                 style: Theme.of(context).textTheme.caption))
                       ],
@@ -264,7 +264,7 @@ class ProductHorizontalListItem extends StatelessWidget {
                                 padding: const EdgeInsets.only(
                                     left: PsDimens.space8,
                                     right: PsDimens.space4),
-                                child: Text('${product.itemType.name}',
+                                child: Text('${product.itemType!.name}',
                                     textAlign: TextAlign.start,
                                     style: Theme.of(context).textTheme.caption))
                           ],

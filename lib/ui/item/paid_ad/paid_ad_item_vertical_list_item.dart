@@ -10,8 +10,8 @@ import 'package:flutterbuyandsell/viewobject/paid_ad_item.dart';
 
 class PaidAdItemVerticalListItem extends StatelessWidget {
   const PaidAdItemVerticalListItem(
-      {Key key,
-      @required this.paidAdItem,
+      {Key? key,
+      required this.paidAdItem,
       this.onTap,
       this.animationController,
       this.animation,
@@ -19,17 +19,17 @@ class PaidAdItemVerticalListItem extends StatelessWidget {
       : super(key: key);
 
   final PaidAdItem paidAdItem;
-  final Function onTap;
-  final AnimationController animationController;
-  final Animation<double> animation;
-  final ProductDetailIntentHolder productDetailIntentHolder;
+  final VoidCallback? onTap;
+  final AnimationController? animationController;
+  final Animation<double>? animation;
+  final ProductDetailIntentHolder? productDetailIntentHolder;
 
   @override
   Widget build(BuildContext context) {
-    animationController.forward();
+    animationController!.forward();
 
     return AnimatedBuilder(
-        animation: animationController,
+        animation: animationController!,
         child: InkWell(
             onTap: onTap,
             child: Card(
@@ -39,18 +39,18 @@ class PaidAdItemVerticalListItem extends StatelessWidget {
                     height: 400,
                     margin: const EdgeInsets.all(PsDimens.space8),
                     child:
-                        PaidAdItemWidget(paidAdItem: paidAdItem, onTap: onTap)),
+                        PaidAdItemWidget(paidAdItem: paidAdItem, onTap: onTap!)),
                 clipper: ShapeBorderClipper(
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(4))),
               ),
             )),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return FadeTransition(
-              opacity: animation,
+              opacity: animation!,
               child: Transform(
                   transform: Matrix4.translationValues(
-                      0.0, 100 * (1.0 - animation.value), 0.0),
+                      0.0, 100 * (1.0 - animation!.value), 0.0),
                   child: child));
         });
   }
@@ -58,7 +58,7 @@ class PaidAdItemVerticalListItem extends StatelessWidget {
 
 class PaidAdItemWidget extends StatelessWidget {
   const PaidAdItemWidget(
-      {Key key, @required this.paidAdItem, @required this.onTap})
+      {Key? key, required this.paidAdItem, required this.onTap})
       : super(key: key);
 
   final PaidAdItem paidAdItem;
@@ -90,7 +90,7 @@ class PaidAdItemWidget extends StatelessWidget {
                     height: PsDimens.space40,
                     child: PsNetworkCircleImageForUser(
                       photoKey: '',
-                      imagePath: paidAdItem.item.user.userProfilePhoto,
+                      imagePath: paidAdItem.item!.user!.userProfilePhoto!,
                       // width: PsDimens.space40,
                       // height: PsDimens.space40,
                       boxfit: BoxFit.cover,
@@ -106,10 +106,10 @@ class PaidAdItemWidget extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                              paidAdItem.item.user.userName == ''
+                              paidAdItem.item!.user!.userName == ''
                                   ? Utils.getString(
                                       context, 'default__user_name')
-                                  : '${paidAdItem.item.user.userName}',
+                                  : '${paidAdItem.item!.user!.userName}',
                               textAlign: TextAlign.start,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
@@ -139,7 +139,7 @@ class PaidAdItemWidget extends StatelessWidget {
                 children: <Widget>[
                   PsNetworkImage(
                     photoKey: '',
-                    defaultPhoto: paidAdItem.item.defaultPhoto,
+                    defaultPhoto: paidAdItem.item!.defaultPhoto!,
                     width: double.infinity,
                     height: PsDimens.space300,
                     boxfit: BoxFit.cover,
@@ -163,7 +163,7 @@ class PaidAdItemWidget extends StatelessWidget {
                                     context, 'paid__ads_in_progress'),
                                 style: Theme.of(context)
                                     .textTheme
-                                    .bodyText2
+                                    .bodyText2!
                                     .copyWith(color: Colors.white),
                               ),
                             )
@@ -181,7 +181,7 @@ class PaidAdItemWidget extends StatelessWidget {
                                         context, 'paid__ads_in_completed'),
                                     style: Theme.of(context)
                                         .textTheme
-                                        .bodyText2
+                                        .bodyText2!
                                         .copyWith(color: Colors.white),
                                   ),
                                 )
@@ -200,7 +200,7 @@ class PaidAdItemWidget extends StatelessWidget {
                                             'paid__ads_is_not_yet_start'),
                                         style: Theme.of(context)
                                             .textTheme
-                                            .bodyText2
+                                            .bodyText2!
                                             .copyWith(color: Colors.white),
                                       ),
                                     )
@@ -216,7 +216,7 @@ class PaidAdItemWidget extends StatelessWidget {
                   right: PsDimens.space8,
                   bottom: PsDimens.space4),
               child: Text(
-                paidAdItem.item.title,
+                paidAdItem.item!.title!,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.bodyText2,
                 maxLines: 1,
@@ -232,23 +232,23 @@ class PaidAdItemWidget extends StatelessWidget {
                 children: <Widget>[
                   Text(
                       paidAdItem.item != null &&
-                              paidAdItem.item.price != '0' &&
-                              paidAdItem.item.price != ''
-                          ? '${paidAdItem.item.itemCurrency.currencySymbol}${Utils.getPriceFormat(paidAdItem.item.price)}'
+                              paidAdItem.item!.price != '0' &&
+                              paidAdItem.item!.price != ''
+                          ? '${paidAdItem.item!.itemCurrency!.currencySymbol}${Utils.getPriceFormat(paidAdItem.item!.price!)}'
                           : Utils.getString(context, 'item_price_free'),
                       textAlign: TextAlign.start,
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle2
+                          .subtitle2!
                           .copyWith(color: PsColors.mainColor)),
                   Padding(
                       padding: const EdgeInsets.only(
                           left: PsDimens.space8, right: PsDimens.space8),
-                      child: Text('(${paidAdItem.item.conditionOfItem.name})',
+                      child: Text('(${paidAdItem.item!.conditionOfItem!.name!})',
                           textAlign: TextAlign.start,
                           style: Theme.of(context)
                               .textTheme
-                              .bodyText2
+                              .bodyText2!
                               .copyWith(color: Colors.blue)))
                 ],
               ),
@@ -281,7 +281,7 @@ class PaidAdItemWidget extends StatelessWidget {
                           textAlign: TextAlign.start,
                           style: Theme.of(context)
                               .textTheme
-                              .caption
+                              .caption!
                               .copyWith(color: Colors.blue))),
                   Expanded(
                     child: Container(
@@ -290,13 +290,13 @@ class PaidAdItemWidget extends StatelessWidget {
                             paidAdItem.startTimeStamp == ''
                                 ? ''
                                 : Utils.changeTimeStampToStandardDateTimeFormat(
-                                    paidAdItem.startTimeStamp),
+                                    paidAdItem.startTimeStamp!),
                             textAlign: TextAlign.start,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: Theme.of(context)
                                 .textTheme
-                                .caption
+                                .caption!
                                 .copyWith(color: Colors.blue))),
                   )
                 ],
@@ -327,7 +327,7 @@ class PaidAdItemWidget extends StatelessWidget {
                           textAlign: TextAlign.start,
                           style: Theme.of(context)
                               .textTheme
-                              .caption
+                              .caption!
                               .copyWith(color: Colors.blue))),
                   Expanded(
                     child: Padding(
@@ -336,13 +336,13 @@ class PaidAdItemWidget extends StatelessWidget {
                             paidAdItem.endTimeStamp == ''
                                 ? ''
                                 : Utils.changeTimeStampToStandardDateTimeFormat(
-                                    paidAdItem.endTimeStamp),
+                                    paidAdItem.endTimeStamp!),
                             textAlign: TextAlign.start,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1,
                             style: Theme.of(context)
                                 .textTheme
-                                .caption
+                                .caption!
                                 .copyWith(color: Colors.blue))),
                   )
                 ],
@@ -379,17 +379,17 @@ class PaidAdItemWidget extends StatelessWidget {
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
-                                  .caption
+                                  .caption!
                                   .copyWith(color: Colors.blue))),
                       Padding(
                           padding:
                               const EdgeInsets.only(right: PsDimens.space8),
                           child: Text(
-                              '${paidAdItem.item.itemCurrency.currencySymbol}${paidAdItem.amount}',
+                              '${paidAdItem.item!.itemCurrency!.currencySymbol}${paidAdItem.amount}',
                               textAlign: TextAlign.start,
                               style: Theme.of(context)
                                   .textTheme
-                                  .caption
+                                  .caption!
                                   .copyWith(color: Colors.blue))),
                     ],
                   ),

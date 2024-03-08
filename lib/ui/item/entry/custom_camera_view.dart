@@ -39,8 +39,8 @@ void logError(String code, String message) =>
 
 class _CameraExampleHomeState extends State<CustomCameraView>
     with WidgetsBindingObserver {
-  CameraController controller;
-  XFile imagePath;
+  CameraController? controller;
+  XFile? imagePath;
 
   @override
   void initState() {
@@ -60,14 +60,14 @@ class _CameraExampleHomeState extends State<CustomCameraView>
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     // App state changed before we got the chance to initialize.
-    if (controller == null || !controller.value.isInitialized) {
+    if (controller == null || !controller!.value.isInitialized) {
       return;
     }
     if (state == AppLifecycleState.inactive) {
       controller?.dispose();
     } else if (state == AppLifecycleState.resumed) {
       if (controller != null) {
-        onNewCameraSelected(controller.description);
+        onNewCameraSelected(controller!.description);
       }
     }
   }
@@ -107,7 +107,7 @@ class _CameraExampleHomeState extends State<CustomCameraView>
                     color: Colors.black,
                     border: Border.all(
                       color: controller != null &&
-                              controller.value.isRecordingVideo
+                              controller!.value.isRecordingVideo
                           ? Colors.redAccent
                           : Colors.grey,
                       width: 3.0,
@@ -137,7 +137,7 @@ class _CameraExampleHomeState extends State<CustomCameraView>
 
   /// Display the preview from the camera (or a message if the preview is not available).
   Widget _cameraPreviewWidget() {
-    if (controller == null || !controller.value.isInitialized) {
+    if (controller == null || !controller!.value.isInitialized) {
       return GestureDetector(
         onTap: () {
           //
@@ -153,8 +153,8 @@ class _CameraExampleHomeState extends State<CustomCameraView>
       );
     } else {
       return AspectRatio(
-        aspectRatio: controller.value.aspectRatio,
-        child: CameraPreview(controller),
+        aspectRatio: controller!.value.aspectRatio,
+        child: CameraPreview(controller!),
       );
     }
   }
@@ -169,8 +169,8 @@ class _CameraExampleHomeState extends State<CustomCameraView>
           icon: const Icon(Icons.camera_alt),
           color: Colors.blue,
           onPressed: controller != null &&
-                  controller.value.isInitialized &&
-                  !controller.value.isRecordingVideo
+                  controller!.value.isInitialized &&
+                  !controller!.value.isRecordingVideo
               ? onTakePictureButtonPressed
               : null,
         ),
@@ -191,7 +191,7 @@ class _CameraExampleHomeState extends State<CustomCameraView>
 
   dynamic onNewCameraSelected(CameraDescription cameraDescription) async {
     if (controller != null) {
-      await controller.dispose();
+      await controller!.dispose();
     }
     controller = CameraController(
       Utils.cameras[0],
@@ -200,17 +200,17 @@ class _CameraExampleHomeState extends State<CustomCameraView>
     );
 
     // If the controller is updated then update the UI.
-    controller.addListener(() {
+    controller!.addListener(() {
       if (mounted) {
         setState(() {});
       }
-      if (controller.value.hasError) {
-        showInSnackBar('Camera error ${controller.value.errorDescription}');
+      if (controller!.value.hasError) {
+        showInSnackBar('Camera error ${controller!.value.errorDescription}');
       }
     });
 
     try {
-      await controller.initialize();
+      await controller!.initialize();
     } on CameraException catch (e) {
       _showCameraException(e);
     }
@@ -235,33 +235,33 @@ class _CameraExampleHomeState extends State<CustomCameraView>
   }
 
   Future<XFile> takePicture() async {
-    if (!controller.value.isInitialized) {
+    if (!controller!.value.isInitialized) {
       showInSnackBar('Error: select a camera first.');
-      return null;
+      return null!;
     }
     final Directory extDir = await getApplicationDocumentsDirectory();
     final String dirPath = '${extDir.path}/Pictures/flutter_test';
     await Directory(dirPath).create(recursive: true);
     //final String filePath = '$dirPath/${timestamp()}.jpg';
 
-    if (controller.value.isTakingPicture) {
+    if (controller!.value.isTakingPicture) {
       // A capture is already pending, do nothing.
-      return null;
+      return null!;
     }
 
       try {
-     final XFile file = await controller.takePicture();
+     final XFile file = await controller!.takePicture();
      return file;
     } on CameraException catch (e) {
       _showCameraException(e);
-      return null;
+      return null!;
     }
     
   }
 
 
   void _showCameraException(CameraException e) {
-    logError(e.code, e.description);
+    logError(e.code, e.description!);
     showInSnackBar('Error: ${e.code}\n${e.description}');
   }
 }

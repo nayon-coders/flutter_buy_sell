@@ -13,8 +13,8 @@ import 'package:provider/provider.dart';
 
 class OfferSentListView extends StatefulWidget {
   const OfferSentListView({
-    Key key,
-    @required this.animationController,
+    Key? key,
+    required this.animationController,
   }) : super(key: key);
 
   final AnimationController animationController;
@@ -25,14 +25,14 @@ class OfferSentListView extends StatefulWidget {
 class _OfferSentListViewState extends State<OfferSentListView>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
-  OfferListProvider _offerListProvider;
+  OfferListProvider? _offerListProvider;
 
-  AnimationController animationController;
-  Animation<double> animation;
+  AnimationController? animationController;
+  Animation<double>? animation;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -42,8 +42,8 @@ class _OfferSentListViewState extends State<OfferSentListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        holder.getOfferSentList().userId = psValueHolder.loginUserId;
-        _offerListProvider.nextOfferList(holder);
+        holder!.getOfferSentList().userId = psValueHolder!.loginUserId;
+        _offerListProvider!.nextOfferList(holder!);
       }
     });
 
@@ -53,15 +53,15 @@ class _OfferSentListViewState extends State<OfferSentListView>
     super.initState();
   }
 
-  OfferRepository offerRepository;
-  PsValueHolder psValueHolder;
-  OfferParameterHolder holder;
+  OfferRepository? offerRepository;
+  PsValueHolder? psValueHolder;
+  OfferParameterHolder? holder;
   dynamic data;
   @override
   Widget build(BuildContext context) {
     psValueHolder = Provider.of<PsValueHolder>(context);
     holder = OfferParameterHolder().getOfferSentList();
-    holder.getOfferSentList().userId = psValueHolder.loginUserId;
+    holder!.getOfferSentList().userId = psValueHolder!.loginUserId;
 
     offerRepository = Provider.of<OfferRepository>(context);
 
@@ -69,16 +69,16 @@ class _OfferSentListViewState extends State<OfferSentListView>
       lazy: false,
       create: (BuildContext context) {
         final OfferListProvider provider =
-            OfferListProvider(repo: offerRepository);
-        provider.loadOfferList(holder);
+            OfferListProvider(repo: offerRepository!);
+        provider.loadOfferList(holder!);
         return provider;
       },
       child: Consumer<OfferListProvider>(builder:
-          (BuildContext context, OfferListProvider provider, Widget child) {
+          (BuildContext context, OfferListProvider provider, Widget? child) {
         if (provider.offerList != null &&
             provider.offerList.data != null &&
-            provider.offerList.data.isNotEmpty &&
-            psValueHolder.loginUserId != null) {
+            provider.offerList.data!.isNotEmpty &&
+            psValueHolder!.loginUserId != null) {
           return Scaffold(
             body: Column(
               mainAxisSize: MainAxisSize.max,
@@ -94,9 +94,9 @@ class _OfferSentListViewState extends State<OfferSentListView>
                         context: context,
                             child: ListView.builder(
                               shrinkWrap: true,
-                              itemCount: provider.offerList.data.length,
+                              itemCount: provider.offerList.data!.length,
                               itemBuilder: (BuildContext context, int index) {
-                                final int count = provider.offerList.data.length;
+                                final int count = provider.offerList.data!.length;
                                 widget.animationController.forward();
                                 return OfferSentListItem(
                                   animationController: widget.animationController,
@@ -108,10 +108,10 @@ class _OfferSentListViewState extends State<OfferSentListView>
                                           curve: Curves.fastOutSlowIn),
                                     ),
                                   ),
-                                  offer: provider.offerList.data[index],
+                                  offer: provider.offerList.data![index],
                                   onTap: () async {
                                     print(provider
-                                        .offerList.data[index].item.title);
+                                        .offerList.data![index].item!.title);
                                     final dynamic returnData =
                                         await Navigator.pushNamed(
                                       context,
@@ -119,14 +119,14 @@ class _OfferSentListViewState extends State<OfferSentListView>
                                       arguments: ChatHistoryIntentHolder(
                                           chatFlag: PsConst.CHAT_FROM_BUYER,
                                           itemId: provider
-                                              .offerList.data[index].item.id,
+                                              .offerList.data![index].item!.id,
                                           buyerUserId: provider
-                                              .offerList.data[index].buyerUserId,
+                                              .offerList.data![index].buyerUserId,
                                           sellerUserId: provider.offerList
-                                              .data[index].sellerUserId),
+                                              .data![index].sellerUserId),
                                     );
                                     if (returnData == null) {
-                                      provider.loadOfferList(holder);
+                                      provider.loadOfferList(holder!);
                                     }
                                   },
                                 );
@@ -134,7 +134,7 @@ class _OfferSentListViewState extends State<OfferSentListView>
                             ),
                           ),
                           onRefresh: () {
-                            return provider.resetOfferList(holder);
+                            return provider.resetOfferList(holder!);
                           },
                         ),
                       ),

@@ -28,14 +28,14 @@ class ItemEntryLocationViewState extends State<ItemEntryLocationView>
     with TickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  ItemLocationProvider _itemLocationProvider;
-  AnimationController animationController;
-  Animation<double> animation;
-  PsValueHolder valueHolder;
+  ItemLocationProvider? _itemLocationProvider;
+  AnimationController? animationController;
+  Animation<double>? animation;
+  PsValueHolder?valueHolder;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     animation = null;
     super.dispose();
   }
@@ -45,9 +45,9 @@ class ItemEntryLocationViewState extends State<ItemEntryLocationView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        _itemLocationProvider.nextItemLocationList(
-          _itemLocationProvider.latestLocationParameterHolder.toMap(),
-          _itemLocationProvider.psValueHolder.loginUserId);
+        _itemLocationProvider!.nextItemLocationList(
+          _itemLocationProvider!.latestLocationParameterHolder.toMap(),
+          _itemLocationProvider!.psValueHolder.loginUserId);
       }
     });
 
@@ -56,17 +56,17 @@ class ItemEntryLocationViewState extends State<ItemEntryLocationView>
     animation = Tween<double>(
       begin: 0.0,
       end: 10.0,
-    ).animate(animationController);
+    ).animate(animationController!);
     super.initState();
   }
 
-  ItemLocationRepository repo1;
+  ItemLocationRepository? repo1;
 
   @override
   Widget build(BuildContext context) {
     valueHolder = Provider.of<PsValueHolder>(context);
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -89,7 +89,7 @@ class ItemEntryLocationViewState extends State<ItemEntryLocationView>
           appBarTitle: Utils.getString(context, 'item_entry__location') ?? '',
           initProvider: () {
             return ItemLocationProvider(
-                repo: repo1, psValueHolder: valueHolder);
+                repo: repo1!, psValueHolder: valueHolder!);
           },
           onProviderReady: (ItemLocationProvider provider) {
             provider.latestLocationParameterHolder.keyword = searchNameController.text;
@@ -98,14 +98,14 @@ class ItemEntryLocationViewState extends State<ItemEntryLocationView>
             _itemLocationProvider = provider;
           },
           builder: (BuildContext context, ItemLocationProvider provider,
-              Widget child) {
+              Widget? child) {
             return Stack(children: <Widget>[
               Container(
                   child: RefreshIndicator(
                 child: ListView.builder(
                     controller: _scrollController,
                     physics: const AlwaysScrollableScrollPhysics(),
-                    itemCount: provider.itemLocationList.data.length,
+                    itemCount: provider.itemLocationList.data!.length,
                     itemBuilder: (BuildContext context, int index) {
                       if (provider.itemLocationList.status ==
                           PsStatus.BLOCK_LOADING) {
@@ -125,18 +125,18 @@ class ItemEntryLocationViewState extends State<ItemEntryLocationView>
                               PsFrameUIForLoading(),
                             ]));
                       } else {
-                        final int count = provider.itemLocationList.data.length;
-                        animationController.forward();
+                        final int count = provider.itemLocationList.data!.length;
+                        animationController!.forward();
                         return FadeTransition(
-                            opacity: animation,
+                            opacity: animation!,
                             child: ItemEntryLocationListViewItem(
                               itemLocation:
-                                  provider.itemLocationList.data[index],
+                                  provider.itemLocationList.data![index],
                               onTap: () {
                                 Navigator.pop(context,
-                                    provider.itemLocationList.data[index]);
+                                    provider.itemLocationList.data![index]);
                                 print(
-                                    provider.itemLocationList.data[index].name);
+                                    provider.itemLocationList.data![index].name);
                                 // if (index == 0) {
                                 //   Navigator.pushNamed(
                                 //     context,
@@ -148,7 +148,7 @@ class ItemEntryLocationViewState extends State<ItemEntryLocationView>
                               animation:
                                   Tween<double>(begin: 0.0, end: 1.0).animate(
                                 CurvedAnimation(
-                                  parent: animationController,
+                                  parent: animationController!,
                                   curve: Interval((1 / count) * index, 1.0,
                                       curve: Curves.fastOutSlowIn),
                                 ),

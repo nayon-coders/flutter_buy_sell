@@ -13,7 +13,7 @@ class PaidAdProductListContainerView extends StatefulWidget {
 class _PaidAdProductListContainerViewState
     extends State<PaidAdProductListContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -23,14 +23,14 @@ class _PaidAdProductListContainerViewState
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -55,14 +55,14 @@ class _PaidAdProductListContainerViewState
           title: Text(
             Utils.getString(context, 'home__drawer_menu_feature_item'),
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                 fontWeight: FontWeight.bold,
                 color: PsColors.mainColorWithWhite),
           ),
           elevation: 0,
         ),
         body: PaidAdProductListView(
-          animationController: animationController,
+          animationController: animationController!,
         ),
       ),
     );

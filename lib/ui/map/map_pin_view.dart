@@ -12,7 +12,7 @@ import 'package:latlong/latlong.dart';
 
 class MapPinView extends StatefulWidget {
   const MapPinView(
-      {@required this.flag, @required this.maplat, @required this.maplng});
+      {required this.flag, required this.maplat, required this.maplng});
 
   final String flag;
   final String maplat;
@@ -23,14 +23,14 @@ class MapPinView extends StatefulWidget {
 }
 
 class _MapPinViewState extends State<MapPinView> with TickerProviderStateMixin {
-  LatLng latlng;
+  LatLng? latlng;
   double defaultRadius = 3000;
   String address = '';
 
   dynamic loadAddress() async {
     final List<Address> addresses = await Geocoder.local
         .findAddressesFromCoordinates(
-            Coordinates(latlng.latitude, latlng.longitude));
+            Coordinates(latlng!.latitude, latlng!.longitude));
     final Address first = addresses.first;
     address = '${first.addressLine}  \n, ${first.countryName}';
   }
@@ -57,7 +57,7 @@ class _MapPinViewState extends State<MapPinView> with TickerProviderStateMixin {
                         textAlign: TextAlign.justify,
                         style: Theme.of(context)
                             .textTheme
-                            .bodyText2
+                            .bodyText2!
                             .copyWith(fontWeight: FontWeight.bold)
                             .copyWith(color: PsColors.mainColorWithWhite),
                       ),

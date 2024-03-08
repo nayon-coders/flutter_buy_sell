@@ -19,7 +19,7 @@ import 'package:provider/provider.dart';
 import '../item/rating_list_item.dart';
 
 class RatingListView extends StatefulWidget {
-  const RatingListView({Key key, @required this.itemUserId}) : super(key: key);
+  const RatingListView({Key? key, required this.itemUserId}) : super(key: key);
   final String itemUserId;
 
   @override
@@ -28,23 +28,23 @@ class RatingListView extends StatefulWidget {
 
 class _RatingListViewState extends State<RatingListView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
-  RatingRepository ratingRepo;
-  RatingListProvider ratingProvider;
-  UserProvider userProvider;
-  UserRepository userRepository;
-  PsValueHolder psValueHolder;
+  AnimationController? animationController;
+  RatingRepository? ratingRepo;
+  RatingListProvider? ratingProvider;
+  UserProvider? userProvider;
+  UserRepository? userRepository;
+  PsValueHolder? psValueHolder;
   final ScrollController _scrollController = ScrollController();
-  String loginUserId;
-  RatingListHolder ratingListHolder;
+  String? loginUserId;
+  RatingListHolder? ratingListHolder;
 
   @override
   void initState() {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        ratingProvider.nextRatingList(
-            ratingListHolder.toMap(), widget.itemUserId);
+        ratingProvider!.nextRatingList(
+            ratingListHolder!.toMap(), widget.itemUserId);
       }
     });
     animationController =
@@ -54,7 +54,7 @@ class _RatingListViewState extends State<RatingListView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -77,7 +77,7 @@ class _RatingListViewState extends State<RatingListView>
       checkConnection();
     }
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -92,23 +92,23 @@ class _RatingListViewState extends State<RatingListView>
     ratingRepo = Provider.of<RatingRepository>(context);
     userRepository = Provider.of<UserRepository>(context);
     psValueHolder = Provider.of<PsValueHolder>(context);
-    loginUserId = psValueHolder.loginUserId;
+    loginUserId = psValueHolder!.loginUserId;
     return WillPopScope(
         onWillPop: _requestPop,
         child: PsWidgetWithAppBarWithTwoProvider<RatingListProvider, UserProvider>(
             appBarTitle: Utils.getString(context, 'rating_list__title') ?? '',
             initProvider1: () {
-              ratingProvider = RatingListProvider(repo: ratingRepo);
+              ratingProvider = RatingListProvider(repo: ratingRepo!);
               return ratingProvider;
             },
             onProviderReady1: (RatingListProvider provider) async {
               ratingListHolder = RatingListHolder(userId: widget.itemUserId);
               await provider.loadRatingList(
-                  ratingListHolder.toMap(), widget.itemUserId);
+                  ratingListHolder!.toMap(), widget.itemUserId);
             },
             initProvider2: () {
               userProvider = UserProvider(
-                  repo: userRepository, psValueHolder: psValueHolder);
+                  repo: userRepository!, psValueHolder: psValueHolder!);
               return userProvider;
             },
             onProviderReady2: (UserProvider userProvider) {
@@ -120,7 +120,7 @@ class _RatingListViewState extends State<RatingListView>
                   userProvider.userParameterHolder.id);
             },
             child: Consumer<RatingListProvider>(builder: (BuildContext context,
-                RatingListProvider ratingProvider, Widget child) {
+                RatingListProvider ratingProvider, Widget? child) {
               return Stack(
                 children: <Widget>[
                   Container(
@@ -136,13 +136,13 @@ class _RatingListViewState extends State<RatingListView>
                           ),
                           HeaderWidget(ratingProvider: ratingProvider),
                           if (ratingProvider.ratingList != null &&
-                              ratingProvider.ratingList.data.isNotEmpty)
+                              ratingProvider.ratingList.data!.isNotEmpty)
                             SliverList(
                               delegate: SliverChildBuilderDelegate(
                                 (BuildContext context, int index) {
                                   return RatingListItem(
                                     rating:
-                                        ratingProvider.ratingList.data[index],
+                                        ratingProvider.ratingList.data![index],
                                     onTap: () {
                                       // Navigator.pushNamed(context, RoutePaths.directory1__ratingList,
                                       //     arguments: product);
@@ -150,14 +150,14 @@ class _RatingListViewState extends State<RatingListView>
                                   );
                                 },
                                 childCount:
-                                    ratingProvider.ratingList.data.length,
+                                    ratingProvider.ratingList.data!.length,
                               ),
                             )
                         ],
                       ),
                       onRefresh: () {
                         return ratingProvider.resetRatingList(
-                            ratingListHolder.toMap(), widget.itemUserId);
+                            ratingListHolder!.toMap(), widget.itemUserId);
                       },
                     ),
                   ),
@@ -169,7 +169,7 @@ class _RatingListViewState extends State<RatingListView>
 }
 
 class HeaderWidget extends StatefulWidget {
-  const HeaderWidget({Key key, @required this.ratingProvider})
+  const HeaderWidget({Key? key, required this.ratingProvider})
       : super(key: key);
   // final String itemDetailId;
   final RatingListProvider ratingProvider;
@@ -179,8 +179,8 @@ class HeaderWidget extends StatefulWidget {
 }
 
 class _HeaderWidgetState extends State<HeaderWidget> {
-  ProductRepository repo;
-  PsValueHolder psValueHolder;
+  ProductRepository? repo;
+  PsValueHolder? psValueHolder;
 
   @override
   Widget build(BuildContext context) {
@@ -192,10 +192,10 @@ class _HeaderWidgetState extends State<HeaderWidget> {
     );
     return SliverToBoxAdapter(
       child: Consumer<UserProvider>(builder:
-          (BuildContext context, UserProvider userProvider, Widget child) {
+          (BuildContext context, UserProvider userProvider, Widget? child) {
         if (userProvider.user != null &&
             userProvider.user.data != null &&
-            userProvider.user.data.ratingDetail != null) {
+            userProvider.user.data!.ratingDetail != null) {
           return Container(
             color: PsColors.backgroundColor,
             child: Padding(
@@ -209,7 +209,7 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                 children: <Widget>[
                   _spacingWidget,
                   Text(
-                      '${userProvider.user.data.ratingDetail.totalRatingCount} ${Utils.getString(context, 'rating_list__customer_reviews')}'),
+                      '${userProvider.user.data!.ratingDetail!.totalRatingCount} ${Utils.getString(context, 'rating_list__customer_reviews')}'),
                   const SizedBox(
                     height: PsDimens.space4,
                   ),
@@ -217,58 +217,58 @@ class _HeaderWidgetState extends State<HeaderWidget> {
                     children: <Widget>[
                       SmoothStarRating(
                           key: Key(userProvider
-                              .user.data.ratingDetail.totalRatingValue),
+                              .user.data!.ratingDetail!.totalRatingValue!),
                           rating: double.parse(userProvider
-                              .user.data.ratingDetail.totalRatingValue),
+                              .user.data!.ratingDetail!.totalRatingValue!),
                           isReadOnly: true,
                           allowHalfRating: false,
                           starCount: 5,
                           size: PsDimens.space16,
                           color: PsColors.ratingColor,
-                          borderColor: PsColors.grey.withAlpha(100),
+                          borderColor: PsColors.grey!.withAlpha(100),
                           spacing: 0.0),
                       const SizedBox(
                         width: PsDimens.space100,
                       ),
                       Text(
-                          '${userProvider.user.data.ratingDetail.totalRatingValue} ${Utils.getString(context, 'rating_list__out_of_five_stars')}'),
+                          '${userProvider.user.data!.ratingDetail!.totalRatingValue} ${Utils.getString(context, 'rating_list__out_of_five_stars')}'),
                     ],
                   ),
                   _RatingWidget(
                       starCount:
                           Utils.getString(context, 'rating_list__five_star'),
                       value: double.parse(
-                          userProvider.user.data.ratingDetail.fiveStarCount),
+                          userProvider.user.data!.ratingDetail!.fiveStarCount!),
                       percentage:
-                          '${userProvider.user.data.ratingDetail.fiveStarPercent} ${Utils.getString(context, 'rating_list__percent')}'),
+                          '${userProvider.user.data!.ratingDetail!.fiveStarPercent} ${Utils.getString(context, 'rating_list__percent')}'),
                   _RatingWidget(
                       starCount:
                           Utils.getString(context, 'rating_list__four_star'),
                       value: double.parse(
-                          userProvider.user.data.ratingDetail.fourStarCount),
+                          userProvider.user.data!.ratingDetail!.fourStarCount!),
                       percentage:
-                          '${userProvider.user.data.ratingDetail.fourStarPercent} ${Utils.getString(context, 'rating_list__percent')}'),
+                          '${userProvider.user.data!.ratingDetail!.fourStarPercent} ${Utils.getString(context, 'rating_list__percent')}'),
                   _RatingWidget(
                       starCount:
                           Utils.getString(context, 'rating_list__three_star'),
                       value: double.parse(
-                          userProvider.user.data.ratingDetail.threeStarCount),
+                          userProvider.user.data!.ratingDetail!.threeStarCount!),
                       percentage:
-                          '${userProvider.user.data.ratingDetail.threeStarPercent} ${Utils.getString(context, 'rating_list__percent')}'),
+                          '${userProvider.user.data!.ratingDetail!.threeStarPercent} ${Utils.getString(context, 'rating_list__percent')}'),
                   _RatingWidget(
                       starCount:
                           Utils.getString(context, 'rating_list__two_star'),
                       value: double.parse(
-                          userProvider.user.data.ratingDetail.twoStarCount),
+                          userProvider.user.data!.ratingDetail!.twoStarCount!),
                       percentage:
-                          '${userProvider.user.data.ratingDetail.twoStarPercent} ${Utils.getString(context, 'rating_list__percent')}'),
+                          '${userProvider.user.data!.ratingDetail!.twoStarPercent} ${Utils.getString(context, 'rating_list__percent')}'),
                   _RatingWidget(
                       starCount:
                           Utils.getString(context, 'rating_list__one_star'),
                       value: double.parse(
-                          userProvider.user.data.ratingDetail.oneStarCount),
+                          userProvider.user.data!.ratingDetail!.oneStarCount!),
                       percentage:
-                          '${userProvider.user.data.ratingDetail.oneStarPercent} ${Utils.getString(context, 'rating_list__percent')}'),
+                          '${userProvider.user.data!.ratingDetail!.oneStarPercent} ${Utils.getString(context, 'rating_list__percent')}'),
                   _spacingWidget,
                   const Divider(
                     height: PsDimens.space1,
@@ -287,10 +287,10 @@ class _HeaderWidgetState extends State<HeaderWidget> {
 
 class _RatingWidget extends StatelessWidget {
   const _RatingWidget({
-    Key key,
-    @required this.starCount,
-    @required this.value,
-    @required this.percentage,
+    Key? key,
+    required this.starCount,
+    required this.value,
+    required this.percentage,
   }) : super(key: key);
 
   final String starCount;

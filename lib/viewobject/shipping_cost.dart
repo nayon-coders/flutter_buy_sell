@@ -12,13 +12,9 @@ class ShippingCost extends PsObject<ShippingCost> {
 
   @override
   ShippingCost fromMap(dynamic dynamicData) {
-    if (dynamicData != null) {
-      return ShippingCost(
-        shippingZone: ShippingZone().fromMap(dynamicData['shipping']),
-      );
-    } else {
-      return null;
-    }
+    return ShippingCost(
+      shippingZone: ShippingZone().fromMap(dynamicData['shipping']),
+    );
   }
 
   @override
@@ -29,7 +25,7 @@ class ShippingCost extends PsObject<ShippingCost> {
 
       return data;
     } else {
-      return null;
+      return {};
     }
   }
 

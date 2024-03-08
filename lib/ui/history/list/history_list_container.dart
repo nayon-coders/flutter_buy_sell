@@ -13,7 +13,7 @@ class HistoryListContainerView extends StatefulWidget {
 
 class _HistoryListContainerViewState extends State<HistoryListContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -23,14 +23,14 @@ class _HistoryListContainerViewState extends State<HistoryListContainerView>
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -55,13 +55,13 @@ class _HistoryListContainerViewState extends State<HistoryListContainerView>
           title: Text(
             Utils.getString(context, 'history_list__title'),
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headline6.copyWith(
+            style: Theme.of(context).textTheme.headline6!.copyWith(
                 color: PsColors.mainColor, fontWeight: FontWeight.bold),
           ),
           elevation: 0,
         ),
         body: HistoryListView(
-          animationController: animationController,
+          animationController: animationController!,
         ),
       ),
     );

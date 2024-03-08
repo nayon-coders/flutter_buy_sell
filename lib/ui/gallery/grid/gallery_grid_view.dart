@@ -12,13 +12,13 @@ import 'package:provider/provider.dart';
 
 class GalleryGridView extends StatefulWidget {
   const GalleryGridView({
-    Key key,
-    @required this.product,
+    Key? key,
+    required this.product,
     this.onImageTap,
   }) : super(key: key);
 
   final Product product;
-  final Function onImageTap;
+  final VoidCallback? onImageTap;
   @override
   _GalleryGridViewState createState() => _GalleryGridViewState();
 }
@@ -38,12 +38,12 @@ class _GalleryGridViewState extends State<GalleryGridView>
         },
         onProviderReady: (GalleryProvider provider) {
           provider.loadImageList(
-              widget.product.defaultPhoto.imgParentId, PsConst.ITEM_TYPE);
+              widget.product.defaultPhoto!.imgParentId!, PsConst.ITEM_TYPE);
         },
         builder:
-            (BuildContext context, GalleryProvider provider, Widget child) {
+            (BuildContext context, GalleryProvider provider, Widget? child) {
           if (provider.galleryList != null &&
-              provider.galleryList.data.isNotEmpty) {
+              provider.galleryList.data!.isNotEmpty) {
             return Stack(
               children: <Widget>[
                 Container(
@@ -63,21 +63,21 @@ class _GalleryGridViewState extends State<GalleryGridView>
                               delegate: SliverChildBuilderDelegate(
                                 (BuildContext context, int index) {
                                   return GalleryGridItem(
-                                      image: provider.galleryList.data[index],
+                                      image: provider.galleryList.data![index],
                                       onImageTap: () {
                                         Navigator.pushNamed(
                                             context, RoutePaths.galleryDetail,
                                             arguments:
-                                                provider.galleryList.data[index]);
+                                                provider.galleryList.data![index]);
                                       });
                                 },
-                                childCount: provider.galleryList.data.length,
+                                childCount: provider.galleryList.data!.length,
                               ),
                             )
                           ]),
                           onRefresh: (){
                             return provider.resetGalleryList( 
-                              widget.product.defaultPhoto.imgParentId, PsConst.ITEM_TYPE);
+                              widget.product.defaultPhoto!.imgParentId!, PsConst.ITEM_TYPE);
                           },
                     ),
                   ),

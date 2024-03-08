@@ -19,7 +19,7 @@ class ForgotPasswordContainerView extends StatefulWidget {
 class _CityForgotPasswordContainerViewState
     extends State<ForgotPasswordContainerView>
     with SingleTickerProviderStateMixin {
-  AnimationController animationController;
+  AnimationController? animationController;
   @override
   void initState() {
     animationController =
@@ -29,18 +29,18 @@ class _CityForgotPasswordContainerViewState
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  UserProvider userProvider;
-  UserRepository userRepo;
+  UserProvider? userProvider;
+  UserRepository? userRepo;
 
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -83,11 +83,11 @@ class _CityForgotPasswordContainerViewState
 
 class _SliverAppbar extends StatefulWidget {
   const _SliverAppbar(
-      {Key key, @required this.title, this.scaffoldKey, this.menuDrawer})
+      {Key? key, required this.title, this.scaffoldKey, this.menuDrawer})
       : super(key: key);
   final String title;
-  final GlobalKey<ScaffoldState> scaffoldKey;
-  final Drawer menuDrawer;
+  final GlobalKey<ScaffoldState>? scaffoldKey;
+  final Drawer? menuDrawer;
   @override
   _SliverAppbarState createState() => _SliverAppbarState();
 }
@@ -105,7 +105,7 @@ class _SliverAppbarState extends State<_SliverAppbar> {
         textAlign: TextAlign.center,
         style: Theme.of(context)
             .textTheme
-            .headline6
+            .headline6!
             .copyWith(fontWeight: FontWeight.bold)
             .copyWith(color: PsColors.mainColorWithWhite),
       ),

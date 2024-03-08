@@ -3,12 +3,12 @@ import 'package:quiver/core.dart';
 
 class ShippingZone extends PsObject<ShippingZone> {
   ShippingZone({
-    required this.id,
+     this.id,
     this.shippingZonePackageName,
     this.shippingCost,
   });
 
-  String id;
+  String? id;
   String? shippingZonePackageName;
   String? shippingCost;
 
@@ -22,7 +22,7 @@ class ShippingZone extends PsObject<ShippingZone> {
 
   @override
   String getPrimaryKey() {
-    return id;
+    return id!;
   }
 
   @override

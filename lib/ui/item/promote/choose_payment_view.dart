@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 
 class ChoosePaymentVIew extends StatefulWidget {
   const ChoosePaymentVIew(
-      {Key key, @required this.product, @required this.appInfo})
+      {Key? key, required this.product, required this.appInfo})
       : super(key: key);
 
   final Product product;
@@ -27,8 +27,8 @@ class ChoosePaymentVIew extends StatefulWidget {
 }
 
 class ChoosePaymentVIewState extends State<ChoosePaymentVIew> {
-  UserRepository repo1;
-  PsValueHolder psValueHolder;
+  UserRepository? repo1;
+  PsValueHolder? psValueHolder;
   bool bindDataFirstTime = true;
 
   @override
@@ -45,12 +45,12 @@ class ChoosePaymentVIewState extends State<ChoosePaymentVIew> {
       lazy: false,
       create: (BuildContext context) {
         final UserProvider provider =
-            UserProvider(repo: repo1, psValueHolder: psValueHolder);
+            UserProvider(repo: repo1!, psValueHolder: psValueHolder!);
         provider.getUser(provider.psValueHolder.loginUserId);
         return provider;
       },
       child: Consumer<UserProvider>(
-          builder: (BuildContext context, UserProvider provider, Widget child) {
+          builder: (BuildContext context, UserProvider provider, Widget? child) {
         return Scaffold(
           appBar: AppBar(
             brightness: Utils.getBrightnessForAppBar(context),
@@ -58,7 +58,7 @@ class ChoosePaymentVIewState extends State<ChoosePaymentVIew> {
             title: Text(
               Utils.getString(context, 'pesapal_payment__title'),
               textAlign: TextAlign.center,
-              style: Theme.of(context).textTheme.headline6.copyWith(
+              style: Theme.of(context).textTheme.headline6!.copyWith(
                   fontWeight: FontWeight.bold,
                   color: PsColors.mainColorWithWhite),
             ),
@@ -80,7 +80,7 @@ class ChoosePaymentVIewState extends State<ChoosePaymentVIew> {
                     textAlign: TextAlign.start,
                     style: Theme.of(context)
                         .textTheme
-                        .subtitle1
+                        .subtitle1!
                         .copyWith(fontWeight: FontWeight.bold),
                   ),
                 ),

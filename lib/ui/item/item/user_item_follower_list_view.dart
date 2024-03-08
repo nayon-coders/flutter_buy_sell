@@ -16,7 +16,7 @@ import 'package:flutterbuyandsell/constant/route_paths.dart';
 import 'package:flutterbuyandsell/ui/common/ps_ui_widget.dart';
 
 class UserItemFollowerListView extends StatefulWidget {
-  const UserItemFollowerListView({@required this.loginUserId});
+  const UserItemFollowerListView({required this.loginUserId});
   final String loginUserId;
 
   @override
@@ -29,13 +29,13 @@ class UserItemFollowerListViewState extends State<UserItemFollowerListView>
     with SingleTickerProviderStateMixin {
   final ScrollController _scrollController = ScrollController();
 
-  ItemListFromFollowersProvider itemListFromFollowersProvider;
+  ItemListFromFollowersProvider? itemListFromFollowersProvider;
 
-  AnimationController animationController;
+  AnimationController? animationController;
 
   @override
   void dispose() {
-    animationController.dispose();
+    animationController!.dispose();
     super.dispose();
   }
 
@@ -47,18 +47,18 @@ class UserItemFollowerListViewState extends State<UserItemFollowerListView>
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        itemListFromFollowersProvider
+        itemListFromFollowersProvider!
             .nextItemListFromFollowersList(widget.loginUserId);
       }
     });
   }
 
-  ProductRepository repo1;
-  PsValueHolder psValueHolder;
+  ProductRepository? repo1;
+  PsValueHolder? psValueHolder;
   @override
   Widget build(BuildContext context) {
     Future<bool> _requestPop() {
-      animationController.reverse().then<dynamic>(
+      animationController!.reverse().then<dynamic>(
         (void data) {
           if (!mounted) {
             return Future<bool>.value(false);
@@ -82,17 +82,17 @@ class UserItemFollowerListViewState extends State<UserItemFollowerListView>
                   '',
           initProvider: () {
             return ItemListFromFollowersProvider(
-                repo: repo1, psValueHolder: psValueHolder);
+                repo: repo1!, psValueHolder: psValueHolder!);
           },
           onProviderReady: (ItemListFromFollowersProvider provider) {
-            final String loginUserId = Utils.checkUserLoginId(psValueHolder);
+            final String loginUserId = Utils.checkUserLoginId(psValueHolder!);
 
             provider.loadItemListFromFollowersList(loginUserId);
 
             itemListFromFollowersProvider = provider;
           },
           builder: (BuildContext context,
-              ItemListFromFollowersProvider provider, Widget child) {
+              ItemListFromFollowersProvider provider, Widget? child) {
             return Stack(children: <Widget>[
               Container(
                   margin: const EdgeInsets.only(
@@ -115,47 +115,47 @@ class UserItemFollowerListViewState extends State<UserItemFollowerListView>
                               (BuildContext context, int index) {
                                 if (provider.itemListFromFollowersList.data !=
                                         null ||
-                                    provider.itemListFromFollowersList.data
+                                    provider.itemListFromFollowersList.data!
                                         .isNotEmpty) {
                                   final int count = provider
-                                      .itemListFromFollowersList.data.length;
+                                      .itemListFromFollowersList.data!.length;
                                   return ProductVeticalListItem(
                                     coreTagKey: provider.hashCode.toString() +
                                         provider.itemListFromFollowersList
-                                            .data[index].id,
+                                            .data![index].id!,
                                     animationController: animationController,
                                     animation:
                                         Tween<double>(begin: 0.0, end: 1.0)
                                             .animate(
                                       CurvedAnimation(
-                                        parent: animationController,
+                                        parent: animationController!,
                                         curve: Interval(
                                             (1 / count) * index, 1.0,
                                             curve: Curves.fastOutSlowIn),
                                       ),
                                     ),
                                     product: provider
-                                        .itemListFromFollowersList.data[index],
+                                        .itemListFromFollowersList.data![index],
                                     onTap: () {
                                       print(provider.itemListFromFollowersList
-                                          .data[index].defaultPhoto.imgPath);
+                                          .data![index].defaultPhoto!.imgPath);
                                       final Product product = provider
                                           .itemListFromFollowersList
-                                          .data
+                                          .data!
                                           .reversed
                                           .toList()[index];
                                       final ProductDetailIntentHolder holder =
                                           ProductDetailIntentHolder(
                                               productId: provider
                                                   .itemListFromFollowersList
-                                                  .data[index].id,
+                                                  .data![index].id,
                                               heroTagImage:
                                                   provider.hashCode.toString() +
-                                                      product.id +
+                                                      product.id! +
                                                       PsConst.HERO_TAG__IMAGE,
                                               heroTagTitle:
                                                   provider.hashCode.toString() +
-                                                      product.id +
+                                                      product.id! +
                                                       PsConst.HERO_TAG__TITLE);
                                       Navigator.pushNamed(
                                           context, RoutePaths.productDetail,
@@ -167,12 +167,12 @@ class UserItemFollowerListViewState extends State<UserItemFollowerListView>
                                 }
                               },
                               childCount: provider
-                                  .itemListFromFollowersList.data.length,
+                                  .itemListFromFollowersList.data!.length,
                             ),
                           ),
                         ]),
                     onRefresh: () async {
-                      return itemListFromFollowersProvider
+                      return itemListFromFollowersProvider!
                           .resetItemListFromFollowersList(widget.loginUserId);
                     },
                   )),

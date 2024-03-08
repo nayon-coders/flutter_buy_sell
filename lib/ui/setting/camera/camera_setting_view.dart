@@ -14,9 +14,9 @@ class CameraSettingView extends StatefulWidget {
       _NotificationSettingViewState();
 }
 
-NotificationRepository notiRepository;
-NotificationProvider notiProvider;
-PsValueHolder _psValueHolder;
+NotificationRepository? notiRepository;
+NotificationProvider? notiProvider;
+PsValueHolder? _psValueHolder;
 
 class _NotificationSettingViewState extends State<CameraSettingView>
     with SingleTickerProviderStateMixin {
@@ -32,13 +32,13 @@ class _NotificationSettingViewState extends State<CameraSettingView>
             Utils.getString(context, 'camera_setting__toolbar_name') ?? '',
         initProvider: () {
           return NotificationProvider(
-              repo: notiRepository, psValueHolder: _psValueHolder);
+              repo: notiRepository!, psValueHolder: _psValueHolder!);
         },
         onProviderReady: (NotificationProvider provider) {
           notiProvider = provider;
         },
         builder: (BuildContext context, NotificationProvider provider,
-            Widget child) {
+            Widget? child) {
           return _NotificationSettingWidget(notiProvider: provider);
         });
   }
@@ -46,7 +46,7 @@ class _NotificationSettingViewState extends State<CameraSettingView>
 
 class _NotificationSettingWidget extends StatefulWidget {
   const _NotificationSettingWidget({this.notiProvider});
-  final NotificationProvider notiProvider;
+  final NotificationProvider? notiProvider;
   @override
   __NotificationSettingWidgetState createState() =>
       __NotificationSettingWidgetState();
@@ -58,8 +58,8 @@ class __NotificationSettingWidgetState
 
   @override
   Widget build(BuildContext context) {
-    if (notiProvider.psValueHolder.isCustomCamera != null) {
-      if (notiProvider.psValueHolder.isCustomCamera) {
+    if (notiProvider!.psValueHolder.isCustomCamera != null) {
+      if (notiProvider!.psValueHolder.isCustomCamera) {
         isCustomCameraSwitched = true;
       } else {
         isCustomCameraSwitched = false;
@@ -73,12 +73,12 @@ class __NotificationSettingWidgetState
             setState(() async{
               if (value) {
                 isCustomCameraSwitched = value;
-                notiProvider.psValueHolder.isCustomCamera = true;
-               await notiProvider.replaceCustomCameraSetting(true);
+                notiProvider!.psValueHolder.isCustomCamera = true;
+               await notiProvider!.replaceCustomCameraSetting(true);
               } else {
                 isCustomCameraSwitched = value;
-                notiProvider.psValueHolder.isCustomCamera = false;
-               await notiProvider.replaceCustomCameraSetting(false);
+                notiProvider!.psValueHolder.isCustomCamera = false;
+               await notiProvider!.replaceCustomCameraSetting(false);
               }
             });
           }

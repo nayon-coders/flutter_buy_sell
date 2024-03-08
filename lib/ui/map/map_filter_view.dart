@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:latlong/latlong.dart';
 
 class MapFilterView extends StatefulWidget {
-  const MapFilterView({@required this.productParameterHolder});
+  const MapFilterView({required this.productParameterHolder});
 
   final ProductParameterHolder productParameterHolder;
 
@@ -33,7 +33,7 @@ class _MapFilterViewState extends State<MapFilterView>
     '500',
     'All'
   ];
-  LatLng latlng;
+  LatLng? latlng;
   final double zoom = 10;
   double radius = -1;
   double defaultRadius = 3000;
@@ -123,7 +123,7 @@ class _MapFilterViewState extends State<MapFilterView>
                 textAlign: TextAlign.justify,
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText2
+                    .bodyText2!
                     .copyWith(fontWeight: FontWeight.bold)
                     .copyWith(color: PsColors.mainColorWithWhite),
               ),
@@ -145,7 +145,7 @@ class _MapFilterViewState extends State<MapFilterView>
                 textAlign: TextAlign.center,
                 style: Theme.of(context)
                     .textTheme
-                    .bodyText2
+                    .bodyText2!
                     .copyWith(fontWeight: FontWeight.bold)
                     .copyWith(color: PsColors.mainColorWithWhite),
               ),
@@ -156,8 +156,8 @@ class _MapFilterViewState extends State<MapFilterView>
                 widget.productParameterHolder.lng = '';
                 widget.productParameterHolder.mile = '';
               } else {
-                widget.productParameterHolder.lat = latlng.latitude.toString();
-                widget.productParameterHolder.lng = latlng.longitude.toString();
+                widget.productParameterHolder.lat = latlng!.latitude.toString();
+                widget.productParameterHolder.lng = latlng!.longitude.toString();
                 widget.productParameterHolder.mile = getMiles(kmValue);
               }
               Navigator.pop(context, widget.productParameterHolder);
@@ -200,7 +200,7 @@ class _MapFilterViewState extends State<MapFilterView>
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText2
+                          .bodyText2!
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                     Text(
@@ -208,7 +208,7 @@ class _MapFilterViewState extends State<MapFilterView>
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText2
+                          .bodyText2!
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                   ],
@@ -256,7 +256,7 @@ class _MapFilterViewState extends State<MapFilterView>
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText2
+                          .bodyText2!
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                     Text(
@@ -264,7 +264,7 @@ class _MapFilterViewState extends State<MapFilterView>
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
-                          .bodyText2
+                          .bodyText2!
                           .copyWith(fontWeight: FontWeight.bold),
                     ),
                   ],

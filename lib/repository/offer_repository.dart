@@ -137,7 +137,7 @@ class OfferRepository extends PsRepository {
         }
         for (Offer data in _resource.data!) {
           offerMapList.add(OfferMap(
-              id: data.id + paramKey,
+              id: data.id! + paramKey,
               mapKey: paramKey,
               offerId: data.id,
               sorting: i++,

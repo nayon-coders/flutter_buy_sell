@@ -5,15 +5,15 @@ import 'package:flutterbuyandsell/viewobject/common/language.dart';
 
 class LanguageListItem extends StatelessWidget {
   const LanguageListItem({
-    Key key,
-    @required this.language,
-    @required this.animation,
-    @required this.animationController,
+    Key? key,
+    required this.language,
+    required this.animation,
+    required this.animationController,
     this.onTap,
   }) : super(key: key);
 
   final Language language;
-  final Function onTap;
+  final VoidCallback? onTap;
   final AnimationController animationController;
   final Animation<double> animation;
 
@@ -23,7 +23,7 @@ class LanguageListItem extends StatelessWidget {
     return AnimatedBuilder(
         animation: animationController,
         child: InkWell(
-          onTap: onTap,
+          onTap: onTap!,
           child: Ink(
             child: Card(
               elevation: 0.3,
@@ -69,7 +69,7 @@ class LanguageListItem extends StatelessWidget {
             ),
           ),
         ),
-        builder: (BuildContext context, Widget child) {
+        builder: (BuildContext context, Widget? child) {
           return FadeTransition(
             opacity: animation,
             child: Transform(

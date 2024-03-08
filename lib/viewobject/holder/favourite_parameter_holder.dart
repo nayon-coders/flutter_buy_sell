@@ -4,8 +4,8 @@ import 'package:flutter/cupertino.dart';
 
 class FavouriteParameterHolder extends PsHolder<FavouriteParameterHolder> {
   FavouriteParameterHolder({
-    @required this.itemId,
-    @required this.userId,
+    required this.itemId,
+    required this.userId,
   });
 
   final String itemId;
