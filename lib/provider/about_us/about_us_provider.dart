@@ -21,7 +21,7 @@ class AboutUsProvider extends PsProvider {
     });
     aboutUsListStream = StreamController<PsResource<List<AboutUs>>>.broadcast();
     subscription =
-        aboutUsListStream.stream.listen((PsResource<List<AboutUs>> resource) {
+        aboutUsListStream!.stream.listen((PsResource<List<AboutUs>> resource) {
       updateOffset(resource.data!.length);
 
       _aboutUsList = resource;
@@ -37,17 +37,17 @@ class AboutUsProvider extends PsProvider {
     });
   }
 
-  AboutUsRepository _repo;
-  PsValueHolder psValueHolder;
+  AboutUsRepository? _repo;
+  PsValueHolder? psValueHolder;
   PsResource<List<AboutUs>> _aboutUsList =
       PsResource<List<AboutUs>>(PsStatus.NOACTION, '', <AboutUs>[]);
 
   PsResource<List<AboutUs>> get aboutUsList => _aboutUsList;
-  StreamSubscription<PsResource<List<AboutUs>>> subscription;
-  StreamController<PsResource<List<AboutUs>>> aboutUsListStream;
+  StreamSubscription<PsResource<List<AboutUs>>>? subscription;
+  StreamController<PsResource<List<AboutUs>>>? aboutUsListStream;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('AboutUs Provider Dispose: $hashCode');
     super.dispose();
@@ -57,8 +57,8 @@ class AboutUsProvider extends PsProvider {
     isLoading = true;
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getAllAboutUsList(
-        aboutUsListStream, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
+    await _repo!.getAllAboutUsList(
+        aboutUsListStream!, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
   }
 
   Future<dynamic> nextAboutUsList() async {
@@ -66,8 +66,8 @@ class AboutUsProvider extends PsProvider {
 
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
-      await _repo.getNextPageAboutUsList(
-          aboutUsListStream, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
+      await _repo!.getNextPageAboutUsList(
+          aboutUsListStream!, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
     }
   }
 
@@ -77,8 +77,8 @@ class AboutUsProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getAllAboutUsList(
-        aboutUsListStream, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
+    await _repo!.getAllAboutUsList(
+        aboutUsListStream!, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     isLoading = false;
   }

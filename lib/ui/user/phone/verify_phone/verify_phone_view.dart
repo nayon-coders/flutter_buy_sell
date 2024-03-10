@@ -181,7 +181,7 @@ dynamic gotoProfile(
       phoneId: phoneId,
       userName: userName,
       userPhone: phoneNumber,
-      deviceToken: provider.psValueHolder.deviceToken,
+      deviceToken: provider.psValueHolder!.deviceToken,
     );
 
     final PsResource<User> _apiStatus =
@@ -433,7 +433,7 @@ class __ChangeEmailAndRecentCodeWidgetState
             if (await Utils.checkInternetConnectivity()) {
               final ResendCodeParameterHolder resendCodeParameterHolder =
                   ResendCodeParameterHolder(
-                userEmail: widget.provider.psValueHolder.userEmailToVerify,
+                userEmail: widget.provider.psValueHolder!.userEmailToVerify,
               );
 
               final PsResource<ApiStatus> _apiStatus = await widget.provider

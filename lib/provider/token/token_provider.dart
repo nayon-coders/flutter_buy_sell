@@ -40,7 +40,7 @@ class TokenProvider extends PsProvider {
   // StreamSubscription<PsResource<ApiStatus>> subscription;
   // StreamController<PsResource<ApiStatus>> tokenDataListStream;
   // PsApiService _psApiService;
-TokenRepository _repo;
+TokenRepository? _repo;
 
   @override
   void dispose() {
@@ -55,7 +55,7 @@ TokenRepository _repo;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
     // if (isConnectedToInternet) {
-      final PsResource<ApiStatus> _resource = await _repo.getToken(isConnectedToInternet, PsStatus.SUCCESS);
+      final PsResource<ApiStatus> _resource = await _repo!.getToken(isConnectedToInternet, PsStatus.SUCCESS);
 
 return _resource;
       // if (_resource.status == PsStatus.SUCCESS) {

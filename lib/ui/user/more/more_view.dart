@@ -73,7 +73,7 @@ class _MoreViewState extends State<MoreView> {
                   _MorePostTitleWidget(),
                   _MorePendingPostWidget(
                     animationController: widget.animationController,
-                    userId: userProvider.psValueHolder.loginUserId,
+                    userId: userProvider.psValueHolder!.loginUserId,
                     animation: Tween<double>(begin: 0.0, end: 1.0).animate(
                       CurvedAnimation(
                         parent: widget.animationController,
@@ -86,7 +86,7 @@ class _MoreViewState extends State<MoreView> {
                   const SizedBox(height: PsDimens.space4),
                   _MoreActivePostWidget(
                     animationController: widget.animationController,
-                    userId: userProvider.psValueHolder.loginUserId,
+                    userId: userProvider.psValueHolder!.loginUserId,
                     animation: Tween<double>(begin: 0.0, end: 1.0).animate(
                       CurvedAnimation(
                         parent: widget.animationController,
@@ -247,7 +247,7 @@ class _MoreActivePostWidgetState extends State<_MoreActivePostWidget> {
 
     return GestureDetector(
       onTap: () {
-        Navigator.pushNamed(context, RoutePaths.userItemListForProfile, arguments: ItemListIntentHolder(userId: userProvider!.psValueHolder.loginUserId, status: widget.status, title: widget.headerTitle));
+        Navigator.pushNamed(context, RoutePaths.userItemListForProfile, arguments: ItemListIntentHolder(userId: userProvider!.psValueHolder!.loginUserId, status: widget.status, title: widget.headerTitle));
       },
       child: Container(
         color: PsColors.backgroundColor,
@@ -703,7 +703,7 @@ class _MoreDeactivateAccWidget extends StatelessWidget {
                   onAgreeTap: () async {
                     Navigator.of(context).pop();
                     await PsProgressDialog.showDialog(context);
-                    final DeleteUserHolder deleteUserHolder = DeleteUserHolder(userId: userProvider.psValueHolder.loginUserId);
+                    final DeleteUserHolder deleteUserHolder = DeleteUserHolder(userId: userProvider.psValueHolder!.loginUserId);
                     final PsResource<ApiStatus> _apiStatus = await userProvider.postDeleteUser(deleteUserHolder.toMap());
                     PsProgressDialog.dismissDialog();
                     if (_apiStatus.data != null) {

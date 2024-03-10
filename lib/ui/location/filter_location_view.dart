@@ -44,7 +44,7 @@ class _FilterLocationViewState extends State<FilterLocationView>
     _psValueHolder = Provider.of<PsValueHolder>(context);
     userNameController = TextEditingController();
 
-    userNameController!.text = widget.locationParameterHolder!.keyword;
+    userNameController!.text = widget.locationParameterHolder!.keyword!;
 
     Future<bool> _requestPop() {
       animationController!.reverse().then<dynamic>(
@@ -104,7 +104,7 @@ class _FilterLocationViewState extends State<FilterLocationView>
                 child: Row(
                   children: <Widget>[
                     Radio<String>(
-                      value: widget.locationParameterHolder!.orderBy,
+                      value: widget.locationParameterHolder!.orderBy!,
                       groupValue: PsConst.FILTERING__ORDERING,
                       onChanged: (String? name) {
                         updateOrderByData(PsConst.FILTERING__ORDERING);
@@ -128,7 +128,7 @@ class _FilterLocationViewState extends State<FilterLocationView>
                 child: Row(
                   children: <Widget>[
                     Radio<String>(
-                      value: widget.locationParameterHolder!.orderBy,
+                      value: widget.locationParameterHolder!.orderBy!,
                       groupValue: PsConst.FILTERING__ADDED_DATE,
                       onChanged: (String? name) {
                         updateOrderByData(PsConst.FILTERING__ADDED_DATE);
@@ -158,7 +158,7 @@ class _FilterLocationViewState extends State<FilterLocationView>
                 child: Row(
                   children: <Widget>[
                     Radio<String>(
-                      value: widget.locationParameterHolder!.orderType,
+                      value: widget.locationParameterHolder!.orderType!,
                       groupValue: PsConst.FILTERING__ASC,
                       onChanged: (String? name) {
                         updateOrderTypeData(PsConst.FILTERING__ASC);
@@ -182,7 +182,7 @@ class _FilterLocationViewState extends State<FilterLocationView>
                 child: Row(
                   children: <Widget>[
                     Radio<String>(
-                      value: widget.locationParameterHolder!.orderType,
+                      value: widget.locationParameterHolder!.orderType!,
                       groupValue: PsConst.FILTERING__DESC,
                       onChanged: (String? name) {
                         updateOrderTypeData(PsConst.FILTERING__DESC);

@@ -19,7 +19,7 @@ class NotificationProvider extends PsProvider {
       isConnectedToInternet = onValue;
     });
   }
-  NotificationRepository _repo;
+  NotificationRepository? _repo;
   PsValueHolder psValueHolder;
 
   PsResource<ApiStatus> _notification =
@@ -31,7 +31,7 @@ class NotificationProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _notification = await _repo.rawRegisterNotiToken(
+    _notification = await _repo!.rawRegisterNotiToken(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _notification;
@@ -42,7 +42,7 @@ class NotificationProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _notification = await _repo.rawUnRegisterNotiToken(
+    _notification = await _repo!.rawUnRegisterNotiToken(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _notification;
@@ -53,7 +53,7 @@ class NotificationProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _notification = await _repo.postChatNoti(
+    _notification = await _repo!.postChatNoti(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _notification;

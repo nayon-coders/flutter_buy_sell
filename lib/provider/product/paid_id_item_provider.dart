@@ -22,7 +22,7 @@ class PaidAdItemProvider extends PsProvider {
 
     paidAdItemListStream =
         StreamController<PsResource<List<PaidAdItem>>>.broadcast();
-    subscription = paidAdItemListStream.stream
+    subscription = paidAdItemListStream!.stream
         .listen((PsResource<List<PaidAdItem>> resource) {
       updateOffset(resource.data!.length);
 
@@ -39,20 +39,20 @@ class PaidAdItemProvider extends PsProvider {
     });
   }
 
-  StreamController<PsResource<List<PaidAdItem>>> paidAdItemListStream;
+  StreamController<PsResource<List<PaidAdItem>>>? paidAdItemListStream;
 
-  PaidAdItemRepository _repo;
+  PaidAdItemRepository? _repo;
   PsValueHolder psValueHolder;
 
   PsResource<List<PaidAdItem>> _paidAdItemList =
       PsResource<List<PaidAdItem>>(PsStatus.NOACTION, '', <PaidAdItem>[]);
 
   PsResource<List<PaidAdItem>> get paidAdItemList => _paidAdItemList;
-  StreamSubscription<PsResource<List<PaidAdItem>>> subscription;
+  StreamSubscription<PsResource<List<PaidAdItem>>>? subscription;
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Paid Ad Item Provider Dispose: $hashCode');
     super.dispose();
@@ -62,7 +62,7 @@ class PaidAdItemProvider extends PsProvider {
     isLoading = true;
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getPaidAdItemList(paidAdItemListStream, loginUserId,
+    await _repo!.getPaidAdItemList(paidAdItemListStream!, loginUserId,
         isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
   }
 
@@ -71,7 +71,7 @@ class PaidAdItemProvider extends PsProvider {
 
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
-      await _repo.getNextPagePaidAdItemList(paidAdItemListStream, loginUserId,
+      await _repo!.getNextPagePaidAdItemList(paidAdItemListStream!, loginUserId,
           isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
     }
   }
@@ -82,7 +82,7 @@ class PaidAdItemProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getPaidAdItemList(paidAdItemListStream, loginUserId,
+    await _repo!.getPaidAdItemList(paidAdItemListStream!, loginUserId,
         isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
 
     isLoading = false;

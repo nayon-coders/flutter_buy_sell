@@ -24,7 +24,7 @@ class ItemDetailProvider extends PsProvider {
 
     itemDetailStream = StreamController<PsResource<Product>>.broadcast();
     subscription =
-        itemDetailStream.stream.listen((PsResource<Product> resource) {
+        itemDetailStream!.stream.listen((PsResource<Product> resource) {
 
       _item = resource;
 
@@ -41,8 +41,8 @@ class ItemDetailProvider extends PsProvider {
     });
   }
 
-  ProductRepository _repo;
-  PsValueHolder psValueHolder;
+  ProductRepository? _repo;
+  PsValueHolder? psValueHolder;
 
   PsResource<Product> _item = PsResource<Product>(PsStatus.NOACTION, '', null);
   PsResource<Product> get itemDetail => _item;
@@ -51,14 +51,14 @@ class ItemDetailProvider extends PsProvider {
       PsResource<ApiStatus>(PsStatus.NOACTION, '', null);
   PsResource<ApiStatus> get apiStatus => _apiStatus;
 
-  StreamSubscription<PsResource<Product>> subscription;
-  StreamController<PsResource<Product>> itemDetailStream;
+  StreamSubscription<PsResource<Product>>? subscription;
+  StreamController<PsResource<Product>>? itemDetailStream;
 
   dynamic daoSubscription;
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
      if (daoSubscription != null) {
       daoSubscription.cancel();
     }
@@ -78,8 +78,8 @@ class ItemDetailProvider extends PsProvider {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    daoSubscription = await _repo.getItemDetail(
-      itemDetailStream,
+    daoSubscription = await _repo!.getItemDetail(
+      itemDetailStream!,
       productId,
       loginUserId,
       isConnectedToInternet,
@@ -93,8 +93,8 @@ class ItemDetailProvider extends PsProvider {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    daoSubscription = await _repo.getItemDetailForFav(
-      itemDetailStream, 
+    daoSubscription = await _repo!.getItemDetailForFav(
+      itemDetailStream!,
       itemId,
       loginUserId,
       isConnectedToInternet, PsStatus.PROGRESS_LOADING);
@@ -108,8 +108,8 @@ class ItemDetailProvider extends PsProvider {
       super.isLoading = true;
       isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-      daoSubscription = await _repo.getItemDetail(
-        itemDetailStream, 
+      daoSubscription = await _repo!.getItemDetail(
+        itemDetailStream!,
         productId, 
         loginUserId,
         isConnectedToInternet,
@@ -124,8 +124,8 @@ class ItemDetailProvider extends PsProvider {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    daoSubscription = await _repo.getItemDetail(
-      itemDetailStream,
+    daoSubscription = await _repo!.getItemDetail(
+      itemDetailStream!,
       productId,
       loginUserId,
       isConnectedToInternet,
@@ -141,8 +141,8 @@ class ItemDetailProvider extends PsProvider {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
     
-    daoSubscription = await _repo.deleteLocalProductCacheById(
-      itemDetailStream,
+    daoSubscription = await _repo!.deleteLocalProductCacheById(
+      itemDetailStream!,
       productId,
       loginUserId,
       isConnectedToInternet,
@@ -158,8 +158,8 @@ class ItemDetailProvider extends PsProvider {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
     
-    daoSubscription = await _repo.deleteLocalProductCacheByUserId(
-      itemDetailStream, 
+    daoSubscription = await _repo!.deleteLocalProductCacheByUserId(
+      itemDetailStream!,
       loginUserId, 
       addedUserId,
       isConnectedToInternet,
@@ -175,7 +175,7 @@ class ItemDetailProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _apiStatus = await _repo.userDeleteItem(
+    _apiStatus = await _repo!.userDeleteItem(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _apiStatus;

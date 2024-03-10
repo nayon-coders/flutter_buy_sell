@@ -20,8 +20,8 @@ class OfferRepository extends PsRepository {
   }
   String primaryKey = 'id';
   String mapKey = 'map_key';
-  PsApiService _psApiService;
-  OfferDao _offerDao;
+  PsApiService? _psApiService;
+  OfferDao? _offerDao;
 
   void sinkOfferListStream(
       StreamController<PsResource<List<Offer>>> offerListStream,
@@ -32,15 +32,15 @@ class OfferRepository extends PsRepository {
   }
 
   Future<dynamic> insert(Offer offer) async {
-    return _offerDao.insert(primaryKey, offer);
+    return _offerDao!.insert(primaryKey, offer);
   }
 
   Future<dynamic> update(Offer offer) async {
-    return _offerDao.update(offer);
+    return _offerDao!.update(offer);
   }
 
   Future<dynamic> delete(Offer offer) async {
-    return _offerDao.delete(offer);
+    return _offerDao!.delete(offer);
   }
 
   Future<dynamic> getOfferList(
@@ -58,14 +58,14 @@ class OfferRepository extends PsRepository {
     // Load from Db and Send to UI
     sinkOfferListStream(
         offerListStream,
-        await _offerDao.getAllByMap(
+        await _offerDao!.getAllByMap(
             primaryKey, mapKey, paramKey, offerMapDao, OfferMap(),
             status: status));
 
     // Server Call
     if (isConnectedToInternet) {
       final PsResource<List<Offer>> _resource =
-          await _psApiService.getOfferList(holder.toMap());
+          await _psApiService!.getOfferList(holder.toMap());
 
       print('Param Key $paramKey');
       if (_resource.status == PsStatus.SUCCESS) {
@@ -89,7 +89,7 @@ class OfferRepository extends PsRepository {
         await offerMapDao.insertAll(primaryKey, offerMapList);
 
         // Insert Offer
-        await _offerDao.insertAll(primaryKey, _resource.data!);
+        await _offerDao!.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
         // Delete and Insert Map Dao
@@ -100,7 +100,7 @@ class OfferRepository extends PsRepository {
       // Load updated Data from Db and Send to UI
       sinkOfferListStream(
           offerListStream,
-          await _offerDao.getAllByMap(
+          await _offerDao!.getAllByMap(
               primaryKey, mapKey, paramKey, offerMapDao, OfferMap()));
     }
   }
@@ -118,12 +118,12 @@ class OfferRepository extends PsRepository {
     // Load from Db and Send to UI
     sinkOfferListStream(
         offerListStream,
-        await _offerDao.getAllByMap(
+        await _offerDao!.getAllByMap(
             primaryKey, mapKey, paramKey, offerMapDao, OfferMap(),
             status: status));
     if (isConnectedToInternet) {
       final PsResource<List<Offer>> _resource =
-          await _psApiService.getOfferList(holder.toMap());
+          await _psApiService!.getOfferList(holder.toMap());
 
       if (_resource.status == PsStatus.SUCCESS) {
         // Create Map List
@@ -147,11 +147,11 @@ class OfferRepository extends PsRepository {
         await offerMapDao.insertAll(primaryKey, offerMapList);
 
         // Insert Offer
-        await _offerDao.insertAll(primaryKey, _resource.data!);
+        await _offerDao!.insertAll(primaryKey, _resource.data!);
       }
       sinkOfferListStream(
           offerListStream,
-          await _offerDao.getAllByMap(
+          await _offerDao!.getAllByMap(
               primaryKey, mapKey, paramKey, offerMapDao, OfferMap()));
     }
   }

@@ -21,7 +21,7 @@ class NotiProvider extends PsProvider {
     });
 
     notiListStream = StreamController<PsResource<List<Noti>>>.broadcast();
-    subscription = notiListStream.stream.listen((dynamic resource) {
+    subscription = notiListStream!.stream.listen((dynamic resource) {
       updateOffset(resource.data.length);
 
       _notiList = resource;
@@ -36,10 +36,10 @@ class NotiProvider extends PsProvider {
       }
     });
   }
-  NotiRepository _repo;
+  NotiRepository? _repo;
   PsValueHolder psValueHolder;
   String userId = '';
-  String deviceToken;
+  String ?deviceToken;
 
   PsResource<Noti> _noti = PsResource<Noti>(PsStatus.NOACTION, '', null);
   PsResource<Noti> get user => _noti;
@@ -47,11 +47,11 @@ class NotiProvider extends PsProvider {
   PsResource<List<Noti>> _notiList =
       PsResource<List<Noti>>(PsStatus.NOACTION, '', <Noti>[]);
   PsResource<List<Noti>> get notiList => _notiList;
-  StreamSubscription<dynamic> subscription;
-  StreamController<PsResource<List<Noti>>> notiListStream;
+  StreamSubscription<dynamic>? subscription;
+  StreamController<PsResource<List<Noti>>>? notiListStream;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Notification Provider Dispose: $hashCode');
     super.dispose();
@@ -61,7 +61,7 @@ class NotiProvider extends PsProvider {
     isConnectedToInternet = await Utils.checkInternetConnectivity();
     isLoading = true;
 
-    await _repo.getNotiList(notiListStream, isConnectedToInternet, limit,
+    await _repo!.getNotiList(notiListStream!, isConnectedToInternet, limit,
         offset, PsStatus.BLOCK_LOADING, paramMap);
   }
 
@@ -70,7 +70,7 @@ class NotiProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-      await _repo.getNextPageNotiList(notiListStream, isConnectedToInternet,
+      await _repo!.getNextPageNotiList(notiListStream!, isConnectedToInternet,
           limit, offset, PsStatus.PROGRESS_LOADING, paramMap);
     }
   }
@@ -81,7 +81,7 @@ class NotiProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getNotiList(notiListStream, isConnectedToInternet, limit,
+    await _repo!.getNotiList(notiListStream!, isConnectedToInternet, limit,
         offset, PsStatus.BLOCK_LOADING, paramMap);
 
     isLoading = false;
@@ -95,7 +95,7 @@ class NotiProvider extends PsProvider {
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
     _noti =
-        await _repo.postNoti(notiListStream, jsonMap, isConnectedToInternet);
+        await _repo!.postNoti(notiListStream!, jsonMap, isConnectedToInternet);
 
     return _noti;
   }

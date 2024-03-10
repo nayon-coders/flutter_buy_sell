@@ -16,20 +16,20 @@ class ReportedItemRepository extends PsRepository {
     _itemTypeDao = reportedItemDao;
   }
 
-  PsApiService _psApiService;
-  ReportedItemDao _itemTypeDao;
+  PsApiService? _psApiService;
+  ReportedItemDao? _itemTypeDao;
   final String _primaryKey = 'id';
 
   Future<dynamic> insert(ReportedItem itemType) async {
-    return _itemTypeDao.insert(_primaryKey, itemType);
+    return _itemTypeDao!.insert(_primaryKey, itemType);
   }
 
   Future<dynamic> update(ReportedItem itemType) async {
-    return _itemTypeDao.update(itemType);
+    return _itemTypeDao!.update(itemType);
   }
 
   Future<dynamic> delete(ReportedItem itemType) async {
-    return _itemTypeDao.delete(itemType);
+    return _itemTypeDao!.delete(itemType);
   }
 
   Future<dynamic> getReportedItemList(
@@ -41,21 +41,21 @@ class ReportedItemRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
 
-    itemTypeListStream.sink.add(await _itemTypeDao.getAll(status: status));
+    itemTypeListStream.sink.add(await _itemTypeDao!.getAll(status: status));
 
     final PsResource<List<ReportedItem>> _resource =
-        await _psApiService.getReportedItemList(loginUserId,limit, offset);
+        await _psApiService!.getReportedItemList(loginUserId,limit, offset);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      await _itemTypeDao.deleteAll();
-      await _itemTypeDao.insertAll(_primaryKey, _resource.data!);
+      await _itemTypeDao!.deleteAll();
+      await _itemTypeDao!.insertAll(_primaryKey, _resource.data!);
       
     }else{
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
-        await _itemTypeDao.deleteAll();
+        await _itemTypeDao!.deleteAll();
       }
     }
-    itemTypeListStream.sink.add(await _itemTypeDao.getAll());
+    itemTypeListStream.sink.add(await _itemTypeDao!.getAll());
   }
 
   Future<dynamic> getNextPageReportedItemList(
@@ -66,19 +66,19 @@ class ReportedItemRepository extends PsRepository {
       int offset,
       PsStatus status,
       {bool isLoadFromServer = true}) async {
-    itemTypeListStream.sink.add(await _itemTypeDao.getAll(status: status));
+    itemTypeListStream.sink.add(await _itemTypeDao!.getAll(status: status));
 
     final PsResource<List<ReportedItem>> _resource =
-        await _psApiService.getReportedItemList(loginUserId,limit, offset);
+        await _psApiService!.getReportedItemList(loginUserId,limit, offset);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      _itemTypeDao
+      _itemTypeDao!
           .insertAll(_primaryKey, _resource.data!)
           .then((dynamic data) async {
-        itemTypeListStream.sink.add(await _itemTypeDao.getAll());
+        itemTypeListStream.sink.add(await _itemTypeDao!.getAll());
       });
     } else {
-      itemTypeListStream.sink.add(await _itemTypeDao.getAll());
+      itemTypeListStream.sink.add(await _itemTypeDao!.getAll());
     }
   }
 }

@@ -19,7 +19,7 @@ class ItemEntryProvider extends PsProvider {
     print('Item Entry Provider: $hashCode');
 
     itemListStream = StreamController<PsResource<Product>>.broadcast();
-    subscription = itemListStream.stream.listen((PsResource<Product> resource) {
+    subscription = itemListStream!.stream.listen((PsResource<Product> resource) {
       if (resource != null && resource.data != null) {
         _itemResource = resource;
         item = resource.data!;
@@ -39,16 +39,16 @@ class ItemEntryProvider extends PsProvider {
     });
   }
 
-  ProductRepository _repo;
+  ProductRepository? _repo;
   PsValueHolder psValueHolder;
   PsResource<Product> _itemResource =
       PsResource<Product>(PsStatus.NOACTION, '', null);
   PsResource<Product> get itemResource => _itemResource;
 
-  StreamSubscription<PsResource<Product>> subscription;
-  StreamController<PsResource<Product>> itemListStream;
+  StreamSubscription<PsResource<Product>>? subscription;
+  StreamController<PsResource<Product>>? itemListStream;
 
-  Product item;
+  Product? item;
 
   String categoryId = '';
   String subCategoryId = '';
@@ -71,7 +71,7 @@ class ItemEntryProvider extends PsProvider {
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Item Entry Provider Dispose: $hashCode');
     super.dispose();
@@ -84,7 +84,7 @@ class ItemEntryProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _itemResource = await _repo.postItemEntry(
+    _itemResource = await _repo!.postItemEntry(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _itemResource;
@@ -93,7 +93,7 @@ class ItemEntryProvider extends PsProvider {
   Future<dynamic> getItemFromDB(String itemId) async {
     isLoading = true;
 
-    await _repo.getItemFromDB(
-        itemId, itemListStream, PsStatus.PROGRESS_LOADING);
+    await _repo!.getItemFromDB(
+        itemId, itemListStream!, PsStatus.PROGRESS_LOADING);
   }
 }

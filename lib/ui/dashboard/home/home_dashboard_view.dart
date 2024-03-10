@@ -297,7 +297,7 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                           userId: valueHolder!.loginUserId,
                           deviceToken: valueHolder!.deviceToken);
                   _userUnreadMessageProvider!.userUnreadMessageCount(
-                      _userUnreadMessageProvider!.userUnreadMessageHolder);
+                      _userUnreadMessageProvider!.userUnreadMessageHolder!);
                 }
                 return _userUnreadMessageProvider!;
               }),
@@ -414,7 +414,7 @@ class _HomeDashboardViewWidgetState extends State<HomeDashboardViewWidget> {
                   if (valueHolder!.loginUserId != null &&
                       valueHolder!.loginUserId != '') {
                     _userUnreadMessageProvider!.userUnreadMessageCount(
-                        _userUnreadMessageProvider!.userUnreadMessageHolder);
+                        _userUnreadMessageProvider!.userUnreadMessageHolder!);
                   }
 
                   _itemListFromFollowersProvider!.resetItemListFromFollowersList(
@@ -909,8 +909,8 @@ class _HomeBlogProductSliderListWidget extends StatelessWidget {
                         width: double.infinity,
                         child: BlogSliderView(
                           blogList: blogProvider.blogList.data!,
-                          onTap: (Blog blog) {
-                            Navigator.pushNamed!(context, RoutePaths.blogDetail,
+                          onTap: (Blog blog) {///TODO Fiz problem
+                            Navigator.pushNamed(context, RoutePaths.blogDetail,
                                 arguments: blog);
                           },
                         ),

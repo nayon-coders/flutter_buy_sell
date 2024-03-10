@@ -132,7 +132,7 @@ class _BlockedUserListViewState extends State<BlockedUserListView>
 
                                       final UnblockUserHolder userBlockItemParameterHolder =
                                       UnblockUserHolder(
-                                      fromBlockUserId: userProvider!.psValueHolder.loginUserId,
+                                      fromBlockUserId: userProvider!.psValueHolder!.loginUserId,
                                        toBlockUserId: provider.blockedUserList.data![index].userId);
 
                                       final PsResource<ApiStatus> _apiStatus = await userProvider!

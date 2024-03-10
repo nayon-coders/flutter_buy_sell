@@ -5,11 +5,11 @@ import 'package:flutterbuyandsell/ui/common/ps_button_widget_with_round_corner.d
 import 'package:flutterbuyandsell/utils/utils.dart';
 
 class ChooseCameraTypeDialog extends StatefulWidget {
-  const ChooseCameraTypeDialog({Key key, this.onCameraTap, this.onGalleryTap})
+  const ChooseCameraTypeDialog({Key? key, this.onCameraTap, this.onGalleryTap})
       : super(key: key);
 
-  final Function onCameraTap;
-  final Function onGalleryTap;
+  final Function? onCameraTap;
+  final Function? onGalleryTap;
 
   @override
   _LogoutDialogState createState() => _LogoutDialogState();
@@ -24,8 +24,8 @@ class _LogoutDialogState extends State<ChooseCameraTypeDialog> {
 
 class NewDialog extends StatelessWidget {
   const NewDialog({
-    Key key,
-    @required this.widget,
+    Key? key,
+    required this.widget,
   }) : super(key: key);
 
   final ChooseCameraTypeDialog widget;
@@ -44,7 +44,7 @@ class NewDialog extends StatelessWidget {
           children: <Widget>[
             const SizedBox(height: PsDimens.space16),
             Text(Utils.getString(context, 'camera_dialog__title'),
-                style: Theme.of(context).textTheme.headline6.copyWith(
+                style: Theme.of(context).textTheme.headline6!.copyWith(
                     color: PsColors.mainColor, fontWeight: FontWeight.bold)),
             const SizedBox(height: PsDimens.space24),
             PSButtonWidgetRoundCorner(
@@ -54,7 +54,7 @@ class NewDialog extends StatelessWidget {
                   Utils.getString(context, 'camera_dialog__gallery_and_camera'),
               onPressed: () {
                 Navigator.pop(context);
-                widget.onGalleryTap();
+                widget.onGalleryTap!();
               },
             ),
             const SizedBox(height: PsDimens.space24),
@@ -68,7 +68,7 @@ class NewDialog extends StatelessWidget {
             ),
             const SizedBox(height: PsDimens.space16),
             Text(Utils.getString(context, 'camera_dialog__text'),
-                style: Theme.of(context).textTheme.button.copyWith()),
+                style: Theme.of(context).textTheme.button!.copyWith()),
             const SizedBox(height: PsDimens.space8),
             PSButtonWidgetRoundCorner(
               hasShadow: true,
@@ -77,7 +77,7 @@ class NewDialog extends StatelessWidget {
                   Utils.getString(context, 'camera_dialog__custom_camera'),
               onPressed: () {
                 Navigator.pop(context);
-                widget.onCameraTap();
+                widget.onCameraTap!();
               },
             ),
             const SizedBox(height: PsDimens.space16),

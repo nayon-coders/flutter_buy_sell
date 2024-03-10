@@ -20,7 +20,7 @@ class UserListProvider extends PsProvider {
 
     userListStream = StreamController<PsResource<List<User>>>.broadcast();
     subscription =
-        userListStream.stream.listen((PsResource<List<User>> resource) {
+        userListStream!.stream.listen((PsResource<List<User>> resource) {
       updateOffset(resource.data!.length);
 
       _userList = resource;
@@ -40,18 +40,18 @@ class UserListProvider extends PsProvider {
   UserParameterHolder followingUserParameterHolder =
       UserParameterHolder().getFollowingUsers();
 
-  UserRepository _repo;
+  UserRepository? _repo;
   PsValueHolder? psValueHolder;
 
   PsResource<List<User>> _userList =
       PsResource<List<User>>(PsStatus.NOACTION, '', <User>[]);
 
   PsResource<List<User>> get userList => _userList;
-  StreamSubscription<PsResource<List<User>>> subscription;
-  StreamController<PsResource<List<User>>> userListStream;
+  StreamSubscription<PsResource<List<User>>>? subscription;
+  StreamController<PsResource<List<User>>>? userListStream;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Added Item Provider Dispose: $hashCode');
     super.dispose();
@@ -62,7 +62,7 @@ class UserListProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    await _repo.getUserList(userListStream, isConnectedToInternet, limit,
+    await _repo!.getUserList(userListStream!, isConnectedToInternet, limit,
         offset, PsStatus.PROGRESS_LOADING, holder);
   }
 
@@ -72,7 +72,7 @@ class UserListProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-      await _repo.getNextPageUserList(userListStream, isConnectedToInternet,
+      await _repo!.getNextPageUserList(userListStream!, isConnectedToInternet,
           limit, offset, PsStatus.PROGRESS_LOADING, holder);
     }
   }
@@ -83,7 +83,7 @@ class UserListProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getUserList(userListStream, isConnectedToInternet, limit,
+    await _repo!.getUserList(userListStream!, isConnectedToInternet, limit,
         offset, PsStatus.PROGRESS_LOADING, holder);
 
     isLoading = false;

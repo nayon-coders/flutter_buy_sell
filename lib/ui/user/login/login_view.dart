@@ -600,11 +600,11 @@ class __ForgotPasswordAndRegisterWidgetState
                     final User user = returnData;
                     widget.provider!.psValueHolder =
                         Provider.of<PsValueHolder>(context, listen: false);
-                    widget.provider!.psValueHolder.loginUserId = user.userId!;
-                    widget.provider!.psValueHolder.userIdToVerify = '';
-                    widget.provider!.psValueHolder.userNameToVerify = '';
-                    widget.provider!.psValueHolder.userEmailToVerify = '';
-                    widget.provider!.psValueHolder.userPasswordToVerify = '';
+                    widget.provider!.psValueHolder!.loginUserId = user.userId!;
+                    widget.provider!.psValueHolder!.userIdToVerify = '';
+                    widget.provider!.psValueHolder!.userNameToVerify = '';
+                    widget.provider!.psValueHolder!.userEmailToVerify = '';
+                    widget.provider!.psValueHolder!.userPasswordToVerify = '';
                     Navigator.pop(context, user);
                   }
                 }

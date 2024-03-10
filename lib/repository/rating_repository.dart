@@ -18,19 +18,19 @@ class RatingRepository extends PsRepository {
   }
 
   String primaryKey = 'id';
-  PsApiService _psApiService;
-  RatingDao _ratingDao;
+  PsApiService? _psApiService;
+  RatingDao? _ratingDao;
 
   Future<dynamic> insert(Rating rating) async {
-    return _ratingDao.insert(primaryKey, rating);
+    return _ratingDao!.insert(primaryKey, rating);
   }
 
   Future<dynamic> update(Rating rating) async {
-    return _ratingDao.update(rating);
+    return _ratingDao!.update(rating);
   }
 
   Future<dynamic> delete(Rating rating) async {
-    return _ratingDao.delete(rating);
+    return _ratingDao!.delete(rating);
   }
 
   Future<dynamic> getAllRatingList(
@@ -45,27 +45,27 @@ class RatingRepository extends PsRepository {
       bool isLoadFromServer = true}) async {
     final Finder finder = Finder(filter: Filter.equals('to_user_id', userId));
     ratingListStream.sink
-        .add(await _ratingDao.getAll(status: status, finder: finder));
+        .add(await _ratingDao!.getAll(status: status, finder: finder));
 
     if (isConnectedToInternet) {
       final PsResource<List<Rating>> _resource =
-          await _psApiService.getRatingList(jsonMap, limit, offset);
+          await _psApiService!.getRatingList(jsonMap, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
         if (isNeedDelete) {
-          await _ratingDao.deleteWithFinder(finder);
+          await _ratingDao!.deleteWithFinder(finder);
         }
-        await _ratingDao.insertAll(primaryKey, _resource.data!);
+        await _ratingDao!.insertAll(primaryKey, _resource.data!);
         
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
           if (isNeedDelete) {
-            await _ratingDao.deleteWithFinder(finder);
+            await _ratingDao!.deleteWithFinder(finder);
           }
         }
       }
       // ratingListStream.sink.add(await _ratingDao.getAll(finder: finder));
-      final dynamic subscription = _ratingDao.getAllWithSubscription(
+      final dynamic subscription = _ratingDao!.getAllWithSubscription(
         status: PsStatus.SUCCESS,
         finder: finder,
        onDataUpdated: (List<Rating> resultList) {
@@ -93,16 +93,16 @@ class RatingRepository extends PsRepository {
       {bool isLoadFromServer = true}) async {
     final Finder finder = Finder(filter: Filter.equals('to_user_id', userId));
     ratingListStream.sink
-        .add(await _ratingDao.getAll(finder: finder, status: status));
+        .add(await _ratingDao!.getAll(finder: finder, status: status));
 
     if (isConnectedToInternet) {
       final PsResource<List<Rating>> _resource =
-          await _psApiService.getRatingList(jsonMap, limit, offset);
+          await _psApiService!.getRatingList(jsonMap, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _ratingDao.insertAll(primaryKey, _resource.data!);
+        await _ratingDao!.insertAll(primaryKey, _resource.data!);
       }
-      ratingListStream.sink.add(await _ratingDao.getAll(finder: finder));
+      ratingListStream.sink.add(await _ratingDao!.getAll(finder: finder));
     }
   }
 
@@ -113,11 +113,11 @@ class RatingRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<Rating> _resource =
-        await _psApiService.postRating(jsonMap);
+        await _psApiService!.postRating(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       // await _ratingDao
       //     .deleteWithFinder(Finder(filter: Filter.equals(primaryKey,jsonMap['id'])));
-      await _ratingDao.insert(primaryKey, _resource.data!);
+      await _ratingDao!.insert(primaryKey, _resource.data!);
     } 
     
     // final dynamic subscription = _ratingDao.getOneWithSubscription(
@@ -134,7 +134,7 @@ class RatingRepository extends PsRepository {
 
     // return subscription;
 
-      final dynamic subscription = _ratingDao.getOneWithSubscription(
+      final dynamic subscription = _ratingDao!.getOneWithSubscription(
         status: PsStatus.SUCCESS,
         onDataUpdated: (Rating rating) {
           if (status != null && status != PsStatus.NOACTION) {

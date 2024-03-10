@@ -17,7 +17,7 @@ class ContactUsProvider extends PsProvider {
     });
   }
 
-  ContactUsRepository _repo;
+  ContactUsRepository? _repo;
 
   PsResource<ApiStatus> _contactUs =
       PsResource<ApiStatus>(PsStatus.NOACTION, '', null);
@@ -37,7 +37,7 @@ class ContactUsProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _contactUs = await _repo.postContactUs(
+    _contactUs = await _repo!.postContactUs(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _contactUs;

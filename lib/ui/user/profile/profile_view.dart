@@ -144,7 +144,7 @@ class _ProfilePageState extends State<ProfileView>
                       pendingProductProvider!.psValueHolder!.loginUserId!;
                   pendingProductProvider!.addedUserParameterHolder.status = '0';
                   pendingProductProvider!.loadProductList(
-                      provider!.psValueHolder.loginUserId,
+                      provider!.psValueHolder!.loginUserId,
                       pendingProductProvider!.addedUserParameterHolder);
                 }
 
@@ -971,16 +971,16 @@ class __ProfileDetailWidgetState extends State<_ProfileDetailWidget> {
           lazy: false,
           create: (BuildContext context) {
             print(widget.provider.getCurrentFirebaseUser());
-            if (widget.provider.psValueHolder.loginUserId == null ||
-                widget.provider.psValueHolder.loginUserId == '') {
+            if (widget.provider.psValueHolder!.loginUserId == null ||
+                widget.provider.psValueHolder!.loginUserId == '') {
               widget.provider.userParameterHolder.id = widget.userId;
               widget.provider.getUser(widget.userId);
               // provider.getMyUserData(provider.userParameterHolder.toMap());
             } else {
               widget.provider.userParameterHolder.id =
-                  widget.provider.psValueHolder.loginUserId;
+                  widget.provider.psValueHolder!.loginUserId;
               widget.provider
-                  .getUser(widget.provider.psValueHolder.loginUserId);
+                  .getUser(widget.provider.psValueHolder!.loginUserId);
               // provider.getMyUserData(provider.userParameterHolder.toMap());
             }
 
@@ -1177,14 +1177,14 @@ class _DeactivateAccWidget extends StatelessWidget {
                         await PsProgressDialog.showDialog(context);
                         final DeleteUserHolder deleteUserHolder =
                             DeleteUserHolder(
-                                userId: userProvider.psValueHolder.loginUserId);
+                                userId: userProvider.psValueHolder!.loginUserId);
                         final PsResource<ApiStatus> _apiStatus =
                             await userProvider
                                 .postDeleteUser(deleteUserHolder.toMap());
                         if (_apiStatus.data != null) {
                           if (callLogoutCallBack != null) {
                             callLogoutCallBack(
-                                userProvider.psValueHolder.loginUserId);
+                                userProvider.psValueHolder!.loginUserId);
                           }
                         }
                         PsProgressDialog.dismissDialog();
@@ -1256,7 +1256,7 @@ class _FavAndSettingWidget extends StatelessWidget {
                     arguments: userProvider!.user.data!.userName);
                 if (returnData) {
                   if (callLogoutCallBack != null) {
-                    callLogoutCallBack!(userProvider!.psValueHolder.loginUserId);
+                    callLogoutCallBack!(userProvider!.psValueHolder!.loginUserId);
                   }
                 }
               },
@@ -1346,7 +1346,7 @@ class _EditAndHistoryTextWidget extends StatelessWidget {
             RoutePaths.editProfile,
           );
           if (returnData != null && returnData is bool) {
-            userProvider.getUser(userProvider.psValueHolder.loginUserId);
+            userProvider.getUser(userProvider.psValueHolder!.loginUserId);
           }
         },
       );

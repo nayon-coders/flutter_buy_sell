@@ -104,7 +104,7 @@ class PsButtonWidget extends StatelessWidget {
           if (passwordController.text != '' && confirmPasswordController.text != '') {
             if (passwordController.text == confirmPasswordController.text) {
               if (await Utils.checkInternetConnectivity()) {
-                final ChangePasswordParameterHolder contactUsParameterHolder = ChangePasswordParameterHolder(userId: provider.psValueHolder.loginUserId, userPassword: passwordController.text);
+                final ChangePasswordParameterHolder contactUsParameterHolder = ChangePasswordParameterHolder(userId: provider.psValueHolder!.loginUserId, userPassword: passwordController.text);
 
                 final PsResource<ApiStatus> _apiStatus = await provider.postChangePassword(contactUsParameterHolder.toMap());
 

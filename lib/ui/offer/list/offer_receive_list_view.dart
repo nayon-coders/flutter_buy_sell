@@ -61,6 +61,7 @@ class _OfferReceivedListViewState extends State<OfferReceivedListView>
   @override
   Widget build(BuildContext context) {
     psValueHolder = Provider.of<PsValueHolder>(context);
+    ///TODO fix problem
     holder = OfferParameterHolder().getOfferReceivedList();
     holder!.getOfferReceivedList().userId = psValueHolder!.loginUserId;
 

@@ -25,7 +25,7 @@ class ChatHistoryListProvider extends PsProvider {
     chatHistoryListStream =
         StreamController<PsResource<List<ChatHistory>>>.broadcast();
 
-    subscription = chatHistoryListStream.stream
+    subscription = chatHistoryListStream!.stream
         .listen((PsResource<List<ChatHistory>> resource) {
       updateOffset(resource.data!.length);
 
@@ -49,18 +49,18 @@ class ChatHistoryListProvider extends PsProvider {
   final ChatHistoryParameterHolder chatFromBuyerParameterHolder =
       ChatHistoryParameterHolder().getBuyerHistoryList();
 
-  ChatHistoryRepository _repo;
+  ChatHistoryRepository? _repo;
   PsResource<List<ChatHistory>> _chatHistoryList =
       PsResource<List<ChatHistory>>(PsStatus.NOACTION, '', <ChatHistory>[]);
 
   PsResource<List<ChatHistory>> get chatHistoryList => _chatHistoryList;
-  StreamSubscription<PsResource<List<ChatHistory>>> subscription;
-  StreamController<PsResource<List<ChatHistory>>> chatHistoryListStream;
+  StreamSubscription<PsResource<List<ChatHistory>>>? subscription;
+  StreamController<PsResource<List<ChatHistory>>>? chatHistoryListStream;
   dynamic daoSubscription;
-  StreamController<PsResource<ChatHistory>> chatHistoryStream;
+  StreamController<PsResource<ChatHistory>>? chatHistoryStream;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     if (daoSubscription != null) {
       daoSubscription.cancel();
     }
@@ -74,7 +74,7 @@ class ChatHistoryListProvider extends PsProvider {
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
     // daoSubscription =
-    await _repo.getChatHistoryList(chatHistoryListStream, isConnectedToInternet,
+    await _repo!.getChatHistoryList(chatHistoryListStream!, isConnectedToInternet,
         limit, offset, PsStatus.PROGRESS_LOADING, holder);
   }
 
@@ -82,8 +82,8 @@ class ChatHistoryListProvider extends PsProvider {
       ChatHistoryParameterHolder holder) async {
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    await _repo.getChatHistoryListFromDB(
-        chatHistoryListStream,
+    await _repo!.getChatHistoryListFromDB(
+        chatHistoryListStream!,
         isConnectedToInternet,
         limit,
         offset,
@@ -97,8 +97,8 @@ class ChatHistoryListProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-      await _repo.getNextPageChatHistoryList(
-          chatHistoryListStream,
+      await _repo!.getNextPageChatHistoryList(
+          chatHistoryListStream!,
           isConnectedToInternet,
           limit,
           offset,
@@ -113,7 +113,7 @@ class ChatHistoryListProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getChatHistoryList(chatHistoryListStream, isConnectedToInternet,
+    await _repo!.getChatHistoryList(chatHistoryListStream!, isConnectedToInternet,
         limit, offset, PsStatus.PROGRESS_LOADING, holder);
 
     isLoading = false;
@@ -124,7 +124,7 @@ class ChatHistoryListProvider extends PsProvider {
   ) async {
     isConnectedToInternet = await Utils.checkInternetConnectivity();
     isLoading = true;
-    await _repo.resetUnreadCount(chatHistoryListStream, jsonMap,
+    await _repo!.resetUnreadCount(chatHistoryListStream!, jsonMap,
         isConnectedToInternet, PsStatus.PROGRESS_LOADING);
   }
 
@@ -133,7 +133,7 @@ class ChatHistoryListProvider extends PsProvider {
   ) async {
     isConnectedToInternet = await Utils.checkInternetConnectivity();
     isLoading = true;
-    daoSubscription = await _repo.getChatHistory(chatHistoryListStream, holder,
+    daoSubscription = await _repo!.getChatHistory(chatHistoryListStream!, holder,
         isConnectedToInternet, PsStatus.PROGRESS_LOADING);
   }
 

@@ -22,7 +22,7 @@ class RejectedProductProvider extends PsProvider {
 
     itemListStream = StreamController<PsResource<List<Product>>>.broadcast();
     subscription =
-        itemListStream.stream.listen((PsResource<List<Product>> resource) {
+        itemListStream!.stream.listen((PsResource<List<Product>> resource) {
       updateOffset(resource.data!.length);
 
       _itemList = resource;
@@ -37,7 +37,7 @@ class RejectedProductProvider extends PsProvider {
       }
     });
   }
-  ProductRepository _repo;
+  ProductRepository? _repo;
   PsValueHolder? psValueHolder;
   ProductParameterHolder addedUserParameterHolder =
       ProductParameterHolder().getRejectedItemParameterHolder();
@@ -45,11 +45,11 @@ class RejectedProductProvider extends PsProvider {
       PsResource<List<Product>>(PsStatus.NOACTION, '', <Product>[]);
 
   PsResource<List<Product>> get itemList => _itemList;
-  StreamSubscription<PsResource<List<Product>>> subscription;
-  StreamController<PsResource<List<Product>>> itemListStream;
+  StreamSubscription<PsResource<List<Product>>>? subscription;
+  StreamController<PsResource<List<Product>>>? itemListStream;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Added Product Provider Dispose: $hashCode');
     super.dispose();
@@ -61,8 +61,8 @@ class RejectedProductProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    await _repo.getItemListByUserId(
-        itemListStream,
+    await _repo!.getItemListByUserId(
+        itemListStream!,
         loginUserId,
         isConnectedToInternet,
         limit,
@@ -78,8 +78,8 @@ class RejectedProductProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-      await _repo.getNextPageItemListByUserId(
-          itemListStream,
+      await _repo!.getNextPageItemListByUserId(
+          itemListStream!,
           loginUserId,
           isConnectedToInternet,
           limit,
@@ -96,8 +96,8 @@ class RejectedProductProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getItemListByUserId(
-        itemListStream,
+    await _repo!.getItemListByUserId(
+        itemListStream!,
         loginUserId,
         isConnectedToInternet,
         limit,

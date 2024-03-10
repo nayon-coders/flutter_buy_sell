@@ -65,50 +65,50 @@ class _ItemSearchViewState extends State<HomeItemSearchView> {
         // _searchProductProvider.productParameterHolder.itemLocationId =
         //     _searchProductProvider.psValueHolder.locationId;
 
-        _searchProductProvider!.productParameterHolder.isPaid =
+        _searchProductProvider!.productParameterHolder!.isPaid =
             PsConst.PAID_ITEM_FIRST;
         if (userInputItemNameTextEditingController.text != null &&
             userInputItemNameTextEditingController.text != '') {
-          _searchProductProvider!.productParameterHolder.searchTerm =
+          _searchProductProvider!.productParameterHolder!.searchTerm =
               userInputItemNameTextEditingController.text;
         } else {
-          _searchProductProvider!.productParameterHolder.searchTerm = '';
+          _searchProductProvider!.productParameterHolder!.searchTerm = '';
         }
         if (userInputMaximunPriceEditingController.text != null) {
-          _searchProductProvider!.productParameterHolder.maxPrice =
+          _searchProductProvider!.productParameterHolder!.maxPrice =
               userInputMaximunPriceEditingController.text;
         } else {
-          _searchProductProvider!.productParameterHolder.maxPrice = '';
+          _searchProductProvider!.productParameterHolder!.maxPrice = '';
         }
         if (userInputMinimumPriceEditingController.text != null) {
-          _searchProductProvider!.productParameterHolder.minPrice =
+          _searchProductProvider!.productParameterHolder!.minPrice =
               userInputMinimumPriceEditingController.text;
         } else {
-          _searchProductProvider!.productParameterHolder.minPrice = '';
+          _searchProductProvider!.productParameterHolder!.minPrice = '';
         }
 
         if (_searchProductProvider!.categoryId != null) {
-          _searchProductProvider!.productParameterHolder.catId =
+          _searchProductProvider!.productParameterHolder!.catId =
               _searchProductProvider!.categoryId;
         }
         if (_searchProductProvider!.subCategoryId != null) {
-          _searchProductProvider!.productParameterHolder.subCatId =
+          _searchProductProvider!.productParameterHolder!.subCatId =
               _searchProductProvider!.subCategoryId;
         }
         if (_searchProductProvider!.itemTypeId != null) {
-          _searchProductProvider!.productParameterHolder.itemTypeId =
+          _searchProductProvider!.productParameterHolder!.itemTypeId =
               _searchProductProvider!.itemTypeId;
         }
         if (_searchProductProvider!.itemConditionId != null) {
-          _searchProductProvider!.productParameterHolder.conditionOfItemId =
+          _searchProductProvider!.productParameterHolder!.conditionOfItemId =
               _searchProductProvider!.itemConditionId;
         }
         if (_searchProductProvider!.itemPriceTypeId != null) {
-          _searchProductProvider!.productParameterHolder.itemPriceTypeId =
+          _searchProductProvider!.productParameterHolder!.itemPriceTypeId =
               _searchProductProvider!.itemPriceTypeId;
         }
         if (_searchProductProvider!.itemDealOptionId != null) {
-          _searchProductProvider!.productParameterHolder.dealOptionId =
+          _searchProductProvider!.productParameterHolder!.dealOptionId =
               _searchProductProvider!.itemDealOptionId;
         }
         print('userInputText' + userInputItemNameTextEditingController.text);
@@ -141,7 +141,7 @@ class _ItemSearchViewState extends State<HomeItemSearchView> {
                       Utils.checkUserLoginId(valueHolder!);
               _searchProductProvider!.loadProductListByKey(
                   loginUserId,
-                  _searchProductProvider!.productParameterHolder);
+                  _searchProductProvider!.productParameterHolder!);
 
               return _searchProductProvider!;
             },

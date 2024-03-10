@@ -50,7 +50,7 @@ class UserMap extends PsMapObject<UserMap> {
 
       return data;
     } else {
-      return {};
+      return {} ;
     }
   }
 

@@ -25,26 +25,26 @@ class ProductParameterHolder extends PsHolder<dynamic> {
     status = '1';
   }
 
-  String searchTerm;
-  String catId;
-  String subCatId;
-  String itemTypeId;
-  String itemPriceTypeId;
-  String itemCurrencyId;
-  String itemLocationId;
-  String dealOptionId;
-  String conditionOfItemId;
-  String maxPrice;
-  String minPrice;
-  String brand;
-  String lat;
-  String lng;
-  String mile;
-  String orderBy;
-  String orderType;
-  String addedUserId;
-  String isPaid;
-  String status;
+  String? searchTerm;
+  String? catId;
+  String? subCatId;
+  String? itemTypeId;
+  String? itemPriceTypeId;
+  String? itemCurrencyId;
+  String? itemLocationId;
+  String? dealOptionId;
+  String? conditionOfItemId;
+  String? maxPrice;
+  String? minPrice;
+  String? brand;
+  String? lat;
+  String? lng;
+  String? mile;
+  String? orderBy;
+  String? orderType;
+  String? addedUserId;
+  String? isPaid;
+  String? status;
 
   bool isFiltered() {
     return !(
@@ -348,64 +348,64 @@ class ProductParameterHolder extends PsHolder<dynamic> {
     String result = '';
 
     if (searchTerm != '') {
-      result += searchTerm + ':';
+      result += searchTerm !+ ':';
     }
     if (catId != '') {
-      result += catId + ':';
+      result += catId !+ ':';
     }
     if (subCatId != '') {
-      result += subCatId + ':';
+      result += subCatId !+ ':';
     }
     if (itemTypeId != '') {
-      result += itemTypeId + ':';
+      result += itemTypeId !+ ':';
     }
     if (itemPriceTypeId != '') {
-      result += itemPriceTypeId + ':';
+      result += itemPriceTypeId !+ ':';
     }
     if (itemCurrencyId != '') {
-      result += itemCurrencyId + ':';
+      result += itemCurrencyId !+ ':';
     }
     if (itemLocationId != '') {
-      result += itemLocationId + ':';
+      result += itemLocationId !+ ':';
     }
     if (dealOptionId != '') {
-      result += dealOptionId + ':';
+      result += dealOptionId !+ ':';
     }
     if (conditionOfItemId != '') {
-      result += conditionOfItemId + ':';
+      result += conditionOfItemId !+ ':';
     }
     if (maxPrice != '') {
-      result += maxPrice + ':';
+      result += maxPrice !+ ':';
     }
     if (minPrice != '') {
-      result += minPrice + ':';
+      result += minPrice !+ ':';
     }
     if (brand != '') {
-      result += brand + ':';
+      result += brand !+ ':';
     }
     if (lat != '') {
-      result += lat + ':';
+      result += lat !+ ':';
     }
     if (lng != '') {
-      result += lng + ':';
+      result += lng !+ ':';
     }
     if (mile != '') {
-      result += mile + ':';
+      result += mile !+ ':';
     }
     if (addedUserId != '') {
-      result += addedUserId + ':';
+      result += addedUserId !+ ':';
     }
     if (status != '') {
-      result += status + ':';
+      result += status !+ ':';
     }
     if (isPaid != '') {
-      result += isPaid + ':';
+      result += isPaid !+ ':';
     }
     if (orderBy != '') {
-      result += orderBy + ':';
+      result += orderBy !+ ':';
     }
     if (orderType != '') {
-      result += orderType;
+      result += orderType!;
     }
 
     return result;

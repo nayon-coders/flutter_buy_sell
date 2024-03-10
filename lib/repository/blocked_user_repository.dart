@@ -18,19 +18,19 @@ class BlockedUserRepository extends PsRepository {
   }
 
   String primaryKey = 'user_id';
-  PsApiService _psApiService;
-  BlockedUserDao _blockedUserDao;
+  PsApiService? _psApiService;
+  BlockedUserDao? _blockedUserDao;
 
   Future<dynamic> insert(BlockedUser blockedUser) async {
-    return _blockedUserDao.insert(primaryKey, blockedUser);
+    return _blockedUserDao!.insert(primaryKey, blockedUser);
   }
 
   Future<dynamic> update(BlockedUser blockedUser) async {
-    return _blockedUserDao.update(blockedUser);
+    return _blockedUserDao!.update(blockedUser);
   }
 
   Future<dynamic> delete(BlockedUser blockedUser) async {
-    return _blockedUserDao.delete(blockedUser);
+    return _blockedUserDao!.delete(blockedUser);
   }
 
   Future<dynamic> postDeleteUserFromDB(
@@ -38,8 +38,8 @@ class BlockedUserRepository extends PsRepository {
       String userId,PsStatus status,
       {bool isLoadFromServer = true}) async {
         final Finder finder = Finder(filter: Filter.equals('user_id', userId));
-      await _blockedUserDao.deleteWithFinder(finder);
-    return blockedUserListStream.sink.add(await _blockedUserDao.getAll());
+      await _blockedUserDao!.deleteWithFinder(finder);
+    return blockedUserListStream.sink.add(await _blockedUserDao!.getAll());
   }
 
   Future<dynamic> getAllBlockedUserList(
@@ -50,22 +50,22 @@ class BlockedUserRepository extends PsRepository {
       int offset,
       PsStatus status,
       {bool isLoadFromServer = true}) async {
-    blogListStream.sink.add(await _blockedUserDao.getAll(status: status));
+    blogListStream.sink.add(await _blockedUserDao!.getAll(status: status));
 
     if (isConnectedToInternet) {
       final PsResource<List<BlockedUser>> _resource =
-          await _psApiService.getBlockedUserList(loginUserId,limit, offset);
+          await _psApiService!.getBlockedUserList(loginUserId,limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _blockedUserDao.deleteAll();
-        await _blockedUserDao.insertAll(primaryKey, _resource.data!);
+        await _blockedUserDao!.deleteAll();
+        await _blockedUserDao!.insertAll(primaryKey, _resource.data!);
         
       }else{
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
-          await _blockedUserDao.deleteAll();
+          await _blockedUserDao!.deleteAll();
         }
       }
-      blogListStream.sink.add(await _blockedUserDao.getAll());
+      blogListStream.sink.add(await _blockedUserDao!.getAll());
     }
   }
 
@@ -77,16 +77,16 @@ class BlockedUserRepository extends PsRepository {
       int offset,
       PsStatus status,
       {bool isLoadFromServer = true}) async {
-    blogListStream.sink.add(await _blockedUserDao.getAll(status: status));
+    blogListStream.sink.add(await _blockedUserDao!.getAll(status: status));
 
     if (isConnectedToInternet) {
       final PsResource<List<BlockedUser>> _resource =
-          await _psApiService.getBlockedUserList(loginUserId,limit, offset);
+          await _psApiService!.getBlockedUserList(loginUserId,limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _blockedUserDao.insertAll(primaryKey, _resource.data!);
+        await _blockedUserDao!.insertAll(primaryKey, _resource.data!);
       }
-      blogListStream.sink.add(await _blockedUserDao.getAll());
+      blogListStream.sink.add(await _blockedUserDao!.getAll());
     }
   }
 }

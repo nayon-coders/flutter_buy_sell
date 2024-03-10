@@ -22,8 +22,8 @@ class ChatHistoryRepository extends PsRepository {
   }
   String primaryKey = 'id';
   String mapKey = 'map_key';
-  PsApiService _psApiService;
-  ChatHistoryDao _chatHistoryDao;
+  PsApiService? _psApiService;
+  ChatHistoryDao? _chatHistoryDao;
 
   void sinkchatHistoryListStream(
       StreamController<PsResource<List<ChatHistory>>> chatHistoryListStream,
@@ -50,15 +50,15 @@ class ChatHistoryRepository extends PsRepository {
   }
 
   Future<dynamic> insert(ChatHistory chatHistory) async {
-    return _chatHistoryDao.insert(primaryKey, chatHistory);
+    return _chatHistoryDao!.insert(primaryKey, chatHistory);
   }
 
   Future<dynamic> update(ChatHistory chatHistory) async {
-    return _chatHistoryDao.update(chatHistory);
+    return _chatHistoryDao!.update(chatHistory);
   }
 
   Future<dynamic> delete(ChatHistory chatHistory) async {
-    return _chatHistoryDao.delete(chatHistory);
+    return _chatHistoryDao!.delete(chatHistory);
   }
 
 //   Future<dynamic> getChatHistoryList(StreamController<PsResource<List<ChatHistory>>> chatHistoryListStream,
@@ -158,7 +158,7 @@ class ChatHistoryRepository extends PsRepository {
     //         primaryKey, mapKey, paramKey, chatHistoryMapDao, ChatHistoryMap()));
 
      final dynamic subscription =
-          await _chatHistoryDao.getAllWithSubscriptionByMap(
+          await _chatHistoryDao!.getAllWithSubscriptionByMap(
               primaryKey: primaryKey,
               mapKey: mapKey,
               paramKey: paramKey,
@@ -193,14 +193,14 @@ class ChatHistoryRepository extends PsRepository {
     // Load from Db and Send to UI
     sinkchatHistoryListStream(
         chatHistoryListStream,
-        await _chatHistoryDao.getAllByMap(
+        await _chatHistoryDao!.getAllByMap(
             primaryKey, mapKey, paramKey, chatHistoryMapDao, ChatHistoryMap(),
             status: status));
 
     // Server Call
     if (isConnectedToInternet) {
       final PsResource<List<ChatHistory>> _resource =
-          await _psApiService.getChatHistoryList(holder.toMap());
+          await _psApiService!.getChatHistoryList(holder.toMap());
 
       print('Param Key $paramKey');
       if (_resource.status == PsStatus.SUCCESS) {
@@ -224,7 +224,7 @@ class ChatHistoryRepository extends PsRepository {
         await chatHistoryMapDao.insertAll(primaryKey, chatHistoryMapList);
 
         // Insert ChatHistory
-        await _chatHistoryDao.insertAll(primaryKey, _resource.data!);
+        await _chatHistoryDao!.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
         // Delete and Insert Map Dao
@@ -235,7 +235,7 @@ class ChatHistoryRepository extends PsRepository {
       // Load updated Data from Db and Send to UI
       sinkchatHistoryListStream(
           chatHistoryListStream,
-          await _chatHistoryDao.getAllByMap(primaryKey, mapKey, paramKey,
+          await _chatHistoryDao!.getAllByMap(primaryKey, mapKey, paramKey,
               chatHistoryMapDao, ChatHistoryMap()));
     }
   }
@@ -253,12 +253,12 @@ class ChatHistoryRepository extends PsRepository {
     // Load from Db and Send to UI
     sinkchatHistoryListStream(
         chatHistoryListStream,
-        await _chatHistoryDao.getAllByMap(
+        await _chatHistoryDao!.getAllByMap(
             primaryKey, mapKey, paramKey, chatHistoryMapDao, ChatHistoryMap(),
             status: status));
     if (isConnectedToInternet) {
       final PsResource<List<ChatHistory>> _resource =
-          await _psApiService.getChatHistoryList(holder.toMap());
+          await _psApiService!.getChatHistoryList(holder.toMap());
 
       if (_resource.status == PsStatus.SUCCESS) {
         // Create Map List
@@ -283,11 +283,11 @@ class ChatHistoryRepository extends PsRepository {
         await chatHistoryMapDao.insertAll(primaryKey, chatHistoryMapList);
 
         // Insert ChatHistory
-        await _chatHistoryDao.insertAll(primaryKey, _resource.data!);
+        await _chatHistoryDao!.insertAll(primaryKey, _resource.data!);
       }
       sinkchatHistoryListStream(
           chatHistoryListStream,
-          await _chatHistoryDao.getAllByMap(primaryKey, mapKey, paramKey,
+          await _chatHistoryDao!.getAllByMap(primaryKey, mapKey, paramKey,
               chatHistoryMapDao, ChatHistoryMap()));
     }
   }
@@ -296,7 +296,7 @@ class ChatHistoryRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ChatHistory> _resource =
-        await _psApiService.syncChatHistory(jsonMap);
+        await _psApiService!.syncChatHistory(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -330,14 +330,14 @@ class ChatHistoryRepository extends PsRepository {
       {bool isLoadFromServer = true}) async {
     final String paramKey = holder.getParamKey();
     sinkchatHistoryListStream(
-        chatHistoryListStream, await _chatHistoryDao.getAll(status: status));
+        chatHistoryListStream, await _chatHistoryDao!.getAll(status: status));
     final PsResource<ChatHistory> _resource =
-        await _psApiService.getChatHistory(holder.toMap());
+        await _psApiService!.getChatHistory(holder.toMap());
     if (_resource.status == PsStatus.SUCCESS) {
       // await _chatHistoryDao.deleteAll();
       final Finder resetUnreadFinder =
           Finder(filter: Filter.equals('id', _resource.data!.id));
-      await _chatHistoryDao.update(_resource.data!, finder: resetUnreadFinder);
+      await _chatHistoryDao!.update(_resource.data!, finder: resetUnreadFinder);
 
       // sinkchatHistoryListStream(chatHistoryListStream, await _chatHistoryDao.getAll());
 
@@ -345,12 +345,12 @@ class ChatHistoryRepository extends PsRepository {
     } else {
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
       // Delete and Insert Map Dao
-      await _chatHistoryDao
+      await _chatHistoryDao!
           .deleteWithFinder(Finder(filter: Filter.equals(mapKey, paramKey)));
       }
     }
 
-    final dynamic subscription = await _chatHistoryDao.getAllWithSubscription(
+    final dynamic subscription = await _chatHistoryDao!.getAllWithSubscription(
         status: PsStatus.SUCCESS,
         onDataUpdated: (List<ChatHistory> message) {
           if (status != null && status != PsStatus.NOACTION) {
@@ -372,7 +372,7 @@ class ChatHistoryRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ChatHistory> _resource =
-        await _psApiService.getChatHistory(holder.toMap());
+        await _psApiService!.getChatHistory(holder.toMap());
 
     if (_resource.status == PsStatus.SUCCESS) {
       sinkChatHistoryStream(chatHistoryStream, _resource);
@@ -393,16 +393,16 @@ class ChatHistoryRepository extends PsRepository {
       {bool isLoadFromServer = true}) async {
     sinkResetUnreadCountStream(
         resetUnreadCountStream,
-        await _chatHistoryDao.getAll(
+        await _chatHistoryDao!.getAll(
           status: status,
         ));
     final PsResource<ChatHistory> _resource =
-        await _psApiService.resetUnreadMessageCount(jsonMap);
+        await _psApiService!.resetUnreadMessageCount(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       final Finder resetUnreadFinder =
           Finder(filter: Filter.equals('id', _resource.data!.id));
       //require to know message count once
-      await _chatHistoryDao.update(_resource.data!, finder: resetUnreadFinder);
+      await _chatHistoryDao!.update(_resource.data!, finder: resetUnreadFinder);
       // return _chatHistoryDao.getAll();
 
     } else {
@@ -420,7 +420,7 @@ class ChatHistoryRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ChatHistory> _resource =
-        await _psApiService.acceptedOffer(jsonMap, loginUserId);
+        await _psApiService!.acceptedOffer(jsonMap, loginUserId);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -438,7 +438,7 @@ class ChatHistoryRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ChatHistory> _resource =
-        await _psApiService.rejectedOffer(jsonMap, loginUserId);
+        await _psApiService!.rejectedOffer(jsonMap, loginUserId);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -458,15 +458,15 @@ class ChatHistoryRepository extends PsRepository {
       {bool isLoadFromServer = true}) async {
     sinkChatHistoryStream(
         chatHistoryStream,
-        await _chatHistoryDao.getOne(
+        await _chatHistoryDao!.getOne(
           status: status,
         ));
     final PsResource<ChatHistory> _resource =
-        await _psApiService.makeMarkAsSold(jsonMap, loginUserId);
+        await _psApiService!.makeMarkAsSold(jsonMap, loginUserId);
     if (_resource.status == PsStatus.SUCCESS) {
       // await _chatHistoryDao.deleteAll();
-      await _chatHistoryDao.insert(primaryKey, _resource.data!);
-      sinkChatHistoryStream(chatHistoryStream, await _chatHistoryDao.getOne());
+      await _chatHistoryDao!.insert(primaryKey, _resource.data!);
+      sinkChatHistoryStream(chatHistoryStream, await _chatHistoryDao!.getOne());
 
       // return _resource;
     } else {

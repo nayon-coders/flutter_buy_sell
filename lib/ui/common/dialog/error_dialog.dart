@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class ErrorDialog extends StatefulWidget {
   const ErrorDialog({this.message});
-  final String message;
+  final String? message;
   @override
   _ErrorDialogState createState() => _ErrorDialogState();
 }
@@ -19,8 +19,8 @@ class _ErrorDialogState extends State<ErrorDialog> {
 
 class _NewDialog extends StatelessWidget {
   const _NewDialog({
-    Key key,
-    @required this.widget,
+    Key? key,
+    required this.widget,
   }) : super(key: key);
 
   final ErrorDialog widget;
@@ -57,7 +57,7 @@ class _NewDialog extends StatelessWidget {
                         textAlign: TextAlign.start,
                         style: Theme.of(context)
                             .textTheme
-                            .subtitle1
+                            .subtitle1!
                             .copyWith(color: PsColors.white)),
                   ],
                 )),
@@ -71,7 +71,7 @@ class _NewDialog extends StatelessWidget {
                   top: PsDimens.space8,
                   bottom: PsDimens.space8),
               child: Text(
-                widget.message,
+                widget.message!,
                 style: Theme.of(context).textTheme.button,
               ),
             ),
@@ -93,7 +93,7 @@ class _NewDialog extends StatelessWidget {
                 Utils.getString(context, 'dialog__ok'),
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: PsColors.mainColor),
               ),
             )

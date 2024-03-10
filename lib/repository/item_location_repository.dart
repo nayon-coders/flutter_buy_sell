@@ -18,19 +18,19 @@ class ItemLocationRepository extends PsRepository {
   }
 
   String primaryKey = 'id';
-  PsApiService _psApiService;
-  ItemLocationDao _itemLocationDao;
+  PsApiService? _psApiService;
+  ItemLocationDao? _itemLocationDao;
 
   Future<dynamic> insert(ItemLocation itemLocation) async {
-    return _itemLocationDao.insert(primaryKey, itemLocation);
+    return _itemLocationDao!.insert(primaryKey, itemLocation);
   }
 
   Future<dynamic> update(ItemLocation itemLocation) async {
-    return _itemLocationDao.update(itemLocation);
+    return _itemLocationDao!.update(itemLocation);
   }
 
   Future<dynamic> delete(ItemLocation itemLocation) async {
-    return _itemLocationDao.delete(itemLocation);
+    return _itemLocationDao!.delete(itemLocation);
   }
 
   Future<dynamic> getAllItemLocationList(
@@ -43,22 +43,22 @@ class ItemLocationRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     itemLocationListStream.sink
-        .add(await _itemLocationDao.getAll(status: status));
+        .add(await _itemLocationDao!.getAll(status: status));
 
     if (isConnectedToInternet) {
       final PsResource<List<ItemLocation>> _resource =
-          await _psApiService.getItemLocationList(jsonMap,loginUserId,limit, offset);
+          await _psApiService!.getItemLocationList(jsonMap,loginUserId,limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _itemLocationDao.deleteAll();
-        await _itemLocationDao.insertAll(primaryKey, _resource.data!);
-        itemLocationListStream.sink.add(await _itemLocationDao.getAll());
+        await _itemLocationDao!.deleteAll();
+        await _itemLocationDao!.insertAll(primaryKey, _resource.data!);
+        itemLocationListStream.sink.add(await _itemLocationDao!.getAll());
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
-          await _itemLocationDao.deleteAll();
+          await _itemLocationDao!.deleteAll();
         }
       }
-      itemLocationListStream.sink.add(await _itemLocationDao.getAll(
+      itemLocationListStream.sink.add(await _itemLocationDao!.getAll(
             status: _resource.status, message: _resource.message!));
     }
   }
@@ -73,16 +73,16 @@ class ItemLocationRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     itemLocationListStream.sink
-        .add(await _itemLocationDao.getAll(status: status));
+        .add(await _itemLocationDao!.getAll(status: status));
 
     if (isConnectedToInternet) {
       final PsResource<List<ItemLocation>> _resource =
-          await _psApiService.getItemLocationList(jsonMap, loginUserId,limit, offset);
+          await _psApiService!.getItemLocationList(jsonMap, loginUserId,limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _itemLocationDao.insertAll(primaryKey, _resource.data!);
+        await _itemLocationDao!.insertAll(primaryKey, _resource.data!);
       }
-      itemLocationListStream.sink.add(await _itemLocationDao.getAll());
+      itemLocationListStream.sink.add(await _itemLocationDao!.getAll());
     }
   }
 }

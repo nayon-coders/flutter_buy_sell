@@ -27,15 +27,15 @@ class RateMyAppDialog extends StatelessWidget {
   /// Creates a new Rate my app dialog.
   const RateMyAppDialog(
     this.rateMyApp, {
-    @required this.title,
-    @required this.message,
-    @required this.contentBuilder,
+    required this.title,
+    required this.message,
+    required this.contentBuilder,
     this.actionsBuilder,
-    @required this.rateButton,
-    @required this.noButton,
-    @required this.laterButton,
+    required this.rateButton,
+    required this.noButton,
+    required this.laterButton,
     this.listener,
-    @required this.dialogStyle,
+    required this.dialogStyle,
   })  : assert(title != null),
         assert(message != null),
         assert(rateButton != null),
@@ -56,7 +56,7 @@ class RateMyAppDialog extends StatelessWidget {
   final DialogContentBuilder contentBuilder;
 
   /// The actions builder.
-  final DialogActionsBuilder actionsBuilder;
+  final DialogActionsBuilder? actionsBuilder;
 
   /// The dialog's rate button.
   final String rateButton;
@@ -68,7 +68,7 @@ class RateMyAppDialog extends StatelessWidget {
   final String laterButton;
 
   /// The buttons listener.
-  final RateMyAppDialogButtonClickListener listener;
+  final RateMyAppDialogButtonClickListener? listener;
 
   /// The dialog's style.
   final DialogStyle dialogStyle;
@@ -107,19 +107,19 @@ class RateMyAppDialog extends StatelessWidget {
           rateMyApp,
           text: rateButton,
           validator: () =>
-              listener == null || listener(RateMyAppDialogButton.rate),
+              listener == null || listener!(RateMyAppDialogButton.rate),
         ),
         RateMyAppLaterButton(
           rateMyApp,
           text: laterButton,
           validator: () =>
-              listener == null || listener(RateMyAppDialogButton.later),
+              listener == null || listener!(RateMyAppDialogButton.later),
         ),
         RateMyAppNoButton(
           rateMyApp,
           text: noButton,
           validator: () =>
-              listener == null || listener(RateMyAppDialogButton.no),
+              listener == null || listener!(RateMyAppDialogButton.no),
         ),
       ];
 }
@@ -129,12 +129,12 @@ class RateMyAppStarDialog extends StatefulWidget {
   /// Creates a new Rate my app star dialog.
   const RateMyAppStarDialog(
     this.rateMyApp, {
-    @required this.title,
-    @required this.message,
-    @required this.contentBuilder,
+    required this.title,
+    required this.message,
+    required this.contentBuilder,
     this.actionsBuilder,
-    @required this.dialogStyle,
-    @required this.starRatingOptions,
+    required this.dialogStyle,
+    required this.starRatingOptions,
   })  : assert(title != null),
         assert(message != null),
         assert(dialogStyle != null),
@@ -153,7 +153,7 @@ class RateMyAppStarDialog extends StatefulWidget {
   final DialogContentBuilder contentBuilder;
 
   /// The rating changed callback.
-  final StarDialogActionsBuilder actionsBuilder;
+  final StarDialogActionsBuilder? actionsBuilder;
 
   /// The dialog's style.
   final DialogStyle dialogStyle;
@@ -185,7 +185,7 @@ class RateMyAppStarDialog extends StatefulWidget {
 /// The Rate my app star dialog state.
 class RateMyAppStarDialogState extends State<RateMyAppStarDialog> {
   /// The current rating.
-  double _currentRating;
+  double? _currentRating;
 
   @override
   void initState() {
@@ -218,7 +218,7 @@ class RateMyAppStarDialogState extends State<RateMyAppStarDialog> {
             allowHalfRating: widget.starRatingOptions.allowHalfRating,
             halfFilledIconData: widget.starRatingOptions.halfFilledIconData,
             filledIconData: widget.starRatingOptions.filledIconData,
-            rating: _currentRating == null ? 0.0 : _currentRating.toDouble(),
+            rating: _currentRating == null ? 0.0 : _currentRating!.toDouble(),
           ),
         ],
       ),
@@ -237,7 +237,7 @@ class RateMyAppStarDialogState extends State<RateMyAppStarDialog> {
       contentPadding: widget.dialogStyle.contentPadding,
       shape: widget.dialogStyle.dialogShape,
       actions: (widget.actionsBuilder ?? widget._defaultOnRatingChanged)(
-          context, _currentRating),
+          context, _currentRating!),
     );
   }
 }
@@ -247,7 +247,7 @@ abstract class _RateMyAppDialogButton extends StatelessWidget {
   /// Creates a new Rate my app button widget instance.
   const _RateMyAppDialogButton(
     this.rateMyApp, {
-    @required this.text,
+    required this.text,
     this.validator = _validatorTrue,
     this.callback,
   }) : assert(text != null);
@@ -262,7 +262,7 @@ abstract class _RateMyAppDialogButton extends StatelessWidget {
   final Validator validator;
 
   /// Called when the action has been executed.
-  final VoidCallback callback;
+  final VoidCallback? callback;
 
   @override
   Widget build(BuildContext context) => TextButton(
@@ -274,7 +274,7 @@ abstract class _RateMyAppDialogButton extends StatelessWidget {
 
           await onButtonClicked(context);
           if (callback != null) {
-            callback();
+            callback!();
           }
         },
       );
@@ -291,9 +291,9 @@ class RateMyAppRateButton extends _RateMyAppDialogButton {
   /// Creates a new Rate my app "rate" button widget instance.
   const RateMyAppRateButton(
     RateMyApp rateMyApp, {
-    @required String text,
-    Validator validator,
-    VoidCallback callback,
+    required String text,
+    Validator? validator,
+    VoidCallback? callback,
   }) : super(
           rateMyApp,
           text: text,
@@ -314,9 +314,9 @@ class RateMyAppLaterButton extends _RateMyAppDialogButton {
   /// Creates a new Rate my app "later" button widget instance.
   const RateMyAppLaterButton(
     RateMyApp rateMyApp, {
-    @required String text,
+    required String text,
     Validator validator,
-    VoidCallback callback,
+    VoidCallback? callback,
   }) : super(
           rateMyApp,
           text: text,
@@ -336,9 +336,9 @@ class RateMyAppNoButton extends _RateMyAppDialogButton {
   /// Creates a new Rate my app "no" button widget instance.
   const RateMyAppNoButton(
     RateMyApp rateMyApp, {
-    @required String text,
-    Validator validator,
-    VoidCallback callback,
+    required String text,
+    Validator? validator,
+    VoidCallback? callback,
   }) : super(
           rateMyApp,
           text: text,

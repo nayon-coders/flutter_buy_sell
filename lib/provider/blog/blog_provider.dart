@@ -12,7 +12,7 @@ class BlogProvider extends PsProvider {
     if (limit != 0) {
       super.limit = limit;
     }
-    _repo = repo!;
+    _repo = repo;
 
     print('Blog Provider: $hashCode');
 
@@ -20,8 +20,7 @@ class BlogProvider extends PsProvider {
       isConnectedToInternet = onValue;
     });
     blogListStream = StreamController<PsResource<List<Blog>>>.broadcast();
-    subscription =
-        blogListStream.stream.listen((PsResource<List<Blog>> resource) {
+    subscription = blogListStream!.stream.listen((PsResource<List<Blog>> resource) {
       updateOffset(resource.data!.length);
 
       _blogList = resource;
@@ -37,17 +36,17 @@ class BlogProvider extends PsProvider {
     });
   }
 
-  BlogRepository _repo;
+  BlogRepository? _repo;
 
   PsResource<List<Blog>> _blogList =
       PsResource<List<Blog>>(PsStatus.NOACTION, '', <Blog>[]);
 
   PsResource<List<Blog>> get blogList => _blogList;
-  StreamSubscription<PsResource<List<Blog>>> subscription;
-  StreamController<PsResource<List<Blog>>> blogListStream;
+  StreamSubscription<PsResource<List<Blog>>>? subscription;
+  StreamController<PsResource<List<Blog>>>? blogListStream;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Blog Provider Dispose: $hashCode');
     super.dispose();
@@ -57,7 +56,7 @@ class BlogProvider extends PsProvider {
     isLoading = true;
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getAllBlogList(blogListStream, isConnectedToInternet, limit,
+    await _repo!.getAllBlogList(blogListStream!, isConnectedToInternet, limit,
         offset, PsStatus.PROGRESS_LOADING);
   }
 
@@ -66,7 +65,7 @@ class BlogProvider extends PsProvider {
 
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
-      await _repo.getNextPageBlogList(blogListStream, isConnectedToInternet,
+      await _repo!.getNextPageBlogList(blogListStream!, isConnectedToInternet,
           limit, offset, PsStatus.PROGRESS_LOADING);
     }
   }
@@ -77,7 +76,7 @@ class BlogProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getAllBlogList(blogListStream, isConnectedToInternet, limit,
+    await _repo!.getAllBlogList(blogListStream!, isConnectedToInternet, limit,
         offset, PsStatus.PROGRESS_LOADING);
 
     isLoading = false;

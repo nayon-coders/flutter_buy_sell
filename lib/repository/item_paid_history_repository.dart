@@ -11,7 +11,7 @@ class ItemPaidHistoryRepository extends PsRepository {
     _psApiService = psApiService;
   }
   String primaryKey = 'id';
-  PsApiService _psApiService;
+  PsApiService? _psApiService;
 
   Future<PsResource<ItemPaidHistory>> postItemPaidHistory(
       Map<dynamic, dynamic> jsonMap,
@@ -19,7 +19,7 @@ class ItemPaidHistoryRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ItemPaidHistory> _resource =
-        await _psApiService.postItemPaidHistory(jsonMap);
+        await _psApiService!.postItemPaidHistory(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {

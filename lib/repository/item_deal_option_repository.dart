@@ -16,20 +16,20 @@ class ItemDealOptionRepository extends PsRepository {
     _itemDealOptionDao = itemDealOptionDao;
   }
 
-  PsApiService _psApiService;
-  ItemDealOptionDao _itemDealOptionDao;
+  PsApiService? _psApiService;
+  ItemDealOptionDao? _itemDealOptionDao;
   final String _primaryKey = 'id';
 
   Future<dynamic> insert(DealOption dealOption) async {
-    return _itemDealOptionDao.insert(_primaryKey, dealOption);
+    return _itemDealOptionDao!.insert(_primaryKey, dealOption);
   }
 
   Future<dynamic> update(DealOption dealOption) async {
-    return _itemDealOptionDao.update(dealOption);
+    return _itemDealOptionDao!.update(dealOption);
   }
 
   Future<dynamic> delete(DealOption dealOption) async {
-    return _itemDealOptionDao.delete(dealOption);
+    return _itemDealOptionDao!.delete(dealOption);
   }
 
   Future<dynamic> getItemDealOptionList(
@@ -41,21 +41,21 @@ class ItemDealOptionRepository extends PsRepository {
       {bool isLoadFromServer = true}) async {
 
     itemDealOptionListStream.sink
-        .add(await _itemDealOptionDao.getAll(status: status));
+        .add(await _itemDealOptionDao!.getAll(status: status));
 
     final PsResource<List<DealOption>> _resource =
-        await _psApiService.getItemDealOptionList(limit, offset);
+        await _psApiService!.getItemDealOptionList(limit, offset);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      await _itemDealOptionDao.deleteAll();
-      await _itemDealOptionDao.insertAll(_primaryKey, _resource.data!);
+      await _itemDealOptionDao!.deleteAll();
+      await _itemDealOptionDao!.insertAll(_primaryKey, _resource.data!);
       
     }else{
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
-        await _itemDealOptionDao.deleteAll();
+        await _itemDealOptionDao!.deleteAll();
       }
     }
-    itemDealOptionListStream.sink.add(await _itemDealOptionDao.getAll());
+    itemDealOptionListStream.sink.add(await _itemDealOptionDao!.getAll());
   }
 
   Future<dynamic> getNextPageItemDealOptionList(
@@ -66,19 +66,19 @@ class ItemDealOptionRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     itemDealOptionListStream.sink
-        .add(await _itemDealOptionDao.getAll(status: status));
+        .add(await _itemDealOptionDao!.getAll(status: status));
 
     final PsResource<List<DealOption>> _resource =
-        await _psApiService.getItemDealOptionList(limit, offset);
+        await _psApiService!.getItemDealOptionList(limit, offset);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      _itemDealOptionDao
+      _itemDealOptionDao!
           .insertAll(_primaryKey, _resource.data!)
           .then((dynamic data) async {
-        itemDealOptionListStream.sink.add(await _itemDealOptionDao.getAll());
+        itemDealOptionListStream.sink.add(await _itemDealOptionDao!.getAll());
       });
     } else {
-      itemDealOptionListStream.sink.add(await _itemDealOptionDao.getAll());
+      itemDealOptionListStream.sink.add(await _itemDealOptionDao!.getAll());
     }
   }
 }

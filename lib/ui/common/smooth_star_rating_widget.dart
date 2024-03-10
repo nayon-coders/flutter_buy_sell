@@ -199,7 +199,7 @@ class _SmoothStarRatingState extends State<SmoothStarRating> {
             : GestureDetector(
                 onTapDown: (TapDownDetails detail) {
                   final RenderObject? box = context?.findRenderObject();
-                  final Offset _pos = box!.globalToLocal!(detail.globalPosition)!;
+                  final Offset _pos = box.globalToLocal(detail.globalPosition)!;
                   final double i = (_pos.dx - widget.spacing) / widget.size;
                   double newRating =
                       widget.allowHalfRating ? i : i.round().toDouble();

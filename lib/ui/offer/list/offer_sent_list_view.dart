@@ -60,6 +60,7 @@ class _OfferSentListViewState extends State<OfferSentListView>
   @override
   Widget build(BuildContext context) {
     psValueHolder = Provider.of<PsValueHolder>(context);
+    ///TODO fix problem
     holder = OfferParameterHolder().getOfferSentList();
     holder!.getOfferSentList().userId = psValueHolder!.loginUserId;
 

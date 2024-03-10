@@ -113,7 +113,7 @@ class _RatingListViewState extends State<RatingListView>
             },
             onProviderReady2: (UserProvider userProvider) {
               userProvider.userParameterHolder.loginUserId =
-                  userProvider.psValueHolder.loginUserId;
+                  userProvider.psValueHolder!.loginUserId;
               userProvider.userParameterHolder.id = widget.itemUserId;
               userProvider.getOtherUserData(
                   userProvider.userParameterHolder.toMap(),

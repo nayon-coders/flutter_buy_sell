@@ -99,9 +99,9 @@ class ItemDealOptionViewState extends State<ItemDealOptionView>
                 child: ListView.builder(
                   physics: const AlwaysScrollableScrollPhysics(),
                     controller: _scrollController,
-                    itemCount: provider.itemDealOptionList.data!.length,
+                    itemCount: provider.itemDealOptionList!.data!.length,
                     itemBuilder: (BuildContext context, int index) {
-                      if (provider.itemDealOptionList.status ==
+                      if (provider.itemDealOptionList!.status ==
                           PsStatus.BLOCK_LOADING) {
                         return Shimmer.fromColors(
                             baseColor: Colors.grey[300],
@@ -120,18 +120,18 @@ class ItemDealOptionViewState extends State<ItemDealOptionView>
                             ]));
                       } else {
                         final int count =
-                            provider.itemDealOptionList.data!.length;
+                            provider.itemDealOptionList!.data!.length;
                         animationController!.forward();
                         return FadeTransition(
                             opacity: animation!,
                             child: ItemDealOptionListViewItem(
                               dealOption:
-                                  provider.itemDealOptionList.data![index],
+                                  provider.itemDealOptionList!.data![index],
                               onTap: () {
                                 Navigator.pop(context,
-                                    provider.itemDealOptionList.data![index]);
+                                    provider.itemDealOptionList!.data![index]);
                                 print(provider
-                                    .itemDealOptionList.data![index].name);
+                                    .itemDealOptionList!.data![index].name);
                                 // if (index == 0) {
                                 //   Navigator.pushNamed(
                                 //     context,
@@ -155,7 +155,7 @@ class ItemDealOptionViewState extends State<ItemDealOptionView>
                   return provider.resetItemDealOptionList();
                 },
               )),
-              PSProgressIndicator(provider.itemDealOptionList.status)
+              PSProgressIndicator(provider.itemDealOptionList!.status)
             ]);
           }),
     );

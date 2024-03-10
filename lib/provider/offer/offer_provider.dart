@@ -20,7 +20,7 @@ class OfferListProvider extends PsProvider {
     offerListStream = StreamController<PsResource<List<Offer>>>.broadcast();
 
     subscription =
-        offerListStream.stream.listen((PsResource<List<Offer>> resource) {
+        offerListStream!.stream.listen((PsResource<List<Offer>> resource) {
       updateOffset(resource.data!.length);
 
       _offerList = resource;
@@ -36,17 +36,17 @@ class OfferListProvider extends PsProvider {
     });
   }
 
-  OfferRepository _repo;
+  OfferRepository? _repo;
   PsResource<List<Offer>> _offerList =
       PsResource<List<Offer>>(PsStatus.NOACTION, '', <Offer>[]);
 
   PsResource<List<Offer>> get offerList => _offerList;
-  StreamSubscription<PsResource<List<Offer>>> subscription;
-  StreamController<PsResource<List<Offer>>> offerListStream;
+  StreamSubscription<PsResource<List<Offer>>>? subscription;
+  StreamController<PsResource<List<Offer>>>? offerListStream;
   dynamic daoSubscription;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     if (daoSubscription != null) {
       daoSubscription.cancel();
     }
@@ -60,7 +60,7 @@ class OfferListProvider extends PsProvider {
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
     // daoSubscription =
-    await _repo.getOfferList(offerListStream, isConnectedToInternet, limit,
+    await _repo!.getOfferList(offerListStream!, isConnectedToInternet, limit,
         offset, PsStatus.PROGRESS_LOADING, holder);
   }
 
@@ -70,7 +70,7 @@ class OfferListProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-      await _repo.getNextPageOfferList(offerListStream, isConnectedToInternet,
+      await _repo!.getNextPageOfferList(offerListStream!, isConnectedToInternet,
           limit, offset, PsStatus.PROGRESS_LOADING, holder);
     }
   }
@@ -81,7 +81,7 @@ class OfferListProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getOfferList(offerListStream, isConnectedToInternet, limit,
+    await _repo!.getOfferList(offerListStream!, isConnectedToInternet, limit,
         offset, PsStatus.PROGRESS_LOADING, holder);
 
     isLoading = false;

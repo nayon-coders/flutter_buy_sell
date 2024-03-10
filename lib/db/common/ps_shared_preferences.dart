@@ -8,15 +8,15 @@ class PsSharedPreferences {
   PsSharedPreferences._() {
     Utils.psPrint('init PsSharePerference $hashCode');
     futureShared = SharedPreferences.getInstance();
-    futureShared.then((SharedPreferences shared) {
+    futureShared!.then((SharedPreferences shared) {
       this.shared = shared;
       //loadUserId('Admin');
       loadValueHolder();
     });
   }
 
-  Future<SharedPreferences> futureShared;
-  SharedPreferences shared;
+  Future<SharedPreferences>? futureShared;
+  SharedPreferences shared = SharedPreferences.getInstance() as SharedPreferences;
 
 // Singleton instance
   static final PsSharedPreferences _singleton = PsSharedPreferences._();

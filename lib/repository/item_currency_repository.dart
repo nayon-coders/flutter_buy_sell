@@ -16,20 +16,20 @@ class ItemCurrencyRepository extends PsRepository {
     _itemConditionDao = itemCurrencyDao;
   }
 
-  PsApiService _psApiService;
-  ItemCurrencyDao _itemConditionDao;
+  PsApiService? _psApiService;
+  ItemCurrencyDao? _itemConditionDao;
   final String _primaryKey = 'id';
 
   Future<dynamic> insert(ItemCurrency itemCurrency) async {
-    return _itemConditionDao.insert(_primaryKey, itemCurrency);
+    return _itemConditionDao!.insert(_primaryKey, itemCurrency);
   }
 
   Future<dynamic> update(ItemCurrency itemCurrency) async {
-    return _itemConditionDao.update(itemCurrency);
+    return _itemConditionDao!.update(itemCurrency);
   }
 
   Future<dynamic> delete(ItemCurrency itemCurrency) async {
-    return _itemConditionDao.delete(itemCurrency);
+    return _itemConditionDao!.delete(itemCurrency);
   }
 
   Future<dynamic> getItemCurrencyList(
@@ -41,21 +41,21 @@ class ItemCurrencyRepository extends PsRepository {
       {bool isLoadFromServer = true}) async {
 
     itemConditionListStream.sink
-        .add(await _itemConditionDao.getAll(status: status));
+        .add(await _itemConditionDao!.getAll(status: status));
 
     final PsResource<List<ItemCurrency>> _resource =
-        await _psApiService.getItemCurrencyList(limit, offset);
+        await _psApiService!.getItemCurrencyList(limit, offset);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      await _itemConditionDao.deleteAll();
-      await _itemConditionDao.insertAll(_primaryKey, _resource.data!);
+      await _itemConditionDao!.deleteAll();
+      await _itemConditionDao!.insertAll(_primaryKey, _resource.data!);
       
     }else{
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
-        await _itemConditionDao.deleteAll();
+        await _itemConditionDao!.deleteAll();
       }
     }
-    itemConditionListStream.sink.add(await _itemConditionDao.getAll());
+    itemConditionListStream.sink.add(await _itemConditionDao!.getAll());
   }
 
   Future<dynamic> getNextPageItemCurrencyList(
@@ -66,19 +66,19 @@ class ItemCurrencyRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     itemConditionListStream.sink
-        .add(await _itemConditionDao.getAll(status: status));
+        .add(await _itemConditionDao!.getAll(status: status));
 
     final PsResource<List<ItemCurrency>> _resource =
-        await _psApiService.getItemCurrencyList(limit, offset);
+        await _psApiService!.getItemCurrencyList(limit, offset);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      _itemConditionDao
+      _itemConditionDao!
           .insertAll(_primaryKey, _resource.data!)
           .then((dynamic data) async {
-        itemConditionListStream.sink.add(await _itemConditionDao.getAll());
+        itemConditionListStream.sink.add(await _itemConditionDao!.getAll());
       });
     } else {
-      itemConditionListStream.sink.add(await _itemConditionDao.getAll());
+      itemConditionListStream.sink.add(await _itemConditionDao!.getAll());
     }
   }
 }

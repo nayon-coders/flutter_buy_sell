@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class VersionUpdateDialog extends StatefulWidget {
   const VersionUpdateDialog(
-      {Key key,
+      {Key? key,
       this.title,
       this.description,
       this.leftButtonText,
@@ -15,9 +15,9 @@ class VersionUpdateDialog extends StatefulWidget {
       : super(key: key);
   @override
   _VersionUpdateDialogState createState() => _VersionUpdateDialogState();
-  final String title, description, leftButtonText, rightButtonText;
-  final Function onCancelTap;
-  final Function onUpdateTap;
+  final String? title, description, leftButtonText, rightButtonText;
+  final Function? onCancelTap;
+  final Function? onUpdateTap;
 }
 
 class _VersionUpdateDialogState extends State<VersionUpdateDialog> {
@@ -29,8 +29,8 @@ class _VersionUpdateDialogState extends State<VersionUpdateDialog> {
 
 class NewDialog extends StatelessWidget {
   const NewDialog({
-    Key key,
-    @required this.widget,
+    Key? key,
+    required this.widget,
   }) : super(key: key);
 
   final VersionUpdateDialog widget;
@@ -59,7 +59,7 @@ class NewDialog extends StatelessWidget {
                         topLeft: Radius.circular(10),
                         topRight: Radius.circular(10),
                       ),
-                      border: Border.all(color: PsColors.mainColor, width: 5),
+                      border: Border.all(color: PsColors.mainColor!, width: 5),
                       color: PsColors.mainColor),
                   child: Row(
                     children: <Widget>[
@@ -89,7 +89,7 @@ class NewDialog extends StatelessWidget {
                 child: Row(
                   children: <Widget>[
                     Text(
-                      widget.title,
+                      widget.title!,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                   ],
@@ -101,7 +101,7 @@ class NewDialog extends StatelessWidget {
                     right: PsDimens.space16,
                     bottom: PsDimens.space8),
                 child: Text(
-                  widget.description,
+                  widget.description!,
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ),
@@ -117,10 +117,10 @@ class NewDialog extends StatelessWidget {
                   minWidth: double.infinity,
                   onPressed: () {
                     Navigator.pop(context);
-                    widget.onCancelTap();
+                    widget.onCancelTap!();
                   },
                   child: Text(
-                    widget.leftButtonText,
+                    widget.leftButtonText!,
                     style: Theme.of(context).textTheme.button,
                   ),
                 )),
@@ -134,13 +134,13 @@ class NewDialog extends StatelessWidget {
                   minWidth: double.infinity,
                   onPressed: () {
                     Navigator.of(context).pop();
-                    widget.onUpdateTap();
+                    widget.onUpdateTap!();
                   },
                   child: Text(
-                    widget.rightButtonText,
+                    widget.rightButtonText!,
                     style: Theme.of(context)
                         .textTheme
-                        .button
+                        .button!
                         .copyWith(color: PsColors.mainColor),
                   ),
                 )),

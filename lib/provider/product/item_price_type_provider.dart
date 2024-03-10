@@ -19,7 +19,7 @@ class ItemPriceTypeProvider extends PsProvider {
 
     itemPriceTypeListStream =
         StreamController<PsResource<List<ItemPriceType>>>.broadcast();
-    subscription = itemPriceTypeListStream.stream.listen((dynamic resource) {
+    subscription = itemPriceTypeListStream!.stream.listen((dynamic resource) {
       updateOffset(resource.data.length);
 
       _itemPriceTypeList = resource;
@@ -35,20 +35,20 @@ class ItemPriceTypeProvider extends PsProvider {
     });
   }
 
-  StreamController<PsResource<List<ItemPriceType>>> itemPriceTypeListStream;
-  ItemPriceTypeRepository _repo;
+  StreamController<PsResource<List<ItemPriceType>>>? itemPriceTypeListStream;
+  ItemPriceTypeRepository? _repo;
 
   PsResource<List<ItemPriceType>> _itemPriceTypeList =
       PsResource<List<ItemPriceType>>(PsStatus.NOACTION, '', <ItemPriceType>[]);
 
   PsResource<List<ItemPriceType>> get itemPriceTypeList => _itemPriceTypeList;
-  StreamSubscription<PsResource<List<ItemPriceType>>> subscription;
+  StreamSubscription<PsResource<List<ItemPriceType>>>? subscription;
 
   String categoryId = '';
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Item Price Type Provider Dispose: $hashCode');
     super.dispose();
@@ -57,7 +57,7 @@ class ItemPriceTypeProvider extends PsProvider {
   Future<dynamic> loadItemPriceTypeList() async {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getItemPriceTypeList(itemPriceTypeListStream,
+    await _repo!.getItemPriceTypeList(itemPriceTypeListStream!,
         isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
   }
 
@@ -66,7 +66,7 @@ class ItemPriceTypeProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-      await _repo.getNextPageItemPriceTypeList(itemPriceTypeListStream,
+      await _repo!.getNextPageItemPriceTypeList(itemPriceTypeListStream!,
           isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
     }
   }
@@ -78,8 +78,8 @@ class ItemPriceTypeProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getItemPriceTypeList(
-      itemPriceTypeListStream,
+    await _repo!.getItemPriceTypeList(
+      itemPriceTypeListStream!,
       isConnectedToInternet,
       limit,
       offset,

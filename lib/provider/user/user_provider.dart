@@ -45,7 +45,7 @@ class UserProvider extends PsProvider {
     isDispose = false;
     print('User Provider: $hashCode');
     userListStream = StreamController<PsResource<User>>.broadcast();
-    subscription = userListStream.stream.listen((PsResource<User> resource) {
+    subscription = userListStream!.stream.listen((PsResource<User> resource) {
       if (resource != null && resource.data != null) {
         _user = resource;
         holderUser = resource.data!;
@@ -62,11 +62,11 @@ class UserProvider extends PsProvider {
     });
   }
 
-  UserRepository _repo;
-  PsValueHolder psValueHolder;
-  User holderUser;
-  ShippingCountry selectedCountry;
-  ShippingCity selectedCity;
+  UserRepository? _repo;
+  PsValueHolder? psValueHolder;
+  User? holderUser;
+  ShippingCountry? selectedCountry;
+  ShippingCity? selectedCity;
   bool isCheckBoxSelect = true;
   UserParameterHolder userParameterHolder =
       UserParameterHolder().getOtherUserData();
@@ -79,13 +79,13 @@ class UserProvider extends PsProvider {
       PsResource<ApiStatus>(PsStatus.NOACTION, '', null);
   PsResource<ApiStatus> get apiStatus => _apiStatus;
 
-  StreamSubscription<PsResource<User>> subscription;
-  StreamController<PsResource<User>> userListStream;
+  StreamSubscription<PsResource<User>>? subscription;
+  StreamController<PsResource<User>>?userListStream;
   final fb_auth.FirebaseAuth _firebaseAuth = fb_auth.FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('User Provider Dispose: $hashCode');
     super.dispose();
@@ -98,7 +98,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _user = await _repo.postUserRegister(
+    _user = await _repo!.postUserRegister(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _user;
@@ -111,7 +111,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _user = await _repo.postUserEmailVerify(
+    _user = await _repo!.postUserEmailVerify(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _user;
@@ -126,7 +126,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _user = await _repo.postImageUpload(userId, platformName, imageFile,
+    _user = await _repo!.postImageUpload(userId, platformName, imageFile,
         isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _user;
@@ -139,7 +139,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _user = await _repo.postUserLogin(
+    _user = await _repo!.postUserLogin(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _user;
@@ -152,7 +152,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _apiStatus = await _repo.postForgotPassword(
+    _apiStatus = await _repo!.postForgotPassword(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _apiStatus;
@@ -165,7 +165,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _apiStatus = await _repo.postChangePassword(
+    _apiStatus = await _repo!.postChangePassword(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _apiStatus;
@@ -178,7 +178,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _holderUser = await _repo.postProfileUpdate(
+    _holderUser = await _repo!.postProfileUpdate(
         jsonMap, isConnectedToInternet, PsStatus.SUCCESS);
     if (_holderUser.status == PsStatus.SUCCESS) {
       _user = _holderUser;
@@ -195,7 +195,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _user = await _repo.postPhoneLogin(
+    _user = await _repo!.postPhoneLogin(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _user;
@@ -208,7 +208,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _user = await _repo.postUserFollow(
+    _user = await _repo!.postUserFollow(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _user;
@@ -221,7 +221,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _user = await _repo.postFBLogin(
+    _user = await _repo!.postFBLogin(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _user;
@@ -234,7 +234,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _user = await _repo.postAppleLogin(
+    _user = await _repo!.postAppleLogin(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _user;
@@ -247,7 +247,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _user = await _repo.postGoogleLogin(
+    _user = await _repo!.postGoogleLogin(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _user;
@@ -260,7 +260,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _apiStatus = await _repo.postResendCode(
+    _apiStatus = await _repo!.postResendCode(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _apiStatus;
@@ -272,15 +272,15 @@ class UserProvider extends PsProvider {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    await _repo.getUser(userListStream, loginUserId, isConnectedToInternet,
+    await _repo!.getUser(userListStream!, loginUserId, isConnectedToInternet,
         PsStatus.PROGRESS_LOADING);
   }
 
   Future<dynamic> getUserFromDB(String loginUserId) async {
     isLoading = true;
 
-    await _repo.getUserFromDB(
-        loginUserId, userListStream, PsStatus.PROGRESS_LOADING);
+    await _repo!.getUserFromDB(
+        loginUserId, userListStream!, PsStatus.PROGRESS_LOADING);
   }
 
   Future<dynamic> getOtherUserData(
@@ -289,7 +289,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _user = await _repo.getOtherUserData(userListStream, jsonMap, otherUserId,
+    _user = await _repo!.getOtherUserData(userListStream!, jsonMap, otherUserId,
         isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _user;
@@ -302,7 +302,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _apiStatus = await _repo.userReportItem(
+    _apiStatus = await _repo!.userReportItem(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _apiStatus;
@@ -315,7 +315,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _apiStatus = await _repo.blockUser(
+    _apiStatus = await _repo!.blockUser(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _apiStatus;
@@ -328,7 +328,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _apiStatus = await _repo.postUnBlockUser(
+    _apiStatus = await _repo!.postUnBlockUser(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _apiStatus;
@@ -341,7 +341,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _apiStatus = await _repo.postDeleteUser(
+    _apiStatus = await _repo!.postDeleteUser(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _apiStatus;
@@ -543,7 +543,7 @@ class UserProvider extends PsProvider {
               userName: user.displayName,
               userEmail: email,
               profilePhotoUrl: user.photoURL,
-              deviceToken: psValueHolder.deviceToken);
+              deviceToken: psValueHolder!.deviceToken);
 
       final PsResource<User> _apiStatus =
           await postAppleLogin(appleLoginParameterHolder.toMap());
@@ -583,13 +583,13 @@ class UserProvider extends PsProvider {
 
           handleFirebaseAuthError(context, appleIdCredential.email!);
           // Fail to Login to Firebase, must return null;
-          return null;
+          return null!;
         }
         fb_auth.User? firebaseUser = authResult.user;
         if (scopes.contains(Scope.fullName)) {
           String displayName;
 
-          displayName = null;
+          displayName = null!;
 
           if (appleIdCredential.fullName?.givenName != null) {
             displayName = '${appleIdCredential.fullName!.givenName}';
@@ -628,7 +628,7 @@ class UserProvider extends PsProvider {
           message: 'Sign in aborted by user',
         );
     }
-    return null;
+    return null!;
   }
 
   ///
@@ -749,7 +749,7 @@ class UserProvider extends PsProvider {
       return user;
     } on Exception {
       print('not select google account');
-      return null;
+      return null!;
     }
   }
 
@@ -769,7 +769,7 @@ class UserProvider extends PsProvider {
             }
           }
         } else {
-          return null;
+          return null!;
         }
       }
       final GoogleLoginParameterHolder googleLoginParameterHolder =
@@ -778,7 +778,7 @@ class UserProvider extends PsProvider {
         userName: user.displayName,
         userEmail: email,
         profilePhotoUrl: user.photoURL,
-        deviceToken: psValueHolder.deviceToken,
+        deviceToken: psValueHolder!.deviceToken,
       );
 
       final PsResource<User> _apiStatus =
@@ -791,7 +791,7 @@ class UserProvider extends PsProvider {
 
       return _apiStatus;
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -932,10 +932,10 @@ class UserProvider extends PsProvider {
 
         handleFirebaseAuthError(context, profile['email']);
 
-        return null;
+        return null!;
       }
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -967,7 +967,7 @@ class UserProvider extends PsProvider {
         userName: user.displayName,
         userEmail: email,
         profilePhotoUrl: '',
-        deviceToken: psValueHolder.deviceToken,
+        deviceToken: psValueHolder!.deviceToken,
         profileImgId: facebookUser['id'],
       );
 
@@ -981,7 +981,7 @@ class UserProvider extends PsProvider {
 
       return _apiStatus;
     } else {
-      return null;
+      return null!;
     }
   }
 
@@ -1104,7 +1104,7 @@ class UserProvider extends PsProvider {
         UserLoginParameterHolder(
       userEmail: email,
       userPassword: password,
-      deviceToken: psValueHolder.deviceToken,
+      deviceToken: psValueHolder!.deviceToken,
     );
 
     final PsResource<User> _apiStatus =
@@ -1185,10 +1185,10 @@ class UserProvider extends PsProvider {
                     resourceUser.data!.userEmail!,
                     password);
 
-                psValueHolder.userIdToVerify = user.userId!;
-                psValueHolder.userNameToVerify = user.userName!;
-                psValueHolder.userEmailToVerify = user.userEmail!;
-                psValueHolder.userPasswordToVerify = user.userPassword!;
+                psValueHolder!.userIdToVerify = user.userId!;
+                psValueHolder!.userNameToVerify = user.userName!;
+                psValueHolder!.userEmailToVerify = user.userEmail!;
+                psValueHolder!.userPasswordToVerify = user.userPassword!;
 
                 final dynamic returnData = await Navigator.pushNamed(
                     context, RoutePaths.user_verify_email_container,
@@ -1200,11 +1200,11 @@ class UserProvider extends PsProvider {
                     psValueHolder =
                         Provider.of<PsValueHolder>(context, listen: false);
                   }
-                  psValueHolder.loginUserId = user.userId!;
-                  psValueHolder.userIdToVerify = '';
-                  psValueHolder.userNameToVerify = '';
-                  psValueHolder.userEmailToVerify = '';
-                  psValueHolder.userPasswordToVerify = '';
+                  psValueHolder!.loginUserId = user.userId!;
+                  psValueHolder!.userIdToVerify = '';
+                  psValueHolder!.userNameToVerify = '';
+                  psValueHolder!.userEmailToVerify = '';
+                  psValueHolder!.userPasswordToVerify = '';
                   print(user.userId);
 
                   Navigator.pop(context, resourceUser.data);
@@ -1314,7 +1314,7 @@ class UserProvider extends PsProvider {
       userEmail: email,
       userPassword: password,
       userPhone: '',
-      deviceToken: psValueHolder.deviceToken,
+      deviceToken: psValueHolder!.deviceToken,
     );
 
     final PsResource<User> _apiStatus =
@@ -1327,10 +1327,10 @@ class UserProvider extends PsProvider {
       await replaceVerifyUserData(_apiStatus.data!.userId!,
           _apiStatus.data!.userName!, _apiStatus.data!.userEmail!, password);
 
-      psValueHolder.userIdToVerify = user.userId!;
-      psValueHolder.userNameToVerify = user.userName!;
-      psValueHolder.userEmailToVerify = user.userEmail!;
-      psValueHolder.userPasswordToVerify = user.userPassword!;
+      psValueHolder!.userIdToVerify = user.userId!;
+      psValueHolder!.userNameToVerify = user.userName!;
+      psValueHolder!.userEmailToVerify = user.userEmail!;
+      psValueHolder!.userPasswordToVerify = user.userPassword!;
     }
 
     return _apiStatus;
@@ -1343,7 +1343,7 @@ class UserProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _apiStatus = await _repo.userLogout(
+    _apiStatus = await _repo!.userLogout(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _apiStatus;

@@ -14,7 +14,7 @@ class LanguageProvider extends PsProvider {
     isDispose = false;
   }
 
-  LanguageRepository _repo;
+  LanguageRepository? _repo;
 
   List<Language> _languageList = <Language>[];
   List<Language> get languageList => _languageList;
@@ -32,11 +32,11 @@ class LanguageProvider extends PsProvider {
 
   Future<dynamic> addLanguage(Language language) async {
     currentLanguage = language;
-    return await _repo.addLanguage(language);
+    return await _repo!.addLanguage(language);
   }
 
   Language getLanguage() {
-    currentLanguage = _repo.getLanguage();
+    currentLanguage = _repo!.getLanguage();
     return currentLanguage;
   }
 

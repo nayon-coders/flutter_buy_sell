@@ -22,7 +22,7 @@ class BlockedUserProvider extends PsProvider {
     });
     blockedUserListStream = StreamController<PsResource<List<BlockedUser>>>.broadcast();
     subscription =
-        blockedUserListStream.stream.listen((PsResource<List<BlockedUser>> resource) {
+        blockedUserListStream!.stream.listen((PsResource<List<BlockedUser>> resource) {
       updateOffset(resource.data!.length);
 
       _blockedUserList = resource;
@@ -38,18 +38,18 @@ class BlockedUserProvider extends PsProvider {
     });
   }
 
-  BlockedUserRepository _repo;
+  BlockedUserRepository? _repo;
   PsValueHolder? valueHolder;
 
   PsResource<List<BlockedUser>> _blockedUserList =
       PsResource<List<BlockedUser>>(PsStatus.NOACTION, '', <BlockedUser>[]);
 
   PsResource<List<BlockedUser>> get blockedUserList => _blockedUserList;
-  StreamSubscription<PsResource<List<BlockedUser>>> subscription;
-  StreamController<PsResource<List<BlockedUser>>> blockedUserListStream;
+  StreamSubscription<PsResource<List<BlockedUser>>>? subscription;
+  StreamController<PsResource<List<BlockedUser>>>? blockedUserListStream;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('BlockedUser Provider Dispose: $hashCode');
     super.dispose();
@@ -59,7 +59,7 @@ class BlockedUserProvider extends PsProvider {
     isLoading = true;
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getAllBlockedUserList(blockedUserListStream, isConnectedToInternet,loginUserId, limit,
+    await _repo!.getAllBlockedUserList(blockedUserListStream!, isConnectedToInternet,loginUserId, limit,
         offset, PsStatus.PROGRESS_LOADING);
   }
 
@@ -68,7 +68,7 @@ class BlockedUserProvider extends PsProvider {
 
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
-      await _repo.getNextPageBlockedUserList(blockedUserListStream, isConnectedToInternet,loginUserId,
+      await _repo!.getNextPageBlockedUserList(blockedUserListStream!, isConnectedToInternet,loginUserId,
           limit, offset, PsStatus.PROGRESS_LOADING);
     }
   }
@@ -79,7 +79,7 @@ class BlockedUserProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getAllBlockedUserList(blockedUserListStream, isConnectedToInternet,loginUserId, limit,
+    await _repo!.getAllBlockedUserList(blockedUserListStream!, isConnectedToInternet,loginUserId, limit,
         offset, PsStatus.PROGRESS_LOADING);
 
     isLoading = false;
@@ -88,8 +88,8 @@ class BlockedUserProvider extends PsProvider {
   Future<dynamic> deleteUserFromDB(String loginUserId) async {
     isLoading = true;
 
-    await _repo.postDeleteUserFromDB(
-        blockedUserListStream,loginUserId, PsStatus.PROGRESS_LOADING);
+    await _repo!.postDeleteUserFromDB(
+        blockedUserListStream!,loginUserId, PsStatus.PROGRESS_LOADING);
   }
 
 }

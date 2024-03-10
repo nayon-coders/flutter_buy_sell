@@ -23,7 +23,7 @@ class SearchProductProvider extends PsProvider {
 
     productListStream = StreamController<PsResource<List<Product>>>.broadcast();
     subscription =
-        productListStream.stream.listen((PsResource<List<Product>> resource) {
+        productListStream!.stream.listen((PsResource<List<Product>> resource) {
       updateOffset(resource.data!.length);
 
       // _productList = resource;
@@ -47,18 +47,18 @@ class SearchProductProvider extends PsProvider {
       }
     });
   }
-  ProductRepository _repo;
+  ProductRepository? _repo;
   PsValueHolder? psValueHolder;
   PsResource<List<Product>> _productList =
       PsResource<List<Product>>(PsStatus.NOACTION, '', <Product>[]);
 
   PsResource<List<Product>> get productList => _productList;
-  StreamSubscription<PsResource<List<Product>>> subscription;
-  StreamController<PsResource<List<Product>>> productListStream;
+  StreamSubscription<PsResource<List<Product>>>? subscription;
+  StreamController<PsResource<List<Product>>>? productListStream;
 
   dynamic daoSubscription;
 
-  ProductParameterHolder productParameterHolder;
+  ProductParameterHolder? productParameterHolder;
 
   bool isSwitchedFeaturedProduct = false;
   bool isSwitchedDiscountPrice = false;
@@ -83,10 +83,10 @@ class SearchProductProvider extends PsProvider {
   bool isfouthRatingClicked = false;
   bool isFifthRatingClicked = false;
 
-  String _itemLocationId;
+  String? _itemLocationId;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     if (daoSubscription != null) {
       daoSubscription.cancel();
     }
@@ -110,13 +110,13 @@ class SearchProductProvider extends PsProvider {
         productParameterHolder.itemLocationId = '';
       } else {
         if (_itemLocationId != null && _itemLocationId != '') {
-          productParameterHolder.itemLocationId = _itemLocationId;
+          productParameterHolder.itemLocationId = _itemLocationId!;
         }
       }
     }
 
-    daoSubscription = await _repo.getProductList(
-        productListStream,
+    daoSubscription = await _repo!.getProductList(
+        productListStream!,
         isConnectedToInternet,
         loginUserId,
         limit,
@@ -142,13 +142,13 @@ class SearchProductProvider extends PsProvider {
           productParameterHolder.itemLocationId = '';
         } else {
           if (_itemLocationId != null && _itemLocationId != '') {
-            productParameterHolder.itemLocationId = _itemLocationId;
+            productParameterHolder.itemLocationId = _itemLocationId!;
           }
         }
       }
 
-      await _repo.getNextPageProductList(
-          productListStream,
+      await _repo!.getNextPageProductList(
+          productListStream!,
           isConnectedToInternet,
           loginUserId,
           limit,
@@ -172,7 +172,7 @@ class SearchProductProvider extends PsProvider {
         productParameterHolder.itemLocationId = '';
       } else {
         if (_itemLocationId != null && _itemLocationId != '') {
-          productParameterHolder.itemLocationId = _itemLocationId;
+          productParameterHolder.itemLocationId = _itemLocationId!;
         }
       }
     }
@@ -180,8 +180,8 @@ class SearchProductProvider extends PsProvider {
     updateOffset(0);
 
     isLoading = true;
-    daoSubscription = await _repo.getProductList(
-        productListStream,
+    daoSubscription = await _repo!.getProductList(
+        productListStream!,
         isConnectedToInternet,
         loginUserId,
         limit,

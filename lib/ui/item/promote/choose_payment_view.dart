@@ -46,7 +46,7 @@ class ChoosePaymentVIewState extends State<ChoosePaymentVIew> {
       create: (BuildContext context) {
         final UserProvider provider =
             UserProvider(repo: repo1!, psValueHolder: psValueHolder!);
-        provider.getUser(provider.psValueHolder.loginUserId);
+        provider.getUser(provider.psValueHolder!.loginUserId);
         return provider;
       },
       child: Consumer<UserProvider>(

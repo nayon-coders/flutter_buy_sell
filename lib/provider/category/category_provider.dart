@@ -31,7 +31,7 @@ class CategoryProvider extends PsProvider {
     categoryListStream =
         StreamController<PsResource<List<Category>>>.broadcast();
     subscription =
-        categoryListStream.stream.listen((PsResource<List<Category>> resource) {
+        categoryListStream!.stream.listen((PsResource<List<Category>> resource) {
       updateOffset(resource.data!.length);
 
       _categoryList = resource;
@@ -46,24 +46,24 @@ class CategoryProvider extends PsProvider {
       }
     });
   }
-  StreamController<PsResource<List<Category>>> categoryListStream;
+  StreamController<PsResource<List<Category>>>? categoryListStream;
   final CategoryParameterHolder category = CategoryParameterHolder();
 
-  CategoryRepository _repo;
+  CategoryRepository? _repo;
   PsValueHolder psValueHolder;
 
   PsResource<List<Category>> _categoryList =
       PsResource<List<Category>>(PsStatus.NOACTION, '', <Category>[]);
 
   PsResource<List<Category>> get categoryList => _categoryList;
-  StreamSubscription<PsResource<List<Category>>> subscription;
+  StreamSubscription<PsResource<List<Category>>>? subscription;
 
   PsResource<ApiStatus> _apiStatus =
       PsResource<ApiStatus>(PsStatus.NOACTION, '', null);
   PsResource<ApiStatus> get user => _apiStatus;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Category Provider Dispose: $hashCode');
     super.dispose();
@@ -74,7 +74,7 @@ class CategoryProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
     if (isConnectedToInternet) {
-      await _repo.getCategoryList(categoryListStream, isConnectedToInternet,
+      await _repo!.getCategoryList(categoryListStream!, isConnectedToInternet,
           limit, offset, PsStatus.PROGRESS_LOADING);
     }
     return isConnectedToInternet;
@@ -85,19 +85,19 @@ class CategoryProvider extends PsProvider {
 
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
-      await _repo.getNextPageCategoryList(categoryListStream,
+      await _repo!.getNextPageCategoryList(categoryListStream!,
           isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
     }
   }
 
-  Future<void> resetCategoryList() async {
+  Future<bool> resetCategoryList() async {
     isConnectedToInternet = await Utils.checkInternetConnectivity();
     isLoading = true;
 
     updateOffset(0);
      if (isConnectedToInternet) {
 
-    await _repo.getCategoryList(categoryListStream, isConnectedToInternet,
+    await _repo!.getCategoryList(categoryListStream!, isConnectedToInternet,
         limit, offset, PsStatus.PROGRESS_LOADING);
      }
 
@@ -112,7 +112,7 @@ class CategoryProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _apiStatus = await _repo.postTouchCount(
+    _apiStatus = await _repo!.postTouchCount(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _apiStatus;

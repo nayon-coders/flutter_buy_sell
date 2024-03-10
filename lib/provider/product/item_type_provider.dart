@@ -19,7 +19,7 @@ class ItemTypeProvider extends PsProvider {
 
     itemTypeListStream =
         StreamController<PsResource<List<ItemType>>>.broadcast();
-    subscription = itemTypeListStream.stream.listen((dynamic resource) {
+    subscription = itemTypeListStream!.stream.listen((dynamic resource) {
       updateOffset(resource.data.length);
 
       _itemTypeList = resource;
@@ -35,20 +35,20 @@ class ItemTypeProvider extends PsProvider {
     });
   }
 
-  StreamController<PsResource<List<ItemType>>> itemTypeListStream;
-  ItemTypeRepository _repo;
+  StreamController<PsResource<List<ItemType>>>? itemTypeListStream;
+  ItemTypeRepository? _repo;
 
   PsResource<List<ItemType>> _itemTypeList =
       PsResource<List<ItemType>>(PsStatus.NOACTION, '', <ItemType>[]);
 
   PsResource<List<ItemType>> get itemTypeList => _itemTypeList;
-  StreamSubscription<PsResource<List<ItemType>>> subscription;
+  StreamSubscription<PsResource<List<ItemType>>>? subscription;
 
   String categoryId = '';
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Item Type Provider Dispose: $hashCode');
     super.dispose();
@@ -57,7 +57,7 @@ class ItemTypeProvider extends PsProvider {
   Future<dynamic> loadItemTypeList() async {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getItemTypeList(itemTypeListStream, isConnectedToInternet,
+    await _repo!.getItemTypeList(itemTypeListStream!, isConnectedToInternet,
         limit, offset, PsStatus.PROGRESS_LOADING);
   }
 
@@ -66,7 +66,7 @@ class ItemTypeProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-      await _repo.getNextPageItemTypeList(itemTypeListStream,
+      await _repo!.getNextPageItemTypeList(itemTypeListStream!,
           isConnectedToInternet, limit, offset, PsStatus.PROGRESS_LOADING);
     }
   }
@@ -78,8 +78,8 @@ class ItemTypeProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getItemTypeList(
-      itemTypeListStream,
+    await _repo!.getItemTypeList(
+      itemTypeListStream!,
       isConnectedToInternet,
       limit,
       offset,

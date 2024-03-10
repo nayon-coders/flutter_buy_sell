@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 
 class ConfirmDialogView extends StatefulWidget {
   const ConfirmDialogView(
-      {Key key,
+      {Key? key,
       this.description,
       this.leftButtonText,
       this.rightButtonText,
       this.onAgreeTap})
       : super(key: key);
 
-  final String description, leftButtonText, rightButtonText;
-  final Function onAgreeTap;
+  final String? description, leftButtonText, rightButtonText;
+  final Function? onAgreeTap;
 
   @override
   _LogoutDialogState createState() => _LogoutDialogState();
@@ -28,8 +28,8 @@ class _LogoutDialogState extends State<ConfirmDialogView> {
 
 class NewDialog extends StatelessWidget {
   const NewDialog({
-    Key key,
-    @required this.widget,
+    Key? key,
+    required this.widget,
   }) : super(key: key);
 
   final ConfirmDialogView widget;
@@ -61,7 +61,7 @@ class NewDialog extends StatelessWidget {
     );
 
     final Widget _messageWidget = Text(
-      widget.description,
+      widget.description!,
       style: Theme.of(context).textTheme.subtitle2,
     );
     return Dialog(
@@ -101,7 +101,7 @@ class NewDialog extends StatelessWidget {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(widget.leftButtonText,
+              child: Text(widget.leftButtonText!,
                   style: Theme.of(context).textTheme.button),
             )),
             Container(
@@ -113,13 +113,13 @@ class NewDialog extends StatelessWidget {
               height: 50,
               minWidth: double.infinity,
               onPressed: () {
-                widget.onAgreeTap();
+                widget.onAgreeTap!();
               },
               child: Text(
-                widget.rightButtonText,
+                widget.rightButtonText!,
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: PsColors.mainColor),
               ),
             )),

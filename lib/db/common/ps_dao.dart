@@ -187,7 +187,7 @@ abstract class PsDao<T extends PsObject<T>> {
       Function? onDataUpdated}) async {
     final PsResource<List<PsObject<dynamic>>> dataList = await mapDao!.getAll(
         finder: Finder(
-            filter: Filter.equals(mapKey, paramKey, anyInList: true),
+            filter: Filter.equals(mapKey!, paramKey, anyInList: true),
             sortOrders: <SortOrder>[SortOrder('sorting', true)]));
     final List<String> valueList = mapObj.getIdList(dataList.data);
 
@@ -198,7 +198,7 @@ abstract class PsDao<T extends PsObject<T>> {
     if (sortOrderList != null && sortOrderList.isNotEmpty) {
       finder.sortOrders = sortOrderList;
     }
-    final dynamic query = dao.query(finder: finder);
+    final dynamic query = dao!.query(finder: finder);
     final dynamic subscription = await query
         .onSnapshots(await db)
         .listen((dynamic recordSnapshots2) async {
@@ -206,7 +206,7 @@ abstract class PsDao<T extends PsObject<T>> {
         finder.sortOrders = sortOrderList;
       }
 
-      final dynamic recordSnapshots = await dao.find(
+      final dynamic recordSnapshots = await dao!.find(
         await db,
         finder: finder,
       );
@@ -216,7 +216,7 @@ abstract class PsDao<T extends PsObject<T>> {
       for (String id in valueList) {
         for (dynamic snapshot in recordSnapshots) {
           if (snapshot.value[primaryKey] == id) {
-            final T localObj = obj.fromMap(snapshot.value);
+            final T localObj = obj!.fromMap(snapshot.value);
             localObj.key = snapshot.key;
             resultList.add(localObj);
             break;
@@ -236,7 +236,7 @@ abstract class PsDao<T extends PsObject<T>> {
       List<SortOrder>? sortOrderList,
       PsStatus status = PsStatus.SUCCESS,
       Function? onDataUpdated}) async {
-   final PsResource<List<PsObject<dynamic>>> dataList = await mapDao.getAll(
+   final PsResource<List<PsObject<dynamic>>> dataList = await mapDao!.getAll(
         finder: Finder(sortOrders: <SortOrder>[SortOrder('sorting', true)]));
 
     final List<String> valueList = mapObj.getIdList(dataList.data);
@@ -249,7 +249,7 @@ abstract class PsDao<T extends PsObject<T>> {
     if (sortOrderList != null && sortOrderList.isNotEmpty) {
       finder.sortOrders = sortOrderList;
     }
-    final dynamic query = dao.query(finder: finder);
+    final dynamic query = dao!.query(finder: finder);
     final dynamic subscription = await query
         .onSnapshots(await db)
         .listen((dynamic recordSnapshots2) async {
@@ -257,7 +257,7 @@ abstract class PsDao<T extends PsObject<T>> {
         finder.sortOrders = sortOrderList;
       }
 
-      final dynamic recordSnapshots = await dao.find(
+      final dynamic recordSnapshots = await dao!.find(
         await db,
         finder: finder,
       );
@@ -267,7 +267,7 @@ abstract class PsDao<T extends PsObject<T>> {
       for (String id in valueList) {
         for (dynamic snapshot in recordSnapshots) {
           if (snapshot.value[primaryKey] == id) {
-            final T localObj = obj.fromMap(snapshot.value);
+            final T localObj = obj!.fromMap(snapshot.value);
             localObj.key = snapshot.key;
             resultList.add(localObj);
             break;
@@ -284,13 +284,13 @@ abstract class PsDao<T extends PsObject<T>> {
       PsStatus status = PsStatus.SUCCESS,
       String message = ''}) async {
     finder ??= Finder(sortOrders: <SortOrder> [SortOrder(sortingKey, true)]);
-    final dynamic recordSnapshots = await dao.find(
+    final dynamic recordSnapshots = await dao!.find(
       await db,
       finder: finder,
     );
     final List<T> resultList = <T>[];
     recordSnapshots.forEach((dynamic snapshot) {
-      final T localObj = obj.fromMap(snapshot.value);
+      final T localObj = obj!.fromMap(snapshot.value);
       localObj.key = snapshot.key;
       resultList.add(localObj);
     });
@@ -301,14 +301,14 @@ abstract class PsDao<T extends PsObject<T>> {
   Future<PsResource<T>> getOne(
       {Finder? finder, PsStatus status = PsStatus.SUCCESS}) async {
     finder ??= Finder();
-    final dynamic recordSnapshots = await dao.find(
+    final dynamic recordSnapshots = await dao!.find(
       await db,
       finder: finder,
     );
-    T  result;
+    T?  result;
 
     for (dynamic snapshot in recordSnapshots) {
-      final T localObj = obj.fromMap(snapshot.value);
+      final T localObj = obj!.fromMap(snapshot.value);
       localObj.key = snapshot.key;
       result = localObj;
       break;
@@ -336,7 +336,7 @@ abstract class PsDao<T extends PsObject<T>> {
       finder.sortOrders = sortOrderList;
     }
 
-    final dynamic recordSnapshots = await dao.find(
+    final dynamic recordSnapshots = await dao!.find(
       await db,
       finder: finder,
     );
@@ -346,7 +346,7 @@ abstract class PsDao<T extends PsObject<T>> {
     for (String id in valueList) {
       for (dynamic snapshot in recordSnapshots) {
         if (snapshot.value[primaryKey] == id) {
-          resultList.add(obj.fromMap(snapshot.value));
+          resultList.add(obj!.fromMap(snapshot.value));
           break;
         }
       }
@@ -379,7 +379,7 @@ abstract class PsDao<T extends PsObject<T>> {
       finder.sortOrders = sortOrderList;
     }
 
-    final dynamic recordSnapshots = await dao.find(
+    final dynamic recordSnapshots = await dao!.find(
       await db,
       finder: finder,
     );
@@ -389,7 +389,7 @@ abstract class PsDao<T extends PsObject<T>> {
     for (String id in valueList) {
       for (dynamic snapshot in recordSnapshots) {
         if (snapshot.value['id'] == id) {
-          resultList.add(obj.fromMap(snapshot.value));
+          resultList.add(obj!.fromMap(snapshot.value));
           break;
         }
       }
@@ -421,7 +421,7 @@ abstract class PsDao<T extends PsObject<T>> {
       finder.sortOrders = sortOrderList;
     }
 
-    final dynamic recordSnapshots = await dao.find(
+    final dynamic recordSnapshots = await dao!.find(
       await db,
       finder: finder,
     );
@@ -431,7 +431,7 @@ abstract class PsDao<T extends PsObject<T>> {
     for (String id in valueList) {
       for (dynamic snapshot in recordSnapshots) {
         if (snapshot.value[primaryKey] == id) {
-          resultList.add(obj.fromMap(snapshot.value));
+          resultList.add(obj!.fromMap(snapshot.value));
           break;
         }
       }

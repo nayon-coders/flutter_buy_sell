@@ -20,7 +20,7 @@ class ReportedItemProvider extends PsProvider {
 
     itemTypeListStream =
         StreamController<PsResource<List<ReportedItem>>>.broadcast();
-    subscription = itemTypeListStream.stream.listen((dynamic resource) {
+    subscription = itemTypeListStream!.stream.listen((dynamic resource) {
       updateOffset(resource.data.length);
 
       _itemTypeList = resource;
@@ -36,21 +36,21 @@ class ReportedItemProvider extends PsProvider {
     });
   }
 
-  StreamController<PsResource<List<ReportedItem>>> itemTypeListStream;
-  ReportedItemRepository _repo;
+  StreamController<PsResource<List<ReportedItem>>>? itemTypeListStream;
+  ReportedItemRepository? _repo;
   PsValueHolder? valueHolder;
 
   PsResource<List<ReportedItem>> _itemTypeList =
       PsResource<List<ReportedItem>>(PsStatus.NOACTION, '', <ReportedItem>[]);
 
   PsResource<List<ReportedItem>> get reportedItem => _itemTypeList;
-  StreamSubscription<PsResource<List<ReportedItem>>> subscription;
+  StreamSubscription<PsResource<List<ReportedItem>>>? subscription;
 
   String categoryId = '';
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Item Type Provider Dispose: $hashCode');
     super.dispose();
@@ -59,7 +59,7 @@ class ReportedItemProvider extends PsProvider {
   Future<dynamic> loadReportedItemList(String loginUserId) async {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getReportedItemList(itemTypeListStream, isConnectedToInternet,loginUserId,
+    await _repo!.getReportedItemList(itemTypeListStream!, isConnectedToInternet,loginUserId,
         limit, offset, PsStatus.PROGRESS_LOADING);
   }
 
@@ -68,7 +68,7 @@ class ReportedItemProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-      await _repo.getNextPageReportedItemList(itemTypeListStream,
+      await _repo!.getNextPageReportedItemList(itemTypeListStream!,
           isConnectedToInternet, loginUserId,limit, offset, PsStatus.PROGRESS_LOADING);
     }
   }
@@ -80,8 +80,8 @@ class ReportedItemProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getReportedItemList(
-      itemTypeListStream,
+    await _repo!.getReportedItemList(
+      itemTypeListStream!,
       isConnectedToInternet,
       loginUserId,
       limit,

@@ -19,7 +19,7 @@ class MarkSoldOutItemProvider extends PsProvider {
     markSoldOutItemStream = StreamController<PsResource<Product>>.broadcast();
 
     subscription =
-        markSoldOutItemStream.stream.listen((PsResource<Product> resource) {
+        markSoldOutItemStream!.stream.listen((PsResource<Product> resource) {
       _markSoldOutItem = resource;
 
       if (resource.status != PsStatus.BLOCK_LOADING &&
@@ -32,16 +32,16 @@ class MarkSoldOutItemProvider extends PsProvider {
       }
     });
   }
-  ProductRepository _repo;
+  ProductRepository? _repo;
   PsResource<Product> _markSoldOutItem =
       PsResource<Product>(PsStatus.NOACTION, '', null);
 
   PsResource<Product> get markSoldOutItem => _markSoldOutItem;
-  StreamSubscription<PsResource<Product>> subscription;
-  StreamController<PsResource<Product>> markSoldOutItemStream;
+  StreamSubscription<PsResource<Product>>? subscription;
+  StreamController<PsResource<Product>>? markSoldOutItemStream;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Mark Sold Out Provider Dispose: $hashCode');
     super.dispose();
@@ -53,7 +53,7 @@ class MarkSoldOutItemProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    await _repo.markSoldOutItem(markSoldOutItemStream, loginUserId,
+    await _repo!.markSoldOutItem(markSoldOutItemStream!, loginUserId,
         isConnectedToInternet, PsStatus.PROGRESS_LOADING, holder);
   }
 
@@ -64,7 +64,7 @@ class MarkSoldOutItemProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-      await _repo.markSoldOutItem(markSoldOutItemStream, loginUserId,
+      await _repo!.markSoldOutItem(markSoldOutItemStream!, loginUserId,
           isConnectedToInternet, PsStatus.PROGRESS_LOADING, holder);
     }
   }

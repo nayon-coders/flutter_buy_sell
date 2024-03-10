@@ -16,20 +16,20 @@ class ItemConditionRepository extends PsRepository {
     _itemConditionDao = itemConditionDao;
   }
 
-  PsApiService _psApiService;
-  ItemConditionDao _itemConditionDao;
+  PsApiService? _psApiService;
+  ItemConditionDao? _itemConditionDao;
   final String _primaryKey = 'id';
 
   Future<dynamic> insert(ConditionOfItem conditionOfItem) async {
-    return _itemConditionDao.insert(_primaryKey, conditionOfItem);
+    return _itemConditionDao!.insert(_primaryKey, conditionOfItem);
   }
 
   Future<dynamic> update(ConditionOfItem conditionOfItem) async {
-    return _itemConditionDao.update(conditionOfItem);
+    return _itemConditionDao!.update(conditionOfItem);
   }
 
   Future<dynamic> delete(ConditionOfItem conditionOfItem) async {
-    return _itemConditionDao.delete(conditionOfItem);
+    return _itemConditionDao!.delete(conditionOfItem);
   }
 
   Future<dynamic> getItemConditionList(
@@ -42,21 +42,21 @@ class ItemConditionRepository extends PsRepository {
       {bool isLoadFromServer = true}) async {
 
     itemConditionListStream.sink
-        .add(await _itemConditionDao.getAll(status: status));
+        .add(await _itemConditionDao!.getAll(status: status));
 
     final PsResource<List<ConditionOfItem>> _resource =
-        await _psApiService.getItemConditionList(limit, offset);
+        await _psApiService!.getItemConditionList(limit, offset);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      await _itemConditionDao.deleteAll();
-      await _itemConditionDao.insertAll(_primaryKey, _resource.data!);
+      await _itemConditionDao!.deleteAll();
+      await _itemConditionDao!.insertAll(_primaryKey, _resource.data!);
       
     }else{
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
-        await _itemConditionDao.deleteAll();
+        await _itemConditionDao!.deleteAll();
       }
     }
-    itemConditionListStream.sink.add(await _itemConditionDao.getAll());
+    itemConditionListStream.sink.add(await _itemConditionDao!.getAll());
   }
 
   Future<dynamic> getNextPageItemConditionList(
@@ -68,19 +68,19 @@ class ItemConditionRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     itemConditionListStream.sink
-        .add(await _itemConditionDao.getAll(status: status));
+        .add(await _itemConditionDao!.getAll(status: status));
 
     final PsResource<List<ConditionOfItem>> _resource =
-        await _psApiService.getItemConditionList(limit, offset);
+        await _psApiService!.getItemConditionList(limit, offset);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      _itemConditionDao
+      _itemConditionDao!
           .insertAll(_primaryKey, _resource.data!)
           .then((dynamic data) async {
-        itemConditionListStream.sink.add(await _itemConditionDao.getAll());
+        itemConditionListStream.sink.add(await _itemConditionDao!.getAll());
       });
     } else {
-      itemConditionListStream.sink.add(await _itemConditionDao.getAll());
+      itemConditionListStream.sink.add(await _itemConditionDao!.getAll());
     }
   }
 }

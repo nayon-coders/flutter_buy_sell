@@ -19,8 +19,8 @@ class CategoryRepository extends PsRepository {
 
   String primaryKey = 'cat_id';
   String mapKey = 'map_key';
-  PsApiService _psApiService;
-  CategoryDao _categoryDao;
+  PsApiService? _psApiService;
+  CategoryDao? _categoryDao;
 
   void sinkCategoryListStream(
       StreamController<PsResource<List<Category>>> categoryListStream,
@@ -31,15 +31,15 @@ class CategoryRepository extends PsRepository {
   }
 
   Future<dynamic> insert(Category category) async {
-    return _categoryDao.insert(primaryKey, category);
+    return _categoryDao!.insert(primaryKey, category);
   }
 
   Future<dynamic> update(Category category) async {
-    return _categoryDao.update(category);
+    return _categoryDao!.update(category);
   }
 
   Future<dynamic> delete(Category category) async {
-    return _categoryDao.delete(category);
+    return _categoryDao!.delete(category);
   }
 
   Future<dynamic> getCategoryList(
@@ -53,26 +53,26 @@ class CategoryRepository extends PsRepository {
     // Prepare Holder and Map Dao
 
     sinkCategoryListStream(
-        categoryListStream, await _categoryDao.getAll(status: status));
+        categoryListStream, await _categoryDao!.getAll(status: status));
 
     if (isConnectedToInternet) {
       final PsResource<List<Category>> _resource =
-          await _psApiService.getCategoryList(limit, offset);
+          await _psApiService!.getCategoryList(limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
         // Delete and Insert Map Dao
-        await _categoryDao.deleteAll();
+        await _categoryDao!.deleteAll();
 
         // Insert Category
-        await _categoryDao.insertAll(primaryKey, _resource.data!);
+        await _categoryDao!.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
           print('delete all');
-          await _categoryDao.deleteAll();
+          await _categoryDao!.deleteAll();
         }
       }
       // Load updated Data from Db and Send to UI
-      sinkCategoryListStream(categoryListStream, await _categoryDao.getAll());
+      sinkCategoryListStream(categoryListStream, await _categoryDao!.getAll());
     }
   }
 
@@ -86,18 +86,18 @@ class CategoryRepository extends PsRepository {
     // Prepare Holder and Map Dao
 
     sinkCategoryListStream(
-        categoryListStream, await _categoryDao.getAll(status: status));
+        categoryListStream, await _categoryDao!.getAll(status: status));
 
     if (isConnectedToInternet) {
       final PsResource<List<Category>> _resource =
-          await _psApiService.getCategoryList(limit, offset);
+          await _psApiService!.getCategoryList(limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _categoryDao.getAll();
+        await _categoryDao!.getAll();
 
-        await _categoryDao.insertAll(primaryKey, _resource.data!);
+        await _categoryDao!.insertAll(primaryKey, _resource.data!);
       }
-      sinkCategoryListStream(categoryListStream, await _categoryDao.getAll());
+      sinkCategoryListStream(categoryListStream, await _categoryDao!.getAll());
     }
   }
 
@@ -105,7 +105,7 @@ class CategoryRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
-        await _psApiService.postTouchCount(jsonMap);
+        await _psApiService!.postTouchCount(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {

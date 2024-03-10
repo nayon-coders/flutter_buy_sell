@@ -17,19 +17,19 @@ class BlogRepository extends PsRepository {
   }
 
   String primaryKey = 'id';
-  PsApiService _psApiService;
-  BlogDao _blogDao;
+  PsApiService? _psApiService;
+  BlogDao? _blogDao;
 
   Future<dynamic> insert(Blog blog) async {
-    return _blogDao.insert(primaryKey, blog);
+    return _blogDao!.insert(primaryKey, blog);
   }
 
   Future<dynamic> update(Blog blog) async {
-    return _blogDao.update(blog);
+    return _blogDao!.update(blog);
   }
 
   Future<dynamic> delete(Blog blog) async {
-    return _blogDao.delete(blog);
+    return _blogDao!.delete(blog);
   }
 
   Future<dynamic> getAllBlogList(
@@ -39,22 +39,22 @@ class BlogRepository extends PsRepository {
       int offset,
       PsStatus status,
       {bool isLoadFromServer = true}) async {
-    blogListStream.sink.add(await _blogDao.getAll(status: status));
+    blogListStream.sink.add(await _blogDao!.getAll(status: status));
 
     if (isConnectedToInternet) {
       final PsResource<List<Blog>> _resource =
-          await _psApiService.getBlogList(limit, offset);
+          await _psApiService!.getBlogList(limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _blogDao.deleteAll();
-        await _blogDao.insertAll(primaryKey, _resource.data!);
+        await _blogDao!.deleteAll();
+        await _blogDao!.insertAll(primaryKey, _resource.data!);
         
       }else{
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
-          await _blogDao.deleteAll();
+          await _blogDao!.deleteAll();
         }
       }
-      blogListStream.sink.add(await _blogDao.getAll());
+      blogListStream.sink.add(await _blogDao!.getAll());
     }
   }
 
@@ -65,16 +65,16 @@ class BlogRepository extends PsRepository {
       int offset,
       PsStatus status,
       {bool isLoadFromServer = true}) async {
-    blogListStream.sink.add(await _blogDao.getAll(status: status));
+    blogListStream.sink.add(await _blogDao!.getAll(status: status));
 
     if (isConnectedToInternet) {
       final PsResource<List<Blog>> _resource =
-          await _psApiService.getBlogList(limit, offset);
+          await _psApiService!.getBlogList(limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _blogDao.insertAll(primaryKey, _resource.data!);
+        await _blogDao!.insertAll(primaryKey, _resource.data!);
       }
-      blogListStream.sink.add(await _blogDao.getAll());
+      blogListStream.sink.add(await _blogDao!.getAll());
     }
   }
 }

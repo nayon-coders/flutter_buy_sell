@@ -17,14 +17,14 @@ class LanguageRepository extends PsRepository {
       StreamController<PsLanguageValueHolder>();
   Stream<PsLanguageValueHolder> get psValueHolder => _valueController.stream;
 
-  PsSharedPreferences _psSharedPreferences;
+  PsSharedPreferences? _psSharedPreferences;
 
   void loadLanguageValueHolder() {
-    final String? _languageCodeKey = _psSharedPreferences.shared
+    final String? _languageCodeKey = _psSharedPreferences!.shared
         .getString(PsConst.LANGUAGE__LANGUAGE_CODE_KEY);
-    final String? _countryCodeKey = _psSharedPreferences.shared
+    final String? _countryCodeKey = _psSharedPreferences!.shared
         .getString(PsConst.LANGUAGE__COUNTRY_CODE_KEY);
-    final String? _languageNameKey = _psSharedPreferences.shared
+    final String? _languageNameKey = _psSharedPreferences!.shared
         .getString(PsConst.LANGUAGE__LANGUAGE_NAME_KEY);
 
     _valueController.add(PsLanguageValueHolder(
@@ -35,25 +35,25 @@ class LanguageRepository extends PsRepository {
   }
 
   Future<void> addLanguage(Language language) async {
-    await _psSharedPreferences.shared
+    await _psSharedPreferences!.shared
         .setString(PsConst.LANGUAGE__LANGUAGE_CODE_KEY, language.languageCode);
-    await _psSharedPreferences.shared
+    await _psSharedPreferences!.shared
         .setString(PsConst.LANGUAGE__COUNTRY_CODE_KEY, language.countryCode);
-    await _psSharedPreferences.shared
+    await _psSharedPreferences!.shared
         .setString(PsConst.LANGUAGE__LANGUAGE_NAME_KEY, language.name);
-    await _psSharedPreferences.shared.setString('locale',
+    await _psSharedPreferences!.shared.setString('locale',
         Locale(language.languageCode, language.countryCode).toString());
     loadLanguageValueHolder();
   }
 
   Language getLanguage() {
-    final String languageCode = _psSharedPreferences.shared
+    final String languageCode = _psSharedPreferences!.shared
             .getString(PsConst.LANGUAGE__LANGUAGE_CODE_KEY) ??
         PsConfig.defaultLanguage.languageCode;
-    final String countryCode = _psSharedPreferences.shared
+    final String countryCode = _psSharedPreferences!.shared
             .getString(PsConst.LANGUAGE__COUNTRY_CODE_KEY) ??
         PsConfig.defaultLanguage.countryCode;
-    final String languageName = _psSharedPreferences.shared
+    final String languageName = _psSharedPreferences!.shared
             .getString(PsConst.LANGUAGE__LANGUAGE_NAME_KEY) ??
         PsConfig.defaultLanguage.name;
 

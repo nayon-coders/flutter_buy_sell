@@ -10,11 +10,11 @@ class UserParameterHolder extends PsHolder<dynamic> {
     userName = '';
   }
 
-  String id;
-  String overallRating;
-  String returnTypes;
-  String loginUserId;
-  String userName;
+  String? id;
+  String? overallRating;
+  String? returnTypes;
+  String? loginUserId;
+  String? userName;
 
   bool isCatAndSubCatFiltered() {
     return !(overallRating == '' && returnTypes == '');
@@ -88,19 +88,19 @@ class UserParameterHolder extends PsHolder<dynamic> {
     String result = '';
 
     if (id != '') {
-      result += id + ':';
+      result += id !+ ':';
     }
     if (overallRating != '') {
-      result += overallRating + ':';
+      result += overallRating !+ ':';
     }
     if (returnTypes != '') {
-      result += returnTypes + ':';
+      result += returnTypes !+ ':';
     }
     if (loginUserId != '') {
-      result += loginUserId + ':';
+      result += loginUserId !+ ':';
     }
     if (userName != '') {
-      result += userName + ':';
+      result += userName !+ ':';
     }
 
     return result;

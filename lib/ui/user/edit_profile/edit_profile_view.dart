@@ -84,7 +84,7 @@ class _EditProfileViewState extends State<EditProfileView>
                   repo: userRepository!, psValueHolder: psValueHolder!);
             },
             onProviderReady: (UserProvider provider) async {
-              await provider.getUser(provider.psValueHolder.loginUserId);
+              await provider.getUser(provider.psValueHolder!.loginUserId);
               userProvider = provider;
             },
             builder:
@@ -214,7 +214,7 @@ class _TwoButtonWidget extends StatelessWidget {
                           isShowPhone: userProvider.user.data!.isShowPhone,
                           userAddress: addressController.text,
                           city: cityController.text,
-                          deviceToken: userProvider.psValueHolder.deviceToken);
+                          deviceToken: userProvider.psValueHolder!.deviceToken);
                   // final ProgressDialog progressDialog = loadingDialog(context);
                   // progressDialog.show();
                   await PsProgressDialog.showDialog(context);
@@ -488,7 +488,7 @@ class __ImageWidgetState extends State<_ImageWidget> {
           PsProgressDialog.dismissDialog();
           final PsResource<User> _apiStatus = await widget.userProvider!
               .postImageUpload(
-                  widget.userProvider!.psValueHolder.loginUserId,
+                  widget.userProvider!.psValueHolder!.loginUserId,
                   PsConst.PLATFORM,
                   await Utils.getImageFileFromAssets(
                       images[0], PsConfig.profileImageSize));

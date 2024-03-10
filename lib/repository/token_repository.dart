@@ -15,12 +15,12 @@ class TokenRepository extends PsRepository {
     _psApiService = psApiService;
   }
   String primaryKey = '';
-  PsApiService _psApiService;
+  PsApiService? _psApiService;
 
   Future<PsResource<ApiStatus>> getToken(
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
-    final PsResource<ApiStatus> _resource = await _psApiService.getToken();
+    final PsResource<ApiStatus> _resource = await _psApiService!.getToken();
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {

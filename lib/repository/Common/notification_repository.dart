@@ -12,7 +12,7 @@ class NotificationRepository extends PsRepository {
     _psApiService = psApiService;
   }
 
-  PsApiService _psApiService;
+  PsApiService? _psApiService;
 
   //noti register
   Future<PsResource<ApiStatus>> rawRegisterNotiToken(
@@ -21,7 +21,7 @@ class NotificationRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
-        await _psApiService.rawRegisterNotiToken(jsonMap);
+        await _psApiService!.rawRegisterNotiToken(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -40,7 +40,7 @@ class NotificationRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
-        await _psApiService.rawUnRegisterNotiToken(jsonMap);
+        await _psApiService!.rawUnRegisterNotiToken(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -58,7 +58,7 @@ class NotificationRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
-        await _psApiService.postChatNoti(jsonMap);
+        await _psApiService!.postChatNoti(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {

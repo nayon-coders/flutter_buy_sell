@@ -78,12 +78,12 @@ class _MapFilterViewState extends State<MapFilterView>
 
   @override
   Widget build(BuildContext context) {
-    latlng ??= LatLng(double.parse(widget.productParameterHolder.lat),
-        double.parse(widget.productParameterHolder.lng));
+    latlng ??= LatLng(double.parse(widget.productParameterHolder.lat!),
+        double.parse(widget.productParameterHolder.lng!));
 
     if (widget.productParameterHolder.mile != '' && isFirst) {
       final int _index =
-          findTheIndexOfTheValue(widget.productParameterHolder.mile);
+          findTheIndexOfTheValue(widget.productParameterHolder.mile!);
       kmValue = seekBarValues[_index];
       final double _val = double.parse(getMiles(kmValue)) * 1000;
       radius = _val;

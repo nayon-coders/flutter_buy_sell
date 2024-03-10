@@ -23,7 +23,7 @@ class PaidAdProductProvider extends PsProvider {
 
     productListStream = StreamController<PsResource<List<Product>>>.broadcast();
     subscription =
-        productListStream.stream.listen((PsResource<List<Product>> resource) {
+        productListStream!.stream.listen((PsResource<List<Product>> resource) {
       updateOffset(resource.data!.length);
 
       print('**** PaidAdProductProvider ${resource.data!.length}');
@@ -40,20 +40,20 @@ class PaidAdProductProvider extends PsProvider {
       }
     });
   }
-  ProductRepository _repo;
+  ProductRepository? _repo;
   PsResource<List<Product>> _productList =
       PsResource<List<Product>>(PsStatus.NOACTION, '', <Product>[]);
   final ProductParameterHolder productPaidAdParameterHolder =
       ProductParameterHolder().getPaidItemParameterHolder();
   PsResource<List<Product>> get productList => _productList;
-  StreamSubscription<PsResource<List<Product>>> subscription;
-  StreamController<PsResource<List<Product>>> productListStream;
+  StreamSubscription<PsResource<List<Product>>>? subscription;
+  StreamController<PsResource<List<Product>>>? productListStream;
 
   dynamic daoSubscription;
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     if (daoSubscription != null) {
       daoSubscription.cancel();
     }
@@ -68,8 +68,8 @@ class PaidAdProductProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    daoSubscription = await _repo.getProductList(
-        productListStream,
+    daoSubscription = await _repo!.getProductList(
+        productListStream!,
         isConnectedToInternet,
         loginUserId,
         limit,
@@ -85,8 +85,8 @@ class PaidAdProductProvider extends PsProvider {
     updateOffset(0);
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    daoSubscription = await _repo.getProductList(
-        productListStream,
+    daoSubscription = await _repo!.getProductList(
+        productListStream!,
         isConnectedToInternet,
         loginUserId,
         limit,
@@ -104,8 +104,8 @@ class PaidAdProductProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-      daoSubscription = await _repo.getProductList(
-          productListStream,
+      daoSubscription = await _repo!.getProductList(
+          productListStream!,
           isConnectedToInternet,
           loginUserId,
           limit,

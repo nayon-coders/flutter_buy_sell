@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 
 class ChatNotiDialog extends StatefulWidget {
   const ChatNotiDialog(
-      {Key key,
+      {Key? key,
       this.description,
       this.leftButtonText,
       this.rightButtonText,
       this.onAgreeTap})
       : super(key: key);
 
-  final String description, leftButtonText, rightButtonText;
-  final Function onAgreeTap;
+  final String? description, leftButtonText, rightButtonText;
+  final Function? onAgreeTap;
 
   @override
   _LogoutDialogState createState() => _LogoutDialogState();
@@ -28,8 +28,8 @@ class _LogoutDialogState extends State<ChatNotiDialog> {
 
 class NewDialog extends StatelessWidget {
   const NewDialog({
-    Key key,
-    @required this.widget,
+    Key? key,
+    required this.widget,
   }) : super(key: key);
 
   final ChatNotiDialog widget;
@@ -61,7 +61,7 @@ class NewDialog extends StatelessWidget {
     );
 
     final Widget _messageWidget = Text(
-      widget.description,
+      widget.description!,
       style: Theme.of(context).textTheme.subtitle1,
     );
     return Dialog(
@@ -77,7 +77,7 @@ class NewDialog extends StatelessWidget {
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(5),
                       topRight: Radius.circular(5)),
-                  border: Border.all(color: PsColors.mainColor, width: 5),
+                  border: Border.all(color: PsColors.mainColor!, width: 5),
                   color: PsColors.mainColor),
               child: _headerWidget),
           _largeSpacingWidget,
@@ -103,7 +103,7 @@ class NewDialog extends StatelessWidget {
                 Navigator.of(context).pop();
               },
               child: Text(
-                widget.leftButtonText,
+                widget.leftButtonText!,
                 style: Theme.of(context).textTheme.button,
               ),
             )),
@@ -117,13 +117,13 @@ class NewDialog extends StatelessWidget {
               minWidth: double.infinity,
               onPressed: () {
                 Navigator.of(context).pop();
-                widget.onAgreeTap();
+                widget.onAgreeTap!();
               },
               child: Text(
-                widget.rightButtonText,
+                widget.rightButtonText!,
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: PsColors.mainColor),
               ),
             )),

@@ -18,7 +18,7 @@ class ClearAllDataProvider extends PsProvider {
     _repo = repo;
     print('ClearAllData Provider: $hashCode');
     allListStream = StreamController<PsResource<List<Product>>>.broadcast();
-    subscription = allListStream.stream.listen((PsResource<List<Product>> resource) {
+    subscription = allListStream!.stream.listen((PsResource<List<Product>> resource) {
       updateOffset(resource.data!.length);
 
       _basketList = resource;
@@ -34,18 +34,18 @@ class ClearAllDataProvider extends PsProvider {
     });
   }
 
-  StreamController<PsResource<List<Product>>> allListStream;
-  ClearAllDataRepository _repo;
+  StreamController<PsResource<List<Product>>>? allListStream;
+  ClearAllDataRepository? _repo;
   PsValueHolder? psValueHolder;
 
   PsResource<List<Product>> _basketList =
       PsResource<List<Product>>(PsStatus.NOACTION, '', <Product>[]);
 
   PsResource<List<Product>> get basketList => _basketList;
-  StreamSubscription<PsResource<List<Product>>> subscription;
+  StreamSubscription<PsResource<List<Product>>>? subscription;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('ClearAll Provider Dispose: $hashCode');
     super.dispose();
@@ -53,6 +53,6 @@ class ClearAllDataProvider extends PsProvider {
 
   Future<dynamic> clearAllData() async {
     isLoading = true;
-    _repo.clearAllData(allListStream);
+    _repo!.clearAllData(allListStream!);
   }
 }

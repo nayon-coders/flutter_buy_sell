@@ -71,7 +71,7 @@ class _InAppPurchaseViewState extends State<InAppPurchaseView> {
         print(purchaseDetails.status);
 
         if (itemPromotionProvider!.selectedDate != null) {
-          startDate = itemPromotionProvider!.selectedDate;
+          startDate = itemPromotionProvider!.selectedDate!;
         }
         final DateTime dateTime = DateTime.now();
         final int resultStartTimeStamp =

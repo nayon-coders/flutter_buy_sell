@@ -14,7 +14,7 @@ class HistoryProvider extends PsProvider {
 
     historyListStream = StreamController<PsResource<List<Product>>>.broadcast();
     subscription =
-        historyListStream.stream.listen((PsResource<List<Product>> resource) {
+        historyListStream!.stream.listen((PsResource<List<Product>> resource) {
       updateOffset(resource.data!.length);
 
       _historyList = resource;
@@ -30,17 +30,17 @@ class HistoryProvider extends PsProvider {
     });
   }
 
-  HistoryRepository _repo;
+  HistoryRepository? _repo;
 
   PsResource<List<Product>> _historyList =
       PsResource<List<Product>>(PsStatus.NOACTION, '', <Product>[]);
 
   PsResource<List<Product>> get historyList => _historyList;
-  StreamSubscription<PsResource<List<Product>>> subscription;
-  StreamController<PsResource<List<Product>>> historyListStream;
+  StreamSubscription<PsResource<List<Product>>>? subscription;
+  StreamController<PsResource<List<Product>>>? historyListStream;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('History Provider Dispose: $hashCode');
     super.dispose();
@@ -48,13 +48,13 @@ class HistoryProvider extends PsProvider {
 
   Future<dynamic> loadHistoryList() async {
     isLoading = true;
-    await _repo.getAllHistoryList(historyListStream, PsStatus.PROGRESS_LOADING);
+    await _repo!.getAllHistoryList(historyListStream!, PsStatus.PROGRESS_LOADING);
   }
 
   Future<dynamic> addHistoryList(Product product) async {
     isLoading = true;
-    await _repo.addAllHistoryList(
-        historyListStream, PsStatus.PROGRESS_LOADING, product);
+    await _repo!.addAllHistoryList(
+        historyListStream!, PsStatus.PROGRESS_LOADING, product);
   }
 
   Future<void> resetHistoryList() async {
@@ -63,7 +63,7 @@ class HistoryProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getAllHistoryList(historyListStream, PsStatus.PROGRESS_LOADING);
+    await _repo!.getAllHistoryList(historyListStream!, PsStatus.PROGRESS_LOADING);
 
     isLoading = false;
   }

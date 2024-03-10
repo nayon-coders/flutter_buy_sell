@@ -26,7 +26,7 @@ class ItemListFromFollowersProvider extends PsProvider {
     });
     itemListFromFollowersStream =
         StreamController<PsResource<List<Product>>>.broadcast();
-    subscription = itemListFromFollowersStream.stream
+    subscription = itemListFromFollowersStream!.stream
         .listen((PsResource<List<Product>> resource) {
       updateOffset(resource.data!.length);
 
@@ -44,21 +44,21 @@ class ItemListFromFollowersProvider extends PsProvider {
     });
   }
 
-  ProductRepository _repo;
+  ProductRepository? _repo;
   PsValueHolder psValueHolder;
   PsResource<List<Product>> _itemListFromFollowersList =
       PsResource<List<Product>>(PsStatus.NOACTION, '', <Product>[]);
 
   PsResource<List<Product>> get itemListFromFollowersList =>
       _itemListFromFollowersList;
-  StreamSubscription<PsResource<List<Product>>> subscription;
-  StreamController<PsResource<List<Product>>> itemListFromFollowersStream;
+  StreamSubscription<PsResource<List<Product>>>? subscription;
+  StreamController<PsResource<List<Product>>>? itemListFromFollowersStream;
 
   dynamic daoSubscription;
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
 
     if (daoSubscription != null) {
     daoSubscription.cancel();
@@ -73,8 +73,8 @@ class ItemListFromFollowersProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    daoSubscription = await _repo.getAllItemListFromFollower(
-        itemListFromFollowersStream,
+    daoSubscription = await _repo!.getAllItemListFromFollower(
+        itemListFromFollowersStream!,
         isConnectedToInternet,
         loginUserId,
         limit,
@@ -88,8 +88,8 @@ class ItemListFromFollowersProvider extends PsProvider {
 
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
-      await _repo.getNextPageItemListFromFollower(
-          itemListFromFollowersStream,
+      await _repo!.getNextPageItemListFromFollower(
+          itemListFromFollowersStream!,
           isConnectedToInternet,
           loginUserId,
           limit,
@@ -104,8 +104,8 @@ class ItemListFromFollowersProvider extends PsProvider {
 
     updateOffset(0);
 
-    daoSubscription = await _repo.getAllItemListFromFollower(
-        itemListFromFollowersStream,
+    daoSubscription = await _repo!.getAllItemListFromFollower(
+        itemListFromFollowersStream!,
         isConnectedToInternet,
         loginUserId,
         limit,

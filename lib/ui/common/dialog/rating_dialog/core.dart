@@ -14,19 +14,19 @@ class RateMyApp {
   /// Creates a new Rate my app instance.
   RateMyApp({
     this.preferencesPrefix = 'rateMyApp_',
-    int minDays,
-    int remindDays,
-    int minLaunches,
-    int remindLaunches,
+    int? minDays,
+    int? remindDays,
+    int? minLaunches,
+    int? remindLaunches,
     this.googlePlayIdentifier,
     this.appStoreIdentifier,
   })  : conditions = <Condition>[],
         assert(preferencesPrefix != null) {
     populateWithDefaultConditions(
-      minDays: minDays,
-      remindDays: remindDays,
-      minLaunches: minLaunches,
-      remindLaunches: remindLaunches,
+      minDays: minDays!,
+      remindDays: remindDays!,
+      minLaunches: minLaunches!,
+      remindLaunches: remindLaunches!,
     );
   }
 
@@ -35,7 +35,7 @@ class RateMyApp {
     this.preferencesPrefix = 'rateMyApp_',
     this.googlePlayIdentifier,
     this.appStoreIdentifier,
-    @required this.conditions,
+    required this.conditions,
   })  : assert(preferencesPrefix != null),
         assert(conditions != null);
 
@@ -43,13 +43,13 @@ class RateMyApp {
   static const MethodChannel _channel = MethodChannel('rate_my_app');
 
   /// Prefix for preferences.
-  final String preferencesPrefix;
+  final String? preferencesPrefix;
 
   /// The google play identifier.
-  final String googlePlayIdentifier;
+  final String? googlePlayIdentifier;
 
   /// The app store identifier.
-  final String appStoreIdentifier;
+  final String? appStoreIdentifier;
 
   /// All conditions that should be met to show the dialog.
   final List<Condition> conditions;
@@ -58,7 +58,7 @@ class RateMyApp {
   Future<void> init() async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
     for (Condition condition in conditions) {
-      condition.readFromPreferences(preferences, preferencesPrefix);
+      condition.readFromPreferences(preferences, preferencesPrefix!);
     }
 
     // conditions.forEach((Condition condition) =>
@@ -70,7 +70,7 @@ class RateMyApp {
   Future<void> save() async {
     final SharedPreferences preferences = await SharedPreferences.getInstance();
     for (Condition condition in conditions) {
-      await condition.saveToPreferences(preferences, preferencesPrefix);
+      await condition.saveToPreferences(preferences, preferencesPrefix!);
     }
 
     await callEvent(RateMyAppEventType.saved);
@@ -88,20 +88,20 @@ class RateMyApp {
   /// Whether the dialog should be opened.
   bool get shouldOpenDialog =>
       conditions.firstWhere((Condition condition) => !condition.isMet,
-          orElse: () => null) ==
+          orElse: () => null!) ==
       null;
 
   /// Returns the corresponding store identifier.
   String get storeIdentifier {
     if (Platform.isIOS) {
-      return appStoreIdentifier;
+      return appStoreIdentifier!;
     }
 
     if (Platform.isAndroid) {
-      return googlePlayIdentifier;
+      return googlePlayIdentifier!;
     }
 
-    return null;
+    return null!;
   }
 
   /// Returns whether native review dialog is supported.
@@ -116,17 +116,17 @@ class RateMyApp {
   /// Shows the rate dialog.
   Future<void> showRateDialog(
     BuildContext context, {
-    String title,
-    String message,
-    DialogContentBuilder contentBuilder,
-    DialogActionsBuilder actionsBuilder,
-    String rateButton,
-    String noButton,
-    String laterButton,
-    RateMyAppDialogButtonClickListener listener,
-    bool ignoreNativeDialog,
-    DialogStyle dialogStyle,
-    VoidCallback onDismissed,
+    String? title,
+    String? message,
+    DialogContentBuilder? contentBuilder,
+    DialogActionsBuilder? actionsBuilder,
+    String? rateButton,
+    String? noButton,
+    String? laterButton,
+    RateMyAppDialogButtonClickListener? listener,
+    bool? ignoreNativeDialog,
+    DialogStyle? dialogStyle,
+    VoidCallback? onDismissed,
   }) async {
     ignoreNativeDialog ??= Platform.isAndroid;
     if (!ignoreNativeDialog && await isNativeReviewDialogSupported) {
@@ -136,7 +136,7 @@ class RateMyApp {
     }
 
     unawaited(callEvent(RateMyAppEventType.dialogOpen));
-    final RateMyAppDialogButton clickedButton =
+    final RateMyAppDialogButton? clickedButton =
         await showDialog<RateMyAppDialogButton>(
       context: context,
       builder: (BuildContext context) => RateMyAppDialog(
@@ -146,12 +146,12 @@ class RateMyApp {
             'If you like this app, please take a little bit of your time to review it !\nIt really helps us and it shouldn\'t take you more than one minute.',
         contentBuilder: contentBuilder ??
             ((BuildContext context, Widget defaultContent) => defaultContent),
-        actionsBuilder: actionsBuilder,
+        actionsBuilder: actionsBuilder!,
         rateButton: rateButton ?? 'RATE',
         noButton: noButton ?? 'NO THANKS',
         laterButton: laterButton ?? 'MAYBE LATER',
-        listener: listener,
-        dialogStyle: dialogStyle ?? const DialogStyle(),
+        listener: listener!,
+        dialogStyle: dialogStyle ??const DialogStyle(),
       ),
     );
 
@@ -163,17 +163,17 @@ class RateMyApp {
   /// Shows the star rate dialog.
   Future<void> showStarRateDialog(
     BuildContext context, {
-    String title,
-    String message,
-    DialogContentBuilder contentBuilder,
-    StarDialogActionsBuilder actionsBuilder,
-    bool ignoreNativeDialog,
-    DialogStyle dialogStyle,
-    StarRatingOptions starRatingOptions,
-    VoidCallback onDismissed,
+    String? title,
+    String? message,
+    DialogContentBuilder? contentBuilder,
+    StarDialogActionsBuilder? actionsBuilder,
+    bool? ignoreNativeDialog,
+    DialogStyle? dialogStyle,
+    StarRatingOptions? starRatingOptions,
+    VoidCallback? onDismissed,
   }) async {
     ignoreNativeDialog ??= Platform.isAndroid;
-    if (!ignoreNativeDialog && await isNativeReviewDialogSupported) {
+    if (!ignoreNativeDialog && await isNativeReviewDialogSupported!) {
       unawaited(callEvent(RateMyAppEventType.iOSRequestReview));
       await launchNativeReviewDialog();
       return;
@@ -191,7 +191,7 @@ class RateMyApp {
             'You like this app ? Then take a little bit of your time to leave a rating :',
         contentBuilder: contentBuilder ??
             ((BuildContext context, Widget defaultContent) => defaultContent),
-        actionsBuilder: actionsBuilder,
+        actionsBuilder: actionsBuilder!,
         dialogStyle: dialogStyle ??
             const DialogStyle(
               titleAlign: TextAlign.center,
@@ -238,10 +238,10 @@ class RateMyApp {
 
   /// Adds the default conditions to the current conditions list.
   void populateWithDefaultConditions({
-    int minDays,
-    int remindDays,
-    int minLaunches,
-    int remindLaunches,
+    int? minDays,
+    int? remindDays,
+    int? minLaunches,
+    int? remindLaunches,
   }) {
     conditions.add(MinimumDaysCondition(
       minDays: minDays ?? 7,

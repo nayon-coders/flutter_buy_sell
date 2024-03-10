@@ -620,14 +620,14 @@ mixin Utils {
         final String itemId = message['item_id'];
         final String action = message['action'];
 
-        if (userProvider.psValueHolder.loginUserId != null && userProvider.psValueHolder.loginUserId != '' && !isReachChatView) {
+        if (userProvider.psValueHolder!.loginUserId != null && userProvider.psValueHolder!.loginUserId != '' && !isReachChatView) {
           _showChatNotification(context, notiMessage, sellerId, buyerId, senderName, senderProflePhoto, itemId, action, loginUserId);
         }
       } else if (flag == 'review') {
         // final String rating = message['data']['rating'];
         final String rating = message['rating'];
         final String ratingMessage = Utils.getString(context, 'noti_message__text1') + rating.split('.')[0] + Utils.getString(context, 'noti_message__text2') + '\n"' + notiMessage + '"';
-        _onSelectReviewNotification(context, ratingMessage, userProvider.psValueHolder.loginUserId);
+        _onSelectReviewNotification(context, ratingMessage, userProvider.psValueHolder!.loginUserId);
       } else {
         _onSelectApprovalNotification(context, notiMessage);
       }
@@ -650,13 +650,13 @@ mixin Utils {
         final String itemId = data['item_id'];
         final String action = data['action'];
 
-        if (userProvider.psValueHolder.loginUserId != null && userProvider.psValueHolder.loginUserId != '' && !isReachChatView) {
+        if (userProvider.psValueHolder!.loginUserId != null && userProvider.psValueHolder!.loginUserId != '' && !isReachChatView) {
           _showChatNotification(context, notiMessage, sellerId, buyerId, senderName, senderProflePhoto, itemId, action, loginUserId);
         }
       } else if (flag == 'review') {
         final String rating = data['rating'];
         final String ratingMessage = Utils.getString(context, 'noti_message__text1') + rating.split('.')[0] + Utils.getString(context, 'noti_message__text2') + '\n"' + notiMessage + '"';
-        _onSelectReviewNotification(context, ratingMessage, userProvider.psValueHolder.loginUserId);
+        _onSelectReviewNotification(context, ratingMessage, userProvider.psValueHolder!.loginUserId);
       } else {
         _onSelectApprovalNotification(context, notiMessage);
       }

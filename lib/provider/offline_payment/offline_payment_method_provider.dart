@@ -21,7 +21,7 @@ class OfflinePaymentMethodProvider extends PsProvider {
     });
 
     notiListStream = StreamController<PsResource<OfflinePaymentMethod>>.broadcast();
-    subscription = notiListStream.stream.listen((dynamic resource) {
+    subscription = notiListStream!.stream.listen((dynamic resource) {
       // updateOffset(resource.data.length);
 
       _notiList = resource;
@@ -36,10 +36,10 @@ class OfflinePaymentMethodProvider extends PsProvider {
       }
     });
   }
-  OfflinePaymentMethodRepository _repo;
+  OfflinePaymentMethodRepository? _repo;
   PsValueHolder? psValueHolder;
   String userId = '';
-  String deviceToken;
+  String? deviceToken;
 
   final PsResource<OfflinePaymentMethod> _noti = PsResource<OfflinePaymentMethod>(PsStatus.NOACTION, '', null);
   PsResource<OfflinePaymentMethod> get user => _noti;
@@ -47,11 +47,11 @@ class OfflinePaymentMethodProvider extends PsProvider {
   PsResource<OfflinePaymentMethod> _notiList =
       PsResource<OfflinePaymentMethod>(PsStatus.NOACTION, '', null);
   PsResource<OfflinePaymentMethod> get offlinePaymentMethod => _notiList;
-  StreamSubscription<dynamic> subscription;
-  StreamController<PsResource<OfflinePaymentMethod>> notiListStream;
+  StreamSubscription<dynamic>? subscription;
+  StreamController<PsResource<OfflinePaymentMethod>>? notiListStream;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Notification Provider Dispose: $hashCode');
     super.dispose();
@@ -61,7 +61,7 @@ class OfflinePaymentMethodProvider extends PsProvider {
     isConnectedToInternet = await Utils.checkInternetConnectivity();
     isLoading = true;
 
-    await _repo.getOfflinePaymentList(notiListStream, isConnectedToInternet, limit,
+    await _repo!.getOfflinePaymentList(notiListStream!, isConnectedToInternet, limit,
         offset, PsStatus.BLOCK_LOADING);
   }
 
@@ -70,7 +70,7 @@ class OfflinePaymentMethodProvider extends PsProvider {
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
 
-      await _repo.getNextPageOfflinePaymentList(notiListStream, isConnectedToInternet,
+      await _repo!.getNextPageOfflinePaymentList(notiListStream!, isConnectedToInternet,
           limit, offset, PsStatus.PROGRESS_LOADING);
     }
   }
@@ -81,7 +81,7 @@ class OfflinePaymentMethodProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getOfflinePaymentList(notiListStream, isConnectedToInternet, limit,
+    await _repo!.getOfflinePaymentList(notiListStream!, isConnectedToInternet, limit,
         offset, PsStatus.BLOCK_LOADING);
 
     isLoading = false;

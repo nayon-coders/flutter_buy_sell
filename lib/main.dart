@@ -131,7 +131,7 @@ class _PSAppState extends State<PSApp> {
       Utils.psPrint('init ps shareperferences');
       psSharedPreferences = PsSharedPreferences.instance;
       Utils.psPrint('get shared');
-      psSharedPreferences.futureShared.then((SharedPreferences sh) {
+      psSharedPreferences.futureShared!.then((SharedPreferences sh) {
         psSharedPreferences.shared = sh;
 
         Utils.psPrint('init theme provider');

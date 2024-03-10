@@ -16,20 +16,20 @@ class ItemTypeRepository extends PsRepository {
     _itemTypeDao = itemTypeDao;
   }
 
-  PsApiService _psApiService;
-  ItemTypeDao _itemTypeDao;
+  PsApiService? _psApiService;
+  ItemTypeDao? _itemTypeDao;
   final String _primaryKey = 'id';
 
   Future<dynamic> insert(ItemType itemType) async {
-    return _itemTypeDao.insert(_primaryKey, itemType);
+    return _itemTypeDao!.insert(_primaryKey, itemType);
   }
 
   Future<dynamic> update(ItemType itemType) async {
-    return _itemTypeDao.update(itemType);
+    return _itemTypeDao!.update(itemType);
   }
 
   Future<dynamic> delete(ItemType itemType) async {
-    return _itemTypeDao.delete(itemType);
+    return _itemTypeDao!.delete(itemType);
   }
 
   Future<dynamic> getItemTypeList(
@@ -40,21 +40,21 @@ class ItemTypeRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
 
-    itemTypeListStream.sink.add(await _itemTypeDao.getAll(status: status));
+    itemTypeListStream.sink.add(await _itemTypeDao!.getAll(status: status));
 
     final PsResource<List<ItemType>> _resource =
-        await _psApiService.getItemTypeList(limit, offset);
+        await _psApiService!.getItemTypeList(limit, offset);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      await _itemTypeDao.deleteAll();
-      await _itemTypeDao.insertAll(_primaryKey, _resource.data!);
+      await _itemTypeDao!.deleteAll();
+      await _itemTypeDao!.insertAll(_primaryKey, _resource.data!);
       
     }else{
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
-        await _itemTypeDao.deleteAll();
+        await _itemTypeDao!.deleteAll();
       }
     }
-    itemTypeListStream.sink.add(await _itemTypeDao.getAll());
+    itemTypeListStream.sink.add(await _itemTypeDao!.getAll());
   }
 
   Future<dynamic> getNextPageItemTypeList(
@@ -64,19 +64,19 @@ class ItemTypeRepository extends PsRepository {
       int offset,
       PsStatus status,
       {bool isLoadFromServer = true}) async {
-    itemTypeListStream.sink.add(await _itemTypeDao.getAll(status: status));
+    itemTypeListStream.sink.add(await _itemTypeDao!.getAll(status: status));
 
     final PsResource<List<ItemType>> _resource =
-        await _psApiService.getItemTypeList(limit, offset);
+        await _psApiService!.getItemTypeList(limit, offset);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      _itemTypeDao
+      _itemTypeDao!
           .insertAll(_primaryKey, _resource.data!)
           .then((dynamic data) async {
-        itemTypeListStream.sink.add(await _itemTypeDao.getAll());
+        itemTypeListStream.sink.add(await _itemTypeDao!.getAll());
       });
     } else {
-      itemTypeListStream.sink.add(await _itemTypeDao.getAll());
+      itemTypeListStream.sink.add(await _itemTypeDao!.getAll());
     }
   }
 }

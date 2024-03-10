@@ -34,8 +34,8 @@ abstract class DebuggableCondition extends Condition {
 class MinimumDaysCondition extends DebuggableCondition {
   /// Creates a new minimum days condition instance.
   MinimumDaysCondition({
-    @required this.minDays,
-    @required this.remindDays,
+    required this.minDays,
+    required this.remindDays,
   })  : assert(minDays != null),
         assert(remindDays != null);
 
@@ -47,7 +47,7 @@ class MinimumDaysCondition extends DebuggableCondition {
   final int remindDays;
 
   /// The minimum date required to meet this condition.
-  DateTime minimumDate;
+  DateTime? minimumDate;
 
   
   @override
@@ -62,14 +62,14 @@ class MinimumDaysCondition extends DebuggableCondition {
   Future<void> saveToPreferences(
       SharedPreferences preferences, String preferencesPrefix) {
     return preferences.setInt(
-        preferencesPrefix + 'minimumDate', minimumDate.millisecondsSinceEpoch);
+        preferencesPrefix + 'minimumDate', minimumDate!.millisecondsSinceEpoch);
   }
 
   @override
   void reset() => minimumDate = _now();
 
   @override
-  bool get isMet => DateTime.now().isAfter(minimumDate);
+  bool get isMet => DateTime.now().isAfter(minimumDate!);
 
   @override
   bool onEventOccurred(RateMyAppEventType eventType) {
@@ -84,7 +84,7 @@ class MinimumDaysCondition extends DebuggableCondition {
 
   @override
   String get valuesAsString {
-    return 'Minimum days : $minDays\nRemind days : $remindDays\nMinimum valid date : ${_dateToString(minimumDate)}';
+    return 'Minimum days : $minDays\nRemind days : $remindDays\nMinimum valid date : ${_dateToString(minimumDate!)}';
   }
 
   /// Returns a formatted date string.
@@ -95,7 +95,7 @@ class MinimumDaysCondition extends DebuggableCondition {
   String _addZeroIfNeeded(int number) => number.toString().padLeft(2, '0');
 
   /// Returns the current date with the minimum days added.
-  DateTime _now([Duration toAdd]) =>
+  DateTime _now([Duration? toAdd]) =>
       DateTime.now().add(toAdd ?? Duration(days: minDays));
 }
 
@@ -104,19 +104,19 @@ class MinimumAppLaunchesCondition extends DebuggableCondition {
   
   /// Creates a new minimum app launches condition instance.
   MinimumAppLaunchesCondition({
-    @required this.minLaunches,
-    @required this.remindLaunches,
+    required this.minLaunches,
+    required this.remindLaunches,
   })  : assert(minLaunches != null),
         assert(remindLaunches != null);
 
   /// Minimum launches before being able to show the dialog.
-  final int minLaunches;
+  final int? minLaunches;
 
   /// Launches to subtract to the number of launches when the user clicks on "Maybe later".
-  final int remindLaunches;
+  final int? remindLaunches;
 
   /// Number of app launches.
-  int launches;
+  int? launches;
 
   
   @override
@@ -128,25 +128,25 @@ class MinimumAppLaunchesCondition extends DebuggableCondition {
   @override
   Future<void> saveToPreferences(
       SharedPreferences preferences, String preferencesPrefix) {
-    return preferences.setInt(preferencesPrefix + 'launches', launches);
+    return preferences.setInt(preferencesPrefix + 'launches', launches!);
   }
 
   @override
   void reset() => launches = 0;
 
   @override
-  bool get isMet => launches >= minLaunches;
+  bool get isMet => launches! >= minLaunches!;
 
   @override
   bool onEventOccurred(RateMyAppEventType eventType) {
     if (eventType == RateMyAppEventType.initialized) {
-      launches++;
+      launches;
       return true;
     }
 
     if (eventType == RateMyAppEventType.laterButtonPressed ||
         eventType == RateMyAppEventType.iOSRequestReview) {
-      launches -= remindLaunches;
+      launches = remindLaunches!;
       return true;
     }
 
@@ -162,7 +162,7 @@ class MinimumAppLaunchesCondition extends DebuggableCondition {
 /// The do not open again condition.
 class DoNotOpenAgainCondition extends DebuggableCondition {
   /// Whether the dialog should not be opened again.
-  bool doNotOpenAgain;
+  bool? doNotOpenAgain;
 
   @override
   void readFromPreferences(
@@ -175,14 +175,14 @@ class DoNotOpenAgainCondition extends DebuggableCondition {
   Future<void> saveToPreferences(
       SharedPreferences preferences, String preferencesPrefix) {
     return preferences.setBool(
-        preferencesPrefix + 'doNotOpenAgain', doNotOpenAgain);
+        preferencesPrefix + 'doNotOpenAgain', doNotOpenAgain!);
   }
 
   @override
   void reset() => doNotOpenAgain = false;
 
   @override
-  bool get isMet => !doNotOpenAgain;
+  bool get isMet => !doNotOpenAgain!;
 
   @override
   bool onEventOccurred(RateMyAppEventType eventType) {
@@ -197,6 +197,6 @@ class DoNotOpenAgainCondition extends DebuggableCondition {
 
   @override
   String get valuesAsString {
-    return 'Do not open again ? ' + (doNotOpenAgain ? 'Yes' : 'No');
+    return 'Do not open again ? ' + (doNotOpenAgain! ? 'Yes' : 'No');
   }
 }

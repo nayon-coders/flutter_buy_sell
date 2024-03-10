@@ -22,7 +22,7 @@ class TouchCountProvider extends PsProvider {
     });
   }
 
-  ProductRepository _repo;
+  ProductRepository? _repo;
   PsValueHolder psValueHolder;
 
   PsResource<ApiStatus> _apiStatus =
@@ -43,7 +43,7 @@ class TouchCountProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _apiStatus = await _repo.postTouchCount(
+    _apiStatus = await _repo!.postTouchCount(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _apiStatus;

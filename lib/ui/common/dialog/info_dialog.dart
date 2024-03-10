@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class InfoDialog extends StatefulWidget {
   const InfoDialog({this.message});
-  final String message;
+  final String? message;
   @override
   _InfoDialogState createState() => _InfoDialogState();
 }
@@ -19,8 +19,8 @@ class _InfoDialogState extends State<InfoDialog> {
 
 class NewDialog extends StatelessWidget {
   const NewDialog({
-    Key key,
-    @required this.widget,
+    Key? key,
+    required this.widget,
   }) : super(key: key);
 
   final InfoDialog widget;
@@ -66,7 +66,7 @@ class NewDialog extends StatelessWidget {
                 top: PsDimens.space8,
                 bottom: PsDimens.space8),
             child: Text(
-              widget.message,
+              widget.message!,
               style: Theme.of(context).textTheme.subtitle2,
             ),
           ),
@@ -85,7 +85,7 @@ class NewDialog extends StatelessWidget {
               Utils.getString(context, 'dialog__ok'),
               style: Theme.of(context)
                   .textTheme
-                  .button
+                  .button!
                   .copyWith(color: PsColors.mainColor),
             ),
           )

@@ -30,8 +30,8 @@ class ProductRepository extends PsRepository {
   String mapKey = 'map_key';
   String addedUserIdKey = 'added_user_id';
   String collectionIdKey = 'collection_id';
-  PsApiService _psApiService;
-  ProductDao _productDao;
+  PsApiService? _psApiService;
+  ProductDao? _productDao;
 
   void sinkProductListStream(
       StreamController<PsResource<List<Product>>> productListStream,
@@ -82,15 +82,15 @@ class ProductRepository extends PsRepository {
   }
 
   Future<dynamic> insert(Product product) async {
-    return _productDao.insert(primaryKey, product);
+    return _productDao!.insert(primaryKey, product);
   }
 
   Future<dynamic> update(Product product) async {
-    return _productDao.update(product);
+    return _productDao!.update(product);
   }
 
   Future<dynamic> delete(Product product) async {
-    return _productDao.delete(product);
+    return _productDao!.delete(product);
   }
 
   Future<dynamic> getItemFromDB(String itemId,
@@ -98,7 +98,7 @@ class ProductRepository extends PsRepository {
     final Finder finder = Finder(filter: Filter.equals(primaryKey, itemId));
 
     itemStream.sink
-        .add(await _productDao.getOne(finder: finder, status: status));
+        .add(await _productDao!.getOne(finder: finder, status: status));
   }
 
   Future<dynamic> getProductList(
@@ -117,13 +117,13 @@ class ProductRepository extends PsRepository {
     // Load from Db and Send to UI
     sinkProductListStream(
         productListStream,
-        await _productDao.getAllByMap(
+        await _productDao!.getAllByMap(
             primaryKey, mapKey, paramKey, productMapDao, ProductMap(),
             status: status));
 
     // Server Call
     if (isConnectedToInternet) {
-      final PsResource<List<Product>> _resource = await _psApiService
+      final PsResource<List<Product>> _resource = await _psApiService!
           .getProductList(holder.toMap(), loginUserId, limit, offset);
 
       print('Param Key $paramKey');
@@ -149,7 +149,7 @@ class ProductRepository extends PsRepository {
         await productMapDao.insertAll(primaryKey, productMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data!);
+        await _productDao!.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
           print('delete all');
@@ -163,7 +163,7 @@ class ProductRepository extends PsRepository {
       //     await _productDao.getAllByMap(
       //         primaryKey, mapKey, paramKey, productMapDao, ProductMap()));
       final dynamic subscription =
-          await _productDao.getAllWithSubscriptionByMap(
+          await _productDao!.getAllWithSubscriptionByMap(
               primaryKey: primaryKey,
               mapKey: mapKey,
               paramKey: paramKey,
@@ -198,11 +198,11 @@ class ProductRepository extends PsRepository {
     // Load from Db and Send to UI
     sinkProductListStream(
         productListStream,
-        await _productDao.getAllByMap(
+        await _productDao!.getAllByMap(
             primaryKey, mapKey, paramKey, productMapDao, ProductMap(),
             status: status));
     if (isConnectedToInternet) {
-      final PsResource<List<Product>> _resource = await _psApiService
+      final PsResource<List<Product>> _resource = await _psApiService!
           .getProductList(holder.toMap(), loginUserId, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
@@ -227,11 +227,11 @@ class ProductRepository extends PsRepository {
         await productMapDao.insertAll(primaryKey, productMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data!);
+        await _productDao!.insertAll(primaryKey, _resource.data!);
       }
       sinkProductListStream(
           productListStream,
-          await _productDao.getAllByMap(
+          await _productDao!.getAllByMap(
               primaryKey, mapKey, paramKey, productMapDao, ProductMap()));
     }
   }
@@ -245,20 +245,20 @@ class ProductRepository extends PsRepository {
       {bool isLoadFromServer = true}) async {
     final Finder finder = Finder(filter: Filter.equals(primaryKey, itemId));
     sinkItemDetailStream(itemDetailStream,
-        await _productDao.getOne(status: status, finder: finder));
+        await _productDao!.getOne(status: status, finder: finder));
 
     if (isConnectedToInternet) {
       final PsResource<Product> _resource =
-          await _psApiService.getItemDetail(itemId, loginUserId);
+          await _psApiService!.getItemDetail(itemId, loginUserId);
 
       if (_resource.status == PsStatus.SUCCESS) {
         // await _productDao.deleteWithFinder(finder);
-        await _productDao.insert(primaryKey, _resource.data!);
+        await _productDao!.insert(primaryKey, _resource.data!);
       }
       // sinkItemDetailStream(
       //     itemDetailStream, await _productDao.getOne(finder: finder));
 
-      final dynamic subscription = _productDao.getOneWithSubscription(
+      final dynamic subscription = _productDao!.getOneWithSubscription(
           status: PsStatus.SUCCESS,
           finder: finder,
           onDataUpdated: (Product product) {
@@ -285,10 +285,10 @@ class ProductRepository extends PsRepository {
     // Prepare Holder and Map Dao
     final Finder finder = Finder(filter: Filter.equals(primaryKey, itemId));
 
-    await _productDao.deleteWithFinder(finder);
+    await _productDao!.deleteWithFinder(finder);
 
     sinkItemDetailStream(
-        itemDetailStream, await _productDao.getOne(finder: finder));
+        itemDetailStream, await _productDao!.getOne(finder: finder));
   }
 
   Future<dynamic> deleteLocalProductCacheByUserId(
@@ -302,10 +302,10 @@ class ProductRepository extends PsRepository {
     final Finder finder =
         Finder(filter: Filter.equals(addedUserIdKey, addedUserId));
 
-    await _productDao.deleteWithFinder(finder);
+    await _productDao!.deleteWithFinder(finder);
 
     sinkItemDetailStream(
-        itemDetailStream, await _productDao.getOne(finder: finder));
+        itemDetailStream, await _productDao!.getOne(finder: finder));
   }
 
   Future<dynamic> getItemDetailForFav(
@@ -319,13 +319,13 @@ class ProductRepository extends PsRepository {
 
     if (isConnectedToInternet) {
       final PsResource<Product> _resource =
-          await _psApiService.getItemDetail(itemId, loginUserId);
+          await _psApiService!.getItemDetail(itemId, loginUserId);
 
       if (_resource.status == PsStatus.SUCCESS) {
         // await _productDao.deleteWithFinder(finder);
-        await _productDao.insert(primaryKey, _resource.data!);
+        await _productDao!.insert(primaryKey, _resource.data!);
         sinkItemDetailStream(
-            productDetailStream, await _productDao.getOne(finder: finder));
+            productDetailStream, await _productDao!.getOne(finder: finder));
       }
     }
   }
@@ -346,14 +346,14 @@ class ProductRepository extends PsRepository {
     // Load from Db and Send to UI
     sinkFavouriteProductListStream(
         favouriteProductListStream,
-        await _productDao.getAllByJoin(
+        await _productDao!.getAllByJoin(
             primaryKey, favouriteProductDao, FavouriteProduct(),
             status: status));
 
     // Server Call
     if (isConnectedToInternet) {
       final PsResource<List<Product>> _resource =
-          await _psApiService.getFavouritesList(loginUserId, limit, offset);
+          await _psApiService!.getFavouritesList(loginUserId, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
         // Create Map List
@@ -373,7 +373,7 @@ class ProductRepository extends PsRepository {
             primaryKey, favouriteProductMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data!);
+        await _productDao!.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
           // Delete and Insert Map Dao
@@ -383,7 +383,7 @@ class ProductRepository extends PsRepository {
       // Load updated Data from Db and Send to UI
       sinkFavouriteProductListStream(
           favouriteProductListStream,
-          await _productDao.getAllByJoin(
+          await _productDao!.getAllByJoin(
               primaryKey, favouriteProductDao, FavouriteProduct()));
     }
   }
@@ -401,13 +401,13 @@ class ProductRepository extends PsRepository {
     // Load from Db and Send to UI
     sinkFavouriteProductListStream(
         favouriteProductListStream,
-        await _productDao.getAllByJoin(
+        await _productDao!.getAllByJoin(
             primaryKey, favouriteProductDao, FavouriteProduct(),
             status: status));
 
     if (isConnectedToInternet) {
       final PsResource<List<Product>> _resource =
-          await _psApiService.getFavouritesList(loginUserId, limit, offset);
+          await _psApiService!.getFavouritesList(loginUserId, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
         // Create Map List
@@ -431,11 +431,11 @@ class ProductRepository extends PsRepository {
             primaryKey, favouriteProductMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data!);
+        await _productDao!.insertAll(primaryKey, _resource.data!);
       }
       sinkFavouriteProductListStream(
           favouriteProductListStream,
-          await _productDao.getAllByJoin(
+          await _productDao!.getAllByJoin(
               primaryKey, favouriteProductDao, FavouriteProduct()));
     }
   }
@@ -444,7 +444,7 @@ class ProductRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<Product> _resource =
-        await _psApiService.postFavourite(jsonMap);
+        await _psApiService!.postFavourite(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -459,7 +459,7 @@ class ProductRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
-        await _psApiService.postTouchCount(jsonMap);
+        await _psApiService!.postTouchCount(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -486,14 +486,14 @@ class ProductRepository extends PsRepository {
     // Load from Db and Send to UI
     sinkRelatedProductListStream(
         relatedProductListStream,
-        await _productDao.getAllByJoin(
+        await _productDao!.getAllByJoin(
             primaryKey, relatedProductDao, RelatedProduct(),
             status: status));
 
     // Server Call
     if (isConnectedToInternet) {
       final PsResource<List<Product>> _resource =
-          await _psApiService.getRelatedProductList(
+          await _psApiService!.getRelatedProductList(
               productId, categoryId, loginUserId, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
@@ -512,7 +512,7 @@ class ProductRepository extends PsRepository {
         await relatedProductDao.insertAll(primaryKey, relatedProductMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data!);
+        await _productDao!.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
           // Delete and Insert Map Dao
@@ -522,7 +522,7 @@ class ProductRepository extends PsRepository {
       // Load updated Data from Db and Send to UI
       sinkRelatedProductListStream(
           relatedProductListStream,
-          await _productDao.getAllByJoin(
+          await _productDao!.getAllByJoin(
               primaryKey, relatedProductDao, RelatedProduct()));
     }
   }
@@ -541,13 +541,13 @@ class ProductRepository extends PsRepository {
     // Load from Db and Send to UI
     sinkFollowerItemListStream(
         itemListFromFollowersStream,
-        await _productDao.getAllByJoin(
+        await _productDao!.getAllByJoin(
             primaryKey, followerItemDao, FollowerItem(),
             status: status));
 
     // Server Call
     if (isConnectedToInternet) {
-      final PsResource<List<Product>> _resource = await _psApiService
+      final PsResource<List<Product>> _resource = await _psApiService!
           .getAllItemListFromFollower(loginUserId, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
@@ -566,7 +566,7 @@ class ProductRepository extends PsRepository {
         await followerItemDao.insertAll(primaryKey, followerItemMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data!);
+        await _productDao!.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
           // Delete and Insert Map Dao
@@ -580,7 +580,7 @@ class ProductRepository extends PsRepository {
       //         primaryKey, followerItemDao, FollowerItem()));
 
       final dynamic subscription =
-          await _productDao.getAllWithSubscriptionByJoin(
+          await _productDao!.getAllWithSubscriptionByJoin(
               primaryKey: primaryKey,
               mapDao: followerItemDao,
               mapObj: FollowerItem(),
@@ -611,12 +611,12 @@ class ProductRepository extends PsRepository {
     // Load from Db and Send to UI
     sinkFollowerItemListStream(
         itemListFromFollowersStream,
-        await _productDao.getAllByJoin(
+        await _productDao!.getAllByJoin(
             primaryKey, followerItemDao, FollowerItem(),
             status: status));
 
     if (isConnectedToInternet) {
-      final PsResource<List<Product>> _resource = await _psApiService
+      final PsResource<List<Product>> _resource = await _psApiService!
           .getAllItemListFromFollower(loginUserId, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
@@ -639,11 +639,11 @@ class ProductRepository extends PsRepository {
         await followerItemDao.insertAll(primaryKey, followerItemMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data!);
+        await _productDao!.insertAll(primaryKey, _resource.data!);
       }
       sinkFavouriteProductListStream(
           itemListFromFollowersStream,
-          await _productDao.getAllByJoin(
+          await _productDao!.getAllByJoin(
               primaryKey, followerItemDao, FollowerItem()));
     }
   }
@@ -664,13 +664,13 @@ class ProductRepository extends PsRepository {
     // Load from Db and Send to UI
     sinkProductListStream(
         productListStream,
-        await _productDao.getAllByMap(
+        await _productDao!.getAllByMap(
             primaryKey, mapKey, paramKey, productMapDao, ProductMap(),
             status: status));
 
     // Server Call
     if (isConnectedToInternet) {
-      final PsResource<List<Product>> _resource = await _psApiService
+      final PsResource<List<Product>> _resource = await _psApiService!
           .getItemListByUserId(holder.toMap(), loginUserId, limit, offset);
 
       print('Param Key $paramKey');
@@ -696,7 +696,7 @@ class ProductRepository extends PsRepository {
         await productMapDao.insertAll(primaryKey, productMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data!);
+        await _productDao!.insertAll(primaryKey, _resource.data!);
       } else {
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
           // Delete and Insert Map Dao
@@ -706,7 +706,7 @@ class ProductRepository extends PsRepository {
       }
 
       final dynamic subscription =
-          await _productDao.getAllWithSubscriptionByMap(
+          await _productDao!.getAllWithSubscriptionByMap(
               primaryKey: primaryKey,
               mapKey: mapKey,
               paramKey: paramKey,
@@ -741,11 +741,11 @@ class ProductRepository extends PsRepository {
     // Load from Db and Send to UI
     sinkProductListStream(
         productListStream,
-        await _productDao.getAllByMap(
+        await _productDao!.getAllByMap(
             primaryKey, mapKey, paramKey, productMapDao, ProductMap(),
             status: status));
     if (isConnectedToInternet) {
-      final PsResource<List<Product>> _resource = await _psApiService
+      final PsResource<List<Product>> _resource = await _psApiService!
           .getItemListByUserId(holder.toMap(), loginUserId, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
@@ -770,11 +770,11 @@ class ProductRepository extends PsRepository {
         await productMapDao.insertAll(primaryKey, productMapList);
 
         // Insert Product
-        await _productDao.insertAll(primaryKey, _resource.data!);
+        await _productDao!.insertAll(primaryKey, _resource.data!);
       }
       sinkProductListStream(
           productListStream,
-          await _productDao.getAllByMap(
+          await _productDao!.getAllByMap(
               primaryKey, mapKey, paramKey, productMapDao, ProductMap()));
     }
   }
@@ -788,16 +788,16 @@ class ProductRepository extends PsRepository {
       MarkSoldOutItemParameterHolder holder,
       {bool isLoadFromServer = true}) async {
     sinkItemDetailStream(
-        markSoldOutStream, await _productDao.getOne(status: status));
+        markSoldOutStream, await _productDao!.getOne(status: status));
 
     if (isConnectedToInternet) {
       final PsResource<Product> _resource =
-          await _psApiService.markSoldOutItem(holder.toMap(), loginUserId);
+          await _psApiService!.markSoldOutItem(holder.toMap(), loginUserId);
 
       if (_resource.status == PsStatus.SUCCESS) {
         //await _productDao.deleteAll();
-        await _productDao.update(_resource.data!);
-        sinkItemDetailStream(markSoldOutStream, await _productDao.getOne());
+        await _productDao!.update(_resource.data!);
+        sinkItemDetailStream(markSoldOutStream, await _productDao!.getOne());
       }
     }
   }
@@ -806,7 +806,7 @@ class ProductRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<Product> _resource =
-        await _psApiService.postItemEntry(jsonMap);
+        await _psApiService!.postItemEntry(jsonMap);
 
     if (_resource.status == PsStatus.SUCCESS) {
       await insert(_resource.data!);
@@ -826,7 +826,7 @@ class ProductRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
-        await _psApiService.deleteItem(jsonMap);
+        await _psApiService!.deleteItem(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {

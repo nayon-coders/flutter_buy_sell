@@ -24,7 +24,7 @@ class GetChatHistoryProvider extends PsProvider {
     chatHistoryStream = StreamController<PsResource<ChatHistory>>.broadcast();
 
     subscription =
-        chatHistoryStream.stream.listen((PsResource<ChatHistory> resource) {
+        chatHistoryStream!.stream.listen((PsResource<ChatHistory> resource) {
       // updateOffset(resource.data.length);
 
       _chatHistory = resource;
@@ -39,14 +39,14 @@ class GetChatHistoryProvider extends PsProvider {
       }
     });
   }
-  ChatHistoryRepository _repo;
+  ChatHistoryRepository? _repo;
   PsResource<ChatHistory> _chatHistory =
       PsResource<ChatHistory>(PsStatus.NOACTION, '', null);
 
   PsResource<ChatHistory> get chatHistory => _chatHistory;
-  StreamSubscription<PsResource<ChatHistory>> subscription;
-  StreamController<PsResource<ChatHistory>> chatHistoryStream;
-  String _currentTimeString;
+  StreamSubscription<PsResource<ChatHistory>>? subscription;
+  StreamController<PsResource<ChatHistory>>? chatHistoryStream;
+  String? _currentTimeString;
 
   dynamic daoSubscription;
   @override
@@ -54,7 +54,7 @@ class GetChatHistoryProvider extends PsProvider {
     if (daoSubscription != null) {
       daoSubscription.cancel();
     }
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('ChatHistory Provider Dispose: $hashCode');
     super.dispose();
@@ -65,8 +65,8 @@ class GetChatHistoryProvider extends PsProvider {
   ) async {
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _chatHistory = await _repo.getChatHistoryForOne(
-        chatHistoryStream, holder, isConnectedToInternet, PsStatus.SUCCESS);
+    _chatHistory = await _repo!.getChatHistoryForOne(
+        chatHistoryStream!, holder, isConnectedToInternet, PsStatus.SUCCESS);
     return _chatHistory;
   }
 
@@ -79,7 +79,7 @@ class GetChatHistoryProvider extends PsProvider {
       this._currentTimeString = _currentTimeString;
       isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-      _chatHistory = await _repo.postChatHistory(
+      _chatHistory = await _repo!.postChatHistory(
           jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
       isLoading = false;
@@ -93,7 +93,7 @@ class GetChatHistoryProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _chatHistory = await _repo.postAcceptedOffer(
+    _chatHistory = await _repo!.postAcceptedOffer(
         jsonMap, loginUserId, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _chatHistory;
@@ -105,7 +105,7 @@ class GetChatHistoryProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _chatHistory = await _repo.postRejectedOffer(
+    _chatHistory = await _repo!.postRejectedOffer(
         jsonMap, loginUserId, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _chatHistory;
@@ -117,8 +117,8 @@ class GetChatHistoryProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    await _repo.makeMarkAsSold(
-      chatHistoryStream,
+    await _repo!.makeMarkAsSold(
+      chatHistoryStream!,
       loginUserId,
       holder.toMap(),
       isConnectedToInternet,

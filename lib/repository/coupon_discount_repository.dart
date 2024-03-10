@@ -14,7 +14,7 @@ class CouponDiscountRepository extends PsRepository {
     _psApiService = psApiService;
   }
   String primaryKey = 'id';
-  PsApiService _psApiService;
+  PsApiService? _psApiService;
 
   Future<PsResource<CouponDiscount>> postCouponDiscount(
       Map<dynamic, dynamic> jsonMap,
@@ -22,7 +22,7 @@ class CouponDiscountRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<CouponDiscount> _resource =
-        await _psApiService.postCouponDiscount(jsonMap);
+        await _psApiService!.postCouponDiscount(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {

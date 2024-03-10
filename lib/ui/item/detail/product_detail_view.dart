@@ -265,9 +265,9 @@ class _ProductDetailState extends State<ProductDetailView>
                                   ),
                                   if (provider.itemDetail.data!.addedUserId ==
                                           provider
-                                              .psValueHolder.loginUserId ||
+                                              .psValueHolder!.loginUserId ||
                                       provider.itemDetail.data!.addedUserId !=
-                                          provider.psValueHolder.loginUserId)
+                                          provider.psValueHolder!.loginUserId)
                                     Container(
                                       margin: const EdgeInsets.only(
                                           left: PsDimens.space12,
@@ -285,7 +285,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                              provider.itemDetail.data!
                                                       .addedUserId ==
                                                   provider.psValueHolder
-                                                      .loginUserId)
+                                                      !.loginUserId)
                                             Container(
                                               decoration: BoxDecoration(
                                                   borderRadius:
@@ -312,7 +312,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                               PsConst.ADS_REJECT && 
                                              provider.itemDetail.data!
                                                       .addedUserId ==
-                                                  provider.psValueHolder
+                                                  provider.psValueHolder!
                                                       .loginUserId)
                                             Container(
                                               decoration: BoxDecoration(
@@ -340,7 +340,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                                   .ADS_WAITING_FOR_APPROVAL &&
                                              provider.itemDetail.data!
                                                       .addedUserId ==
-                                                  provider.psValueHolder
+                                                  provider.psValueHolder!
                                                       .loginUserId)
                                             Container(
                                               decoration: BoxDecoration(
@@ -366,7 +366,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                                   PsConst.ADSFINISHED &&
                                               provider.itemDetail.data!
                                                       .addedUserId ==
-                                                  provider.psValueHolder
+                                                  provider.psValueHolder!
                                                       .loginUserId) 
                                                         ...<Widget>[
                                             Container(
@@ -395,7 +395,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                                   PsConst.ADSNOTYETSTART &&
                                                   provider.itemDetail.data!
                                                       .addedUserId ==
-                                                  provider.psValueHolder
+                                                  provider.psValueHolder!
                                                       .loginUserId)
                                                    ...<Widget>[
                                                 Container(
@@ -508,7 +508,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                                     // )
                                                     else if (provider.itemDetail
                                                             .data!.addedUserId ==
-                                                        provider.psValueHolder
+                                                        provider.psValueHolder!
                                                             .loginUserId)
                                                       Expanded(
                                                         child: InkWell(
@@ -665,7 +665,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                                   PsConst.ADSPROGRESS  && 
                                              provider.itemDetail.data!
                                                       .addedUserId ==
-                                                  provider.psValueHolder
+                                                  provider.psValueHolder!
                                                       .loginUserId)
                                                 Container(
                                                   decoration: BoxDecoration(
@@ -692,7 +692,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                                       PsConst.ADSFINISHED &&
                                                   provider.itemDetail.data!
                                                           .addedUserId ==
-                                                      provider.psValueHolder
+                                                      provider.psValueHolder!
                                                           .loginUserId)
                                                 Container(
                                                   decoration: BoxDecoration(
@@ -718,7 +718,7 @@ class _ProductDetailState extends State<ProductDetailView>
                                                   PsConst.ADSNOTYETSTART && 
                                                   provider.itemDetail.data!
                                                       .addedUserId ==
-                                                  provider.psValueHolder
+                                                  provider.psValueHolder!
                                                       .loginUserId)
                                                 Container(
                                                   decoration: BoxDecoration(
@@ -1034,10 +1034,10 @@ class _PopUpMenuWidget extends StatelessWidget {
             onSelected: _onSelect,
             itemBuilder: (BuildContext context) {
               return <PopupMenuEntry<String>>[
-                if (itemDetailProvider.psValueHolder.loginUserId !=
+                if (itemDetailProvider.psValueHolder!.loginUserId !=
                         itemUserId &&
-                    itemDetailProvider.psValueHolder.loginUserId != null &&
-                    itemDetailProvider.psValueHolder.loginUserId != '')
+                    itemDetailProvider.psValueHolder!.loginUserId != null &&
+                    itemDetailProvider.psValueHolder!.loginUserId != '')
                   PopupMenuItem<String>(
                     value: '1',
                     child: Visibility(
@@ -1048,10 +1048,10 @@ class _PopUpMenuWidget extends StatelessWidget {
                       ),
                     ),
                   ),
-                if (itemDetailProvider.psValueHolder.loginUserId !=
+                if (itemDetailProvider.psValueHolder!.loginUserId !=
                         itemUserId &&
-                    itemDetailProvider.psValueHolder.loginUserId != null &&
-                    itemDetailProvider.psValueHolder.loginUserId != '')
+                    itemDetailProvider.psValueHolder!.loginUserId != null &&
+                    itemDetailProvider.psValueHolder!.loginUserId != '')
                   PopupMenuItem<String>(
                     value: '2',
                     child: Visibility(
@@ -1909,7 +1909,7 @@ class _PromoteTileViewState extends State<PromoteTileView> {
                                       returnData == null) {
                                     final String loginUserId =
                                         Utils.checkUserLoginId(
-                                            widget.provider.psValueHolder);
+                                            widget.provider.psValueHolder!);
                                     widget.provider.loadProduct(
                                         widget.product.id!, loginUserId);
                                   }
@@ -1925,7 +1925,7 @@ class _PromoteTileViewState extends State<PromoteTileView> {
                                       returnData == null) {
                                     final String loginUserId =
                                         Utils.checkUserLoginId(
-                                            widget.provider.psValueHolder);
+                                            widget.provider.psValueHolder!);
                                     widget.provider.loadProduct(
                                         widget.product.id!, loginUserId);
                                   }
@@ -1951,7 +1951,7 @@ class _PromoteTileViewState extends State<PromoteTileView> {
                                                 returnData == null) {
                                               final String loginUserId =
                                                   Utils.checkUserLoginId(widget
-                                                      .provider.psValueHolder);
+                                                      .provider.psValueHolder!);
                                               widget.provider.loadProduct(
                                                   widget.product.id!,
                                                   loginUserId);
@@ -1967,7 +1967,7 @@ class _PromoteTileViewState extends State<PromoteTileView> {
                                                 returnData == null) {
                                               final String loginUserId =
                                                   Utils.checkUserLoginId(widget
-                                                      .provider.psValueHolder);
+                                                      .provider.psValueHolder!);
                                               widget.provider.loadProduct(
                                                   widget.product.id!,
                                                   loginUserId);

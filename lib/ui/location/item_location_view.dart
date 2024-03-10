@@ -95,7 +95,7 @@ class ItemLocationListViewWidget extends StatefulWidget {
   _ItemLocationListViewWidgetState createState() =>
       _ItemLocationListViewWidgetState();
 }
-LocationParameterHolder locationParameterHolder =
+LocationParameterHolder locationParameterHolder =///TODO Fix problem
         LocationParameterHolder().getDefaultParameterHolder();
 final TextEditingController searchNameController = TextEditingController();
 
@@ -156,7 +156,7 @@ class _ItemLocationListViewWidgetState
                         arguments: locationParameterHolder);
                     if(returnData != null && returnData is LocationParameterHolder){
                       _provider.latestLocationParameterHolder = returnData;
-                      searchNameController.text = returnData.keyword;
+                      searchNameController.text = returnData.keyword!;
                       _provider.resetItemLocationList(_provider.latestLocationParameterHolder.toMap(),
                       Utils.checkUserLoginId(_provider.psValueHolder));
                     }

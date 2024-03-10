@@ -8,8 +8,8 @@ import 'package:share/share.dart';
 
 class ShareAppDialog extends StatefulWidget {
   const ShareAppDialog({this.message, this.onPressed});
-  final String message;
-  final Function onPressed;
+  final String? message;
+  final Function? onPressed;
 
   @override
   _ShareAppDialogState createState() => _ShareAppDialogState();
@@ -24,8 +24,8 @@ class _ShareAppDialogState extends State<ShareAppDialog> {
 
 class _NewDialog extends StatelessWidget {
   const _NewDialog({
-    Key key,
-    @required this.widget,
+    Key? key,
+    required this.widget,
   }) : super(key: key);
 
   final ShareAppDialog widget;

@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 
 class SuccessDialog extends StatefulWidget {
   const SuccessDialog({this.message, this.onPressed});
-  final String message;
-  final Function onPressed;
+  final String? message;
+  final Function? onPressed;
 
   @override
   _SuccessDialogState createState() => _SuccessDialogState();
@@ -21,8 +21,8 @@ class _SuccessDialogState extends State<SuccessDialog> {
 
 class _NewDialog extends StatelessWidget {
   const _NewDialog({
-    Key key,
-    @required this.widget,
+    Key? key,
+    required this.widget,
   }) : super(key: key);
 
   final SuccessDialog widget;
@@ -69,7 +69,7 @@ class _NewDialog extends StatelessWidget {
                   top: PsDimens.space8,
                   bottom: PsDimens.space8),
               child: Text(
-                widget.message,
+                widget.message!,
                 style: Theme.of(context).textTheme.subtitle2,
               ),
             ),
@@ -84,13 +84,13 @@ class _NewDialog extends StatelessWidget {
               minWidth: double.infinity,
               onPressed: () {
                 Navigator.of(context).pop();
-                widget.onPressed();
+                widget.onPressed!();
               },
               child: Text(
                 Utils.getString(context, 'dialog__ok'),
                 style: Theme.of(context)
                     .textTheme
-                    .button
+                    .button!
                     .copyWith(color: PsColors.mainColor),
               ),
             )

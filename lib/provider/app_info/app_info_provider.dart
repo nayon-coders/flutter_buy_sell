@@ -17,7 +17,7 @@ class AppInfoProvider extends PsProvider {
     isDispose = false;
   }
 
-  AppInfoRepository _repo;
+  AppInfoRepository? _repo;
   PsValueHolder? psValueHolder;
 
   PsResource<PSAppInfo> _psAppInfo =
@@ -38,7 +38,7 @@ class AppInfoProvider extends PsProvider {
     isLoading = true;
 
     final PsResource<PSAppInfo> psAppInfo =
-        await _repo.postDeleteHistory(jsonMap);
+        await _repo!.postDeleteHistory(jsonMap);
 
     return psAppInfo;
   }
@@ -61,7 +61,7 @@ class AppInfoProvider extends PsProvider {
                 psValueHolder!));
 
     final PsResource<PSAppInfo> psAppInfo =
-        await _repo.postDeleteHistory(appInfoParameterHolder.toMap());
+        await _repo!.postDeleteHistory(appInfoParameterHolder.toMap());
     _psAppInfo = psAppInfo;
 
     if (!isDispose) {

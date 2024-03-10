@@ -7,7 +7,7 @@ import 'package:flutterbuyandsell/repository/user_repository.dart';
 import 'package:flutterbuyandsell/viewobject/common/ps_value_holder.dart';
 
 class ChoosePaymentTypeDialog extends StatefulWidget {
-  const ChoosePaymentTypeDialog({Key key, @required this.onInAppPurchaseTap,@required this.onOtherPaymentTap})
+  const ChoosePaymentTypeDialog({Key? key, required this.onInAppPurchaseTap,required this.onOtherPaymentTap})
       : super(key: key);
 
   final Function onInAppPurchaseTap;
@@ -18,8 +18,8 @@ class ChoosePaymentTypeDialog extends StatefulWidget {
 }
 
 class _LogoutDialogState extends State<ChoosePaymentTypeDialog> {
-UserRepository repo1;
-  PsValueHolder psValueHolder;
+UserRepository? repo1;
+  PsValueHolder? psValueHolder;
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +29,8 @@ UserRepository repo1;
 
 class NewDialog extends StatelessWidget {
   const NewDialog({
-    Key key,
-    @required this.widget,
+    Key? key,
+    required this.widget,
   }) : super(key: key);
 
   final ChoosePaymentTypeDialog widget;
@@ -52,7 +52,7 @@ class NewDialog extends StatelessWidget {
             Text(Utils.getString(context, 'pesapal_payment__title'),
                 style: Theme.of(context)
                     .textTheme
-                    .headline6
+                    .headline6!
                     .copyWith(color: PsColors.mainColor,fontWeight: FontWeight.bold)),
             const SizedBox(height: PsDimens.space28),
             PSButtonWidgetRoundCorner(

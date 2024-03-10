@@ -23,7 +23,7 @@ class UserUnreadMessageProvider extends PsProvider {
     userUnreadMessageStream =
         StreamController<PsResource<UserUnreadMessage>>.broadcast();
 
-    subscription = userUnreadMessageStream.stream
+    subscription = userUnreadMessageStream!.stream
         .listen((PsResource<UserUnreadMessage> resource) {
       // updateOffset(resource.data.length);
 
@@ -39,21 +39,21 @@ class UserUnreadMessageProvider extends PsProvider {
       }
     });
   }
-  UserUnreadMessageRepository _repo;
+  UserUnreadMessageRepository? _repo;
   PsResource<UserUnreadMessage> _userUnreadMessage =
       PsResource<UserUnreadMessage>(PsStatus.NOACTION, '', null);
 
   PsResource<UserUnreadMessage> get userUnreadMessage => _userUnreadMessage;
-  StreamSubscription<PsResource<UserUnreadMessage>> subscription;
-  StreamController<PsResource<UserUnreadMessage>> userUnreadMessageStream;
+  StreamSubscription<PsResource<UserUnreadMessage>>? subscription;
+  StreamController<PsResource<UserUnreadMessage>>? userUnreadMessageStream;
   dynamic daoSubscription;
   dynamic daoDeleteSubscription;
 
-  UserUnreadMessageParameterHolder userUnreadMessageHolder;
+  UserUnreadMessageParameterHolder? userUnreadMessageHolder;
   int totalUnreadCount = 0;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     if (daoSubscription != null) {
       daoSubscription.cancel();
     }
@@ -72,8 +72,8 @@ class UserUnreadMessageProvider extends PsProvider {
     isConnectedToInternet = await Utils.checkInternetConnectivity();
     isLoading = true;
 
-    daoSubscription = await _repo.postUserUnreadMessageCount(
-        userUnreadMessageStream,
+    daoSubscription = await _repo!.postUserUnreadMessageCount(
+        userUnreadMessageStream!,
         holder,
         isConnectedToInternet,
         PsStatus.PROGRESS_LOADING);
@@ -84,8 +84,8 @@ class UserUnreadMessageProvider extends PsProvider {
     isConnectedToInternet = await Utils.checkInternetConnectivity();
     isLoading = true;
 
-    daoDeleteSubscription = await _repo.postDeleteUserUnreadMessageCount(
-        userUnreadMessageStream,
+    daoDeleteSubscription = await _repo!.postDeleteUserUnreadMessageCount(
+        userUnreadMessageStream!,
         isConnectedToInternet,
         PsStatus.PROGRESS_LOADING);
   }

@@ -22,22 +22,22 @@ class DialogStyle {
   final EdgeInsetsGeometry contentPadding;
 
   /// The title text align.
-  final TextAlign titleAlign;
+  final TextAlign? titleAlign;
 
   /// The title text style.
-  final TextStyle titleStyle;
+  final TextStyle? titleStyle;
 
   /// The message padding.
   final EdgeInsetsGeometry messagePadding;
 
   /// The message text align.
-  final TextAlign messageAlign;
+  final TextAlign? messageAlign;
 
   /// The message padding.
-  final TextStyle messageStyle;
+  final TextStyle? messageStyle;
 
   /// The dialog shape.
-  final ShapeBorder dialogShape;
+  final ShapeBorder? dialogShape;
 
   
 }

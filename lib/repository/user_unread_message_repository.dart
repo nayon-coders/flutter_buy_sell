@@ -20,8 +20,8 @@ class UserUnreadMessageRepository extends PsRepository {
 
   String primaryKey = 'id';
   String mapKey = 'map_key';
-  PsApiService _psApiService;
-  UserUnreadMessageDao _userUnreadMessageDao;
+  PsApiService? _psApiService;
+  UserUnreadMessageDao? _userUnreadMessageDao;
 
   void sinkUserUnreadMessageCountStream(
       StreamController<PsResource<UserUnreadMessage>>
@@ -33,15 +33,15 @@ class UserUnreadMessageRepository extends PsRepository {
   }
 
   Future<dynamic> insert(UserUnreadMessage userUnreadMessage) async {
-    return _userUnreadMessageDao.insert(primaryKey, userUnreadMessage);
+    return _userUnreadMessageDao!.insert(primaryKey, userUnreadMessage);
   }
 
   Future<dynamic> update(UserUnreadMessage userUnreadMessage) async {
-    return _userUnreadMessageDao.update(userUnreadMessage);
+    return _userUnreadMessageDao!.update(userUnreadMessage);
   }
 
   Future<dynamic> delete(UserUnreadMessage userUnreadMessage) async {
-    return _userUnreadMessageDao.delete(userUnreadMessage);
+    return _userUnreadMessageDao!.delete(userUnreadMessage);
   }
 
   Future<dynamic> postUserUnreadMessageCount(
@@ -55,26 +55,26 @@ class UserUnreadMessageRepository extends PsRepository {
 
     sinkUserUnreadMessageCountStream(
         userUnreadMessageCountStream,
-        await _userUnreadMessageDao.getOne(
+        await _userUnreadMessageDao!.getOne(
           status: status,
         ));
     final PsResource<UserUnreadMessage> _resource =
-        await _psApiService.postUserUnreadMessageCount(holder.toMap());
+        await _psApiService!.postUserUnreadMessageCount(holder.toMap());
     if(_resource != null && _resource.data != null && _resource.data!.id == null){
       _resource.data!.id = '1';
     }
     if (_resource.status == PsStatus.SUCCESS) {
-      await _userUnreadMessageDao.deleteAll();
-      await _userUnreadMessageDao.insert(primaryKey, _resource.data!);
+      await _userUnreadMessageDao!.deleteAll();
+      await _userUnreadMessageDao!.insert(primaryKey, _resource.data!);
     } else {
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
         // Delete and Insert Map Dao
-        await _userUnreadMessageDao
+        await _userUnreadMessageDao!
             .deleteWithFinder(Finder(filter: Filter.equals(mapKey, paramKey)));
       }
     }
 
-    final dynamic subscription = _userUnreadMessageDao.getOneWithSubscription(
+    final dynamic subscription = _userUnreadMessageDao!.getOneWithSubscription(
         status: PsStatus.SUCCESS,
         onDataUpdated: (UserUnreadMessage message) {
           if (status != null && status != PsStatus.NOACTION) {
@@ -96,9 +96,9 @@ class UserUnreadMessageRepository extends PsRepository {
     PsStatus status,
     {bool isLoadFromServer = true}) async {
      
-      await _userUnreadMessageDao.deleteAll();
+      await _userUnreadMessageDao!.deleteAll();
 
-      final dynamic subscription = _userUnreadMessageDao.getOneWithSubscription(
+      final dynamic subscription = _userUnreadMessageDao!.getOneWithSubscription(
           status: PsStatus.SUCCESS,
           onDataUpdated: (UserUnreadMessage message) {
             if (status != null && status != PsStatus.NOACTION) {

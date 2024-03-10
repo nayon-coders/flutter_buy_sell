@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class NotiDialog extends StatefulWidget {
   const NotiDialog({this.message});
-  final String message;
+  final String? message;
   @override
   _NotiDialogState createState() => _NotiDialogState();
 }
@@ -19,8 +19,8 @@ class _NotiDialogState extends State<NotiDialog> {
 
 class NewDialog extends StatelessWidget {
   const NewDialog({
-    Key key,
-    @required this.widget,
+    Key? key,
+    required this.widget,
   }) : super(key: key);
 
   final NotiDialog widget;
@@ -40,7 +40,7 @@ class NewDialog extends StatelessWidget {
                   borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(5),
                       topRight: Radius.circular(5)),
-                  border: Border.all(color: PsColors.mainColor, width: 5),
+                  border: Border.all(color: PsColors.mainColor!, width: 5),
                   color: PsColors.mainColor),
               child: Row(
                 children: <Widget>[
@@ -67,7 +67,7 @@ class NewDialog extends StatelessWidget {
                 top: PsDimens.space8,
                 bottom: PsDimens.space8),
             child: Text(
-              widget.message,
+              widget.message!,
               style: TextStyle(color: PsColors.black),
             ),
           ),

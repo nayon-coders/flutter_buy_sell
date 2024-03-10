@@ -20,7 +20,7 @@ class GalleryProvider extends PsProvider {
 
     galleryListStream =
         StreamController<PsResource<List<DefaultPhoto>>>.broadcast();
-    subscription = galleryListStream.stream
+    subscription = galleryListStream!.stream
         .listen((PsResource<List<DefaultPhoto>> resource) {
       updateOffset(resource.data!.length);
 
@@ -40,21 +40,21 @@ class GalleryProvider extends PsProvider {
     });
   }
 
-  GalleryRepository _repo;
+  GalleryRepository? _repo;
   List<DefaultPhoto> selectedImageList = <DefaultPhoto>[];
 
   PsResource<List<DefaultPhoto>> _galleryList =
       PsResource<List<DefaultPhoto>>(PsStatus.NOACTION, '', <DefaultPhoto>[]);
 
   PsResource<List<DefaultPhoto>> get galleryList => _galleryList;
-  StreamSubscription<PsResource<List<DefaultPhoto>>> subscription;
-  StreamController<PsResource<List<DefaultPhoto>>> galleryListStream;
+  StreamSubscription<PsResource<List<DefaultPhoto>>>? subscription;
+  StreamController<PsResource<List<DefaultPhoto>>>? galleryListStream;
 
   PsResource<DefaultPhoto> _defaultPhoto =
       PsResource<DefaultPhoto>(PsStatus.NOACTION, '', null);
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Gallery Provider Dispose: $hashCode');
     super.dispose();
@@ -67,7 +67,7 @@ class GalleryProvider extends PsProvider {
     isLoading = true;
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getAllImageList(galleryListStream, isConnectedToInternet,
+    await _repo!.getAllImageList(galleryListStream!, isConnectedToInternet,
         parentImgId, imageType, limit, offset, PsStatus.PROGRESS_LOADING);
   }
 
@@ -80,7 +80,7 @@ class GalleryProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _defaultPhoto = await _repo.postItemImageUpload(itemId, imgId, imageFile,
+    _defaultPhoto = await _repo!.postItemImageUpload(itemId, imgId, imageFile,
         isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _defaultPhoto;
@@ -98,7 +98,7 @@ class GalleryProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _defaultPhoto = await _repo.postChatImageUpload(
+    _defaultPhoto = await _repo!.postChatImageUpload(
         senderId, sellerUserId, buyerUserId, itemId, type, imageFile);
 
     return _defaultPhoto;
@@ -114,7 +114,7 @@ class GalleryProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getAllImageList(galleryListStream, isConnectedToInternet,
+    await _repo!.getAllImageList(galleryListStream!, isConnectedToInternet,
         parentImgId, imageType, limit, offset, PsStatus.PROGRESS_LOADING);
 
     isLoading = false;

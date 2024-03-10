@@ -16,20 +16,20 @@ class ItemPriceTypeRepository extends PsRepository {
     _itemPriceTypeDao = itemPriceTypeDao;
   }
 
-  PsApiService _psApiService;
-  ItemPriceTypeDao _itemPriceTypeDao;
+  PsApiService? _psApiService;
+  ItemPriceTypeDao? _itemPriceTypeDao;
   final String _primaryKey = 'id';
 
   Future<dynamic> insert(ItemPriceType itemPriceType) async {
-    return _itemPriceTypeDao.insert(_primaryKey, itemPriceType);
+    return _itemPriceTypeDao!.insert(_primaryKey, itemPriceType);
   }
 
   Future<dynamic> update(ItemPriceType itemPriceType) async {
-    return _itemPriceTypeDao.update(itemPriceType);
+    return _itemPriceTypeDao!.update(itemPriceType);
   }
 
   Future<dynamic> delete(ItemPriceType itemPriceType) async {
-    return _itemPriceTypeDao.delete(itemPriceType);
+    return _itemPriceTypeDao!.delete(itemPriceType);
   }
 
   Future<dynamic> getItemPriceTypeList(
@@ -40,21 +40,21 @@ class ItemPriceTypeRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     itemConditionListStream.sink
-        .add(await _itemPriceTypeDao.getAll(status: status));
+        .add(await _itemPriceTypeDao!.getAll(status: status));
 
     final PsResource<List<ItemPriceType>> _resource =
-        await _psApiService.getItemPriceTypeList(limit, offset);
+        await _psApiService!.getItemPriceTypeList(limit, offset);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      await _itemPriceTypeDao.deleteAll();
-      await _itemPriceTypeDao.insertAll(_primaryKey, _resource.data!);
+      await _itemPriceTypeDao!.deleteAll();
+      await _itemPriceTypeDao!.insertAll(_primaryKey, _resource.data!);
       
     }else{
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
-        await _itemPriceTypeDao.deleteAll();
+        await _itemPriceTypeDao!.deleteAll();
       }
     }
-    itemConditionListStream.sink.add(await _itemPriceTypeDao.getAll());
+    itemConditionListStream.sink.add(await _itemPriceTypeDao!.getAll());
   }
 
   Future<dynamic> getNextPageItemPriceTypeList(
@@ -65,19 +65,19 @@ class ItemPriceTypeRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     itemConditionListStream.sink
-        .add(await _itemPriceTypeDao.getAll(status: status));
+        .add(await _itemPriceTypeDao!.getAll(status: status));
 
     final PsResource<List<ItemPriceType>> _resource =
-        await _psApiService.getItemPriceTypeList(limit, offset);
+        await _psApiService!.getItemPriceTypeList(limit, offset);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      _itemPriceTypeDao
+      _itemPriceTypeDao!
           .insertAll(_primaryKey, _resource.data!)
           .then((dynamic data) async {
-        itemConditionListStream.sink.add(await _itemPriceTypeDao.getAll());
+        itemConditionListStream.sink.add(await _itemPriceTypeDao!.getAll());
       });
     } else {
-      itemConditionListStream.sink.add(await _itemPriceTypeDao.getAll());
+      itemConditionListStream.sink.add(await _itemPriceTypeDao!.getAll());
     }
   }
 }

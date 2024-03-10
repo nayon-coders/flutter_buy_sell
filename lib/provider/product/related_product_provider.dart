@@ -22,7 +22,7 @@ class RelatedProductProvider extends PsProvider {
     });
     relatedProductListStream =
         StreamController<PsResource<List<Product>>>.broadcast();
-    subscription = relatedProductListStream.stream
+    subscription = relatedProductListStream!.stream
         .listen((PsResource<List<Product>> resource) {
       updateOffset(resource.data!.length);
 
@@ -41,18 +41,18 @@ class RelatedProductProvider extends PsProvider {
   }
 
   PsValueHolder psValueHolder;
-  ProductRepository _repo;
+  ProductRepository? _repo;
 
   PsResource<List<Product>> _relatedProductList =
       PsResource<List<Product>>(PsStatus.NOACTION, '', <Product>[]);
 
   PsResource<List<Product>> get relatedProductList => _relatedProductList;
-  StreamSubscription<PsResource<List<Product>>> subscription;
-  StreamController<PsResource<List<Product>>> relatedProductListStream;
+  StreamSubscription<PsResource<List<Product>>>? subscription;
+  StreamController<PsResource<List<Product>>>? relatedProductListStream;
 
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     print('Related Provider Dispose: $hashCode');
     super.dispose();
   }
@@ -68,8 +68,8 @@ class RelatedProductProvider extends PsProvider {
     offset = 0;
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getRelatedProductList(
-        relatedProductListStream,
+    await _repo!.getRelatedProductList(
+        relatedProductListStream!,
         productId,
         categoryId,
         loginUserId,

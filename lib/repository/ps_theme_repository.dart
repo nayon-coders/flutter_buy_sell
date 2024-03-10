@@ -9,16 +9,16 @@ class PsThemeRepository extends PsRepository {
     _psSharedPreferences = psSharedPreferences;
   }
 
-  PsSharedPreferences _psSharedPreferences;
+  PsSharedPreferences? _psSharedPreferences;
 
   Future<void> updateTheme(bool isDarkTheme) async {
-    await _psSharedPreferences.shared
+    await _psSharedPreferences!.shared
         .setBool(PsConst.THEME__IS_DARK_THEME, isDarkTheme);
   }
 
   ThemeData getTheme() {
     final bool isDarkTheme =
-        _psSharedPreferences.shared.getBool(PsConst.THEME__IS_DARK_THEME) ??
+        _psSharedPreferences!.shared.getBool(PsConst.THEME__IS_DARK_THEME) ??
             false;
 
     if (isDarkTheme) {

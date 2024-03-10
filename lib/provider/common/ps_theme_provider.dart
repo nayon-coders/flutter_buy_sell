@@ -7,13 +7,13 @@ class PsThemeProvider extends PsProvider {
   PsThemeProvider({required PsThemeRepository repo, int limit = 0}) : super(repo,limit) {
     _repo = repo;
   }
-  PsThemeRepository _repo;
+  PsThemeRepository? _repo;
 
   Future<dynamic> updateTheme(bool isDarkTheme) {
-    return _repo.updateTheme(isDarkTheme);
+    return _repo!.updateTheme(isDarkTheme);
   }
 
   ThemeData getTheme() {
-    return _repo.getTheme();
+    return _repo!.getTheme();
   }
 }

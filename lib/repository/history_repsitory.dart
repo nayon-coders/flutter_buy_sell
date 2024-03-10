@@ -13,31 +13,31 @@ class HistoryRepository extends PsRepository {
   }
 
   String primaryKey = 'id';
-  HistoryDao _historyDao;
+  HistoryDao? _historyDao;
 
   Future<dynamic> insert(Product history) async {
-    return _historyDao.insert(primaryKey, history);
+    return _historyDao!.insert(primaryKey, history);
   }
 
   Future<dynamic> update(Product history) async {
-    return _historyDao.update(history);
+    return _historyDao!.update(history);
   }
 
   Future<dynamic> delete(Product history) async {
-    return _historyDao.delete(history);
+    return _historyDao!.delete(history);
   }
 
   Future<dynamic> getAllHistoryList(
       StreamController<PsResource<List<Product>>> historyListStream,
       PsStatus status) async {
-    historyListStream.sink.add(await _historyDao.getAll(status: status));
+    historyListStream.sink.add(await _historyDao!.getAll(status: status));
   }
 
   Future<dynamic> addAllHistoryList(
       StreamController<PsResource<List<Product>>> historyListStream,
       PsStatus status,
       Product product) async {
-    await _historyDao.insert(primaryKey, product);
+    await _historyDao!.insert(primaryKey, product);
     // historyListStream.sink.add(await _historyDao.getAll(status: status));
   }
 }

@@ -20,19 +20,19 @@ class GalleryRepository extends PsRepository {
 
   String primaryKey = 'id';
   String imgParentId = 'img_parent_id';
-  PsApiService _psApiService;
-  GalleryDao _galleryDao;
+  PsApiService? _psApiService;
+  GalleryDao? _galleryDao;
 
   Future<dynamic> insert(DefaultPhoto image) async {
-    return _galleryDao.insert(primaryKey, image);
+    return _galleryDao!.insert(primaryKey, image);
   }
 
   Future<dynamic> update(DefaultPhoto image) async {
-    return _galleryDao.update(image);
+    return _galleryDao!.update(image);
   }
 
   Future<dynamic> delete(DefaultPhoto image) async {
-    return _galleryDao.delete(image);
+    return _galleryDao!.delete(image);
   }
 
   Future<dynamic> getAllImageList(
@@ -44,26 +44,26 @@ class GalleryRepository extends PsRepository {
       int offset,
       PsStatus status,
       {bool isLoadFromServer = true}) async {
-    galleryListStream.sink.add(await _galleryDao.getAll(
+    galleryListStream.sink.add(await _galleryDao!.getAll(
         finder: Finder(filter: Filter.equals(imgParentId, parentImgId)),
         status: status));
 
     if (isConnectedToInternet) {
-      final PsResource<List<DefaultPhoto>> _resource = await _psApiService
+      final PsResource<List<DefaultPhoto>> _resource = await _psApiService!
           .getImageList(parentImgId, imageType, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _galleryDao.deleteWithFinder(
+        await _galleryDao!.deleteWithFinder(
             Finder(filter: Filter.equals(imgParentId, parentImgId)));
-        await _galleryDao.insertAll(imgParentId, _resource.data!);
+        await _galleryDao!.insertAll(imgParentId, _resource.data!);
         
       }else{
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
-          await _galleryDao.deleteWithFinder(
+          await _galleryDao!.deleteWithFinder(
             Finder(filter: Filter.equals(imgParentId, parentImgId)));
         }
       }
-      galleryListStream.sink.add(await _galleryDao.getAll(
+      galleryListStream.sink.add(await _galleryDao!.getAll(
             finder: Finder(filter: Filter.equals(imgParentId, parentImgId))));
     }
   }
@@ -72,9 +72,9 @@ class GalleryRepository extends PsRepository {
       String imgId, File imageFile, bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<DefaultPhoto> _resource =
-        await _psApiService.postItemImageUpload(itemId, imgId, imageFile);
+        await _psApiService!.postItemImageUpload(itemId, imgId, imageFile);
     if (_resource.status == PsStatus.SUCCESS) {
-      await _galleryDao
+      await _galleryDao!
           .deleteWithFinder(Finder(filter: Filter.equals(imgParentId, imgId)));
       await insert(_resource.data!);
       return _resource;
@@ -95,10 +95,10 @@ class GalleryRepository extends PsRepository {
       File imageFile,
       {bool isLoadFromServer = true}) async {
     final PsResource<DefaultPhoto> _resource =
-        await _psApiService.postChatImageUpload(
+        await _psApiService!.postChatImageUpload(
             senderId, sellerUserId, buyerUserId, itemId, type, imageFile);
     if (_resource.status == PsStatus.SUCCESS) {
-      await _galleryDao.deleteAll();
+      await _galleryDao!.deleteAll();
       await insert(_resource.data!);
       return _resource;
     } else {

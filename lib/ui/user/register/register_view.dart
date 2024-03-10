@@ -75,11 +75,11 @@ class _RegisterViewState extends State<RegisterView>
         child: Consumer<UserProvider>(builder:
             (BuildContext context, UserProvider provider, Widget? child) {
           nameController = TextEditingController(
-              text: provider.psValueHolder.userNameToVerify);
+              text: provider.psValueHolder!.userNameToVerify);
           emailController = TextEditingController(
-              text: provider.psValueHolder.userEmailToVerify);
+              text: provider.psValueHolder!.userEmailToVerify);
           passwordController = TextEditingController(
-              text: provider.psValueHolder.userPasswordToVerify);
+              text: provider.psValueHolder!.userPasswordToVerify);
 
           return Stack(
             children: <Widget>[
@@ -216,9 +216,9 @@ void updateCheckBox(
   } else {
     provider.isCheckBoxSelect = true;
     //it is for holder
-    provider.psValueHolder.userNameToVerify = nameTextEditingController.text;
-    provider.psValueHolder.userEmailToVerify = emailTextEditingController.text;
-    provider.psValueHolder.userPasswordToVerify =
+    provider.psValueHolder!.userNameToVerify = nameTextEditingController.text;
+    provider.psValueHolder!.userEmailToVerify = emailTextEditingController.text;
+    provider.psValueHolder!.userPasswordToVerify =
         passwordTextEditingController.text;
     Navigator.pushNamed(context, RoutePaths.privacyPolicy, arguments: 1);
   }

@@ -14,13 +14,13 @@ class ContactUsRepository extends PsRepository {
     _psApiService = psApiService;
   }
   String primaryKey = 'id';
-  PsApiService _psApiService;
+  PsApiService? _psApiService;
 
   Future<PsResource<ApiStatus>> postContactUs(Map<dynamic, dynamic> jsonMap,
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
-        await _psApiService.postContactUs(jsonMap);
+        await _psApiService!.postContactUs(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {

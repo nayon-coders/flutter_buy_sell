@@ -19,7 +19,7 @@ class UserLoginProvider extends PsProvider {
     print('User Login Provider: $hashCode');
 
     userLoginStream = StreamController<PsResource<UserLogin>>.broadcast();
-    subscriptionUserLogin = userLoginStream.stream
+    subscriptionUserLogin = userLoginStream!.stream
         .listen((PsResource<UserLogin> userLoginResource) {
       _userLogin = userLoginResource;
 
@@ -34,7 +34,7 @@ class UserLoginProvider extends PsProvider {
     });
   }
 
-  UserRepository _repo;
+  UserRepository? _repo;
   PsValueHolder psValueHolder;
 
   UserParameterHolder userParameterHolder =
@@ -48,12 +48,12 @@ class UserLoginProvider extends PsProvider {
       PsResource<ApiStatus>(PsStatus.NOACTION, '', null);
   PsResource<ApiStatus> get apiStatus => _apiStatus;
 
-  StreamController<PsResource<UserLogin>> userLoginStream;
-  StreamSubscription<PsResource<UserLogin>> subscriptionUserLogin;
+  StreamController<PsResource<UserLogin>>? userLoginStream;
+  StreamSubscription<PsResource<UserLogin>>? subscriptionUserLogin;
 
   @override
   void dispose() {
-    subscriptionUserLogin.cancel();
+    subscriptionUserLogin!.cancel();
     isDispose = true;
     print('User Login Provider Dispose: $hashCode');
     super.dispose();
@@ -62,8 +62,8 @@ class UserLoginProvider extends PsProvider {
   Future<dynamic> getUserLoginFromDB(String loginUserId) async {
     isLoading = true;
 
-    await _repo.getUserLoginFromDB(
-        loginUserId, userLoginStream, PsStatus.PROGRESS_LOADING);
+    await _repo!.getUserLoginFromDB(
+        loginUserId, userLoginStream!, PsStatus.PROGRESS_LOADING);
   }
 
   Future<dynamic> getMyUserData(
@@ -73,7 +73,7 @@ class UserLoginProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _userLogin = await _repo.getMyUserData(userLoginStream, jsonMap,
+    _userLogin = await _repo!.getMyUserData(userLoginStream!, jsonMap,
         isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _userLogin;
@@ -86,7 +86,7 @@ class UserLoginProvider extends PsProvider {
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
 
-    _apiStatus = await _repo.postDeleteUser(
+    _apiStatus = await _repo!.postDeleteUser(
         jsonMap, isConnectedToInternet, PsStatus.PROGRESS_LOADING);
 
     return _apiStatus;

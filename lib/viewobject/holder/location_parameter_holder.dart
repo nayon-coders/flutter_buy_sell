@@ -8,9 +8,9 @@ class LocationParameterHolder extends PsHolder<dynamic> {
     orderType = PsConst.FILTERING__DESC;
   }
 
-  String keyword;
-  String orderBy;
-  String orderType;
+  String? keyword;
+  String? orderBy;
+  String? orderType;
 
   LocationParameterHolder getDefaultParameterHolder() {
     keyword = '';
@@ -53,13 +53,13 @@ class LocationParameterHolder extends PsHolder<dynamic> {
     String key = '';
 
     if (keyword != '') {
-      key += keyword;
+      key += keyword!;
     }
     if (orderBy != '') {
-      key += orderBy;
+      key += orderBy!;
     }
     if (orderType != '') {
-      key += orderType;
+      key += orderType!;
     }
 
     return key;

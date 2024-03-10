@@ -587,53 +587,53 @@ class _ItemEntryViewState extends State<ItemEntryView> {
                               Widget? child) {
                         if (provider != null &&
                             provider.item != null &&
-                            provider.item.id != null) {
+                            provider.item!.id != null) {
                           if (bindDataFirstTime) {
-                            userInputListingTitle.text = provider.item.title!;
-                            userInputBrand.text = provider.item.brand!;
+                            userInputListingTitle.text = provider.item!.title!;
+                            userInputBrand.text = provider.item!.brand!;
                             userInputHighLightInformation.text =
-                                provider.item.highlightInformation!;
+                                provider.item!.highlightInformation!;
                             userInputDescription.text =
-                                provider.item.description!;
+                                provider.item!.description!;
                             userInputDealOptionText.text =
-                                provider.item.dealOptionRemark!;
-                            userInputLattitude.text = provider.item.lat!;
-                            userInputLongitude.text = provider.item.lng!;
-                            userInputAddress.text = provider.item.address!;
-                            userInputPrice.text = provider.item.price!;
+                                provider.item!.dealOptionRemark!;
+                            userInputLattitude.text = provider.item!.lat!;
+                            userInputLongitude.text = provider.item!.lng!;
+                            userInputAddress.text = provider.item!.address!;
+                            userInputPrice.text = provider.item!.price!;
                             categoryController.text =
-                                provider.item.category!.catName!;
+                                provider.item!.category!.catName!;
                             subCategoryController.text =
-                                provider.item.subCategory!.name!;
-                            typeController.text = provider.item.itemType!.name!;
+                                provider.item!.subCategory!.name!;
+                            typeController.text = provider.item!.itemType!.name!;
                             itemConditionController.text =
-                                provider.item.conditionOfItem!.name!;
+                                provider.item!.conditionOfItem!.name!;
                             priceTypeController.text =
-                                provider.item.itemPriceType!.name!;
+                                provider.item!.itemPriceType!.name!;
                             priceController.text =
-                                provider.item.itemCurrency!.currencySymbol!;
+                                provider.item!.itemCurrency!.currencySymbol!;
                             dealOptionController.text =
-                                provider.item.dealOption!.name!;
+                                provider.item!.dealOption!.name!;
                             locationController.text =
-                                provider.item.itemLocation!.name!;
+                                provider.item!.itemLocation!.name!;
 
-                            provider.categoryId = provider.item.category!.catId!;
+                            provider.categoryId = provider.item!.category!.catId!;
                             provider.subCategoryId =
-                                provider.item.subCategory!.id!;
-                            provider.itemTypeId = provider.item.itemType!.id!;
+                                provider.item!.subCategory!.id!;
+                            provider.itemTypeId = provider.item!.itemType!.id!;
                             provider.itemConditionId =
-                                provider.item.conditionOfItem!.id!;
+                                provider.item!.conditionOfItem!.id!;
                             provider.itemCurrencyId =
-                                provider.item.itemCurrency!.id!;
+                                provider.item!.itemCurrency!.id!;
                             provider.itemDealOptionId =
-                                provider.item.dealOption!.id!;
+                                provider.item!.dealOption!.id!;
                             provider.itemLocationId =
-                                provider.item.itemLocation!.id!;
+                                provider.item!.itemLocation!.id!;
                             provider.itemPriceTypeId =
-                                provider.item.itemPriceType!.id!;
+                                provider.item!.itemPriceType!.id!;
                             bindDataFirstTime = false;
 
-                            if (provider.item.businessMode == '1') {
+                            if (provider.item!.businessMode == '1') {
                               Utils.psPrint('Check On is shop');
                               provider.isCheckBoxSelect = true;
                               _BusinessModeCheckbox();
@@ -799,8 +799,8 @@ class _AllControllerTextWidgetState extends State<AllControllerTextWidget> {
             itemEntryProvider!.psValueHolder.locactionName
         : Container();
     if (itemEntryProvider!.item != null && widget.flag == PsConst.EDIT_ITEM) {
-      _latlng = LatLng(double.parse(itemEntryProvider!.item.lat!),
-          double.parse(itemEntryProvider!.item.lng!));
+      _latlng = LatLng(double.parse(itemEntryProvider!.item!.lat!),
+          double.parse(itemEntryProvider!.item!.lng!));
     }
 
     final Widget _uploadItemWidget = Container(
@@ -1592,8 +1592,8 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
                 ItemEntryImageWidget(
                   index: 0,
                   images: (widget.firstImagePath != null)
-                      ? widget.firstImagePath
-                      : defaultAssetImage,
+                      ? widget.firstImagePath!
+                      : defaultAssetImage!,
                   cameraImagePath: (widget.firstCameraImagePath != nul)
                       ? widget.firstCameraImagePath
                       : defaultAssetImage,
@@ -1601,7 +1601,7 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
                           widget.firstImagePath == null &&
                           widget.firstCameraImagePath == null)
                       ? widget.selectedImageList[0]
-                      : null,
+                      : null!,
                   // (widget.firstImagePath != null) ? null : defaultUrlImage,
                   onTap: () {
                     FocusScope.of(context).requestFocus(FocusNode());
@@ -1640,7 +1640,7 @@ class ImageUploadHorizontalListState extends State<ImageUploadHorizontalList> {
                 ItemEntryImageWidget(
                   index: 1,
                   images: (widget.secondImagePath != null)
-                      ? widget.secondImagePath
+                      ? widget.secondImagePath!
                       : defaultAssetImage,
                   cameraImagePath: (widget.secondCameraImagePath != null)
                       ? widget.secondCameraImagePath

@@ -33,8 +33,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class UserDetailView extends StatefulWidget {
   const UserDetailView({
-    @required this.userId,
-    @required this.userName,
+    required this.userId,
+    required this.userName,
   });
   final String? userId;
   final String? userName;
@@ -99,7 +99,7 @@ class _UserDetailViewState extends State<UserDetailView> with SingleTickerProvid
               ChangeNotifierProvider<UserProvider>(
                   lazy: false,
                   create: (BuildContext context) {
-                    userProvider!.userParameterHolder.loginUserId = userProvider!.psValueHolder.loginUserId;
+                    userProvider!.userParameterHolder.loginUserId = userProvider!.psValueHolder!.loginUserId;
                     userProvider!.userParameterHolder.id = widget.userId.toString();
                     userProvider!.getOtherUserData(userProvider!.userParameterHolder.toMap(), userProvider!.userParameterHolder.id);
 
@@ -199,7 +199,7 @@ class __UserProfileWidgetState extends State<_UserProfileWidget> {
             animation: widget.animationController,
             child: _ImageAndTextWidget(
               userId: provider.user.data!.userId.toString(),
-              loginUserId: provider.psValueHolder.loginUserId,
+              loginUserId: provider.psValueHolder!.loginUserId,
               data: provider.user.data!,
               userProvider: provider,
               itemDetailProvider: widget.itemDetailProvider,
@@ -338,7 +338,7 @@ class __ImageAndTextWidgetState extends State<_ImageAndTextWidget> {
             ],
           ),
           _spacingWidget,
-          if (widget.userProvider.psValueHolder.loginUserId != widget.userProvider.user.data!.userId)
+          if (widget.userProvider.psValueHolder!.loginUserId != widget.userProvider.user.data!.userId)
             MaterialButton(
               color: PsColors.mainColor,
               height: 45,
@@ -367,7 +367,7 @@ class __ImageAndTextWidgetState extends State<_ImageAndTextWidget> {
                       });
                     }
 
-                    final UserFollowHolder userFollowHolder = UserFollowHolder(userId: widget.userProvider.psValueHolder.loginUserId, followedUserId: widget.data.userId);
+                    final UserFollowHolder userFollowHolder = UserFollowHolder(userId: widget.userProvider.psValueHolder!.loginUserId, followedUserId: widget.data.userId);
 
                     final PsResource<User> _user = await widget.userProvider.postUserFollow(userFollowHolder.toMap());
                     if (_user.data != null) {
@@ -407,7 +407,7 @@ class __ImageAndTextWidgetState extends State<_ImageAndTextWidget> {
           _BlockUserWidget(
             itemDetailProvider: widget.itemDetailProvider,
             userId: widget.userProvider.user.data!.userId.toString(),
-            loginUserId: widget.userProvider.psValueHolder.loginUserId,
+            loginUserId: widget.userProvider.psValueHolder!.loginUserId,
             userProvider: widget.userProvider,
           ),
           _spacingWidget,
@@ -546,7 +546,7 @@ class _BlockUserWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: itemDetailProvider.psValueHolder.loginUserId != userId && itemDetailProvider.psValueHolder.loginUserId != null && itemDetailProvider.psValueHolder.loginUserId != '',
+      visible: itemDetailProvider.psValueHolder!.loginUserId != userId && itemDetailProvider.psValueHolder!.loginUserId != null && itemDetailProvider.psValueHolder!.loginUserId != '',
       child: Padding(
           padding: const EdgeInsets.only(
             right: PsDimens.space8,

@@ -44,7 +44,7 @@ class ShippingCost extends PsObject<ShippingCost> {
   }
 
   @override
-  List<Map<String, dynamic>> toMapList(List<dynamic> objectList) {
+  List<Map<String, dynamic>>? toMapList(List<dynamic> objectList) {
     final List<dynamic> dynamicList = <dynamic>[];
     if (objectList != null) {
       for (dynamic data in objectList) {

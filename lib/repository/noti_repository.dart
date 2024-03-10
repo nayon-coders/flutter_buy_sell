@@ -16,20 +16,20 @@ class NotiRepository extends PsRepository {
     _notiDao = notiDao;
   }
 
-  PsApiService _psApiService;
-  NotiDao _notiDao;
+  PsApiService? _psApiService;
+  NotiDao? _notiDao;
   final String _primaryKey = 'id';
 
   Future<dynamic> insert(Noti noti) async {
-    return _notiDao.insert(_primaryKey, noti);
+    return _notiDao!.insert(_primaryKey, noti);
   }
 
   Future<dynamic> update(Noti noti) async {
-    return _notiDao.update(noti);
+    return _notiDao!.update(noti);
   }
 
   Future<dynamic> delete(Noti noti) async {
-    return _notiDao.delete(noti);
+    return _notiDao!.delete(noti);
   }
 
   Future<dynamic> getNotiList(
@@ -42,22 +42,22 @@ class NotiRepository extends PsRepository {
       {bool isLoadFromServer = true}) async {
 
     notiListStream.sink
-        .add(await _notiDao.getAll( status: status));
+        .add(await _notiDao!.getAll( status: status));
 
     if (isConnectedToInternet) {
       final PsResource<List<Noti>> _resource =
-          await _psApiService.getNotificationList(paramMap, limit, offset);
+          await _psApiService!.getNotificationList(paramMap, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _notiDao.deleteAll();
-        await _notiDao.insertAll(_primaryKey, _resource.data!);
+        await _notiDao!.deleteAll();
+        await _notiDao!.insertAll(_primaryKey, _resource.data!);
         
       }else{
         if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
-          await _notiDao.deleteAll();
+          await _notiDao!.deleteAll();
         }
       }
-      notiListStream.sink.add(await _notiDao.getAll());
+      notiListStream.sink.add(await _notiDao!.getAll());
     }
   }
 
@@ -70,20 +70,20 @@ class NotiRepository extends PsRepository {
       Map<dynamic, dynamic> paramMap,
       {bool isLoadFromServer = true}) async {
     notiListStream.sink
-        .add(await _notiDao.getAll(status: status));
+        .add(await _notiDao!.getAll(status: status));
 
     if (isConnectedToInternet) {
       final PsResource<List<Noti>> _resource =
-          await _psApiService.getNotificationList(paramMap, limit, offset);
+          await _psApiService!.getNotificationList(paramMap, limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        _notiDao
+        _notiDao!
             .insertAll(_primaryKey, _resource.data!)
             .then((dynamic data) async {
-          notiListStream.sink.add(await _notiDao.getAll());
+          notiListStream.sink.add(await _notiDao!.getAll());
         });
       } else {
-        notiListStream.sink.add(await _notiDao.getAll());
+        notiListStream.sink.add(await _notiDao!.getAll());
       }
     }
   }
@@ -93,17 +93,17 @@ class NotiRepository extends PsRepository {
       Map<dynamic, dynamic> jsonMap,
       bool isConnectedToInternet,
       {bool isLoadFromServer = true}) async {
-    final PsResource<Noti> _resource = await _psApiService.postNoti(jsonMap);
+    final PsResource<Noti> _resource = await _psApiService!.postNoti(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       ratingListStream.sink
-          .add(await _notiDao.getAll(status: PsStatus.SUCCESS));
+          .add(await _notiDao!.getAll(status: PsStatus.SUCCESS));
       return _resource;
     } else {
       final Completer<PsResource<Noti>> completer =
           Completer<PsResource<Noti>>();
       completer.complete(_resource);
       ratingListStream.sink
-          .add(await _notiDao.getAll(status: PsStatus.SUCCESS));
+          .add(await _notiDao!.getAll(status: PsStatus.SUCCESS));
       return completer.future;
     }
   }

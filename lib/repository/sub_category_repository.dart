@@ -18,20 +18,20 @@ class SubCategoryRepository extends PsRepository {
     _subCategoryDao = subCategoryDao;
   }
 
-  PsApiService _psApiService;
-  SubCategoryDao _subCategoryDao;
+  PsApiService? _psApiService;
+  SubCategoryDao? _subCategoryDao;
   final String _primaryKey = 'id';
 
   Future<dynamic> insert(SubCategory subCategory) async {
-    return _subCategoryDao.insert(_primaryKey, subCategory);
+    return _subCategoryDao!.insert(_primaryKey, subCategory);
   }
 
   Future<dynamic> update(SubCategory subCategory) async {
-    return _subCategoryDao.update(subCategory);
+    return _subCategoryDao!.update(subCategory);
   }
 
   Future<dynamic> delete(SubCategory subCategory) async {
-    return _subCategoryDao.delete(subCategory);
+    return _subCategoryDao!.delete(subCategory);
   }
 
   Future<dynamic> getSubCategoryListByCategoryId(
@@ -45,21 +45,21 @@ class SubCategoryRepository extends PsRepository {
     final Finder finder = Finder(filter: Filter.equals('cat_id', categoryId));
 
     subCategoryListStream.sink
-        .add(await _subCategoryDao.getAll(finder: finder, status: status));
+        .add(await _subCategoryDao!.getAll(finder: finder, status: status));
 
     final PsResource<List<SubCategory>> _resource =
-        await _psApiService.getSubCategoryList(limit, offset, categoryId);
+        await _psApiService!.getSubCategoryList(limit, offset, categoryId);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      await _subCategoryDao.deleteWithFinder(finder);
-      await _subCategoryDao.insertAll(_primaryKey, _resource.data!);
+      await _subCategoryDao!.deleteWithFinder(finder);
+      await _subCategoryDao!.insertAll(_primaryKey, _resource.data!);
     } else {
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
-        await _subCategoryDao.deleteWithFinder(finder);
+        await _subCategoryDao!.deleteWithFinder(finder);
       }
     }
     subCategoryListStream.sink
-        .add(await _subCategoryDao.getAll(finder: finder));
+        .add(await _subCategoryDao!.getAll(finder: finder));
   }
 
   Future<dynamic> getAllSubCategoryListByCategoryId(
@@ -71,21 +71,21 @@ class SubCategoryRepository extends PsRepository {
     final Finder finder = Finder(filter: Filter.equals('cat_id', categoryId));
 
     subCategoryListStream.sink
-        .add(await _subCategoryDao.getAll(finder: finder, status: status));
+        .add(await _subCategoryDao!.getAll(finder: finder, status: status));
 
     final PsResource<List<SubCategory>> _resource =
-        await _psApiService.getAllSubCategoryList(categoryId);
+        await _psApiService!.getAllSubCategoryList(categoryId);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      await _subCategoryDao.deleteWithFinder(finder);
-      await _subCategoryDao.insertAll(_primaryKey, _resource.data!);
+      await _subCategoryDao!.deleteWithFinder(finder);
+      await _subCategoryDao!.insertAll(_primaryKey, _resource.data!);
     }else{
       if (_resource.errorCode == PsConst.ERROR_CODE_10001) {
-        await _subCategoryDao.deleteWithFinder(finder);
+        await _subCategoryDao!.deleteWithFinder(finder);
       }
     }
     subCategoryListStream.sink
-          .add(await _subCategoryDao.getAll(finder: finder));
+          .add(await _subCategoryDao!.getAll(finder: finder));
   }
 
   Future<dynamic> getNextPageSubCategoryList(
@@ -98,21 +98,21 @@ class SubCategoryRepository extends PsRepository {
       {bool isLoadFromServer = true}) async {
     final Finder finder = Finder(filter: Filter.equals('cat_id', categoryId));
     subCategoryListStream.sink
-        .add(await _subCategoryDao.getAll(finder: finder, status: status));
+        .add(await _subCategoryDao!.getAll(finder: finder, status: status));
 
     final PsResource<List<SubCategory>> _resource =
-        await _psApiService.getSubCategoryList(limit, offset, categoryId);
+        await _psApiService!.getSubCategoryList(limit, offset, categoryId);
 
     if (_resource.status == PsStatus.SUCCESS) {
-      _subCategoryDao
+      _subCategoryDao!
           .insertAll(_primaryKey, _resource.data!)
           .then((dynamic data) async {
         subCategoryListStream.sink
-            .add(await _subCategoryDao.getAll(finder: finder));
+            .add(await _subCategoryDao!.getAll(finder: finder));
       });
     } else {
       subCategoryListStream.sink
-          .add(await _subCategoryDao.getAll(finder: finder));
+          .add(await _subCategoryDao!.getAll(finder: finder));
     }
   }
 }

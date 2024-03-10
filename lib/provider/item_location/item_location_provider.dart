@@ -24,7 +24,7 @@ class ItemLocationProvider extends PsProvider {
     });
     itemLocationListStream =
         StreamController<PsResource<List<ItemLocation>>>.broadcast();
-    subscription = itemLocationListStream.stream
+    subscription = itemLocationListStream!.stream
         .listen((PsResource<List<ItemLocation>> resource) {
       updateOffset(resource.data!.length);
 
@@ -46,18 +46,18 @@ class ItemLocationProvider extends PsProvider {
     });
   }
 
-  ItemLocationRepository _repo;
-  PsValueHolder psValueHolder;
+  ItemLocationRepository? _repo;
+  PsValueHolder psValueHolder; ///TODO problem
   LocationParameterHolder latestLocationParameterHolder = LocationParameterHolder().getDefaultParameterHolder();
   PsResource<List<ItemLocation>> _itemLocationList =
       PsResource<List<ItemLocation>>(PsStatus.NOACTION, '', <ItemLocation>[]);
 
   PsResource<List<ItemLocation>> get itemLocationList => _itemLocationList;
-  StreamSubscription<PsResource<List<ItemLocation>>> subscription;
-  StreamController<PsResource<List<ItemLocation>>> itemLocationListStream;
+  StreamSubscription<PsResource<List<ItemLocation>>>? subscription;
+  StreamController<PsResource<List<ItemLocation>>>? itemLocationListStream;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('ItemLocation Provider Dispose: $hashCode');
     super.dispose();
@@ -68,7 +68,7 @@ class ItemLocationProvider extends PsProvider {
     isLoading = true;
 
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo.getAllItemLocationList(itemLocationListStream,
+    await _repo!.getAllItemLocationList(itemLocationListStream!,
         isConnectedToInternet,jsonMap,loginUserId, limit, offset, PsStatus.PROGRESS_LOADING);
   }
 
@@ -78,7 +78,7 @@ class ItemLocationProvider extends PsProvider {
 
     if (!isLoading && !isReachMaxData) {
       super.isLoading = true;
-      await _repo.getNextPageItemLocationList(itemLocationListStream,
+      await _repo!.getNextPageItemLocationList(itemLocationListStream!,
           isConnectedToInternet,jsonMap,loginUserId, limit, offset, PsStatus.PROGRESS_LOADING);
     }
   }
@@ -90,7 +90,7 @@ class ItemLocationProvider extends PsProvider {
 
     updateOffset(0);
 
-    await _repo.getAllItemLocationList(itemLocationListStream,
+    await _repo!.getAllItemLocationList(itemLocationListStream!,
         isConnectedToInternet,jsonMap,loginUserId, limit, offset, PsStatus.PROGRESS_LOADING);
 
     isLoading = false;

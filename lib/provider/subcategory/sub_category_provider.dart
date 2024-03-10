@@ -20,7 +20,7 @@ class SubCategoryProvider extends PsProvider {
 
     subCategoryListStream =
         StreamController<PsResource<List<SubCategory>>>.broadcast();
-    subscription = subCategoryListStream.stream.listen((dynamic resource) {
+    subscription = subCategoryListStream!.stream.listen((dynamic resource) {
       updateOffset(resource.data.length);
 
       _subCategoryList = resource;
@@ -61,7 +61,7 @@ class SubCategoryProvider extends PsProvider {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
     await _repo!.getSubCategoryListByCategoryId(
-        subCategoryListStream,
+        subCategoryListStream!,
         isConnectedToInternet,
         limit,
         offset,
@@ -72,7 +72,7 @@ class SubCategoryProvider extends PsProvider {
   Future<dynamic> loadAllSubCategoryList(String categoryId) async {
     isLoading = true;
     isConnectedToInternet = await Utils.checkInternetConnectivity();
-    await _repo!.getAllSubCategoryListByCategoryId(subCategoryListStream,
+    await _repo!.getAllSubCategoryListByCategoryId(subCategoryListStream!,
         isConnectedToInternet, PsStatus.PROGRESS_LOADING, categoryId);
   }
 
@@ -82,7 +82,7 @@ class SubCategoryProvider extends PsProvider {
       super.isLoading = true;
 
       await _repo!.getNextPageSubCategoryList(
-          subCategoryListStream,
+          subCategoryListStream!,
           isConnectedToInternet,
           limit,
           offset,
@@ -99,7 +99,7 @@ class SubCategoryProvider extends PsProvider {
     updateOffset(0);
 
     await _repo!.getSubCategoryListByCategoryId(
-        subCategoryListStream,
+        subCategoryListStream!,
         isConnectedToInternet,
         limit,
         offset,

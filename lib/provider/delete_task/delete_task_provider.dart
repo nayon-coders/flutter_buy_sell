@@ -14,7 +14,7 @@ class DeleteTaskProvider extends PsProvider {
     print('Delete Task Provider: $hashCode');
     deleteTaskListStream =
         StreamController<PsResource<List<UserLogin>>>.broadcast();
-    subscription = deleteTaskListStream.stream
+    subscription = deleteTaskListStream!.stream
         .listen((PsResource<List<UserLogin>> resource) {
       updateOffset(resource.data!.length);
 
@@ -31,18 +31,18 @@ class DeleteTaskProvider extends PsProvider {
     });
   }
 
-  StreamController<PsResource<List<UserLogin>>> deleteTaskListStream;
-  DeleteTaskRepository _repo;
-  PsValueHolder psValueHolder;
+  StreamController<PsResource<List<UserLogin>>>? deleteTaskListStream;
+  DeleteTaskRepository? _repo;
+  PsValueHolder? psValueHolder;
 
   PsResource<List<UserLogin>> _deleteTaskList =
       PsResource<List<UserLogin>>(PsStatus.NOACTION, '', <UserLogin>[]);
 
   PsResource<List<UserLogin>> get basketList => _deleteTaskList;
-  StreamSubscription<PsResource<List<UserLogin>>> subscription;
+  StreamSubscription<PsResource<List<UserLogin>>>? subscription;
   @override
   void dispose() {
-    subscription.cancel();
+    subscription!.cancel();
     isDispose = true;
     print('Delete Task Provider Dispose: $hashCode');
     super.dispose();
@@ -50,6 +50,6 @@ class DeleteTaskProvider extends PsProvider {
 
   Future<dynamic> deleteTask() async {
     isLoading = true;
-    _repo.deleteTask(deleteTaskListStream);
+    _repo!.deleteTask(deleteTaskListStream!);
   }
 }

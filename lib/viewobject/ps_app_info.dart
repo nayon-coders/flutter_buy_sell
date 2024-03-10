@@ -107,6 +107,6 @@ class PSAppInfo extends PsObject<PSAppInfo> {
       }
     }
 
-    return dynamicList;
+    return dynamicList!;
   }
 }

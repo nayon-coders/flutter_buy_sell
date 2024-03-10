@@ -25,9 +25,9 @@ class UserRepository extends PsRepository {
     _userLoginDao = userLoginDao!;
   }
 
-  PsApiService _psApiService;
-  UserDao _userDao;
-  UserLoginDao _userLoginDao;
+  PsApiService? _psApiService;
+  UserDao? _userDao;
+  UserLoginDao? _userLoginDao;
   final String _userPrimaryKey = 'user_id';
   final String _userLoginPrimaryKey = 'map_key'; //for user login
   final String mapKey = 'map_key'; //for user map
@@ -56,34 +56,34 @@ class UserRepository extends PsRepository {
   }
 
   Future<dynamic> insert(User user) async {
-    return _userDao.insert(_userPrimaryKey, user);
+    return _userDao!.insert(_userPrimaryKey, user);
   }
 
   Future<dynamic> update(User user) async {
-    return _userDao.update(user);
+    return _userDao!.update(user);
   }
 
   Future<dynamic> delete(User user) async {
-    return _userDao.delete(user);
+    return _userDao!.delete(user);
   }
 
   Future<dynamic> insertUserLogin(UserLogin user) async {
-    return _userLoginDao.insert(_userLoginPrimaryKey, user);
+    return _userLoginDao!.insert(_userLoginPrimaryKey, user);
   }
 
   Future<dynamic> updateUserLogin(UserLogin user) async {
-    return _userLoginDao.update(user);
+    return _userLoginDao!.update(user);
   }
 
   Future<dynamic> deleteUserLogin(UserLogin user) async {
-    return _userLoginDao.delete(user);
+    return _userLoginDao!.delete(user);
   }
 
   Future<PsResource<User>> postUserRegister(Map<dynamic, dynamic> jsonMap,
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<User> _resource =
-        await _psApiService.postUserRegister(jsonMap);
+        await _psApiService!.postUserRegister(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -98,9 +98,9 @@ class UserRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<User> _resource =
-        await _psApiService.postUserLogin(jsonMap);
+        await _psApiService!.postUserLogin(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
-      await _userLoginDao.deleteAll();
+      await _userLoginDao!.deleteAll();
       await insert(_resource.data!);
       final String userId = _resource.data!.userId!;
       final UserLogin userLogin =
@@ -120,7 +120,7 @@ class UserRepository extends PsRepository {
     final Finder finder = Finder(filter: Filter.equals('id', loginUserId));
 
     userLoginStream.sink
-        .add(await _userLoginDao.getOne(finder: finder, status: status));
+        .add(await _userLoginDao!.getOne(finder: finder, status: status));
   }
 
   Future<dynamic> getUserFromDB(String loginUserId,
@@ -128,16 +128,16 @@ class UserRepository extends PsRepository {
     final Finder finder =
         Finder(filter: Filter.equals(_userPrimaryKey, loginUserId));
 
-    userStream.sink.add(await _userDao.getOne(finder: finder, status: status));
+    userStream.sink.add(await _userDao!.getOne(finder: finder, status: status));
   }
 
   Future<PsResource<User>> postUserEmailVerify(Map<dynamic, dynamic> jsonMap,
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<User> _resource =
-        await _psApiService.postUserEmailVerify(jsonMap);
+        await _psApiService!.postUserEmailVerify(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
-      await _userLoginDao.deleteAll();
+      await _userLoginDao!.deleteAll();
       await insert(_resource.data!);
       final String userId = _resource.data!.userId!;
       final UserLogin userLogin =
@@ -156,7 +156,7 @@ class UserRepository extends PsRepository {
       File imageFile, bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<User> _resource =
-        await _psApiService.postImageUpload(userId, platformName, imageFile);
+        await _psApiService!.postImageUpload(userId, platformName, imageFile);
     if (_resource.status == PsStatus.SUCCESS) {
       await insert(_resource.data!);
       final String userId = _resource.data!.userId!;
@@ -176,7 +176,7 @@ class UserRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
-        await _psApiService.postDeleteUser(jsonMap);
+        await _psApiService!.postDeleteUser(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -193,7 +193,7 @@ class UserRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
-        await _psApiService.postForgotPassword(jsonMap);
+        await _psApiService!.postForgotPassword(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -210,7 +210,7 @@ class UserRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
-        await _psApiService.postChangePassword(jsonMap);
+        await _psApiService!.postChangePassword(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -225,7 +225,7 @@ class UserRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<User> _resource =
-        await _psApiService.postProfileUpdate(jsonMap);
+        await _psApiService!.postProfileUpdate(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       await insert(_resource.data!);
       final String userId = _resource.data!.userId!;
@@ -245,9 +245,9 @@ class UserRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<User> _resource =
-        await _psApiService.postPhoneLogin(jsonMap);
+        await _psApiService!.postPhoneLogin(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
-      await _userLoginDao.deleteAll();
+      await _userLoginDao!.deleteAll();
       await insert(_resource.data!);
       final String userId = _resource.data!.userId!;
       final UserLogin userLogin =
@@ -266,7 +266,7 @@ class UserRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<User> _resource =
-        await _psApiService.postUserFollow(jsonMap);
+        await _psApiService!.postUserFollow(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       await insert(_resource.data!);
       final String userId = _resource.data!.userId!;
@@ -285,9 +285,9 @@ class UserRepository extends PsRepository {
   Future<PsResource<User>> postFBLogin(Map<dynamic, dynamic> jsonMap,
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
-    final PsResource<User> _resource = await _psApiService.postFBLogin(jsonMap);
+    final PsResource<User> _resource = await _psApiService!.postFBLogin(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
-      await _userLoginDao.deleteAll();
+      await _userLoginDao!.deleteAll();
       await insert(_resource.data!);
       final String userId = _resource.data!.userId!;
       final UserLogin userLogin =
@@ -306,9 +306,9 @@ class UserRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<User> _resource =
-        await _psApiService.postGoogleLogin(jsonMap);
+        await _psApiService!.postGoogleLogin(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
-      await _userLoginDao.deleteAll();
+      await _userLoginDao!.deleteAll();
       await insert(_resource.data!);
       final String userId = _resource.data!.userId!;
       final UserLogin userLogin =
@@ -327,9 +327,9 @@ class UserRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<User> _resource =
-        await _psApiService.postAppleLogin(jsonMap);
+        await _psApiService!.postAppleLogin(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
-      await _userLoginDao.deleteAll();
+      await _userLoginDao!.deleteAll();
       await insert(_resource.data!);
       final String userId = _resource.data!.userId!;
       final UserLogin userLogin =
@@ -348,7 +348,7 @@ class UserRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
-        await _psApiService.postResendCode(jsonMap);
+        await _psApiService!.postResendCode(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -364,18 +364,18 @@ class UserRepository extends PsRepository {
       {bool isLoadFromServer = true}) async {
     final Finder finder = Finder(filter: Filter.equals('user_id', loginUserId));
     sinkUserDetailStream(
-        userListStream, await _userDao.getOne(finder: finder, status: status));
+        userListStream, await _userDao!.getOne(finder: finder, status: status));
 
     if (isConnectedToInternet) {
       final PsResource<List<User>> _resource =
-          await _psApiService.getUser(loginUserId);
+          await _psApiService!.getUser(loginUserId);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _userDao.deleteWithFinder(finder);
-        await _userDao.insertAll(_userPrimaryKey, _resource.data!);
+        await _userDao!.deleteWithFinder(finder);
+        await _userDao!.insertAll(_userPrimaryKey, _resource.data!);
         // UserLogin(loginUserId,true,_resource.data);
         sinkUserDetailStream(
-            userListStream, await _userDao.getOne(finder: finder));
+            userListStream, await _userDao!.getOne(finder: finder));
       }
     }
   }
@@ -388,20 +388,20 @@ class UserRepository extends PsRepository {
       PsStatus status,
       {bool isLoadFromServer = true}) async {
     sinkUserLoginStream(
-        userListStream, await _userLoginDao.getOne(status: status));
+        userListStream, await _userLoginDao!.getOne(status: status));
 
     if (isConnectedToInternet) {
       final PsResource<User> _resource =
-          await _psApiService.getUserDetail(jsonMap);
+          await _psApiService!.getUserDetail(jsonMap);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _userLoginDao.deleteAll();
+        await _userLoginDao!.deleteAll();
         await insert(_resource.data!);
         final String userId = _resource.data!.userId!;
         final UserLogin userLogin =
             UserLogin(id: userId, login: true, user: _resource.data);
         await insertUserLogin(userLogin);
-        sinkUserLoginStream(userListStream, await _userLoginDao.getOne());
+        sinkUserLoginStream(userListStream, await _userLoginDao!.getOne());
       }
     }
   }
@@ -416,17 +416,17 @@ class UserRepository extends PsRepository {
       {bool isLoadFromServer = true}) async {
     final Finder finder = Finder(filter: Filter.equals('user_id', otherUserId));
     sinkUserDetailStream(
-        userListStream, await _userDao.getOne(finder: finder, status: status));
+        userListStream, await _userDao!.getOne(finder: finder, status: status));
 
     if (isConnectedToInternet) {
       final PsResource<User> _resource =
-          await _psApiService.getUserDetail(jsonMap);
+          await _psApiService!.getUserDetail(jsonMap);
 
       if (_resource.status == PsStatus.SUCCESS) {
-        await _userDao.deleteAll();
-        await _userDao.insert(_userPrimaryKey, _resource.data!);
+        await _userDao!.deleteAll();
+        await _userDao!.insert(_userPrimaryKey, _resource.data!);
         sinkUserDetailStream(
-            userListStream, await _userDao.getOne(finder: finder));
+            userListStream, await _userDao!.getOne(finder: finder));
       }
     }
   }
@@ -435,7 +435,7 @@ class UserRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
-        await _psApiService.reportItem(jsonMap);
+        await _psApiService!.reportItem(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -450,7 +450,7 @@ class UserRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
-        await _psApiService.blockUser(jsonMap);
+        await _psApiService!.blockUser(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -465,7 +465,7 @@ class UserRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
-        await _psApiService.postUnBlockUser(jsonMap);
+        await _psApiService!.postUnBlockUser(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
@@ -491,14 +491,14 @@ class UserRepository extends PsRepository {
     // Load from Db and Send to UI
     sinkUserListStream(
         userListStream,
-        await _userDao.getAllByMap(
+        await _userDao!.getAllByMap(
             _userPrimaryKey, mapKey, paramKey, userMapDao, UserMap(),
             status: status));
 
     // Server Call
     if (isConnectedToInternet) {
       final PsResource<List<User>> _resource =
-          await _psApiService.getUserList(holder.toMap(), limit, offset);
+          await _psApiService!.getUserList(holder.toMap(), limit, offset);
 
       print('Param Key $paramKey');
       if (_resource.status == PsStatus.SUCCESS) {
@@ -522,12 +522,12 @@ class UserRepository extends PsRepository {
         await userMapDao.insertAll(_userPrimaryKey, userMapList);
 
         // Insert User
-        await _userDao.insertAll(_userPrimaryKey, _resource.data!);
+        await _userDao!.insertAll(_userPrimaryKey, _resource.data!);
       }
       // Load updated Data from Db and Send to UI
       sinkUserListStream(
           userListStream,
-          await _userDao.getAllByMap(
+          await _userDao!.getAllByMap(
               _userPrimaryKey, mapKey, paramKey, userMapDao, UserMap()));
     }
   }
@@ -545,12 +545,12 @@ class UserRepository extends PsRepository {
     // Load from Db and Send to UI
     sinkUserListStream(
         userListStream,
-        await _userDao.getAllByMap(
+        await _userDao!.getAllByMap(
             _userPrimaryKey, mapKey, paramKey, userMapDao, UserMap(),
             status: status));
     if (isConnectedToInternet) {
       final PsResource<List<User>> _resource =
-          await _psApiService.getUserList(holder.toMap(), limit, offset);
+          await _psApiService!.getUserList(holder.toMap(), limit, offset);
 
       if (_resource.status == PsStatus.SUCCESS) {
         // Create Map List
@@ -574,11 +574,11 @@ class UserRepository extends PsRepository {
         await userMapDao.insertAll(_userPrimaryKey, userMapList);
 
         // Insert User
-        await _userDao.insertAll(_userPrimaryKey, _resource.data!);
+        await _userDao!.insertAll(_userPrimaryKey, _resource.data!);
       }
       sinkUserListStream(
           userListStream,
-          await _userDao.getAllByMap(
+          await _userDao!.getAllByMap(
               _userPrimaryKey, mapKey, paramKey, userMapDao, UserMap()));
     }
   }
@@ -588,7 +588,7 @@ class UserRepository extends PsRepository {
       bool isConnectedToInternet, PsStatus status,
       {bool isLoadFromServer = true}) async {
     final PsResource<ApiStatus> _resource =
-        await _psApiService.postUserLogout(jsonMap);
+        await _psApiService!.postUserLogout(jsonMap);
     if (_resource.status == PsStatus.SUCCESS) {
       return _resource;
     } else {
